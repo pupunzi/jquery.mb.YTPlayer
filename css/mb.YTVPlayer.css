@@ -1,0 +1,75 @@
+/*
+* jQuery.mb.components: mb.YTVPlayer
+* © 2001 - 2010 Matteo Bicocchi (pupunzi), Open Lab
+*
+*/
+
+@charset"UTF-8";
+
+.mb_YTVPlayer :focus {
+	outline: 0;
+}
+.mb_YTVPlayer{
+  display:inline-block;
+  -moz-box-shadow:#000 1px 1px 5px;
+  -webkit-box-shadow:#000 1px 1px 5px;
+}
+
+/*CONTROL BAR*/
+.mb_YTVPlayer .mb_YTVPBar{
+  display:block;
+  width:100%;
+  height:10px;
+  padding:5px;
+  /*background:#333;*/
+  position:absolute;
+  bottom:0;
+  left:0;
+  -moz-box-sizing:padding-box;
+  -webkit-box-sizing:border-box;
+  text-align:left;
+  opacity:.95
+}
+.mb_YTVPlayer .mb_YTVPBar span{
+  display:inline-block;
+  height:0px;
+  background:transparent;
+  font:12px/14px Calibri;
+  position:relative;
+  padding:10px;
+  top:-40px;
+}
+.mb_YTVPlayer .mb_YTVPPlaypause,.mb_YTVPlayer .mb_YTVPPlaypause img{
+  cursor:pointer;
+}
+
+.mb_YTVPlayer .mb_YTVPMuteUnmute{
+  cursor:pointer;
+}
+
+
+/*PROGRESS BAR*/
+.mb_YTVPlayer .mb_YTVPProgress{
+  height:10px;
+  width:100%;
+  background:#222;
+  bottom:0;
+  left:0px;
+
+}
+.mb_YTVPlayer .mb_YTVPLoaded{
+  height:10px;
+  width:0;
+  background:#444;
+  left:0;
+}
+.mb_YTVPlayer .mb_YTVTime{
+  height:5px;
+  width:0;
+  background:#fff;
+  bottom:0;
+  left:0;
+  -moz-box-shadow:#666666 1px 1px 3px;
+  -webkit-box-shadow:#666666 1px 1px 3px;
+}
+

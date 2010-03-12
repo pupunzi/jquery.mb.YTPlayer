@@ -19,7 +19,7 @@
 (function($){
 
   $.YTPlayer={
-    name:"jquery.mb.chromelessVideo",
+    name:"jquery.mb.YTPlayer",
     version:1.0,
     author:"Matteo Bicocchi",
     width:450,

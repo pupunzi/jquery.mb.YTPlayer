@@ -1,7 +1,13 @@
-jquery.mb.YTPlayer
-================================
+# mb.YTPlayer 1.0
 
-This plugin let you initialize a youtube custom player for any youtube movie or use any youtube video as background for your page.
+__An open source jQuery component to easily build your custom Youtube® player or to use a Youtube® video as background for your page.__
+
+![mb.YTPlayer](http://pupunzi.com/gitHub/mb.YTVPlayer-1.jpg)
+![mb.YTPlayer](http://pupunzi.com/gitHub/mb.YTVPlayer-2.jpg)
+
+## [go to the demo](http://pupunzi.com/#mb.components/mb.YTVPlayer/YTVPlayer.html)
+## [go to the doc](http://wiki.github.com/pupunzi/jquery.mb.YTVPlayer/)
+## [go to the blog](http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-YTVPlayer/)
 
 
 [jquery.mb.components](http://pupunzi.com/), another way of thinking the web

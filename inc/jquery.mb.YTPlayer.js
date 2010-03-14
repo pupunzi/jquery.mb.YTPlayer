@@ -82,7 +82,7 @@
           if(data.isBgndMovie){
             //var siteWrapper=$("<div/>").attr("id","YTP_siteWrapper").css({position:"absolute",zIndex:1000,width:"100%",top:0});
             //$("body").wrapInner(siteWrapper);
-            $("body").css({position:"relative",zIndex:1000});
+            $("body").css({position:"relative",zIndex:1});
             $("body").after(dataObj);
             $("body").after($(this));
 

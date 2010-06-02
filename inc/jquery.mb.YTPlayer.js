@@ -133,7 +133,7 @@
         $(player).buildYTPControls();
       }
 
-      player.setPlaybackQuality(player.quality);
+      player.setPlaybackQuality(data.quality);
       player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
     },
     playYTP: function(){

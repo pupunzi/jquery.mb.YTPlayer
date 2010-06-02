@@ -75,19 +75,19 @@
           data.height= data.ratio=="16/9" ? Math.ceil((9*data.width)/16):Math.ceil((3*data.width)/4);
           if(data.width.toString().indexOf("%")!=-1) data.height="100%";
           else
-            if(data.width=="window") data.width= $(window).width();
+          if(data.width=="window") data.width= $(window).width();
 
           var videoWrapper="";
 
           if(data.isBgndMovie){
-            //var siteWrapper=$("<div/>").attr("id","YTP_siteWrapper").css({position:"absolute",zIndex:1000,width:"100%",top:0});
-            //$("body").wrapInner(siteWrapper);
             $("body").css({position:"relative",zIndex:1});
             $("body").after(dataObj);
             $("body").after($(this));
 
-            videoWrapper=$("<div/>").attr("id","wrapper_"+ID).css({overflow:"hidden",position:"absolute",left:0,top:0, width:1, height:1});
+            videoWrapper=$("<div/>").attr("id","wrapper_"+ID).css({overflow:"hidden",position:"absolute",left:0,top:0, width:"100%", height:"100%"});
             $(this).wrap(videoWrapper);
+            var videoSpan=$("<span/>").css({position:"fixed",top:data.ratio=="4/3"?-(data.height/4):0,left:0});
+            $(this).wrap(videoSpan);            
           }else{
             videoWrapper=$("<span/>").attr("id","wrapper_"+ID).css({width:data.width, height:data.height, position:"relative"}).addClass("mb_YTVPlayer");
             $(this).wrap(videoWrapper);
@@ -97,11 +97,8 @@
           var atts = { id: ID };
           data.movieURL=($(this).attr("href").match( /[\\?&]v=([^&#]*)/))[1];
 
-          data.startWidth = data.isBgndMovie?"100%": data.width;
-          data.startHeight=data.isBgndMovie?"100%": data.height;
-
           //swfobject.embedSWF(swfUrl, id, width, height, version, expressInstallSwfurl, flashvars, params, attributes, callbackFn)
-          swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid="+ID,ID, data.startWidth, data.startHeight, "8", null, null, params, atts);
+          swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid="+ID,ID, data.width, data.height, "8", null, null, params, atts);
         });
       });
     },
@@ -110,30 +107,23 @@
       var data = $("#"+player.id+"_data").get(0);
       var BGisInit = typeof document.YTPBG != "undefined";
       var movieID= data.movieURL;
-      $(player).css({opacity:data.opacity});
 
-      //if it is as background
-      if(data.isBgndMovie && !BGisInit){
-        var raster=$("<div/>").addClass("mbYTP_raster").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+$.YTPlayer.rasterImg+")"}).hide();
-        var bufferImg=data.bufferImg?$("<div/>").addClass("mbYTP_bufferImg").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+data.bufferImg+")"}).hide():false;
-        var playerContainer=$(player).parent();
-        var ratio=data.ratio;
+       $(player).css({opacity:data.opacity});
 
-        $(playerContainer).css({width:"auto", height:"auto"});
+       //if it is as background
+       if(data.isBgndMovie && !BGisInit){
+       var raster=$("<div/>").addClass("mbYTP_raster").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+$.YTPlayer.rasterImg+")"}).hide();
+       var bufferImg=data.bufferImg?$("<div/>").addClass("mbYTP_bufferImg").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+data.bufferImg+")"}).hide():false;
+       var playerContainer=$(player).parents("div");
+       var ratio=data.ratio;
 
-        $(player).attr("width",data.width);
-        $(player).attr("height",data.height);
+//       $(playerContainer).css({width:"100%", height:"100%"});
 
-        if ($.browser.mozilla)
-          $(player).css({position:"fixed",top:ratio=="4/3"?-(data.height/4):0,left:0});
-        else
-          $(playerContainer).css({position:"fixed",top:ratio=="4/3"?-(data.height/4):0,left:0});
-
-        //can't be more than one bgnd
-        document.YTPBG=true;
-        $(playerContainer).after(raster);
-        if (data.bufferImg) raster.after(bufferImg);
-      }
+       //can't be more than one bgnd
+       document.YTPBG=true;
+       $(playerContainer).after(raster);
+       if (data.bufferImg) raster.after(bufferImg);
+       }
 
       if(data.isBgndMovie) {
         player.loadVideoByUrl("http://www.youtube.com/v/"+movieID, 0);

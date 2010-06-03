@@ -127,13 +127,16 @@
 
       if(data.isBgndMovie) {
         player.loadVideoByUrl("http://www.youtube.com/v/"+movieID, 0);
+        player.setPlaybackQuality(data.quality);
         if (data.isBgndMovie.mute) player.mute();
       }else{
         player.cueVideoByUrl("http://www.youtube.com/v/"+movieID, 0);
         $(player).buildYTPControls();
       }
 
-      player.setPlaybackQuality(data.quality);
+//      player.setPlaybackQuality(data.quality);
+      //console.debug(player.getAvailableQualityLevels())
+
       player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
     },
     playYTP: function(){

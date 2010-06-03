@@ -82,12 +82,20 @@
           if(data.isBgndMovie){
             $("body").css({position:"relative",zIndex:1});
             $("body").after(dataObj);
-            $("body").after($(this));
+            
+//            if ($.browser.msie && $.browser.version < 8){
+              var bodyWrapper=$("<div/>").css({position:"relative",zIndex:2});
+              $("body").wrapInner(bodyWrapper);
+              $("body").append($(this));
+//            }else
+//              $("body").after($(this));
 
-            videoWrapper=$("<div/>").attr("id","wrapper_"+ID).css({overflow:"hidden",position:"absolute",left:0,top:0, width:"100%", height:"100%"});
+
+            videoWrapper=$("<div/>").attr("id","wrapper_"+ID).css({overflow:"hidden",position:"fixed",left:0,top:0, width:"100%", height:"100%"});
             $(this).wrap(videoWrapper);
             var videoSpan=$("<span/>").css({position:"fixed",top:data.ratio=="4/3"?-(data.height/4):0,left:0});
-            $(this).wrap(videoSpan);            
+            $(this).wrap(videoSpan);
+
           }else{
             videoWrapper=$("<span/>").attr("id","wrapper_"+ID).css({width:data.width, height:data.height, position:"relative"}).addClass("mb_YTVPlayer");
             $(this).wrap(videoWrapper);
@@ -108,22 +116,22 @@
       var BGisInit = typeof document.YTPBG != "undefined";
       var movieID= data.movieURL;
 
-       $(player).css({opacity:data.opacity});
+      $(player).css({opacity:data.opacity});
 
-       //if it is as background
-       if(data.isBgndMovie && !BGisInit){
-       var raster=$("<div/>").addClass("mbYTP_raster").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+$.YTPlayer.rasterImg+")"}).hide();
-       var bufferImg=data.bufferImg?$("<div/>").addClass("mbYTP_bufferImg").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+data.bufferImg+")"}).hide():false;
-       var playerContainer=$(player).parents("div");
-       var ratio=data.ratio;
+      //if it is as background
+      if(data.isBgndMovie && !BGisInit){
+        var raster=$("<div/>").addClass("mbYTP_raster").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+$.YTPlayer.rasterImg+")"}).hide();
+        var bufferImg=data.bufferImg?$("<div/>").addClass("mbYTP_bufferImg").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+data.bufferImg+")"}).hide():false;
+        var playerContainer=$(player).parents("div");
+        var ratio=data.ratio;
 
-//       $(playerContainer).css({width:"100%", height:"100%"});
+        //       $(playerContainer).css({width:"100%", height:"100%"});
 
-       //can't be more than one bgnd
-       document.YTPBG=true;
-       $(playerContainer).after(raster);
-       if (data.bufferImg) raster.after(bufferImg);
-       }
+        //can't be more than one bgnd
+        document.YTPBG=true;
+        $(playerContainer).after(raster);
+        if (data.bufferImg) raster.after(bufferImg);
+      }
 
       if(data.isBgndMovie) {
         player.loadVideoByUrl("http://www.youtube.com/v/"+movieID, 0);
@@ -200,7 +208,6 @@
       }
 
       var loadedW= (loadedByte*(totW-startLeft))/totalBytes;
-      //if (loadedW>totW-timeW) loadedW=totW-timeW;
       loadedBar.css({left:startLeft, width:loadedW});
       timeBar.css({left:0,width:timeW});
       return {totalTime:totalTime,currentTime: currentTime};
@@ -279,6 +286,8 @@
 function onYouTubePlayerReady(playerId) {
   var player=$("#"+playerId);
   player.mb_setMovie();
+
+  //alert("ready")
 }
 
 function playerState(state, el) {

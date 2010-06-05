@@ -42,9 +42,8 @@
 
 
           var dataObj=$("<span/>");
-          var data= dataObj.get(0);
           dataObj.attr("id",ID+"_data").hide();
-          $(this).before(dataObj);
+          var data= dataObj.get(0);
 
           data.opacity=1;
           data.isBgndMovie=false;
@@ -64,38 +63,46 @@
             if ($(this).metadata().opacity) data.opacity=$(this).metadata().opacity;
             if ($(this).metadata().isBgndMovie && !BGisInit) {
               data.isBgndMovie=$(this).metadata().isBgndMovie;
-              data.width=$(this).metadata().isBgndMovie.width? $(this).metadata().isBgndMovie.width:"100%";
+              data.width=$(this).metadata().isBgndMovie.width? $(this).metadata().isBgndMovie.width:"window";
             }
+
             if ($(this).metadata().muteSound) {data.muteSound=$(this).metadata().muteSound;}
             if ($(this).metadata().hasControls) {data.hasControls=$(this).metadata().hasControls;}
             if ($(this).metadata().ratio) {data.ratio=$(this).metadata().ratio;}
             if ($(this).metadata().bufferImg) {data.bufferImg=$(this).metadata().bufferImg;}
           }
 
-          data.height= data.ratio=="16/9" ? Math.ceil((9*data.width)/16):Math.ceil((3*data.width)/4);
-          if(data.width.toString().indexOf("%")!=-1) data.height="100%";
+          if(data.width=="window") {
+/*
+            data.w = "window";
+            data.height= $(window).height()+40;
+            data.width= data.ratio=="16/9" ? Math.ceil((16*data.height)/9):Math.ceil((4*data.height)/3);
+*/
+            data.height="110%";
+            data.width= "110%";
+          }
           else
-          if(data.width=="window") data.width= $(window).width();
+            data.height= data.ratio=="16/9" ? Math.ceil((9*data.width)/16):Math.ceil((3*data.width)/4);
 
           var videoWrapper="";
 
           if(data.isBgndMovie){
             $("body").css({position:"relative",zIndex:1});
             $("body").after(dataObj);
-            
-//            if ($.browser.msie && $.browser.version < 8){
+            if ($.browser.msie && $.browser.version < 8){
               var bodyWrapper=$("<div/>").css({position:"relative",zIndex:2});
               $("body").wrapInner(bodyWrapper);
               $("body").append($(this));
-//            }else
-//              $("body").after($(this));
+            }else
+              $("body").after($(this));
 
 
             videoWrapper=$("<div/>").attr("id","wrapper_"+ID).css({overflow:"hidden",position:"fixed",left:0,top:0, width:"100%", height:"100%"});
             $(this).wrap(videoWrapper);
-            var videoSpan=$("<span/>").css({position:"fixed",top:data.ratio=="4/3"?-(data.height/4):0,left:0});
-            $(this).wrap(videoSpan);
-
+            if(!data.width.toString().indexOf("%")==-1) {
+              var videoDiv=$("<div/>").css({position:"fixed",top: data.ratio=="4/3"?-(data.height/4):0,left:0, display:"block", width:data.width, height:data.height});
+              $(this).wrap(videoDiv);
+            }
           }else{
             videoWrapper=$("<span/>").attr("id","wrapper_"+ID).css({width:data.width, height:data.height, position:"relative"}).addClass("mb_YTVPlayer");
             $(this).wrap(videoWrapper);
@@ -135,16 +142,13 @@
 
       if(data.isBgndMovie) {
         player.loadVideoByUrl("http://www.youtube.com/v/"+movieID, 0);
-        player.setPlaybackQuality(data.quality);
         if (data.isBgndMovie.mute) player.mute();
       }else{
         player.cueVideoByUrl("http://www.youtube.com/v/"+movieID, 0);
         $(player).buildYTPControls();
       }
 
-//      player.setPlaybackQuality(data.quality);
-      //console.debug(player.getAvailableQualityLevels())
-
+      player.setPlaybackQuality(data.quality);
       player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
     },
     playYTP: function(){

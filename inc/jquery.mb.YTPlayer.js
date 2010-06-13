@@ -1,7 +1,7 @@
 /*******************************************************************************
  jquery.mb.components
  Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
- email: info@pupunzi.com
+ email: mbicocchi@open-lab.com
  site: http://pupunzi.com
 
  Licences: MIT, GPL
@@ -86,16 +86,15 @@
 
           var videoWrapper="";
 
+          $("body").after(dataObj);
           if(data.isBgndMovie){
             $("body").css({position:"relative",zIndex:1});
-            $("body").after(dataObj);
             if ($.browser.msie && $.browser.version < 8){
               var bodyWrapper=$("<div/>").css({position:"relative",zIndex:2});
               $("body").wrapInner(bodyWrapper);
               $("body").append($(this));
             }else
               $("body").after($(this));
-
 
             videoWrapper=$("<div/>").attr("id","wrapper_"+ID).css({overflow:"hidden",position:"fixed",left:0,top:0, width:"100%", height:"100%"});
             $(this).wrap(videoWrapper);
@@ -290,8 +289,6 @@
 function onYouTubePlayerReady(playerId) {
   var player=$("#"+playerId);
   player.mb_setMovie();
-
-  //alert("ready")
 }
 
 function playerState(state, el) {

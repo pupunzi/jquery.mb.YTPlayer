@@ -1,0 +1,80 @@
+<!doctype html>
+
+<!--
+  ~ jquery.mb.components
+  ~ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ email: mbicocchi@open-lab.com
+  ~ site: http://pupunzi.com
+  ~
+  ~ Licences: MIT, GPL
+  ~ http://www.opensource.org/licenses/mit-license.php
+  ~ http://www.gnu.org/licenses/gpl.html
+  -->
+        
+
+<html>
+<head>
+  <title>youtube Chromeless fullscreen</title>
+  <link href="css/mb.YTVPlayer.css" media="all" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body{
+      /*background: url("images/06.jpg");*/
+      background:#333;
+      margin:0;
+    }
+    #content{
+      color:white;
+      font:40px/40px Calibri;
+      text-align:center;
+      padding-top:200px;
+      text-shadow:#666666 2px 2px 4px;
+    }
+    .movie{
+      display:none;
+    }
+    .dida{
+      position:fixed;
+      bottom:0;
+      font: 12px/14px Arial, sans-serif;
+      color:white;
+      padding:10px;
+    }
+    #bgndEl{
+      position:relative;
+      margin:auto;
+      width:500px;
+      height:400px;
+    }
+
+  </style>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="inc/jquery.metadata.js"></script>
+  <script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      $(".movie").mb_YTPlayer();
+    });
+  </script>
+
+</head>
+<body>
+<div id="content">
+
+  <img src="http://pupunzi.com/images/logo.png" alt="mb">
+  <br><br>
+  This is a Youtube movie setted as background of a DOM element<br><br>
+  <div id="bgndEl">
+    <br>html content<br>
+    Lorem ipsum dolor sit amet, donec ipsum fusce augue nullam metus luctus, pede at maecenas fusce vestibulum libero nec...
+  </div>
+  <!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=MR9av-I35ME" class="movie {opacity:.4, isBgndMovie:{width:'1990',mute:false}, ratio:'4/3'}">Bill Viola</a>-->
+  <!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=jIrIjai2kY0" class="movie {opacity:.8, isBgndMovie:{width:'1920',mute:true}, ratio:'16/9',quality:'default'}">Bill Viola</a>-->
+  <a id="bgndVideo" href="http://www.youtube.com/watch?v=BsekcY04xvQ" class="movie {opacity:.7, isBgndMovie:{width:900,mute:true}, ID:'bgndEl', ratio:'16/9',quality:'default'}">Bill Viola</a>
+  <!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=V2rifmjZuKQ" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:true}, ratio:'16/9',quality:'default'}">Bill Viola</a>-->
+
+</div>
+</body>
+<div class="dida">Urban Abstract Art Director Jopsu Ramu from Musuta Ltd.</div>
+<!--<div class="dida">Bill Viola - The Quintet of the Astonished (2000)</div>-->
+
+</html>

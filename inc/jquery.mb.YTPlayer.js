@@ -11,7 +11,7 @@
 
 /*
  * jQuery.mb.components: jquery.mb.YTPlayer
- * version: 1.0rc5 - 6-feb-2010 - 43
+ * version: 1.2 - 6-feb-2010 - 43
  * © 2001 - 2010 Matteo Bicocchi (pupunzi), Open Lab
  *
  */
@@ -20,7 +20,7 @@
 
   $.YTPlayer={
     name:"jquery.mb.YTPlayer",
-    version:1.1,
+    version:1.2,
     author:"Matteo Bicocchi",
     width:450,
     controls:{
@@ -70,36 +70,40 @@
             if ($(this).metadata().hasControls) {data.hasControls=$(this).metadata().hasControls;}
             if ($(this).metadata().ratio) {data.ratio=$(this).metadata().ratio;}
             if ($(this).metadata().bufferImg) {data.bufferImg=$(this).metadata().bufferImg;}
+            if ($(this).metadata().ID) {data.ID=$(this).metadata().ID;}
           }
 
           if(data.width=="window") {
-/*
-            data.w = "window";
-            data.height= $(window).height()+40;
-            data.width= data.ratio=="16/9" ? Math.ceil((16*data.height)/9):Math.ceil((4*data.height)/3);
-*/
+            /*
+             data.w = "window";
+             data.height= $(window).height()+40;
+             data.width= data.ratio=="16/9" ? Math.ceil((16*data.height)/9):Math.ceil((4*data.height)/3);
+             */
             data.height="110%";
-            data.width= "110%";
+            data.width= "100%";
           }
           else
             data.height= data.ratio=="16/9" ? Math.ceil((9*data.width)/16):Math.ceil((3*data.width)/4);
 
           var videoWrapper="";
 
-          $("body").after(dataObj);
+          var el= data.ID?$("#"+data.ID):"body";
+          $(el).append(dataObj);
           if(data.isBgndMovie){
-            $("body").css({position:"relative",zIndex:1});
-            if ($.browser.msie && $.browser.version < 8){
+            $(el).css({position:"relative",zIndex:1});
+            if ($.browser.msie && $.browser.version < 8 || data.ID){
               var bodyWrapper=$("<div/>").css({position:"relative",zIndex:2});
-              $("body").wrapInner(bodyWrapper);
-              $("body").append($(this));
+              $(el).wrapInner(bodyWrapper);
+              $(el).append($(this));
             }else
-              $("body").after($(this));
+              $(el).after($(this));
 
-            videoWrapper=$("<div/>").attr("id","wrapper_"+ID).css({overflow:"hidden",position:"fixed",left:0,top:0, width:"100%", height:"100%"});
+            var pos= data.ID?"absolute":"fixed";
+
+            videoWrapper=$("<div/>").attr("id","wrapper_"+ID).css({overflow:"hidden",position:pos,left:0,top:0, width:"100%", height:"100%"});
             $(this).wrap(videoWrapper);
             if(!data.width.toString().indexOf("%")==-1) {
-              var videoDiv=$("<div/>").css({position:"fixed",top: data.ratio=="4/3"?-(data.height/4):0,left:0, display:"block", width:data.width, height:data.height});
+              var videoDiv=$("<div/>").css({position:pos,top: data.ratio=="4/3"?-(data.height/4):0,left:0, display:"block", width:data.width, height:data.height});
               $(this).wrap(videoDiv);
             }
           }else{
@@ -123,18 +127,19 @@
       var movieID= data.movieURL;
 
       $(player).css({opacity:data.opacity});
+      var pos= data.ID?"absolute":"fixed";
 
       //if it is as background
       if(data.isBgndMovie && !BGisInit){
-        var raster=$("<div/>").addClass("mbYTP_raster").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+$.YTPlayer.rasterImg+")"}).hide();
-        var bufferImg=data.bufferImg?$("<div/>").addClass("mbYTP_bufferImg").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"url("+data.bufferImg+")"}).hide():false;
-        var playerContainer=$(player).parents("div");
+        var raster=$("<div/>").addClass("mbYTP_raster").css({position:pos,top:0,left:0,width:"100%",height:"100%",background:"url("+$.YTPlayer.rasterImg+")"}).hide();
+        var bufferImg=data.bufferImg?$("<div/>").addClass("mbYTP_bufferImg").css({position:pos,top:0,left:0,width:"100%",height:"100%",background:"url("+data.bufferImg+")"}).hide():false;
+        var playerContainer=$(player).parents("div:first");
         var ratio=data.ratio;
 
         //       $(playerContainer).css({width:"100%", height:"100%"});
 
         //can't be more than one bgnd
-        document.YTPBG=true;
+        if(!data.ID) document.YTPBG=true;
         $(playerContainer).after(raster);
         if (data.bufferImg) raster.after(bufferImg);
       }

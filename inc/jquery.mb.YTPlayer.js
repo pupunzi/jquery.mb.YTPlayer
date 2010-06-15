@@ -73,28 +73,28 @@
             if ($(this).metadata().ID) {data.ID=$(this).metadata().ID;}
           }
 
+          var el= data.ID?$("#"+data.ID):$("body");
+
           if(data.width=="window") {
-            /*
-             data.w = "window";
-             data.height= $(window).height()+40;
-             data.width= data.ratio=="16/9" ? Math.ceil((16*data.height)/9):Math.ceil((4*data.height)/3);
-             */
-            data.height="110%";
+            data.height="100%";
             data.width= "100%";
+            if(data.ID){
+              data.height=el.outerHeight()+40;
+              data.width= el.outerWidth();
+            }
           }
           else
             data.height= data.ratio=="16/9" ? Math.ceil((9*data.width)/16):Math.ceil((3*data.width)/4);
 
           var videoWrapper="";
 
-          var el= data.ID?$("#"+data.ID):"body";
           $(el).append(dataObj);
           if(data.isBgndMovie){
-            $(el).css({position:"relative",zIndex:1});
+            //            $(el).css({position:"relative",zIndex:1});
             if ($.browser.msie && $.browser.version < 8 || data.ID){
-              var bodyWrapper=$("<div/>").css({position:"relative",zIndex:2});
+              var bodyWrapper=$("<div/>").css({position:"relative",zIndex:0});
               $(el).wrapInner(bodyWrapper);
-              $(el).append($(this));
+              $(el).prepend($(this));
             }else
               $(el).after($(this));
 
@@ -103,7 +103,7 @@
             videoWrapper=$("<div/>").attr("id","wrapper_"+ID).css({overflow:"hidden",position:pos,left:0,top:0, width:"100%", height:"100%"});
             $(this).wrap(videoWrapper);
             if(!data.width.toString().indexOf("%")==-1) {
-              var videoDiv=$("<div/>").css({position:pos,top: data.ratio=="4/3"?-(data.height/4):0,left:0, display:"block", width:data.width, height:data.height});
+              var videoDiv=$("<div/>").css({position:pos,top: data.ratio=="4/3" && !data.ID?-(data.height/4):0,left:0, display:"block", width:data.width, height:data.height});
               $(this).wrap(videoDiv);
             }
           }else{

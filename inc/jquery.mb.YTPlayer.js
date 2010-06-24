@@ -11,7 +11,7 @@
 
 /*
  * jQuery.mb.components: jquery.mb.YTPlayer
- * version: 1.2 - 6-feb-2010 - 43
+ * version: 1.2.1 - 6-feb-2010 - 43
  * © 2001 - 2010 Matteo Bicocchi (pupunzi), Open Lab
  *
  */
@@ -20,7 +20,7 @@
 
   $.YTPlayer={
     name:"jquery.mb.YTPlayer",
-    version:1.2,
+    version:1.2.1,
     author:"Matteo Bicocchi",
     width:450,
     controls:{
@@ -90,13 +90,14 @@
 
           $(el).append(dataObj);
           if(data.isBgndMovie){
-            //            $(el).css({position:"relative",zIndex:1});
             if ($.browser.msie && $.browser.version < 8 || data.ID){
               var bodyWrapper=$("<div/>").css({position:"relative",zIndex:0});
               $(el).wrapInner(bodyWrapper);
               $(el).prepend($(this));
-            }else
+            }else{
+              $(el).css({position:"relative",zIndex:1});              
               $(el).after($(this));
+            }
 
             var pos= data.ID?"absolute":"fixed";
 

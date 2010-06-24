@@ -20,7 +20,7 @@
 
   $.YTPlayer={
     name:"jquery.mb.YTPlayer",
-    version:1.2.1,
+    version:"1.2.1",
     author:"Matteo Bicocchi",
     width:450,
     controls:{

@@ -114,6 +114,15 @@ var origH=theVideo._height;
 ns["onMetaData"] = function(obj) {
     duration = obj.duration;
 }
+/*
+ns.onMetaData = function(infoObject:Object) {
+	var t="";
+    for (var propName:String in infoObject) {
+        t+=propName + " = " + infoObject[propName]+"   ---   ";
+    }
+	ExternalInterface.call("alert",t)
+};
+*/
 
 function videoStatus() {
 	amountLoaded = ns.bytesLoaded / ns.bytesTotal;
@@ -141,8 +150,9 @@ controls.loader.scrubBar.onEnterFrame= function() {
 
 function scrubit() {
 	var t=Math.floor((controls.loader.scrub._x/208)*duration);
-	ExternalInterface.call("alert",t);
-	ns.play(videoUrl,t);
+	//ExternalInterface.call("alert",t);
+	//ns.play(videoUrl,t);
+	ns.seek(t);
 }
 
 _root.createEmptyMovieClip("vSound",_root.getNextHighestDepth());
@@ -182,7 +192,7 @@ controls.mute.onRelease = function() {
 }
 
 if(videoUrl)
-ns.play(videoUrl);
+ns.play(videoUrl,100);
 playing=true;
 
 

@@ -46,7 +46,7 @@
     $(function(){
 
       document.mbCP= new Object();
-      var flashVar={videoUrl:"http://pupunzi.com/test/a/distanza_in_stanza_3.flv", showControls:true, ID:"mySwf", loop:true};
+      var flashVar={videoUrl:"http://pupunzi.com/test/a/distanza_in_stanza_3.flv", showFlashsControls:true, ID:"mySwf", loop:true};
       var params = { allowScriptAccess: "always", wmode:"transparent", allowFullScreen:"true" };
       //swfobject.embedSWF(swfUrl, id, width, height, version, expressInstallSwfurl, flashvars, params, attributes, callbackFn)
       swfobject.embedSWF("chromeless_player.swf","mySwf", 700, 500, "9.0.0",null,flashVar,params);//http://pupunzi.com/test/a/chromeless_player.swf

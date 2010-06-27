@@ -95,7 +95,7 @@
               $(el).wrapInner(bodyWrapper);
               $(el).prepend($(this));
             }else{
-              $(el).css({position:"relative",zIndex:1});              
+              $(el).css({position:"relative",zIndex:1});
               $(el).after($(this));
             }
 
@@ -273,7 +273,7 @@
     },
     formatTime: function(s){
       var min= Math.floor(s/60);
-      var sec= s-(60*min);
+      var sec= Math.floor(s-(60*min));
       return (min<9?"0"+min:min)+" : "+(sec<9?"0"+sec:sec);
     }
   };

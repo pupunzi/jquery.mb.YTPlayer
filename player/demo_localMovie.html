@@ -1,0 +1,199 @@
+<!doctype html>
+
+<!--
+  ~ jquery.mb.components
+  ~ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ email: mbicocchi@open-lab.com
+  ~ site: http://pupunzi.com
+  ~
+  ~ Licences: MIT, GPL
+  ~ http://www.opensource.org/licenses/mit-license.php
+  ~ http://www.gnu.org/licenses/gpl.html
+  -->
+
+<html>
+<head>
+  <title>mb.YTPlayer - A youtube custom Player</title>
+  <link href="../css/mb.YTVPlayer.css" media="all" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body{
+      background: url("../images/06.jpg");
+      margin:0;
+    }
+    #content{
+      color:white;
+      font:40px/40px Calibri;
+      text-align:center;
+      padding-top:120px;
+      text-shadow:#666666 2px 2px 4px;
+    }
+    .movie{
+      display:none;
+    }
+    .dida{
+      position:fixed;
+      bottom:0;
+      font: 12px/14px Arial, sans-serif;
+      color:white;
+      padding:10px;
+    }
+
+  </style>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="swfobject.js"></script>
+  <script type="text/javascript">
+
+    $(function(){
+
+      document.mbCP= new Object();
+      var flashVar={videoUrl:"http://pupunzi.com/test/a/distanza_in_stanza_3.flv", showControls:true, ID:"mySwf", loop:true};
+      var params = { allowScriptAccess: "always", wmode:"transparent", allowFullScreen:"true" };
+      //swfobject.embedSWF(swfUrl, id, width, height, version, expressInstallSwfurl, flashvars, params, attributes, callbackFn)
+      swfobject.embedSWF("chromeless_player.swf","mySwf", 700, 500, "9.0.0",null,flashVar,params);//http://pupunzi.com/test/a/chromeless_player.swf
+
+      setInterval(function(){
+        var s=$('#mySwf').getCurrentTime(true)+" of "+$('#mySwf').getDuration(true);
+        $("#state").html(s);
+      },1000)
+
+    });
+
+    function onMbPlayerReady(playerID){}
+
+    function updateMovieState(ID, videoUrl, currentTime, duration, bytesLoaded, bytesTotal, volume, isPlaying){
+      if (typeof document.mbCP[ID]!="object") document.mbCP[ID]=new Object();
+      document.mbCP[ID].videoUrl = videoUrl;
+      document.mbCP[ID].currentTime = currentTime;
+      document.mbCP[ID].duration = duration;
+      document.mbCP[ID].bytesLoaded = bytesLoaded;
+      document.mbCP[ID].bytesTotal = bytesTotal;
+      document.mbCP[ID].volume = volume;
+      document.mbCP[ID].isPlaying = eval(isPlaying);
+    }
+
+    function formatTime(s){
+      var min= Math.floor(s/60);
+      var sec= Math.floor(s-(60*min));
+      return (min<=9?"0"+min:min)+":"+(sec<=9?"0"+sec:sec);
+    }
+
+    $.fn.getvideoUrl=function(){
+      var player= $(this).get(0);
+      return document.mbCP[player.id].videoUrl;
+    };
+
+    $.fn.getCurrentTime=function(format){
+      var player= $(this).get(0);
+      var time=document.mbCP[player.id].currentTime;
+      if (format)
+        time=formatTime(time);
+      return time ;
+    };
+
+    $.fn.getDuration=function(format){
+      var player= $(this).get(0);
+      var duration=document.mbCP[player.id].duration;
+      if (format)
+        duration=formatTime(duration);
+      return duration ;
+    };
+
+    $.fn.getbytesLoaded=function(){
+      var player= $(this).get(0);
+      return document.mbCP[player.id].bytesLoaded;
+    };
+
+    $.fn.getbytesTotal=function(){
+      var player= $(this).get(0);
+      return document.mbCP[player.id].bytesTotal;
+    };
+
+    $.fn.getPlayingState=function(){
+      var player= $(this).get(0);
+      return document.mbCP[player.id].isPlaying;
+    };
+
+    $.fn.getVolume=function(){
+      var player= $(this).get(0);
+      return document.mbCP[player.id].volume;
+    };
+
+    $.fn.stopVideo=function(){
+      var player= $(this).get(0);
+      player.stopVideo();
+    };
+
+    $.fn.playVideo=function(){
+      var player= $(this).get(0);
+      player.playVideo();
+    };
+
+    $.fn.pauseVideo=function(){
+      var player= $(this).get(0);
+      player.pauseVideo();
+    };
+
+    $.fn.seekTo=function(val){
+      var player= $(this).get(0);
+      player.seekTo(val);
+    };
+
+    $.fn.fullScreenMovie=function(){
+      var player= $(this).get(0);
+      player.fullScreenMovie();
+    };
+
+    $.fn.loadVideoByUrl=function(url,play){
+      var player= $(this).get(0);
+      player.loadVideoByUrl(url,play);
+    };
+
+
+    /*AUDIO*/
+    $.fn.setVoume=function(val){
+      var player= $(this).get(0);
+      player.setVoume(val);
+    };
+
+    $.fn.traceState=function(){
+      var player= $(this).get(0);
+      console.debug(":::::::::::::::::::::::::::::::::::::::::::");
+      console.debug("current URL:: ",$(this).getvideoUrl());
+      console.debug("current time:: ",$(this).getCurrentTime(true));
+      console.debug("duration:: ",$(this).getDuration(true));
+      console.debug("bytes loaded:: ",$(this).getbytesLoaded());
+      console.debug("total bytes:: ",$(this).getbytesTotal());
+      console.debug("is playing:: ",$(this).getPlayingState());
+      console.debug("volume:: ",$(this).getVolume());
+    };
+
+
+  </script>
+
+</head>
+<body>
+<div id="content">
+
+  <img src="http://pupunzi.com/images/logo.png" alt="mb">
+  <br><br>
+  <div style="font-size:80%; cursor:pointer">
+    <span onclick="$('#mySwf').stopVideo()">stop</span> |
+    <span onclick="$('#mySwf').playVideo()">play</span> |
+    <span onclick="$('#mySwf').pauseVideo()">pause</span> |
+    <span onclick="$('#mySwf').traceState()">console</span> |
+    <span onclick="$('#mySwf').seekTo($('#goto').val())">go to: </span><input id="goto" type="text" value="0" style="width:50px; font-size:60%"/> |
+    <span onclick="$('#mySwf').setVoume($('#vol').val())">volume: </span><input id="vol" type="text" value="0" style="width:50px; font-size:60%"/>
+    <div id="state" style="font-size:70%"></div>
+  </div>
+
+  <div id="mySwf"></div>
+  <br>
+  <span onclick="$('#mySwf').loadVideoByUrl('mat2 - Computer.m4v',true)" style="cursor:pointer">load another movie</span>
+  
+
+  <br>
+</div>
+
+</body>
+
+</html>

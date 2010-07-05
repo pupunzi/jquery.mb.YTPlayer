@@ -58,14 +58,10 @@
         autoplay:false,
         placeHolderUrl:"placeholder.png"
       };
-      //$("body").after($("#mySwf").parent());
       var params = { allowScriptAccess: "always", wmode:"transparent", allowFullScreen:"true" };
       //swfobject.embedSWF(swfUrl, id, width, height, version, expressInstallSwfurl, flashvars, params, attributes, callbackFn)
       swfobject.embedSWF("chromeless_player.swf","mySwf","500","390","9.0.0",null,flashVar,params);//http://pupunzi.com/test/a/chromeless_player.swf
       $("#state").hide();
-
-
-      //setTimeout(function(){$('#mySwf').seekTo(1)},1000);
 
     });
 
@@ -73,7 +69,7 @@
       var player= $("#"+playerID);
       //player.css({position:"absolute", width:"100%", height:"100%", top:0,left:0});
       //$("body").css({position:"relative",zIndex:2});
-      $("#mySwf").setTimeInfo("state");
+      player.setTimeInfo("state");
     }
 
     function updateMovieState(ID, videoUrl, currentTime, duration, bytesLoaded, bytesTotal, volume, isPlaying,infocode){

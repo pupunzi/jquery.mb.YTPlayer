@@ -17,7 +17,7 @@
   <link href="../css/mb.YTVPlayer.css" media="all" rel="stylesheet" type="text/css">
   <style type="text/css">
     body{
-      background: url("../images/06.jpg");
+      background: #333;
       margin:0;
     }
     #content{
@@ -42,25 +42,41 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript" src="swfobject.js"></script>
   <script type="text/javascript">
+    /*
+    http://pupunzi.com/test/video/Birds.mov
+    http://pupunzi.com/test/video/distanza_in_stanza_3.flv
+    */
 
     $(function(){
 
       document.mbCP= new Object();
-      var flashVar={videoUrl:"http://pupunzi.com/test/a/distanza_in_stanza_3.flv", showFlashsControls:true, ID:"mySwf", loop:true};
+      var flashVar={
+        videoUrl:"http://pupunzi.com/test/video/distanza_in_stanza_3.flv",
+        showFlashControls:false,
+        ID:"mySwf",
+        loop:false,
+        autoplay:false,
+        placeHolderUrl:"placeholder.png"
+      };
+      //$("body").after($("#mySwf").parent());
       var params = { allowScriptAccess: "always", wmode:"transparent", allowFullScreen:"true" };
       //swfobject.embedSWF(swfUrl, id, width, height, version, expressInstallSwfurl, flashvars, params, attributes, callbackFn)
-      swfobject.embedSWF("chromeless_player.swf","mySwf", 700, 500, "9.0.0",null,flashVar,params);//http://pupunzi.com/test/a/chromeless_player.swf
+      swfobject.embedSWF("chromeless_player.swf","mySwf","500","390","9.0.0",null,flashVar,params);//http://pupunzi.com/test/a/chromeless_player.swf
+      $("#state").hide();
 
-      setInterval(function(){
-        var s=$('#mySwf').getCurrentTime(true)+" of "+$('#mySwf').getDuration(true);
-        $("#state").html(s);
-      },1000)
+
+      //setTimeout(function(){$('#mySwf').seekTo(1)},1000);
 
     });
 
-    function onMbPlayerReady(playerID){}
+    function onMbPlayerReady(playerID){
+      var player= $("#"+playerID);
+      //player.css({position:"absolute", width:"100%", height:"100%", top:0,left:0});
+      //$("body").css({position:"relative",zIndex:2});
+      $("#mySwf").setTimeInfo("state");
+    }
 
-    function updateMovieState(ID, videoUrl, currentTime, duration, bytesLoaded, bytesTotal, volume, isPlaying){
+    function updateMovieState(ID, videoUrl, currentTime, duration, bytesLoaded, bytesTotal, volume, isPlaying,infocode){
       if (typeof document.mbCP[ID]!="object") document.mbCP[ID]=new Object();
       document.mbCP[ID].videoUrl = videoUrl;
       document.mbCP[ID].currentTime = currentTime;
@@ -69,6 +85,7 @@
       document.mbCP[ID].bytesTotal = bytesTotal;
       document.mbCP[ID].volume = volume;
       document.mbCP[ID].isPlaying = eval(isPlaying);
+      document.mbCP[ID].infoCode= infocode;
     }
 
     function formatTime(s){
@@ -113,14 +130,25 @@
       return document.mbCP[player.id].isPlaying;
     };
 
+    /*AUDIO*/
     $.fn.getVolume=function(){
       var player= $(this).get(0);
       return document.mbCP[player.id].volume;
     };
 
+    $.fn.setVoume=function(val){
+      var player= $(this).get(0);
+      player.setVoume(val);
+    };
+
+    $.fn.getInfoCode=function(){
+      var player= $(this).get(0);
+      return document.mbCP[player.id].infoCode;
+    };
+    // video actions
     $.fn.stopVideo=function(){
       var player= $(this).get(0);
-      player.stopVideo();
+      player.stopVideo(true);
     };
 
     $.fn.playVideo=function(){
@@ -138,21 +166,28 @@
       player.seekTo(val);
     };
 
+    // fullscreen needs a real click -- it doesn't work from a js call
     $.fn.fullScreenMovie=function(){
       var player= $(this).get(0);
       player.fullScreenMovie();
     };
 
+    //load video
     $.fn.loadVideoByUrl=function(url,play){
       var player= $(this).get(0);
       player.loadVideoByUrl(url,play);
     };
 
+    // Update time
+    $.fn.setTimeInfo=function(where){
+      var movie=$(this);
+      setInterval(function(){
+        var s=movie.getCurrentTime(true)+" of "+movie.getDuration(true);
+        if(typeof movie.getDuration()=="number")
+        $("#"+where).html(s);
+        $("#"+where).slideDown("slow");
+      },1000);
 
-    /*AUDIO*/
-    $.fn.setVoume=function(val){
-      var player= $(this).get(0);
-      player.setVoume(val);
     };
 
     $.fn.traceState=function(){
@@ -165,6 +200,7 @@
       console.debug("total bytes:: ",$(this).getbytesTotal());
       console.debug("is playing:: ",$(this).getPlayingState());
       console.debug("volume:: ",$(this).getVolume());
+      console.debug("code:: ",$(this).getInfoCode());
     };
 
 
@@ -176,20 +212,21 @@
 
   <img src="http://pupunzi.com/images/logo.png" alt="mb">
   <br><br>
-  <div style="font-size:80%; cursor:pointer">
-    <span onclick="$('#mySwf').stopVideo()">stop</span> |
-    <span onclick="$('#mySwf').playVideo()">play</span> |
-    <span onclick="$('#mySwf').pauseVideo()">pause</span> |
-    <span onclick="$('#mySwf').traceState()">console</span> |
-    <span onclick="$('#mySwf').seekTo($('#goto').val())">go to: </span><input id="goto" type="text" value="0" style="width:50px; font-size:60%"/> |
-    <span onclick="$('#mySwf').setVoume($('#vol').val())">volume: </span><input id="vol" type="text" value="0" style="width:50px; font-size:60%"/>
+  <div class="mbVideoControls" style="font-size:80%; cursor:pointer">
+    <span class="stop" onclick="$('#mySwf').stopVideo()">stop</span> |
+    <span class="play" onclick="$('#mySwf').playVideo()">play</span> |
+    <span class="pause" onclick="$('#mySwf').pauseVideo()">pause</span> |
+    <span class="seek" onclick="$('#mySwf').seekTo($('#goto').val())">go to: </span><input id="goto" type="text" value="0" style="width:50px; font-size:60%"/> |
+    <span class="volme" onclick="$('#mySwf').setVoume($('#vol').val())">volume: </span><input id="vol" type="text" value="0" style="width:50px; font-size:60%"/> |
+    <span  onclick="$('#mySwf').traceState()">console</span>
     <div id="state" style="font-size:70%"></div>
   </div>
-
+  <!--<div style="position:absolute;top:0;left:0; width:100%; height:100%; overflow:hidden;"><div id="mySwf"></div></div>-->
   <div id="mySwf"></div>
+
   <br>
-  <span onclick="$('#mySwf').loadVideoByUrl('mat2 - Computer.m4v',true)" style="cursor:pointer">load another movie</span>
-  
+  <span onclick="$('#mySwf').loadVideoByUrl('mat2 - Computer.m4v',false)" style="cursor:pointer">load 1</span> |
+  <span onclick="$('#mySwf').loadVideoByUrl('Bill_Viola_-_the_Crossing.flv',false)" style="cursor:pointer">load 2</span>
 
   <br>
 </div>

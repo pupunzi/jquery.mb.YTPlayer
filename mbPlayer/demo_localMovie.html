@@ -38,12 +38,17 @@
       padding:10px;
     }
 
+    span.button:hover{
+      color:yellow;
+    }
+
   </style>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script type="text/javascript" src="swfobject.js"></script>
   <script type="text/javascript">
     /*
     http://pupunzi.com/test/video/Birds.mov
+    http://dl.dropbox.com/u/1976976/video/Birds.mov
     http://pupunzi.com/test/video/distanza_in_stanza_3.flv
     */
 
@@ -51,7 +56,7 @@
 
       document.mbCP= new Object();
       var flashVar={
-        videoUrl:"http://pupunzi.com/test/video/distanza_in_stanza_3.flv",
+        videoUrl:"http://dl.dropbox.com/u/1976976/video/Birds.mov",
         showFlashControls:false,
         ID:"mySwf",
         loop:false,
@@ -209,19 +214,19 @@
   <img src="http://pupunzi.com/images/logo.png" alt="mb">
   <br><br>
   <div class="mbVideoControls" style="font-size:80%; cursor:pointer">
-    <span class="stop" onclick="$('#mySwf').stopVideo()">stop</span> |
-    <span class="play" onclick="$('#mySwf').playVideo()">play</span> |
-    <span class="pause" onclick="$('#mySwf').pauseVideo()">pause</span> |
-    <span class="seek" onclick="$('#mySwf').seekTo($('#goto').val())">go to: </span><input id="goto" type="text" value="0" style="width:50px; font-size:60%"/> |
-    <span class="volme" onclick="$('#mySwf').setVoume($('#vol').val())">volume: </span><input id="vol" type="text" value="0" style="width:50px; font-size:60%"/> |
-    <span  onclick="$('#mySwf').traceState()">console</span>
+    <span  class="stop button" onclick="$('#mySwf').stopVideo()">stop</span> |
+    <span class="play button" onclick="$('#mySwf').playVideo()">play</span> |
+    <span class="pause button" onclick="$('#mySwf').pauseVideo()">pause</span> |
+    <span class="seek button" onclick="$('#mySwf').seekTo($('#goto').val())">go to: </span><input id="goto" type="text" value="0" style="width:50px; font-size:60%"/> |
+    <span class="volme button" onclick="$('#mySwf').setVoume($('#vol').val())">volume: </span><input id="vol" type="text" value="0" style="width:50px; font-size:60%"/> |
+    <span class="button"  onclick="$('#mySwf').traceState()">console</span>
     <div id="state" style="font-size:70%"></div>
   </div>
   <!--<div style="position:absolute;top:0;left:0; width:100%; height:100%; overflow:hidden;"><div id="mySwf"></div></div>-->
   <div id="mySwf"></div>
 
   <br>
-  <span onclick="$('#mySwf').loadVideoByUrl('mat2 - Computer.m4v',false)" style="cursor:pointer">load 1</span> |
+  <span  onclick="$('#mySwf').loadVideoByUrl('mat2 - Computer.m4v',false)" style="cursor:pointer">load 1</span> |
   <span onclick="$('#mySwf').loadVideoByUrl('Bill_Viola_-_the_Crossing.flv',false)" style="cursor:pointer">load 2</span>
 
   <br>

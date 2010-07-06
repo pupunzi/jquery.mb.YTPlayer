@@ -15,6 +15,20 @@
  * © 2001 - 2010 Matteo Bicocchi (pupunzi), Open Lab
  */
 
+/**
+ *
+ * it needs: the mbVPlayer.swf
+ * it uses swfobject.js
+ * 
+ * what video can it play?
+ *
+ * .mov --> H.264 web streaming optimized
+ * .m4v
+ * .flv
+ * .f4v
+ * 
+ * */
+
 (function($){
 
   $.mbVPlayer={
@@ -26,13 +40,13 @@
       flashVars:{
         player:"chromeless_player.swf",//http://pupunzi.com/test/a/chromeless_player.swf
         videoUrl:false,
-        isBackground:false,
         showFlashControls:false,
         loop:false,
-        autoplay:false,
-        placeHolderUrl:"placeHolder.png",
-        controlsID:false
+        autoplay:false
       },
+      placeHolderUrl:"placeHolder.png",
+      isBackground:false,
+      controlsID:false,
       width:400,
       height:180
     },
@@ -52,9 +66,9 @@
         if ($.metadata){
           $.metadata.setType("class");
           if($(this).metadata())
-            $.extend(this.options.flashVars,$(this).metadata())
+            $.extend(this.options,$(this).metadata())
         }
-        if(this.options.flashVars.isBackground && !$.mbVPlayer.mbCP.backgroundPlayer){
+        if(this.options.isBackground && !$.mbVPlayer.mbCP.backgroundPlayer){
           var videoWrapper=$("<div>").attr({id:"mbVW_"+el.id}).css({position:"absolute",top:0,left:0,width:"100%",height:"100%",background:"#000",zIndex:0});
           $el.wrapAll(videoWrapper);
           $("body").css({position:"relative",zIndex:2}).after(videoWrapper);
@@ -79,6 +93,9 @@
       var control= $("#"+controlsID);
       var play= control.find(".play");
       var pause= control.find(".pause");
+      var play_pause=control.find(".play_pause");
+      var rew= control.find(".rew");
+      var fwd= control.find(".fwd");
       var stop= control.find(".stop");
       var seekto= control.find(".seekto");
     }

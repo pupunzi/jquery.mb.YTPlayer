@@ -88,15 +88,15 @@
 
           var videoWrapper="";
 
-          $(el).append(dataObj);
+          el.append(dataObj);
           if(data.isBgndMovie){
             if ($.browser.msie && $.browser.version < 8 || data.ID){
               var bodyWrapper=$("<div/>").css({position:"relative",zIndex:0});
-              $(el).wrapInner(bodyWrapper);
-              $(el).prepend($(this));
+              el.wrapInner(bodyWrapper);
+              el.prepend($(this));
             }else{
-              $(el).css({position:"relative",zIndex:1});
-              $(el).after($(this));
+              el.css({position:"relative",zIndex:1});
+              el.after($(this));
             }
 
             var pos= data.ID?"absolute":"fixed";

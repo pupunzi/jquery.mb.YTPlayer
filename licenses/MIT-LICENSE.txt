@@ -1,4 +1,4 @@
-Copyright (c) 2009 Matteo Bicocchi, Open Lab srl
+Copyright (C) 2001, 2011 Matteo Bicocchi, Open Lab srl
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation

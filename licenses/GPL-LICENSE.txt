@@ -1,7 +1,7 @@
         GNU GENERAL PUBLIC LICENSE
            Version 2, June 1991
 
- Copyright (C) 1989, 1991 Open Lab srl.
+ Copyright (C) 2001, 2011 Open Lab srl.
  via Venezia 18b - 50121 Firenze, Italia
 
  Everyone is permitted to copy and distribute verbatim copies

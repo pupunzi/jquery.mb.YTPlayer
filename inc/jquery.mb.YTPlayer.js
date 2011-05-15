@@ -11,7 +11,7 @@
 
 /*
  * jQuery.mb.components: jquery.mb.YTPlayer
- * version: 1.2.1 - 6-feb-2010 - 43
+ * version: 1.2.5 - 6-feb-2010 - 43
  * © 2001 - 2010 Matteo Bicocchi (pupunzi), Open Lab
  *
  */
@@ -20,7 +20,7 @@
 
     $.mbYTPlayer={
         name:"jquery.mb.YTPlayer",
-        version:"1.2.1",
+        version:"1.2.5",
         author:"Matteo Bicocchi",
         width:450,
         controls:{
@@ -95,7 +95,7 @@
                             $(el).prepend($(this));
                         }else{
                             $(el).css({position:"relative",zIndex:1});
-                            $(el).after($(this));
+                            $(el).before($(this));
                         }
 
                         var pos= data.ID?"absolute":"fixed";
@@ -121,6 +121,7 @@
             });
         },
         setMovie: function(){
+					
             var player = $(this).get(0);
             var data = $("#"+player.id+"_data").get(0);
             var BGisInit = typeof document.YTPBG != "undefined";
@@ -135,8 +136,9 @@
             if (data.bufferImg) $(playerContainer).after(bufferImg);
             //if it is as background
             if(data.isBgndMovie && !BGisInit){
-                if ($.mbYTPlayer.rasterImg)
-                    $(playerContainer).after(raster);
+                if ($.mbYTPlayer.rasterImg && $("mbYTP_raster").length==0){
+									$(playerContainer).append(raster);
+								}
 
                 //can't be more than one bgnd
                 if(!data.ID) document.YTPBG=true;
@@ -294,6 +296,26 @@
     $.fn.muteYTPVolume = $.mbYTPlayer.muteYTPVolume;
     $.fn.unmuteYTPVolume = $.mbYTPlayer.unmuteYTPVolume;
     $.fn.manageYTPProgress = $.mbYTPlayer.manageYTPProgress;
+
+
+	$.fn.changeMovie=function(url){
+		var player = $(this).get(0);
+		var data = $("#"+player.id+"_data").get(0);
+		data.movieURL=(url.match( /[\\?&]v=([^&#]*)/))[1];
+		player.loadVideoByUrl("http://www.youtube.com/v/"+data.movieURL, 0);
+	};
+
+	$.fn.changeVolume=function(val){
+		var player = $(this).get(0);
+		var data = $("#"+player.id+"_data").get(0);
+		if(!val && !data.vol && player.getVolume()==0)
+			data.vol=100;
+		else if((!val && player.getVolume()>0) || (val && player.getVolume()==val))
+			data.vol=0;
+		else
+			data.vol=val;
+		player.setVolume(data.vol);
+	};
 
 })(jQuery);
 

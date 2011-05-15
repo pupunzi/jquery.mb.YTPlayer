@@ -45,26 +45,6 @@
 	<script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
 	<script type="text/javascript">
 
-		$.fn.changeMovie=function(url){
-			var player = $(this).get(0);
-			var data = $("#"+player.id+"_data").get(0);
-			data.movieURL=(url.match( /[\\?&]v=([^&#]*)/))[1];
-			player.loadVideoByUrl("http://www.youtube.com/v/"+data.movieURL, 0);
-		};
-
-		$.fn.changeVolume=function(val){
-			var player = $(this).get(0);
-			var data = $("#"+player.id+"_data").get(0);
-			if(!val && !data.vol && player.getVolume()==0)
-				data.vol=100;
-			else if((!val && player.getVolume()>0) || (val && player.getVolume()==val))
-				data.vol=0;
-			else
-				data.vol=val;
-			player.setVolume(data.vol);
-
-		};
-
 		$(function(){
 			$(".movie").mb_YTPlayer();
 		});
@@ -81,14 +61,14 @@
 	<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=iNmt9nXNluE')"> view Benigni's movie </button>
 	<button onclick="$('#bgndVideo').changeVolume(100)"> switch volume </button>
 
-	<!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=MR9av-I35ME" class="movie {opacity:.4, isBgndMovie:{width:'1990',mute:false}, ratio:'4/3'}">Bill Viola</a>-->
+	<a id="bgndVideo" href="http://www.youtube.com/watch?v=MR9av-I35ME" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, ratio:'4/3'}">Bill Viola</a>
 	<!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=jIrIjai2kY0" class="movie {opacity:.8, isBgndMovie:{width:'1920',mute:true}, ratio:'16/9',quality:'default'}">Bill Viola</a>-->
-	<a id="bgndVideo" href="http://www.youtube.com/watch?v=BsekcY04xvQ" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, ratio:'4/3',quality:'default'}">Bill Viola</a>
+	<!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=BsekcY04xvQ" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, ratio:'4/3',quality:'default'}">Bill Viola</a>-->
 	<!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=V2rifmjZuKQ" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:true}, ratio:'16/9',quality:'default'}">Bill Viola</a>-->
 
 </div>
 </body>
-<div class="dida">Urban Abstract Art Director Jopsu Ramu from Musuta Ltd.</div>
-<!--<div class="dida">Bill Viola - The Quintet of the Astonished (2000)</div>-->
+<!--<div class="dida">Urban Abstract Art Director Jopsu Ramu from Musuta Ltd.</div>-->
+<div class="dida">Bill Viola - The Quintet of the Astonished (2000)</div>
 
 </html>

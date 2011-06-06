@@ -24,9 +24,10 @@
 		#content{
 			color:white;
 			font:40px/40px Calibri;
-			text-align:center;
+			text-align:left;
 			padding-top:200px;
 			text-shadow:#666666 2px 2px 4px;
+			margin-left:100px;
 		}
 		.movie{
 			display:none;
@@ -38,6 +39,22 @@
 			color:white;
 			padding:10px;
 		}
+		button{
+			display:block;
+			background:transparent;
+			border:none;
+			color:white;
+			font-size:18px;
+			cursor:pointer;
+		}
+
+		button.command{
+			display:inline-block;
+		}
+
+		button:hover, button.sel{
+			color: #ffcc00;
+		}
 
 	</style>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -47,6 +64,10 @@
 
 		$(function(){
 			$(".movie").mb_YTPlayer();
+			$("button").not(".command").click(function(){
+				$("button").not(".command").removeClass("sel");
+				$(this).addClass("sel");
+			})
 		});
 
 	</script>
@@ -57,18 +78,29 @@
 
 	<img src="http://pupunzi.com/images/logo.png" alt="mb">
 	<br><br>
-	This is a Youtube movie setted as background of this page<br><br>
-	<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=iNmt9nXNluE')"> view Benigni's movie </button>
-	<button onclick="$('#bgndVideo').changeVolume(100)"> switch volume </button>
-
-	<a id="bgndVideo" href="http://www.youtube.com/watch?v=MR9av-I35ME" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, ratio:'4/3'}">Bill Viola</a>
-	<!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=jIrIjai2kY0" class="movie {opacity:.8, isBgndMovie:{width:'1920',mute:true}, ratio:'16/9',quality:'default'}">Bill Viola</a>-->
-	<!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=BsekcY04xvQ" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, ratio:'4/3',quality:'default'}">Bill Viola</a>-->
-	<!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=V2rifmjZuKQ" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:true}, ratio:'16/9',quality:'default'}">Bill Viola</a>-->
+	jQuery.mb.YTPlayer as background<br><br>
+	<div class="console">
+		<button class="command" onclick="$('#bgndVideo').get(0).playVideo()"> play </button>
+		<button class="command" onclick="$('#bgndVideo').get(0).pauseVideo()"> pause </button>
+		<button class="command" onclick="$('#bgndVideo').changeVolume(100)"> switch volume </button>
+		<br>
+		<br>
+		<br>
+		<button class="sel" onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=mAf6zKRb1wI')"> vito acconci theme song 1973   </button>
+		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=dZaD9CHZecE')"> Vito Acconci - Undertone 1972 (extract) </button>
+		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=3ovA7zeviRo&feature=related')"> Dan Graham - Body Press, 1972  </button>
+		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=z5krhw54oqs')"> Fluxus - Wolf Vostell - Sun in your head    </button>
+		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=u9k1FaMIYTs&feature=related')"> nam june paik - 03  </button>
+		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=VuaJAgx0x_4')"> nam june paik </button>
+		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=rkfOgavdhak')"> Bruce Nauman - Pinch Neck 1968 </button>
+		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=UJQmV8aPNao')"> Bill Viola - Acceptance, 2008  </button>
+		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=WHoE01WKDhM&feature=related')"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
+	</div>
+	<a id="bgndVideo" href="http://www.youtube.com/watch?v=mAf6zKRb1wI" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, ratio:'4/3'}">Bill Viola</a>
 
 </div>
+<div class="dida"></div>
+
 </body>
-<!--<div class="dida">Urban Abstract Art Director Jopsu Ramu from Musuta Ltd.</div>-->
-<div class="dida">Bill Viola - The Quintet of the Astonished (2000)</div>
 
 </html>

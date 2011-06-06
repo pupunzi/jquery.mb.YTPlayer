@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<!--<script type="text/javascript" src="http://www.youtube.com/player_api"></script>-->
+<style>
+	body{
+		border:none;
+		margin:0;
+		padding:0;
+		background: #3e1f02;
+	}
+
+	.player{
+		display:inline-block;
+		vertical-align:top;
+		position:relative;
+		width:500px;
+		height:350px;
+		top:100px;
+		left:0;
+	}
+
+	.YTPOverlay{
+		background:url("images/raster.png");
+	}
+
+	.fullScreen{
+		position:fixed!important;
+		z-index:10000!important;
+		top:0!important;
+		left:0!important;
+		width:100%!important;
+		height:100%!important;
+	}
+
+	.controls{
+		position:absolute;
+		bottom:-40px;
+	}
+
+</style>
+
+<script>
+
+	String.prototype.getVideoID=function(){
+		return this.indexOf("http")>-1 ? this.match(/[\\?&]v=([^&#]*)/)[1]:this;
+	};
+
+
+	function onYouTubePlayerAPIReady() {
+		$(document).trigger("YTAPIReady");
+		$.mbYTPlayer.YTAPIReady=true;
+	}
+
+
+	/*
+	 *
+	 * YT videos thumb: http://img.youtube.com/vi/3ovA7zeviRo/0.jpg 1/2/3
+	 *
+	 * */
+
+	(function($){
+
+		$.mbYTPlayer={
+			name:"jquery.mb.YTPlayer",
+			version:"2.0",
+			author:"Matteo Bicocchi",
+			defaults:{
+				containment:"body",
+				chromeLess:true,
+				forceHTML5:true,
+				showYTLogo:false,
+				videoURL:null,
+				startAt:0,
+				autoPlay:true,
+				videoWidth:false,
+				opacity:1,
+
+				onReady:function(event){},
+				onStateChange: function(event){},
+				onPlaybackQualityChange: function(event){},
+				onError: function(event){}
+
+			},
+			buildPlayer:function(options){
+
+				return this.each(function(){
+					var $this=$(this);
+
+					this.opt={};
+
+					var property= $this.data("property") ? eval('(' + $this.data("property") + ')'):{};
+					$.extend(this.opt, $.mbYTPlayer.defaults,options,property);
+
+					if(!$this.attr("id")){
+						$this.attr("id","id_"+new Date().getTime());
+					}
+
+					var playerID="mbYTP_"+$this.attr("id");
+					var videoID= this.opt.videoURL ? this.opt.videoURL.getVideoID() : $this.attr("href")? $this.attr("href").getVideoID() : false;
+					var playerVars= { 'autoplay': 0, 'controls': 0, wmode:"transparent", showinfo:this.opt.chromeLess?0:1, enablejsapi:1, playerapiid:playerID, origin: document.domain};
+					if(this.opt.forceHTML5)
+						$.extend(playerVars,{html5:1});
+
+					var playerBox= $("<div/>").attr("id",playerID).addClass("playerBox");
+
+					//var contWrapper= $("<div/>").addClass("mbYTP_contentWrapper");
+					//contWrapper.css({position:"absolute",zIndex:1,minWidth:"100%", minHeight:"100%"});//
+
+					playerBox.css({position:"absolute",zIndex:0,width:"100%",height:"100%",top:0,left:0, overflow:"hidden",opacity:this.opt.opacity});
+
+					this.opt.containment=this.opt.containment == "self"? $(this) : $(this.opt.containment);
+
+					if(this.opt.containment.get(0).tagName.toLowerCase()!=="body"){
+						//this.opt.containment.wrapInner(contWrapper);
+						this.opt.containment.children().each(function(){
+							if($(this).css("position")=="static")
+								$(this).css("position","relative");
+						});
+
+						this.opt.containment.prepend(playerBox);
+					}else{
+						$("body").css({position:"relative",zIndex:1});
+						this.opt.containment.after(playerBox);
+						$this.hide();
+					}
+					this.opt.playerBoxID=playerID;
+					playerBox.fadeTo(1,0);
+
+					var tag = document.createElement('script');
+					tag.src = "http://www.youtube.com/player_api";
+					var firstScriptTag = document.getElementsByTagName('script')[0];
+					firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+
+					$(document).bind("YTAPIReady",function(){
+
+						var player=new YT.Player(playerID, {
+							videoId: videoID,
+							width: $this.get(0).opt.videoWidth? $this.get(0).opt.videoWidth : "100%",
+							height: $this.get(0).opt.showYTLogo?"100%":"115%",
+							playerVars: playerVars,
+							events: {
+								'onReady': function(event){
+
+									var el=$this.get(0);
+
+									var overlay=$("<div/>").css({position:"absolute",top:0,left:0,width:"100%",height:"100%"}).addClass("YTPOverlay");
+									playerBox.append(overlay);
+									el.player=event.target;
+									overlay.click(function(){
+										if(event.target.getPlayerState()==2)
+											el.player.playVideo();
+										else
+											el.player.pauseVideo();
+									});
+
+									event.target.seekTo(el.opt.startAt,true);
+
+									el.checkState=setInterval(function(){
+										if(event.target.getPlayerState()!=-1 && event.target.getPlayerState()!=3){
+											if(!$this.get(0).opt.autoPlay)
+												event.target.stopVideo();
+											playerBox.fadeTo(1000,el.opt.opacity);
+
+											clearInterval(el.checkState);
+
+											if(typeof el.opt.onReady=="function")
+												el.opt.onReady($this);
+										}
+									},500);
+
+								},
+								'onStateChange': function(event){
+
+								},
+								'onPlaybackQualityChange': function(){},
+								'onError': function(){}
+							}
+						});
+
+						player.b.id="player_"+playerID;
+						player.playVideo();
+					})
+				});
+			},
+			getPlayer:function(){
+				return $(this).get(0).player;
+			},
+			fullScreen:function(){
+				var playerBox=$(".playerBox",this);
+				playerBox.addClass("fullScreen");
+				$(document).bind("keydown.fullScreen",function(e){
+					if(e.keyCode==27){
+						playerBox.removeClass("fullScreen");
+						$(document).unbind("keydown.fullScreen");
+					}
+				})
+			},
+			playerDestroy:function(){
+				var playerBoxID= this.get(0).opt.playerBoxID;
+				$("#"+playerBoxID).remove();
+			}
+		};
+
+		$.fn.buildYTPlayer=$.mbYTPlayer.buildPlayer;
+		$.fn.getPlayer=$.mbYTPlayer.getPlayer;
+		$.fn.fullScreen=$.mbYTPlayer.fullScreen;
+		$.fn.playerDestroy=$.mbYTPlayer.playerDestroy;
+
+		$.mbYTPlayer.YTAPIReady=false;
+
+	})(jQuery);
+
+
+	$(function(){
+		$(".player").buildYTPlayer();
+
+	});
+
+</script>
+
+</head>
+<body>
+<div id="pippo" style="position:absolute; top:0;left:0;z-index:10">
+	<h1 style="color:white"> this YTPlayer uses the new iframe embed </h1>
+</div>
+
+
+<div id="P1" class="player" style="" data-property="{videoURL:'3ovA7zeviRo', containment:'self',autoPlay:false, startAt:40}">
+	<span style="color:white; padding:10px;">test</span>
+	<div class="controls">
+		<button onclick="$('#P1').getPlayer().playVideo()">play</button>
+		<button onclick="$('#P1').getPlayer().pauseVideo()">pause</button>
+		<button onclick="$('#P1').fullScreen()">fullScreen</button>
+		<button onclick="$('#P1').playerDestroy()">destroy</button>
+	</div>
+</div>
+<div id="P2" class="player" style="" data-property="{videoURL:'3ovA7zeviRo', containment:'self',autoPlay:false, opacity:.7}">
+	<div class="controls">
+		<button onclick="$('#P2').getPlayer().playVideo()">play</button>
+		<button onclick="$('#P2').getPlayer().pauseVideo()">pause</button>
+		<button onclick="$('#P2').fullScreen()">fullScreen</button>
+	</div>
+</div>
+
+<!--<div id="P3" class="player" style="" data-property="{videoURL:'V2rifmjZuKQ', containment:'body',autoPlay:true, startAt:1, opacity:1}"></div>-->
+
+</body>
+</html>

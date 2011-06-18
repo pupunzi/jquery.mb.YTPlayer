@@ -128,6 +128,7 @@
 					this.opt.playerBoxID=playerID;
 					playerBox.fadeTo(1,0);
 
+					// add YT API to the header
 					var tag = document.createElement('script');
 					tag.src = "http://www.youtube.com/player_api";
 					var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -227,7 +228,6 @@
 	<h1 style="color:white"> this YTPlayer uses the new iframe embed </h1>
 </div>
 
-
 <div id="P1" class="player" style="" data-property="{videoURL:'3ovA7zeviRo', containment:'self',autoPlay:false, startAt:40}">
 	<span style="color:white; padding:10px;">test</span>
 	<div class="controls">
@@ -245,7 +245,7 @@
 	</div>
 </div>
 
-<!--<div id="P3" class="player" style="" data-property="{videoURL:'V2rifmjZuKQ', containment:'body',autoPlay:true, startAt:1, opacity:1}"></div>-->
+<div id="P3" class="player" style="" data-property="{videoURL:'V2rifmjZuKQ', containment:'body',autoPlay:true, startAt:1, opacity:1}"></div>
 
 </body>
 </html>

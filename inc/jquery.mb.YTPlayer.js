@@ -193,28 +193,24 @@
 			var playBtn=$(player).parent().find(".mb_YTVPPlaypause");
 			playBtn.html($.mbYTPlayer.controls.play);
 			player.pauseVideo();
-
 		},
 		// todo
 		setYTPVolume:function(val){
 			var player= $(this).get(0);
 			var VolumeBtn=$(player).parent().find(".mb_YTVPVolume");
 			player.setVolume(val);
-
 		},
 		muteYTPVolume:function(){
 			var player= $(this).get(0);
 			var muteBtn=$(player).parent().find(".mb_YTVPMuteUnmute");
 			muteBtn.html($.mbYTPlayer.controls.unmute);
 			player.mute();
-
 		},
 		unmuteYTPVolume:function(){
 			var player= $(this).get(0);
 			var muteBtn=$(player).parent().find(".mb_YTVPMuteUnmute");
 			muteBtn.html($.mbYTPlayer.controls.mute);
 			player.unMute();
-
 		},
 		manageYTPProgress:function(){
 			var player= $(this).get(0);

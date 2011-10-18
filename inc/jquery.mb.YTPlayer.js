@@ -11,7 +11,7 @@
 
 /*
  * jQuery.mb.components: jquery.mb.YTPlayer
- * version: 1.2.6 - 6-feb-2010 - 43
+ * version: 1.3.0 - 6-feb-2010 - 43
  * © 2001 - 2010 Matteo Bicocchi (pupunzi), Open Lab
  *
  */
@@ -20,7 +20,7 @@
 
 	$.mbYTPlayer={
 		name:"jquery.mb.YTPlayer",
-		version:"1.2.6",
+		version:"1.3.0",
 		author:"Matteo Bicocchi",
 		width:450,
 		controls:{
@@ -341,9 +341,16 @@ function onYouTubePlayerReady(playerId) {
 function playerState(state, el) {
 	var player=$("#"+el).get(0);
 	var data = $("#"+player.id+"_data").get(0);
+
 	if (state==0 && data.isBgndMovie) {
+		$(document).trigger("YTPStop");
 		player.playVideo();
 	}
+
+	if (state==0 && !data.isBgndMovie) {
+		$(player).stopYTP();
+	}
+
 	if ((state==-1 || state==3) && data.isBgndMovie) {
 		$(player).css({opacity:0});
 		$(".mbYTP_raster").css({opacity:.5,backgroundColor:"black"}).fadeIn();
@@ -351,21 +358,24 @@ function playerState(state, el) {
 		if (!$.browser.msie){
 			$("#wrapper_"+player.id).css({opacity:0});
 		}
+		$(document).trigger("YTPBuffering");
 	}
+
 	if (state==1 && data.isBgndMovie) {
 		$(player).css({opacity:data.opacity});
 		$(".mbYTP_raster").css({opacity:1,backgroundColor:"transparent"});
 		$(".mbYTP_bufferImg").fadeOut();
 		if (!$.browser.msie)
 			$("#wrapper_"+player.id).animate({opacity:1},1000);
+		$(document).trigger("YTPStart");
 	}
 
 	if(state==1 && !data.isBgndMovie)
 		player.totalBytes=player.getVideoBytesTotal();
 
-	if (state==0 && !data.isBgndMovie) {
-		$(player).stopYTP();
-	}
+	if(state==2 && data.isBgndMovie)
+		$(document).trigger("YTPPause");
+
 }
 
 $.fn.toggleVideoState=function(){

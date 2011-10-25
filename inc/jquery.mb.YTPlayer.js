@@ -378,7 +378,7 @@ $.fn.toggleVideoState=function(){
 	var player=this.get(0);
 	var isInit=player.isInit;
 	if (isInit=="undefined")
-		this..mb_YTPlayer();
+		this.mb_YTPlayer();
 	else if (player.getPlayerState()== 1)
 		player.pauseVideo();
 	else

@@ -68,20 +68,10 @@
 			});
 
 			$(document).bind("YTPStart", function(){ $("#eventListener").html("YTPStart")});
-			$(document).bind("YTPStop", function(){ $("#eventListener").html("YTPStop")});
+			$(document).bind("YTPEnd", function(){ $("#eventListener").html("YTPStop")});
 			$(document).bind("YTPPause", function(){ $("#eventListener").html("YTPPause")});
 			$(document).bind("YTPBuffering", function(){ $("#eventListener").html("YTPBuffering")});
-
-/*
-			var videoURLs=['http://www.youtube.com/watch?v=mAf6zKRb1wI','http://www.youtube.com/watch?v=dZaD9CHZecE','http://www.youtube.com/watch?v=3ovA7zeviRo&feature=related'];
-			var idx=0;
-			$(document).bind("YTPStop", function(){
-				idx++;
-				$('#bgndVideo').changeMovie(videoURLs[idx]);
-				if(idx==videoURLs.length-1)
-					idx=-1;
-			});
-*/
+			
 		});
 
 	</script>

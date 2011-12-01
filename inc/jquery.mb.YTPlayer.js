@@ -338,12 +338,13 @@ function playerState(state, el) {
 	var player=$("#"+el).get(0);
 	var data = $("#"+player.id+"_data").get(0);
 
-	if (state==0 && data.isBgndMovie) {
-		$(document).trigger("YTPStop");
+	if (state==0 && data.isBgndMovie && !data.loop) {
+		$(document).trigger("YTPEnd");
 		player.playVideo();
 	}
 
 	if (state==0 && !data.isBgndMovie) {
+		$(document).trigger("YTPEnd");
 		$(player).stopYTP();
 	}
 
@@ -366,10 +367,12 @@ function playerState(state, el) {
 		$(document).trigger("YTPStart");
 	}
 
-	if(state==1 && !data.isBgndMovie)
+	if(state==1 && !data.isBgndMovie){
 		player.totalBytes=player.getVideoBytesTotal();
+		$(document).trigger("YTPStart");
+	}
 
-	if(state==2 && data.isBgndMovie)
+	if(state==2)
 		$(document).trigger("YTPPause");
 
 }

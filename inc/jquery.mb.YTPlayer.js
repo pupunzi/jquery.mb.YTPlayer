@@ -11,8 +11,8 @@
 
 /*
  * jQuery.mb.components: jquery.mb.YTPlayer
- * version: 1.3.0 - 6-feb-2010 - 43
- * © 2001 - 2010 Matteo Bicocchi (pupunzi), Open Lab
+ * version: 1.3.5
+ * © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
  *
  */
 
@@ -20,7 +20,7 @@
 
   $.mbYTPlayer={
     name:"jquery.mb.YTPlayer",
-    version:"1.3.0",
+    version:"1.3.5",
     author:"Matteo Bicocchi",
     width:450,
     controls:{

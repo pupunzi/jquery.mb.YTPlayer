@@ -84,9 +84,8 @@
               data.height=el.outerHeight()+40;
               data.width= el.outerWidth();
             }
-          }
-          else
-            data.height= data.ratio=="16/9" ? Math.ceil((9*data.width)/16):Math.ceil((3*data.width)/4);
+          } else
+            data.height= data.ratio=="16/9" ? Math.ceil((9*data.width)/16): Math.ceil((3*data.width)/4);
 
           var videoWrapper="";
 
@@ -123,6 +122,7 @@
         });
       });
     },
+
     setMovie: function(){
 
       var player = $(this).get(0);
@@ -246,7 +246,7 @@
       if (typeof player.isInit != "undefined") return;
       player.isInit=true;
       var YTPlayer= $(this).parent();
-      var controlBar=$("<span/>").addClass("mb_YTVPBar").css({whiteSpace:"noWrap",position:"absolute"}).hide();
+      var controlBar=$("<span/>").addClass("mb_YTVPBar").css({whiteSpace:"noWrap",position: data.isBgndMovie ? "fixed" : "absolute"}).hide();
       var playpause =$("<span>"+$.mbYTPlayer.controls.play+"</span>").addClass("mb_YTVPPlaypause").click(function(){
         if(player.getPlayerState()== 1){
           $(player).pauseYTP();
@@ -401,4 +401,26 @@ $.fn.toggleVideoState=function(){
     player.pauseVideo();
   else
     player.playVideo();
+};
+
+$.fn.setDimentions=function(){
+  var player=this.get(0);
+  var data = $("#"+player.id+"_data").get(0);
+  var wrapper = $("#wrapper_"+player.id);
+
+  var win={};
+  win.width= $(window).width();
+  win.height= $(window).height();
+
+  var vid={};
+  vid.width= win.width;
+  vid.height= data.ratio=="16/9" ? Math.ceil((9*win.width)/16): Math.ceil((3*win.width)/4);
+
+  if(vid.height<win.height){
+    vid.width= data.ratio=="16/9" ? Math.ceil((16*win.height)/9): Math.ceil((4*win.height)/3);
+    vid.height = win.height;
+  }
+
+  wrapper.css({width:vid.width, height:vid.height});
+
 };

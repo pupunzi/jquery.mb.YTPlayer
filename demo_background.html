@@ -62,6 +62,13 @@
 		$(function(){
 			$("#bgndVideo").mb_YTPlayer();
 
+      $(window).resize(function(){
+        $("#bgndVideo").setDimentions();
+      });
+      $(document).bind("YTPStart", function(){
+        $("#bgndVideo").setDimentions()
+      });
+
 			$("button").not(".command").click(function(){
 				$("button").not(".command").removeClass("sel");
 				$(this).addClass("sel");

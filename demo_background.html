@@ -60,25 +60,20 @@
 	<script type="text/javascript">
 
 		$(function(){
-			$("#bgndVideo").mb_YTPlayer();
-
-      $(window).resize(function(){
-        $("#bgndVideo").setDimentions();
-      });
-      $(document).bind("YTPStart", function(){
-        $("#bgndVideo").setDimentions()
-      });
 
 			$("button").not(".command").click(function(){
 				$("button").not(".command").removeClass("sel");
 				$(this).addClass("sel");
 			});
 
+      //debug functions
 			$(document).bind("YTPStart", function(){ $("#eventListener").html("YTPStart")});
 			$(document).bind("YTPEnd", function(){ $("#eventListener").html("YTPStop")});
 			$(document).bind("YTPPause", function(){ $("#eventListener").html("YTPPause")});
 			$(document).bind("YTPBuffering", function(){ $("#eventListener").html("YTPBuffering")});
-			
+
+      $("#bgndVideo").mb_YTPlayer();
+
 		});
 
 	</script>
@@ -87,7 +82,7 @@
 <body>
 <div id="content">
 
-	<img src="http://pupunzi.com/images/logo.png" alt="mb">
+	<!--<img src="http://pupunzi.com/images/logo.png" alt="mb">-->
 	<br><br>
 	jQuery.mb.YTPlayer as background<br><br>
 	<div class="console">
@@ -101,7 +96,7 @@
 		<br>
 		<br>
 		<button class="sel" onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=mAf6zKRb1wI')"> vito acconci theme song 1973   </button>
-		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=dZaD9CHZecE')"> Vito Acconci - Undertone 1972 (extract) </button>
+		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=dZaD9CHZecE',{ratio:'16/9'})"> Vito Acconci - Undertone 1972 (extract) </button>
 		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=3ovA7zeviRo&feature=related')"> Dan Graham - Body Press, 1972  </button>
 		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=z5krhw54oqs')"> Fluxus - Wolf Vostell - Sun in your head    </button>
 		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=u9k1FaMIYTs&feature=related')"> nam june paik - 03  </button>
@@ -111,7 +106,7 @@
 		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=WHoE01WKDhM&feature=related')"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
 	</div>
 
-	<a id="bgndVideo" href="http://www.youtube.com/watch?v=mAf6zKRb1wI" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false},showControls:true, ratio:'4/3'}">vito acconci theme song 1973</a>
+	<a id="bgndVideo" href="http://www.youtube.com/watch?v=mAf6zKRb1wI" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, optimizeDisplay:true, showControls:true, ratio:'4/3', loop: false}">vito acconci theme song 1973</a>
 
 </div>
 <div class="dida"></div>

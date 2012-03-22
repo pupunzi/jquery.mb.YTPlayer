@@ -1,8 +1,7 @@
 <!doctype html>
-
 <!--
   ~ jquery.mb.components
-  ~ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ Copyright (c) 2001-2012. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
   ~ email: mbicocchi@open-lab.com
   ~ site: http://pupunzi.com
   ~
@@ -10,83 +9,67 @@
   ~ http://www.opensource.org/licenses/mit-license.php
   ~ http://www.gnu.org/licenses/gpl.html
   -->
-
-
 <html>
 <head>
   <title>youtube Chromeless fullscreen</title>
   <link href="css/mb.YTVPlayer.css" media="all" rel="stylesheet" type="text/css">
   <style type="text/css">
     body{
-      background: url("images/06.jpg");
       margin:0;
+      background: #000000;
     }
     #content{
       color:white;
       font:40px/40px Calibri;
-      text-align:center;
+      text-align:left;
       padding-top:200px;
       text-shadow:#666666 2px 2px 4px;
-      width:600px;
-      left:600px;
+      margin-left:100px;
+    }
+
+    .mbYTP_raster{
+      background: none!important;
     }
     .movie{
-      display:none;
-      position:relative; z-index:0;
+      display: none;
     }
-    .dida{
-      position:fixed;
-      bottom:0;
-      font: 12px/14px Arial, sans-serif;
-      color:white;
-      padding:10px;
+
+    #wrapper_bgndVideo{
+      opacity: 0;
     }
-    #main {position:absolute; z-index: 999;
-    }
+
 
   </style>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
   <script type="text/javascript" src="inc/jquery.metadata.js"></script>
   <script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
   <script type="text/javascript">
+
     $(function(){
-      $(".movie").mb_YTPlayer();
+      $("#bgndVideo").mb_YTPlayer();
+
+      //resize the player to fit the screen widht or height and prevent the black
+      $(window).resize(function(){
+        $("#bgndVideo").setDimentions();
+      });
+      $(document).bind("YTPStart", function(){
+        setTimeout(function(){
+          $("#wrapper_bgndVideo").css({opacity: 1});
+        },3000);
+        $("#bgndVideo").setDimentions();
+      });
+
     });
+
   </script>
 
 </head>
 <body>
-<div id="main">
-  <TABLE WIDTH=1280 BORDER=0 CELLPADDING=0 CELLSPACING=0>
-    <TR>
-
-      <TD> <a href="http://www.nighthawks.co.in"><IMG SRC="http://buygranites.com/youtube/images/TEMP_01.jpg" ALT="" WIDTH=1280 HEIGHT=360 border="0"></a></TD>
-
-    </TR>
-    <TR>
-      <TD>
-        <IMG SRC="http://buygranites.com/youtube/images/TEMP_02.jpg" WIDTH=1280 HEIGHT=413 ALT=""></TD>
-    </TR>
-    <TR>
-      <TD>
-        <IMG SRC="http://buygranites.com/youtube/images/TEMP_03.jpg" WIDTH=1280 HEIGHT=727 ALT=""></TD>
-    </TR>
-
-  </TABLE>
-</div>
 <div id="content">
   <br><br>
-  This is a Youtube movie setted as background of this page<br><br>
-  <!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=zrikGVaHOa0&feature=topvideos" class="movie {opacity:.4, isBgndMovie:{width:'1990',mute:false}, ratio:'4/3'}">Bill Viola</a>-->
-  <!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=zrikGVaHOa0&feature=topvideos" class="movie {opacity:.8, isBgndMovie:{width:'1920',mute:true}, ratio:'16/9',quality:'default'}">Bill Viola</a>-->
-  <a id="bgndVideo" href="http://www.youtube.com/watch?v=zrikGVaHOa0&feature=topvideos" class="movie {opacity:.1, isBgndMovie:{width:'530',mute:true}, ratio:'16/9',quality:'default'}">Bill Viola</a>
-  <!--<a id="bgndVideo" href="http://www.youtube.com/watch?v=zrikGVaHOa0&feature=topvideos" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:true}, ratio:'16/9',quality:'default'}">Bill Viola</a>-->
-
+  jQuery.mb.YTPlayer as background<br><br>
+  <a id="bgndVideo" href="http://www.youtube.com/watch?v=eJDSueNSMJE" class="movie {opacity:1, isBgndMovie:{width:'window',mute:false},showControls:true, ratio:'16/9'}">vito acconci theme song 1973</a>
 </div>
-<div class="dida">Urban Abstract Art Director Jopsu Ramu from Musuta Ltd.</div>
-<!--<div class="dida">Bill Viola - The Quintet of the Astonished (2000)</div>-->
 
 </body>
-
 </html>

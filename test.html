@@ -1,0 +1,76 @@
+<!doctype html>
+<!--
+  ~ jquery.mb.components
+  ~ Copyright (c) 2001-2012. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ email: mbicocchi@open-lab.com
+  ~ site: http://pupunzi.com
+  ~
+  ~ Licences: MIT, GPL
+  ~ http://www.opensource.org/licenses/mit-license.php
+  ~ http://www.gnu.org/licenses/gpl.html
+  -->
+<html>
+<head>
+  <title>youtube Chromeless fullscreen</title>
+  <link href="css/mb.YTVPlayer.css" media="all" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body{
+      margin:0;
+      background: #000000;
+    }
+    #content{
+      color:white;
+      font:40px/40px Calibri;
+      text-align:left;
+      padding-top:200px;
+      text-shadow:#666666 2px 2px 4px;
+      margin-left:100px;
+    }
+
+    .mbYTP_raster{
+      background: none!important;
+    }
+
+    .movie{
+      display: none;
+    }
+
+    #wrapper_bgndVideo{
+      opacity: 0;
+    }
+
+
+  </style>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="inc/jquery.metadata.js"></script>
+  <script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
+  <script type="text/javascript">
+
+    $(function(){
+      $("#bgndVideo").mb_YTPlayer();
+
+      //resize the player to fit the screen width or height and prevent the black
+      $(window).resize(function(){
+        $("#bgndVideo").optimizeDisplay();
+      });
+      $(document).bind("YTPStart", function(){
+        setTimeout(function(){
+          $("#wrapper_bgndVideo").css({opacity: 1});
+        },3000);
+        $("#bgndVideo").optimizeDisplay();
+      });
+
+    });
+
+  </script>
+
+</head>
+<body>
+<div id="content">
+  <br><br>
+  jQuery.mb.YTPlayer as background<br><br>
+  <a id="bgndVideo" href="http://www.youtube.com/watch?v=BsekcY04xvQ" class="movie {opacity:1, isBgndMovie:{width:'window',mute:false},showControls:true, ratio:'16/9'}">Urban Abstract - @Musuta for TV Nelonen 4</a>
+</div>
+
+</body>
+</html>

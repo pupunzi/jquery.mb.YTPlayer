@@ -12,7 +12,7 @@
 /*
  * jQuery.mb.components: jquery.mb.YTPlayer
  * version: 1.3.5
- * © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
+ * Â© 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
  *
  */
 
@@ -278,19 +278,19 @@
       YTPlayer.append(controlBar);
 
       if (!data.isBgndMovie)
-              YTPlayer.hover(function(){
-                controlBar.fadeIn();
-                clearInterval(player.getState);
-                player.getState=setInterval(function(){
-                  var prog= $(player).manageYTPProgress();
-                  $(".mb_YTVPTime").html($.mbYTPlayer.formatTime(prog.currentTime)+" / "+ $.mbYTPlayer.formatTime(prog.totalTime));
-                  if(player.getPlayerState()== 1 && $(".mb_YTVPPlaypause").html()!=$.mbYTPlayer.controls.pause) YTPlayer.find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.pause);
-                  if(player.getPlayerState()== 2) YTPlayer.find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.play);
-                },500);
-              },function(){
-                controlBar.fadeOut();
-                clearInterval(player.getState);
-              });
+        YTPlayer.hover(function(){
+          controlBar.fadeIn();
+          clearInterval(player.getState);
+          player.getState=setInterval(function(){
+            var prog= $(player).manageYTPProgress();
+            $(".mb_YTVPTime").html($.mbYTPlayer.formatTime(prog.currentTime)+" / "+ $.mbYTPlayer.formatTime(prog.totalTime));
+            if(player.getPlayerState()== 1 && $(".mb_YTVPPlaypause").html()!=$.mbYTPlayer.controls.pause) YTPlayer.find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.pause);
+            if(player.getPlayerState()== 2) YTPlayer.find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.play);
+          },500);
+        },function(){
+          controlBar.fadeOut();
+          clearInterval(player.getState);
+        });
       else{
         controlBar.fadeIn();
         clearInterval(player.getState);
@@ -403,7 +403,7 @@ $.fn.toggleVideoState=function(){
     player.playVideo();
 };
 
-$.fn.setDimentions=function(){
+$.fn.optimizeDisplay=function(){
   var player=this.get(0);
   var data = $("#"+player.id+"_data").get(0);
   var wrapper = $("#wrapper_"+player.id);

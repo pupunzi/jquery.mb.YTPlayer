@@ -403,7 +403,7 @@ $.fn.toggleVideoState=function(){
     player.playVideo();
 };
 
-$.fn.setDimentions=function(){
+$.fn.optimizeDisplay=function(){
   var player=this.get(0);
   var data = $("#"+player.id+"_data").get(0);
   var wrapper = $("#wrapper_"+player.id);

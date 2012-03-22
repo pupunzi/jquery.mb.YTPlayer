@@ -30,6 +30,7 @@
     .mbYTP_raster{
       background: none!important;
     }
+
     .movie{
       display: none;
     }
@@ -48,15 +49,15 @@
     $(function(){
       $("#bgndVideo").mb_YTPlayer();
 
-      //resize the player to fit the screen widht or height and prevent the black
+      //resize the player to fit the screen width or height and prevent the black
       $(window).resize(function(){
-        $("#bgndVideo").setDimentions();
+        $("#bgndVideo").optimizeDisplay();
       });
       $(document).bind("YTPStart", function(){
         setTimeout(function(){
           $("#wrapper_bgndVideo").css({opacity: 1});
         },3000);
-        $("#bgndVideo").setDimentions();
+        $("#bgndVideo").optimizeDisplay();
       });
 
     });
@@ -68,7 +69,7 @@
 <div id="content">
   <br><br>
   jQuery.mb.YTPlayer as background<br><br>
-  <a id="bgndVideo" href="http://www.youtube.com/watch?v=7h97KkEWA-s" class="movie {opacity:1, isBgndMovie:{width:'window',mute:false},showControls:true, ratio:'16/9'}">Nam June Paik @ Bermant foundation</a>
+  <a id="bgndVideo" href="http://www.youtube.com/watch?v=BsekcY04xvQ" class="movie {opacity:1, isBgndMovie:{width:'window',mute:false},showControls:true, ratio:'16/9'}">Urban Abstract - @Musuta for TV Nelonen 4</a>
 </div>
 
 </body>

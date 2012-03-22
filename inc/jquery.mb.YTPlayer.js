@@ -166,7 +166,7 @@
         $(player).buildYTPControls();
       }
 
-      //player.setPlaybackQuality(data.quality);
+      player.setPlaybackQuality("default");
 
       player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
     },

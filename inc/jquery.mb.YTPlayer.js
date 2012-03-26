@@ -274,7 +274,7 @@
       if (typeof player.isInit != "undefined") return;
       player.isInit=true;
       var YTPlayer= $(this).parent();
-      var controlBar=$("<span/>").addClass("mb_YTVPBar").css({whiteSpace:"noWrap",position: data.isBgndMovie ? "fixed" : "absolute"}).hide();
+      var controlBar=$("<span/>").addClass("mb_YTVPBar").css({whiteSpace:"noWrap",position: data.isBgndMovie && ! data.ID ? "fixed" : "absolute"}).hide();
       var playpause =$("<span>"+$.mbYTPlayer.controls.play+"</span>").addClass("mb_YTVPPlaypause").click(function(){
         if(player.getPlayerState()== 1){
           $(player).pauseYTP();

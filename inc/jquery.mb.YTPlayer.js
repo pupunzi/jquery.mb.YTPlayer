@@ -82,14 +82,12 @@
           }
 
           var el= data.ID?$("#"+data.ID):$("body");
-
+          if(data.ID){
+            el.css({overflow:"hidden"});
+          }
           if(data.width=="window") {
             data.height="100%";
             data.width= "100%";
-            if(data.ID){
-              data.height=el.outerHeight()+40;
-              data.width= el.outerWidth();
-            }
           } else
             data.height= data.ratio=="16/9" ? Math.ceil((9*data.width)/16): Math.ceil((3*data.width)/4);
 
@@ -137,8 +135,6 @@
 
           var defData = {};
           dataObj.get(0).defaults=$.extend(defData,data);
-          console.debug(dataObj.get(0).defaults);
-
         });
       });
     },
@@ -436,8 +432,10 @@ $.fn.optimizeDisplay=function(){
   var wrapper = $("#wrapper_"+player.id);
 
   var win={};
-  win.width= $(window).width();
-  win.height= $(window).height();
+  var el= data.ID?$("#"+data.ID):$(window);
+
+  win.width= el.width();
+  win.height= el.height();
 
   var vid={};
   vid.width= win.width;

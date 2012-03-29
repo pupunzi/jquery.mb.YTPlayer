@@ -95,7 +95,7 @@
 
           $(el).append(dataObj);
           if(data.isBgndMovie){
-            if ($.browser.msie && $.browser.version < 8 || data.ID){
+            if (data.ID){
               var bodyWrapper=$("<div/>").css({position:"relative",zIndex:0});
               $(el).wrapInner(bodyWrapper);
               $(el).prepend(player);
@@ -391,9 +391,7 @@ function playerState(state, el) {
     $(player).css({opacity:0});
     $(".mbYTP_raster").css({opacity:.5,backgroundColor:"black"}).fadeIn();
     $(".mbYTP_bufferImg").css({opacity:.2}).fadeIn();
-    if (!$.browser.msie){
-      $("#wrapper_"+player.id).css({opacity:0});
-    }
+    $("#wrapper_"+player.id).css({opacity:0});
     $(document).trigger("YTPBuffering");
   }
 

@@ -401,8 +401,8 @@ function playerState(state, el) {
     $(player).css({opacity:data.opacity});
     $(".mbYTP_raster").css({opacity:1,backgroundColor:"transparent"});
     $(".mbYTP_bufferImg").fadeOut();
-    if (!$.browser.msie)
-      $("#wrapper_"+player.id).animate({opacity:1},1000);
+
+    $("#wrapper_"+player.id).animate({opacity:1},1000);
     $(document).trigger("YTPStart");
   }
 

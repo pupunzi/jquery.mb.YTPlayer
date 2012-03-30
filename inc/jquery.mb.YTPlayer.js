@@ -11,7 +11,7 @@
 
 /*
  * jQuery.mb.components: jquery.mb.YTPlayer
- * version: 1.3.7
+ * version: 1.3.9
  * Â© 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
  *
  */
@@ -20,7 +20,7 @@
 
   $.mbYTPlayer={
     name:"jquery.mb.YTPlayer",
-    version:"1.3.7",
+    version:"1.3.9",
     author:"Matteo Bicocchi",
     width:450,
     controls:{
@@ -62,7 +62,7 @@
             $.metadata.setType("class");
             if (player.metadata().quality) data.quality=player.metadata().quality;
             if (player.metadata().width) data.width=player.metadata().width;
-            if (player.metadata().opacity) data.opacity=player.metadata().opacity;
+            if (player.metadata().opacity) data.opacity= $.browser.msie ? 1 : player.metadata().opacity;
             if (player.metadata().isBgndMovie && !BGisInit) {
               data.isBgndMovie=player.metadata().isBgndMovie;
               data.width=player.metadata().isBgndMovie.width? player.metadata().isBgndMovie.width:"window";

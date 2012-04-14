@@ -39,20 +39,32 @@
   -moz-box-sizing:padding-box;
   -webkit-box-sizing:border-box;
   text-align:left;
-  opacity:.95;
   z-index: 1000;
   font: 14px/16px sans-serif;
   color:white;
+  opacity:.3;
 }
-.mb_YTVPBar span{
-  display:inline-block;
-  height:0;
+
+.mb_YTVPBar:hover{
+  opacity:1;
+}
+
+.mb_YTVPBar .buttonBar{
   background:transparent;
   font:12px/14px Calibri;
   position:relative;
-  padding:10px;
-  top:-50px;
+  top:-30px;
 }
+
+.mb_YTVPBar span{
+  display:inline-block;
+  font:16px/20px Calibri;
+  position:relative;
+  width: 30px;
+  height: 25px;
+  vertical-align: middle;
+}
+
 .mb_YTVPPlaypause,.mb_YTVPlayer .mb_YTVPPlaypause img{
   cursor:pointer;
 }
@@ -61,22 +73,22 @@
   cursor:pointer;
 }
 
-
 /*PROGRESS BAR*/
 .mb_YTVPProgress{
   height:10px;
   width:100%;
   background:#222;
   bottom:0;
-  left:0px;
-
+  left:0;
 }
+
 .mb_YTVPLoaded{
   height:10px;
   width:0;
   background:#444;
   left:0;
 }
+
 .mb_YTVTime{
   height:5px;
   width:0;
@@ -86,4 +98,3 @@
   -moz-box-shadow:#666666 1px 1px 3px;
   -webkit-box-shadow:#666666 1px 1px 3px;
 }
-

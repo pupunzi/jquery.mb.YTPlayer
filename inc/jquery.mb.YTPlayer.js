@@ -159,7 +159,7 @@
 
       //if it is as background
       if(data.isBgndMovie && !BGisInit){
-        if ($.mbYTPlayer.rasterImg && $("mbYTP_raster").length==0){
+        if ($.mbYTPlayer.rasterImg && $(".mbYTP_raster").length==0){
           $(playerContainer).append(raster);
         }
 
@@ -275,6 +275,8 @@
       player.isInit=true;
       var YTPlayer= $(this).parent();
       var controlBar=$("<span/>").addClass("mb_YTVPBar").css({whiteSpace:"noWrap",position: data.isBgndMovie && !data.ID ? "fixed" : "absolute"}).hide();
+
+      var buttonBar=$("<div/>").addClass("buttonBar");
       var playpause =$("<span>"+$.mbYTPlayer.controls.play+"</span>").addClass("mb_YTVPPlaypause").click(function(){
         if(player.getPlayerState()== 1){
           $(player).pauseYTP();
@@ -301,8 +303,11 @@
       });
       var loadedBar = $("<div/>").addClass("mb_YTVPLoaded").css("position","absolute");
       var timeBar = $("<div/>").addClass("mb_YTVTime").css("position","absolute");
+
+
       progressBar.append(loadedBar).append(timeBar);
-      controlBar.append(playpause).append(MuteUnmute).append(idx).append(progressBar);
+      buttonBar.append(playpause).append(MuteUnmute).append(idx);
+      controlBar.append(buttonBar).append(progressBar);
       YTPlayer.append(controlBar);
 
       if (!data.isBgndMovie)
@@ -388,10 +393,10 @@ function playerState(state, el) {
   }
 
   if ((state==-1 || state==3) && data.isBgndMovie) {
-    $(player).css({opacity:0});
+    //$(player).css({opacity:0});
     $(".mbYTP_raster").css({opacity:.5,backgroundColor:"black"}).fadeIn();
     $(".mbYTP_bufferImg").css({opacity:.2}).fadeIn();
-    $("#wrapper_"+player.id).css({opacity:0});
+    //$("#wrapper_"+player.id).css({opacity:0});
     $(document).trigger("YTPBuffering");
   }
 

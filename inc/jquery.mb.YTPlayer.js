@@ -347,6 +347,7 @@
 
       if (!data.isBgndMovie){
         YTPlayer.css({opacity:data.opacity});
+
         YTPlayer.hover(function(){
           controlBar.fadeIn();
           clearInterval(player.getState);
@@ -354,6 +355,10 @@
           player.getState=setInterval(function(){
 
             //todo: check if audio is muted.
+
+            if(player.isMuted()){
+              YTPlayer.parent().find(".mb_YTVPMuteUnmute").html($.mbYTPlayer.controls.unmute);
+            }
 
             var prog= $(player).manageYTPProgress();
             $(".mb_YTVPTime").html($.mbYTPlayer.formatTime(prog.currentTime)+" / "+ $.mbYTPlayer.formatTime(prog.totalTime));
@@ -366,11 +371,16 @@
           controlBar.fadeOut();
           clearInterval(player.getState);
         });
+
       }else{
         controlBar.fadeIn();
         clearInterval(player.getState);
         player.getState=setInterval(function(){
           var prog= $(player).manageYTPProgress();
+
+          if(player.isMuted()){
+            YTPlayer.parent().find(".mb_YTVPMuteUnmute").html($.mbYTPlayer.controls.unmute);
+          }
 
           YTPlayer.parent().find(".mb_YTVPTime").html($.mbYTPlayer.formatTime(prog.currentTime)+" / "+ $.mbYTPlayer.formatTime(prog.totalTime));
 

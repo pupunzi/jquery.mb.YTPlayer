@@ -43,7 +43,6 @@
 
           var dataObj=$("<span/>");
           dataObj.attr("id",ID+"_data").hide();
-//          var data= dataObj.get(0);
           var data= dataObj.data();
 
           data.opacity=1;
@@ -186,6 +185,7 @@
 
       player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
     },
+
     changeMovie:function(url, opt){
 
       var player = $(this).get(0);
@@ -204,45 +204,58 @@
       $(player).optimizeDisplay();
 
     },
+
     getPlayer:function(){
       return this.get(0);
     },
+
     playYTP: function(){
       var player= $(this).get(0);
       var playBtn=$(player).parent().find(".mb_YTVPPlaypause");
       playBtn.html($.mbYTPlayer.controls.pause);
       player.playVideo();
     },
+
     stopYTP:function(){
       var player= $(this).get(0);
       var playBtn=$(player).parent().find(".mb_YTVPPlaypause");
       playBtn.html($.mbYTPlayer.controls.play);
       player.pauseVideo();
     },
+
     pauseYTP:function(){
       var player= $(this).get(0);
       var playBtn=$(player).parent().find(".mb_YTVPPlaypause");
       playBtn.html($.mbYTPlayer.controls.play);
       player.pauseVideo();
     },
-    // todo
+
     setYTPVolume:function(val){
-      var player= $(this).get(0);
-      var VolumeBtn=$(player).parent().find(".mb_YTVPVolume");
-      player.setVolume(val);
+      var player = $(this).get(0);
+      var data = $("#"+player.id+"_data").data();
+      if(!val && !data.vol && player.getVolume()==0)
+        data.vol=100;
+      else if((!val && player.getVolume()>0) || (val && player.getVolume()==val))
+        data.vol=0;
+      else
+        data.vol=val;
+      player.setVolume(data.vol);
     },
+
     muteYTPVolume:function(){
       var player= $(this).get(0);
       var muteBtn=$(player).parent().find(".mb_YTVPMuteUnmute");
       muteBtn.html($.mbYTPlayer.controls.unmute);
       player.mute();
     },
+
     unmuteYTPVolume:function(){
       var player= $(this).get(0);
       var muteBtn=$(player).parent().find(".mb_YTVPMuteUnmute");
       muteBtn.html($.mbYTPlayer.controls.mute);
       player.unMute();
     },
+
     manageYTPProgress:function(){
       var player= $(this).get(0);
       var YTPlayer= $(player).parent();
@@ -268,6 +281,7 @@
       timeBar.css({left:0,width:timeW});
       return {totalTime:totalTime,currentTime: currentTime};
     },
+
     buildYTPControls:function(){
       var player= $(this).get(0);
       var data = $("#"+player.id+"_data").data();
@@ -304,7 +318,6 @@
       var loadedBar = $("<div/>").addClass("mb_YTVPLoaded").css("position","absolute");
       var timeBar = $("<div/>").addClass("mb_YTVTime").css("position","absolute");
 
-
       progressBar.append(loadedBar).append(timeBar);
       buttonBar.append(playpause).append(MuteUnmute).append(idx);
       controlBar.append(buttonBar).append(progressBar);
@@ -335,6 +348,7 @@
         },500);
       }
     },
+
     formatTime: function(s){
       var min= Math.floor(s/60);
       var sec= Math.floor(s-(60*min));
@@ -353,20 +367,8 @@
   $.fn.pauseYTP = $.mbYTPlayer.pauseYTP;
   $.fn.muteYTPVolume = $.mbYTPlayer.muteYTPVolume;
   $.fn.unmuteYTPVolume = $.mbYTPlayer.unmuteYTPVolume;
+  $.fn.setYTPVolume = $.mbYTPlayer.setYTPVolume;
   $.fn.manageYTPProgress = $.mbYTPlayer.manageYTPProgress;
-
-
-  $.fn.changeVolume=function(val){
-    var player = $(this).get(0);
-    var data = $("#"+player.id+"_data").data();
-    if(!val && !data.vol && player.getVolume()==0)
-      data.vol=100;
-    else if((!val && player.getVolume()>0) || (val && player.getVolume()==val))
-      data.vol=0;
-    else
-      data.vol=val;
-    player.setVolume(data.vol);
-  };
 
 })(jQuery);
 
@@ -446,7 +448,6 @@ $.fn.optimizeDisplay=function(){
 
   var marginTop= -((vid.height-win.height)/2);
   var marginLeft=  0 ;
-
 
   if(vid.height<win.height){
     vid.width= data.ratio=="16/9" ? Math.ceil((16*win.height)/9): Math.ceil((4*win.height)/3);

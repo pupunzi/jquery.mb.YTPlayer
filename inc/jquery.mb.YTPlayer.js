@@ -12,7 +12,9 @@
 /*
  * jQuery.mb.components: jquery.mb.YTPlayer
  * version: 1.3.9
- * Â© 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
+ * © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
+ *
+ * YT API:
  *
  */
 
@@ -30,6 +32,7 @@
       unmute:"<img src='images/unmute.png'>"
     },
     rasterImg:"images/raster.png",
+
     setYTPlayer:function(){
       var players=this;
       $.getScript("http://ajax.googleapis.com/ajax/libs/swfobject/2/swfobject.js",function(){
@@ -211,21 +214,30 @@
 
     playYTP: function(){
       var player= $(this).get(0);
-      var playBtn=$(player).parent().find(".mb_YTVPPlaypause");
+      var data = $("#"+player.id+"_data").data();
+      var controls = data.ID ?  $(player).parent().parent() : $(player).parent();
+
+      var playBtn=controls.find(".mb_YTVPPlaypause");
       playBtn.html($.mbYTPlayer.controls.pause);
       player.playVideo();
     },
 
     stopYTP:function(){
       var player= $(this).get(0);
-      var playBtn=$(player).parent().find(".mb_YTVPPlaypause");
+      var data = $("#"+player.id+"_data").data();
+      var controls = data.ID ?  $(player).parent().parent() : $(player).parent();
+
+      var playBtn=controls.find(".mb_YTVPPlaypause");
       playBtn.html($.mbYTPlayer.controls.play);
       player.pauseVideo();
     },
 
     pauseYTP:function(){
       var player= $(this).get(0);
-      var playBtn=$(player).parent().find(".mb_YTVPPlaypause");
+      var data = $("#"+player.id+"_data").data();
+      var controls = data.ID ?  $(player).parent().parent() : $(player).parent();
+
+      var playBtn=controls.find(".mb_YTVPPlaypause");
       playBtn.html($.mbYTPlayer.controls.play);
       player.pauseVideo();
     },
@@ -244,21 +256,27 @@
 
     muteYTPVolume:function(){
       var player= $(this).get(0);
-      var muteBtn=$(player).parent().find(".mb_YTVPMuteUnmute");
+      var data = $("#"+player.id+"_data").data();
+      var controls = data.ID ?  $(player).parent().parent() : $(player).parent();
+      var muteBtn= controls.find(".mb_YTVPMuteUnmute");
       muteBtn.html($.mbYTPlayer.controls.unmute);
       player.mute();
     },
 
     unmuteYTPVolume:function(){
       var player= $(this).get(0);
-      var muteBtn=$(player).parent().find(".mb_YTVPMuteUnmute");
+      var data = $("#"+player.id+"_data").data();
+      var controls = data.ID ?  $(player).parent().parent() : $(player).parent();
+      var muteBtn=controls.find(".mb_YTVPMuteUnmute");
       muteBtn.html($.mbYTPlayer.controls.mute);
       player.unMute();
     },
 
     manageYTPProgress:function(){
       var player= $(this).get(0);
-      var YTPlayer= $(player).parent();
+      var data = $("#"+player.id+"_data").data();
+      var YTPlayer = data.ID ?  $(player).parent().parent() : $(player).parent();
+
       var progressBar= YTPlayer.find(".mb_YTVPProgress");
       var loadedBar=YTPlayer.find(".mb_YTVPLoaded");
       var timeBar=YTPlayer.find(".mb_YTVTime");
@@ -321,31 +339,45 @@
       progressBar.append(loadedBar).append(timeBar);
       buttonBar.append(playpause).append(MuteUnmute).append(idx);
       controlBar.append(buttonBar).append(progressBar);
-      YTPlayer.append(controlBar);
+      if (data.ID){
+        YTPlayer.before(controlBar);
+      }else{
+        YTPlayer.append(controlBar);
+      }
 
-      if (!data.isBgndMovie)
+      if (!data.isBgndMovie){
         YTPlayer.hover(function(){
           controlBar.fadeIn();
           clearInterval(player.getState);
           player.getState=setInterval(function(){
+
+
+            //todo: check if audio is muted.
+
             var prog= $(player).manageYTPProgress();
             $(".mb_YTVPTime").html($.mbYTPlayer.formatTime(prog.currentTime)+" / "+ $.mbYTPlayer.formatTime(prog.totalTime));
-            if(player.getPlayerState()== 1 && $(".mb_YTVPPlaypause").html()!=$.mbYTPlayer.controls.pause) YTPlayer.find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.pause);
-            if(player.getPlayerState()== 2) YTPlayer.find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.play);
-          },500);
+            if(player.getPlayerState()== 1 && $(".mb_YTVPPlaypause").html()!=$.mbYTPlayer.controls.pause)
+              YTPlayer.parent().find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.pause);
+            if(player.getPlayerState()== 2)
+              YTPlayer.parent().find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.play);
+          },1000);
         },function(){
           controlBar.fadeOut();
           clearInterval(player.getState);
         });
-      else{
+      }else{
         controlBar.fadeIn();
         clearInterval(player.getState);
         player.getState=setInterval(function(){
           var prog= $(player).manageYTPProgress();
-          $(".mb_YTVPTime").html($.mbYTPlayer.formatTime(prog.currentTime)+" / "+ $.mbYTPlayer.formatTime(prog.totalTime));
-          if(player.getPlayerState()== 1 && $(".mb_YTVPPlaypause").html()!=$.mbYTPlayer.controls.pause) YTPlayer.find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.pause);
-          if(player.getPlayerState()== 2) YTPlayer.find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.play);
-        },500);
+
+          YTPlayer.parent().find(".mb_YTVPTime").html($.mbYTPlayer.formatTime(prog.currentTime)+" / "+ $.mbYTPlayer.formatTime(prog.totalTime));
+
+          if(player.getPlayerState()== 1 && $(".mb_YTVPPlaypause").html()!=$.mbYTPlayer.controls.pause)
+            YTPlayer.parent().find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.pause);
+          if(player.getPlayerState()== 2)
+            YTPlayer.parent().find(".mb_YTVPPlaypause").html($.mbYTPlayer.controls.play);
+        },1000);
       }
     },
 

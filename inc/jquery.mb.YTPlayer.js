@@ -64,7 +64,7 @@
             $.metadata.setType("class");
             if (player.metadata().quality) data.quality=player.metadata().quality;
             if (player.metadata().width) data.width=player.metadata().width;
-            if (player.metadata().opacity) data.opacity= $.browser.msie ? 1 : player.metadata().opacity;
+            if (player.metadata().opacity) data.opacity = $.browser.msie ? 1 : player.metadata().opacity ? player.metadata().opacity: data.opacity;
             if (player.metadata().isBgndMovie && !BGisInit) {
               data.isBgndMovie=player.metadata().isBgndMovie;
               data.width=player.metadata().isBgndMovie.width? player.metadata().isBgndMovie.width:"window";
@@ -346,11 +346,12 @@
       }
 
       if (!data.isBgndMovie){
+        YTPlayer.css({opacity:data.opacity});
         YTPlayer.hover(function(){
           controlBar.fadeIn();
           clearInterval(player.getState);
-          player.getState=setInterval(function(){
 
+          player.getState=setInterval(function(){
 
             //todo: check if audio is muted.
 
@@ -444,6 +445,7 @@ function playerState(state, el) {
   }
 
   if(state==1 && !data.isBgndMovie){
+    $(player).css({opacity:data.opacity});
     player.totalBytes=player.getVideoBytesTotal();
     $(document).trigger("YTPStart");
   }

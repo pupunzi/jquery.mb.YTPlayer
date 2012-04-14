@@ -444,11 +444,17 @@ $.fn.optimizeDisplay=function(){
   vid.width= win.width;
   vid.height= data.ratio=="16/9" ? Math.ceil((9*win.width)/16): Math.ceil((3*win.width)/4);
 
+  var marginTop= -((vid.height-win.height)/2);
+  var marginLeft=  0 ;
+
+
   if(vid.height<win.height){
     vid.width= data.ratio=="16/9" ? Math.ceil((16*win.height)/9): Math.ceil((4*win.height)/3);
     vid.height = win.height;
+    marginTop= 0;
+    marginLeft= -((vid.width-win.width)/2);
   }
 
-  wrapper.css({width:vid.width, height:vid.height});
+  wrapper.css({width:vid.width, height:vid.height, marginTop:marginTop, marginLeft:marginLeft});
 
 };

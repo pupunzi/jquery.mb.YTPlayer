@@ -18,6 +18,29 @@
  *
  */
 
+/* todo: add playerlist:
+*
+*
+*
+ var playListURL = 'http://gdata.youtube.com/feeds/api/playlists/B2A4E1367126848D?v=2&alt=json&callback=?';
+ var videoURL= 'http://www.youtube.com/watch?v=';
+ $.getJSON(playListURL, function(data) {
+ var list_data="";
+ $.each(data.feed.entry, function(i, item) {
+ var feedTitle = item.title.$t;
+ var feedURL = item.link[1].href;
+ var fragments = feedURL.split("/");
+ var videoID = fragments[fragments.length - 2];
+ var url = videoURL + videoID;
+ var thumb = "http://img.youtube.com/vi/"+ videoID +"/default.jpg";
+ list_data += '<li><a href="'+ url +'" title="'+ feedTitle +'"><img alt="'+ feedTitle+'" src="'+ thumb +'"</a></li>';
+ });
+ $(list_data).appendTo(".cont");
+ });
+
+ *
+* */
+
 (function($){
 
   $.mbYTPlayer={
@@ -156,7 +179,7 @@
 
       var bufferImg=data.bufferImg?$("<div/>").addClass("mbYTP_bufferImg").css({position:pos,top:0,left:0,width:"100%",height:"100%",background:"url("+data.bufferImg+")"}).hide():false;
       var playerContainer=$(player).parents("div:first");
-      var raster=$("<div/>").addClass("mbYTP_raster").css({position:pos,top:0,left:0,width:"100%",height:"100%",background:"url("+$.mbYTPlayer.rasterImg+")"}).hide();
+      var raster=$("<div/>").addClass("mbYTP_raster").css({opacity:0,position:pos,top:0,left:0,width:"100%",height:"100%",background:"url("+$.mbYTPlayer.rasterImg+")"});
       if (data.bufferImg) $(playerContainer).after(bufferImg);
 
       //if it is as background
@@ -184,7 +207,7 @@
         $(player).buildYTPControls();
       }
 
-      player.setPlaybackQuality("default");
+      player.setPlaybackQuality(data.quality);
 
       player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
     },
@@ -438,17 +461,12 @@ function playerState(state, el) {
   }
 
   if ((state==-1 || state==3) && data.isBgndMovie) {
-    //$(player).css({opacity:0});
-    $(".mbYTP_raster").css({opacity:.5,backgroundColor:"black"}).fadeIn();
-    $(".mbYTP_bufferImg").css({opacity:.2}).fadeIn();
-    //$("#wrapper_"+player.id).css({opacity:0});
     $(document).trigger("YTPBuffering");
   }
 
   if (state==1 && data.isBgndMovie) {
     $(player).css({opacity:data.opacity});
     $(".mbYTP_raster").css({opacity:1,backgroundColor:"transparent"});
-    $(".mbYTP_bufferImg").fadeOut();
 
     $("#wrapper_"+player.id).animate({opacity:1},1000);
     $(document).trigger("YTPStart");

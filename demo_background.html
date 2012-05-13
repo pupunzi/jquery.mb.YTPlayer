@@ -96,7 +96,7 @@
 		<button class="command" onclick="$('#bgndVideo').get(0).playVideo()"> play </button>
 		<button class="command" onclick="$('#bgndVideo').get(0).pauseVideo()"> pause </button>
 		<button class="command" onclick="$('#bgndVideo').setYTPVolume(100)"> switch volume </button>
-		<button class="command" onclick="alert($('#bgndVideo').get(0).getPlayerState())"> get State </button>
+		<button class="command" onclick="alert($('#bgndVideo').get(0).getPlaybackQuality())"> quality </button>
 		<br>
 		<br>
 		<span style="font-size: 18px;">events: </span><span id="eventListener" style="font-size: 18px;">(trace player events)</span>
@@ -112,7 +112,7 @@
 		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=UJQmV8aPNao')"> Bill Viola - Acceptance, 2008  </button>
 		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=WHoE01WKDhM&feature=related')"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
 	</div>
-	<a id="bgndVideo" href="http://www.youtube.com/watch?v=mAf6zKRb1wI" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, optimizeDisplay:true, showControls:true, ratio:'4/3', loop: true}">vito acconci theme song 1973</a>
+	<a id="bgndVideo" href="http://www.youtube.com/watch?v=mAf6zKRb1wI" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, optimizeDisplay:true, showControls:true, ratio:'4/3', loop: true, quality:'small'}">vito acconci theme song 1973</a>
 
   <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
 </div>

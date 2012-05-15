@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 /*
- * jQuery.mb.components: jquery.mb.YTPlayer
+ * $.mb.components: jquery.mb.YTPlayer
  * version: 1.3.9
  * © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
  *
@@ -19,9 +19,9 @@
  */
 
 /* todo: add playerlist:
-*
-*
-*
+ *
+ *
+ *
  var playListURL = 'http://gdata.youtube.com/feeds/api/playlists/B2A4E1367126848D?v=2&alt=json&callback=?';
  var videoURL= 'http://www.youtube.com/watch?v=';
  $.getJSON(playListURL, function(data) {
@@ -39,7 +39,7 @@
  });
 
  *
-* */
+ * */
 
 (function($){
 
@@ -118,10 +118,14 @@
 
           var videoWrapper="";
 
-          $(el).append(dataObj);
+          $(el).prepend(dataObj);
+
           if(data.isBgndMovie){
             if (data.ID){
               var bodyWrapper=$("<div/>").css({position:"relative",zIndex:0});
+              var elPos = el.css("position") == "static" ? "relative" : el.css("position");
+              el.css("position", elPos);
+
               $(el).wrapInner(bodyWrapper);
               $(el).prepend(player);
             }else{
@@ -144,10 +148,11 @@
 
           if(data.optimizeDisplay){
             $(window).resize(function(){
-              $("#bgndVideo").optimizeDisplay();
+              $(player).optimizeDisplay();
             });
             $(document).bind("YTPStart", function(){
               $(player).optimizeDisplay();
+              setTimeout(function(){videoWrapper.css({opacity:1});},2500);
             });
           }
 
@@ -436,11 +441,16 @@
   $.fn.setYTPVolume = $.mbYTPlayer.setYTPVolume;
   $.fn.manageYTPProgress = $.mbYTPlayer.manageYTPProgress;
 
-})(jQuery);
+})($);
 
 function onYouTubePlayerReady(playerId) {
   var player=$("#"+playerId);
   player.mb_setMovie();
+
+  $(document).bind("mousedown",function(e){
+    if(e.target.tagName.toLowerCase() == "a")
+      player.pauseYTP();
+  });
 }
 
 function playerState(state, el) {

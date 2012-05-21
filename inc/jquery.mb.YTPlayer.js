@@ -104,6 +104,8 @@
             if (player.metadata().ID) {data.ID=player.metadata().ID;}
             if (player.metadata().autoplay!=undefined) {data.autoplay=player.metadata().autoplay;}
             if (player.metadata().showControls!=undefined) {data.showControls=player.metadata().showControls;}
+            if (player.metadata().addRaster!=undefined) {data.addRaster=player.metadata().addRaster;}else{data.addRaster=false}
+            if (player.metadata().lightCrop!=undefined) {data.lightCrop=player.metadata().lightCrop;}else{data.lightCrop=false}
           }
 
           var el= data.ID?$("#"+data.ID):$("body");
@@ -189,7 +191,7 @@
 
       //if it is as background
       if(data.isBgndMovie && !BGisInit){
-        if ($.mbYTPlayer.rasterImg && $(".mbYTP_raster").length==0){
+        if (data.addRaster && jQuery.mbYTPlayer.rasterImg && jQuery(".mbYTP_raster").length==0){
           $(playerContainer).append(raster);
         }
 
@@ -477,7 +479,6 @@ function playerState(state, el) {
   if (state==1 && data.isBgndMovie) {
     $(player).css({opacity:data.opacity});
     $(".mbYTP_raster").css({opacity:1,backgroundColor:"transparent"});
-
     $("#wrapper_"+player.id).animate({opacity:1},1000);
     $(document).trigger("YTPStart");
   }
@@ -507,6 +508,7 @@ $.fn.optimizeDisplay=function(){
   var player=this.get(0);
   var data = $("#"+player.id+"_data").data();
   var wrapper = $("#wrapper_"+player.id);
+  var lightCrop= data.lightCrop;
 
   var win={};
   var el= data.ID?$("#"+data.ID):$(window);
@@ -515,16 +517,16 @@ $.fn.optimizeDisplay=function(){
   win.height= el.height();
 
   var vid={};
-  vid.width= win.width;
-  vid.height= data.ratio=="16/9" ? Math.ceil((9*win.width)/16): Math.ceil((3*win.width)/4);
+  vid.width= win.width +( lightCrop ? (win.width*20/100): 0 );
+  vid.height = data.ratio=="16/9" ? Math.ceil((9*win.width)/16): Math.ceil((3*win.width)/4);
 
   var marginTop= -((vid.height-win.height)/2);
-  var marginLeft=  0 ;
+  var marginLeft= -( lightCrop ? (win.width*10/100): 0 ) ;
 
   if(vid.height<win.height){
+    vid.height = win.height +(  lightCrop ? (win.height*20/100) :0 );
     vid.width= data.ratio=="16/9" ? Math.ceil((16*win.height)/9): Math.ceil((4*win.height)/3);
-    vid.height = win.height;
-    marginTop= 0;
+    marginTop=-( lightCrop ? (win.height*10/100) : 0 );
     marginLeft= -((vid.width-win.width)/2);
   }
 

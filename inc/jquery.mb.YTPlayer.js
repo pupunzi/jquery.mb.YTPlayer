@@ -1,5 +1,5 @@
 /*******************************************************************************
- jquery.mb.components
+ $.mb.components
  Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
  email: mbicocchi@open-lab.com
  site: http://pupunzi.com
@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 /*
- * $.mb.components: jquery.mb.YTPlayer
+ * $.mb.components: $.mb.YTPlayer
  * version: 1.3.9
  * © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
  *
@@ -18,33 +18,10 @@
  *
  */
 
-/* todo: add playerlist:
- *
- *
- *
- var playListURL = 'http://gdata.youtube.com/feeds/api/playlists/B2A4E1367126848D?v=2&alt=json&callback=?';
- var videoURL= 'http://www.youtube.com/watch?v=';
- $.getJSON(playListURL, function(data) {
- var list_data="";
- $.each(data.feed.entry, function(i, item) {
- var feedTitle = item.title.$t;
- var feedURL = item.link[1].href;
- var fragments = feedURL.split("/");
- var videoID = fragments[fragments.length - 2];
- var url = videoURL + videoID;
- var thumb = "http://img.youtube.com/vi/"+ videoID +"/default.jpg";
- list_data += '<li><a href="'+ url +'" title="'+ feedTitle +'"><img alt="'+ feedTitle+'" src="'+ thumb +'"</a></li>';
- });
- $(list_data).appendTo(".cont");
- });
-
- *
- * */
-
 (function($){
 
   $.mbYTPlayer={
-    name:"jquery.mb.YTPlayer",
+    name:"$.mb.YTPlayer",
     version:"1.3.9",
     author:"Matteo Bicocchi",
     width:450,
@@ -105,7 +82,10 @@
             if (player.metadata().autoplay!=undefined) {data.autoplay=player.metadata().autoplay;}
             if (player.metadata().showControls!=undefined) {data.showControls=player.metadata().showControls;}
             if (player.metadata().addRaster!=undefined) {data.addRaster=player.metadata().addRaster;}else{data.addRaster=false}
+<<<<<<< HEAD
             if (player.metadata().lightCrop!=undefined) {data.lightCrop=player.metadata().lightCrop;}else{data.lightCrop=false}
+=======
+>>>>>>> Updated mb.CSSAnimate
           }
 
           var el= data.ID?$("#"+data.ID):$("body");
@@ -191,7 +171,11 @@
 
       //if it is as background
       if(data.isBgndMovie && !BGisInit){
+<<<<<<< HEAD
         if (data.addRaster && jQuery.mbYTPlayer.rasterImg && jQuery(".mbYTP_raster").length==0){
+=======
+        if (data.addRaster && $.mbYTPlayer.rasterImg && $(".mbYTP_raster").length==0){
+>>>>>>> Updated mb.CSSAnimate
           $(playerContainer).append(raster);
         }
 

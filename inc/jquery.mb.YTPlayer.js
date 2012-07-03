@@ -82,10 +82,8 @@
             if (player.metadata().autoplay!=undefined) {data.autoplay=player.metadata().autoplay;}
             if (player.metadata().showControls!=undefined) {data.showControls=player.metadata().showControls;}
             if (player.metadata().addRaster!=undefined) {data.addRaster=player.metadata().addRaster;}else{data.addRaster=false}
-<<<<<<< HEAD
+
             if (player.metadata().lightCrop!=undefined) {data.lightCrop=player.metadata().lightCrop;}else{data.lightCrop=false}
-=======
->>>>>>> Updated mb.CSSAnimate
           }
 
           var el= data.ID?$("#"+data.ID):$("body");
@@ -171,11 +169,7 @@
 
       //if it is as background
       if(data.isBgndMovie && !BGisInit){
-<<<<<<< HEAD
-        if (data.addRaster && jQuery.mbYTPlayer.rasterImg && jQuery(".mbYTP_raster").length==0){
-=======
         if (data.addRaster && $.mbYTPlayer.rasterImg && $(".mbYTP_raster").length==0){
->>>>>>> Updated mb.CSSAnimate
           $(playerContainer).append(raster);
         }
 

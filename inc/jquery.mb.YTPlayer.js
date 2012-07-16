@@ -130,7 +130,7 @@
             $(window).resize(function(){
               $(player).optimizeDisplay();
             });
-            $(document).bind("YTPStart", function(){
+            $(document).on("YTPStart", function(){
               $(player).optimizeDisplay();
               setTimeout(function(){videoWrapper.css({opacity:1});},2500);
             });
@@ -427,7 +427,7 @@ function onYouTubePlayerReady(playerId) {
   var player=$("#"+playerId);
   player.mb_setMovie();
 
-  $(document).bind("mousedown",function(e){
+  $(document).on("mousedown",function(e){
     if(e.target.tagName.toLowerCase() == "a")
       player.pauseYTP();
   });

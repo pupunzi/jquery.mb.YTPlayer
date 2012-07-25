@@ -162,7 +162,7 @@
       $(player).css({opacity:data.opacity});
       var pos= data.ID?"absolute":"fixed";
 
-      var bufferImg=data.bufferImg?$("<div/>").addClass("mbYTP_bufferImg").css({position:pos,top:0,left:0,width:"100%",height:"100%",background:"url("+data.bufferImg+")"}).hide():false;
+      var bufferImg=data.bufferImg ? $("<div/>").addClass("mbYTP_bufferImg").css({position:pos,top:0,left:0,width:"100%",height:"100%",background:"url("+data.bufferImg+")"}).hide() : false;
       var playerContainer=$(player).parents("div:first");
       var raster=$("<div/>").addClass("mbYTP_raster").css({opacity:0,position:pos,top:0,left:0,width:"100%",height:"100%",background:"url("+$.mbYTPlayer.rasterImg+")"});
       if (data.bufferImg) $(playerContainer).after(bufferImg);
@@ -187,7 +187,6 @@
         if(data.showControls) $(player).buildYTPControls();
 
       }else{
-        $(playerContainer).after(bufferImg);
         player.cueVideoByUrl("http://www.youtube.com/v/"+movieID, 0);
         $(player).buildYTPControls();
       }
@@ -450,8 +449,9 @@ function playerState(state, el) {
     $(player).stopYTP();
   }
 
-  if ((state==-1 || state==3) && data.isBgndMovie) {
+  if ((state==-1 || state==3)) {
     $(document).trigger("YTPBuffering");
+    $(".mbYTP_bufferImg").show();
   }
 
   if (state==1 && data.isBgndMovie) {
@@ -459,12 +459,15 @@ function playerState(state, el) {
     $(".mbYTP_raster").css({opacity:1,backgroundColor:"transparent"});
     $("#wrapper_"+player.id).animate({opacity:1},1000);
     $(document).trigger("YTPStart");
+    $(".mbYTP_bufferImg").hide();
+
   }
 
   if(state==1 && !data.isBgndMovie){
     $(player).css({opacity:data.opacity});
     player.totalBytes=player.getVideoBytesTotal();
     $(document).trigger("YTPStart");
+    $(".mbYTP_bufferImg").hide();
   }
 
   if(state==2)

@@ -1,6 +1,6 @@
 /*******************************************************************************
- $.mb.components
- Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+ jquery.mb.components
+ Copyright (c) 2001-2012. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
  email: mbicocchi@open-lab.com
  site: http://pupunzi.com
 
@@ -193,7 +193,12 @@
 
       player.setPlaybackQuality(data.quality);
 
-      player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
+      // player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
+
+      setInterval(function(){
+        playerState(player.getPlayerState(),player.id);
+      },1000);
+
     },
 
     changeMovie:function(url, opt){

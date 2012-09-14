@@ -193,11 +193,13 @@
 
       player.setPlaybackQuality(data.quality);
 
-      // player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
+      player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
 
+/*
       setInterval(function(){
         playerState(player.getPlayerState(),player.id);
       },1000);
+*/
 
     },
 

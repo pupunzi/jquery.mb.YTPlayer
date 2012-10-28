@@ -1,6 +1,6 @@
 /*
  * jquery.mb.components
- * Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+ * Copyright (c) 2001-2012. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
  * email: mbicocchi@open-lab.com
  * site: http://pupunzi.com
  *
@@ -11,7 +11,7 @@
 
 /*
 * jQuery.mb.components: mb.YTVPlayer
-* © 2001 - 2010 Matteo Bicocchi (pupunzi), Open Lab
+* © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
 *
 */
 
@@ -27,6 +27,7 @@
 }
 
 /*CONTROL BAR*/
+
 .mb_YTVPBar{
   display:block;
   width:100%;
@@ -52,17 +53,50 @@
 .mb_YTVPBar .buttonBar{
   background:transparent;
   font:12px/14px Calibri;
-  position:relative;
+  position:absolute;
   top:-30px;
+  left:0;
+  padding: 5px;
+  width:100%;
+}
+.mb_YTVPBar:hover .buttonBar{
+  background: rgba(0,0,0,0.4);
 }
 
 .mb_YTVPBar span{
   display:inline-block;
-  font:16px/20px Calibri;
+  font:16px/20px Calibri, sans-serif;
   position:relative;
   width: 30px;
   height: 25px;
   vertical-align: middle;
+}
+.mb_YTVPBar span.mb_YTVPTime{
+  width: 130px;
+}
+
+.mb_YTVPBar span.mb_YTVPUrl,.mb_YTVPBar span.mb_OnlyYT {
+  position: absolute;
+  width: auto;
+  display:block;
+  top:6px;
+  right:20px;
+  cursor: pointer;
+}
+.mb_YTVPBar span.mb_YTVPUrl img{
+  width: 60px;
+}
+
+.mb_YTVPBar span.mb_OnlyYT {
+  left:185px;
+  right: auto;
+}
+.mb_YTVPBar span.mb_OnlyYT img{
+  width: 25px;
+}
+
+.mb_YTVPBar span.mb_YTVPUrl a{
+  color:white;
 }
 
 .mb_YTVPPlaypause,.mb_YTVPlayer .mb_YTVPPlaypause img{

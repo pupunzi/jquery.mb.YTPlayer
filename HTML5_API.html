@@ -450,7 +450,6 @@ function onYouTubePlayerAPIReady() {
 			var YTPlayer= jQuery(this).get(0);
 			var data = YTPlayer.opt;
 			var controlBar=jQuery("<span/>").attr("id","controlBar_"+YTPlayer.id).addClass("mb_YTVPBar").css({whiteSpace:"noWrap",position: data.isBgndMovie && !data.ID ? "fixed" : "absolute"}).hide();
-
 			var buttonBar=jQuery("<div/>").addClass("buttonBar");
 			var playpause =jQuery("<span>"+jQuery.mbYTPlayer.controls.play+"</span>").addClass("mb_YTVPPlaypause").click(function(){
 				jQuery(YTPlayer).pauseYTP();

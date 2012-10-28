@@ -226,7 +226,7 @@ function onYouTubePlayerAPIReady() {
 				}
 				this.opt.id = YTPlayer.id;
 
-				var playerID = "mbYTP_"+$YTPlayer.attr("id");
+				var playerID = "mbYTP_"+YTPlayer.id;
 				var videoID= this.opt.videoURL ? this.opt.videoURL.getVideoID() : $YTPlayer.attr("href")? $YTPlayer.attr("href").getVideoID() : false;
 				var playerVars= { 'autoplay': 0, allowfullscreen:true, 'controls': 0, wmode:"transparent", showinfo:this.opt.chromeLess?0:1, enablejsapi:1, version:3, playerapiid:playerID, origin: document.domain};
 
@@ -246,8 +246,7 @@ function onYouTubePlayerAPIReady() {
 				playerBox.css({position:"absolute",zIndex:0,width:"100%",height:"100%",top:0,left:0, overflow:"hidden",opacity:this.opt.opacity});
 				wrapper.append(playerBox);
 
-				this.opt.containment=this.opt.containment == "self"? jQuery(this) : jQuery(this.opt.containment);
-
+				this.opt.containment = this.opt.containment == "self"? jQuery(this) : jQuery(this.opt.containment);
 				this.opt.isBackground = this.opt.containment.get(0).tagName.toLowerCase() == "body";
 
 				if(!this.opt.isBackground){
@@ -360,9 +359,11 @@ function onYouTubePlayerAPIReady() {
 		getPlayer:function(){
 			return jQuery(this).get(0).player;
 		},
+
 		playerDestroy:function(){
-			var playerBoxID= this.get(0).opt.playerBoxID;
-			jQuery("#"+playerBoxID).remove();
+			var playerBox= this.get(0).opt.wrapper;
+			playerBox.remove();
+			$("#controlBar_"+this.get(0).id).remove();
 		},
 
 		playYTP: function(){

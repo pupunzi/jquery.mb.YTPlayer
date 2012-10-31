@@ -62,11 +62,8 @@
 		position:fixed;
 		bottom:0;
 		left:0;
-		-moz-box-sizing:padding-box;
-		-webkit-box-sizing:border-box;
 		text-align:left;
 		z-index: 1000;
-		font: 14px/16px sans-serif;
 		color:white;
 		opacity:.3;
 
@@ -86,12 +83,13 @@
 
 	.mb_YTVPBar .buttonBar{
 		background:transparent;
-		font:12px/14px Calibri;
+		font:12px/14px Calibri, sans-serif;
 		position:absolute;
 		top:-30px;
 		left:0;
 		padding: 5px;
 		width:100%;
+
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
@@ -137,7 +135,7 @@
 		color:white;
 	}
 
-	.mb_YTVPPlaypause,.mb_YTVPlayer .mb_YTVPPlaypause img{
+	.mb_YTVPlayer .mb_YTVPPlaypause,.mb_YTVPlayer .mb_YTVPPlaypause img{
 		cursor:pointer;
 	}
 
@@ -174,12 +172,9 @@
 </style>
 
 <script>
-
 String.prototype.getVideoID=function(){
 	return this.indexOf("http")>-1 ? this.match(/[\\?&]v=([^&#]*)/)[1]:this;
 };
-
-
 function onYouTubePlayerAPIReady() {
 	$(document).trigger("YTAPIReady");
 	$.mbYTPlayer.YTAPIReady=true;
@@ -217,7 +212,6 @@ function onYouTubePlayerAPIReady() {
 			onStateChange: function(event){},
 			onPlaybackQualityChange: function(event){},
 			onError: function(event){}
-
 		},
 		controls:{
 			play:"<img src='images/play.png'>",
@@ -239,9 +233,9 @@ function onYouTubePlayerAPIReady() {
 				var property = $YTPlayer.data("property") ? eval('(' + $YTPlayer.data("property") + ')'):{};
 				jQuery.extend(YTPlayer.opt, jQuery.mbYTPlayer.defaults,options,property);
 
-				if(!$YTPlayer.attr("id")){
+				if(!$YTPlayer.attr("id"))
 					$YTPlayer.attr("id","id_"+new Date().getTime());
-				}
+
 				YTPlayer.opt.id = YTPlayer.id;
 
 				var playerID = "mbYTP_"+YTPlayer.id;
@@ -298,7 +292,7 @@ function onYouTubePlayerAPIReady() {
 				var firstScriptTag = document.getElementsByTagName('script')[0];
 				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-				jQuery(document).bind("YTAPIReady",function(){
+				jQuery(document).on("YTAPIReady",function(){
 
 					if(YTPlayer.opt.isInit)
 						return;
@@ -318,14 +312,11 @@ function onYouTubePlayerAPIReady() {
 									$YTPlayer.optimizeDisplay();
 								});
 
-
 								if(YTPlayer.opt.showControls)
 									jQuery(YTPlayer).buildYTPControls();
 
 								YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
-
 								YTPlayer.player.seekTo(YTPlayer.opt.startAt,true);
-
 									if(!YTPlayer.opt.autoPlay){
 										YTPlayer.checkForStartAt = setInterval(function(){
 											if(YTPlayer.player.getCurrentTime() == YTPlayer.opt.startAt){

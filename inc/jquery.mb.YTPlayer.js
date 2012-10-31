@@ -138,10 +138,7 @@ $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 						$(window).resize(function(){
 							$(player).optimizeDisplay();
 						});
-						$(document).on("YTPStart", function(){
-							$(player).optimizeDisplay();
-							setTimeout(function(){videoWrapper.fadeTo(2000,1);},10);
-						});
+						$(player).optimizeDisplay();
 					}
 
 					var params = { allowScriptAccess: "always", wmode:"transparent", allowFullScreen:"true" };
@@ -213,7 +210,7 @@ $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 
 //			player.addEventListener("onStateChange", '(function(state) { return playerState(state, "' + player.id + '"); })');
 
-			setInterval(function(){
+			$.mbYTPlayer.stateChange = setInterval(function(){
 				playerState(player.getPlayerState(),player.id);
 			},1000);
 
@@ -252,7 +249,7 @@ $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 		playYTP: function(){
 			var player= $(this).get(0);
 			var data = $("#"+player.id+"_data").data();
-			var controls = data.ID ?  $(player).parent().parent() : $(player).parent();
+			var controls = $("#controlBar_"+player.id);
 
 			var playBtn=controls.find(".mb_YTVPPlaypause");
 			playBtn.html($.mbYTPlayer.controls.pause);
@@ -262,7 +259,7 @@ $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 		stopYTP:function(){
 			var player= $(this).get(0);
 			var data = $("#"+player.id+"_data").data();
-			var controls = data.ID ?  $(player).parent().parent() : $(player).parent();
+			var controls = $("#controlBar_"+player.id);
 
 			var playBtn=controls.find(".mb_YTVPPlaypause");
 			playBtn.html($.mbYTPlayer.controls.play);
@@ -313,7 +310,6 @@ $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 			var player= $(this).get(0);
 			var data = $("#"+player.id+"_data").data();
 			var YTPlayerBar = $("#controlBar_"+player.id);
-			//var YTPlayerBar = data.ID ?  $(player).parent().parent() : $(player).parent();
 
 			var progressBar= YTPlayerBar.find(".mb_YTVPProgress");
 			var loadedBar=YTPlayerBar.find(".mb_YTVPLoaded");
@@ -406,8 +402,6 @@ $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
 
 					player.getState=setInterval(function(){
 
-						//todo: check if audio is muted.
-
 						if(player.isMuted()){
 							YTPlayerBar.find(".mb_YTVPMuteUnmute").html($.mbYTPlayer.controls.unmute);
 						}
@@ -484,14 +478,26 @@ function playerState(state, el) {
 	var data = $("#"+player.id+"_data").data();
 
 	if (state==0 ) {
+		if(player.state == state)
+			return;
+		player.state = state;
+
 		$(document).trigger("YTPEnd");
 		if(data.loop)
 			player.playVideo();
-		else
-			$(player).stopYTP();
+		else{
+			$("#wrapper_"+player.id).animate({opacity:0},2000, function(){
+				$(player).stopYTP();
+			});
+		}
 	}
 
 	if ((state==-1 || state==3)) {
+
+		if(player.state == state)
+			return;
+		player.state = state;
+
 		$(player).css({opacity:data.opacity});
 		$(".mbYTP_raster").css({opacity:1,backgroundColor:"transparent"});
 		$("#wrapper_"+player.id).animate({opacity:1},2000);
@@ -499,13 +505,24 @@ function playerState(state, el) {
 	}
 
 	if (state==1) {
+		if(player.state == state)
+			return;
+		player.state = state;
+
+		$("#wrapper_"+player.id).animate({opacity:1},2000);
+
 		$(player).css({opacity:data.opacity});
 		player.totalBytes=player.getVideoBytesTotal();
 		$(document).trigger("YTPStart");
 	}
 
-	if(state==2)
+	if(state==2){
+		if(player.state == state)
+			return;
+		player.state = state;
+
 		$(document).trigger("YTPPause");
+	}
 }
 
 $.fn.toggleVideoState=function(){

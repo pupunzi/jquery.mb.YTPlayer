@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-<!--<script type="text/javascript" src="http://www.youtube.com/player_api"></script>-->
 <style>
 	body{
 		border:none;
@@ -31,7 +30,7 @@
 	}
 
 	.YTPOverlay.raster{
-		background:transparent url("images/raster.png");
+		background:transparent url("../FlashAPI/images/raster.png");
 	}
 
 	.fullScreen{
@@ -214,12 +213,12 @@ function onYouTubePlayerAPIReady() {
 			onError: function(event){}
 		},
 		controls:{
-			play:"<img src='images/play.png'>",
-			pause:"<img src='images/pause.png'>",
-			mute:"<img src='images/mute.png'>",
-			unmute:"<img src='images/unmute.png'>",
-			onlyYT:"<img src='images/onlyVideo.png'>",
-			ytLogo:"<img src='images/YTLogo.png'>"
+			play:"<img src='../FlashAPI/images/play.png'>",
+			pause:"<img src='../FlashAPI/images/pause.png'>",
+			mute:"<img src='../FlashAPI/images/mute.png'>",
+			unmute:"<img src='../FlashAPI/images/unmute.png'>",
+			onlyYT:"<img src='../FlashAPI/images/onlyVideo.png'>",
+			ytLogo:"<img src='../FlashAPI/images/YTLogo.png'>"
 		},
 		buildPlayer:function(options){
 

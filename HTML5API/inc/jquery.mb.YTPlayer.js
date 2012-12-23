@@ -336,6 +336,7 @@ function onYouTubePlayerAPIReady() {
 										//}
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.pause);
 										jQuery(document).trigger("YTPStart");
+										$YTPlayer.css({background:"transparent"});
 									}
 
 									if(state==2){

@@ -9,7 +9,7 @@
  http://www.gnu.org/licenses/gpl.html
 
  jQuery.mb.components: jQuery.mb.HTML5YTPlayer
- version: 1.5.2
+ version: 1.5.0
  © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
 
  ***************************************************************************/
@@ -28,7 +28,7 @@ String.prototype.getVideoID=function(){
 	}else if(this.indexOf("http")>-1){
 		movieURL = this.match(/[\\?&]v=([^&#]*)/)[1];
 	}else{
-		movieURL = this
+		movieURL = this;
 	}
 	return movieURL;
 };
@@ -108,6 +108,7 @@ function onYouTubePlayerAPIReady() {
 				var $YTPlayer=jQuery(YTPlayer);
 
 				YTPlayer.loop=0;
+				YTPlayer.isYTPlayer=true;
 				YTPlayer.opt={};
 				var property = {};
 				if(jQuery.metadata){
@@ -384,6 +385,12 @@ function onYouTubePlayerAPIReady() {
 
 		changeMovie:function(url, opt){
 			var YTPlayer= jQuery(this).get(0);
+
+			if(!YTPlayer.isYTPlayer){
+				$(YTPlayer).mb_YTPlayer(opt);
+				return;
+			}
+
 			var data = YTPlayer.opt;
 			if(opt){
 				jQuery.extend(data,opt);

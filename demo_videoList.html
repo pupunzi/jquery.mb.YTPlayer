@@ -68,20 +68,20 @@
 	<script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
 	<script type="text/javascript">
 
-		$(function(){
+		jQuery(function(){
 
-			$("button").not(".command").click(function(){
-				$("button").not(".command").removeClass("sel");
-				$(this).addClass("sel");
+			jQuery("button").not(".command").click(function(){
+				jQuery("button").not(".command").removeClass("sel");
+				jQuery(this).addClass("sel");
 			});
 
       //debug functions
-			$(document).bind("YTPStart", function(){ $("#eventListener").html("YTPStart")});
-			$(document).bind("YTPEnd", function(){ $("#eventListener").html("YTPStop")});
-			$(document).bind("YTPPause", function(){ $("#eventListener").html("YTPPause")});
-			$(document).bind("YTPBuffering", function(){ $("#eventListener").html("YTPBuffering")});
+			jQuery(document).bind("YTPStart", function(){ jQuery("#eventListener").html("YTPStart")});
+			jQuery(document).bind("YTPEnd", function(){ jQuery("#eventListener").html("YTPStop")});
+			jQuery(document).bind("YTPPause", function(){ jQuery("#eventListener").html("YTPPause")});
+			jQuery(document).bind("YTPBuffering", function(){ jQuery("#eventListener").html("YTPBuffering")});
 
-      $("#bgndVideo").mb_YTPlayer();
+      jQuery("#bgndVideo").mb_YTPlayer();
 
 		});
 
@@ -95,25 +95,26 @@
 	<br><br>
 	jQuery.mb.YTPlayer as background<br><br>
 	<div class="console">
-		<button class="command" onclick="$('#bgndVideo').getPlayer().playVideo()"> play </button>
-		<button class="command" onclick="$('#bgndVideo').getPlayer().pauseVideo()"> pause </button>
-		<button class="command" onclick="$('#bgndVideo').setYTPVolume(100)"> switch volume </button>
-		<button class="command" onclick="alert($('#bgndVideo').getPlayer().getPlaybackQuality())"> quality </button>
+		<button class="command" onclick="jQuery('#bgndVideo').getPlayer().playVideo()"> play </button>
+		<button class="command" onclick="jQuery('#bgndVideo').getPlayer().pauseVideo()"> pause </button>
+		<button class="command" onclick="jQuery('#bgndVideo').setYTPVolume(100)"> switch volume </button>
+		<button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> quality </button>
 		<br>
 		<br>
 		<span style="font-size: 18px;">events: </span><span id="eventListener" style="font-size: 18px;">(trace player events)</span>
 		<br>
 		<br>
-		<button class="sel" onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=mAf6zKRb1wI')"> vito acconci theme song 1973   </button>
-		<button onclick="$('#bgndVideo').changeMovie('dZaD9CHZecE',{ratio:'4/3'})"> Vito Acconci - Undertone 1972 (extract) </button>
-		<button onclick="$('#bgndVideo').changeMovie('http://youtu.be/3ovA7zeviRo',{ratio:'4/3'})"> Dan Graham - Body Press, 1972  </button>
-		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=z5krhw54oqs',{ratio:'4/3'})"> Fluxus - Wolf Vostell - Sun in your head    </button>
-		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=u9k1FaMIYTs&feature=related')"> nam june paik - 03  </button>
-		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=VuaJAgx0x_4')"> nam june paik </button>
-		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=rkfOgavdhak')"> Bruce Nauman - Pinch Neck 1968 </button>
-		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=UJQmV8aPNao')"> Bill Viola - Acceptance, 2008  </button>
-		<button onclick="$('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=WHoE01WKDhM&feature=related')"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
+		<button class="sel" onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=mAf6zKRb1wI')"> vito acconci theme song 1973   </button>
+		<button onclick="jQuery('#bgndVideo').changeMovie('dZaD9CHZecE',{ratio:'4/3'})"> Vito Acconci - Undertone 1972 (extract) </button>
+		<button onclick="jQuery('#bgndVideo').changeMovie('http://youtu.be/3ovA7zeviRo',{ratio:'4/3'})"> Dan Graham - Body Press, 1972  </button>
+		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=z5krhw54oqs',{ratio:'4/3'})"> Fluxus - Wolf Vostell - Sun in your head    </button>
+		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=u9k1FaMIYTs&feature=related')"> nam june paik - 03  </button>
+		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=VuaJAgx0x_4')"> nam june paik </button>
+		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=rkfOgavdhak')"> Bruce Nauman - Pinch Neck 1968 </button>
+		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=UJQmV8aPNao')"> Bill Viola - Acceptance, 2008  </button>
+		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=WHoE01WKDhM&feature=related')"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
 	</div>
+
 	<a id="bgndVideo" href="http://www.youtube.com/watch?v=mAf6zKRb1wI" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, optimizeDisplay:true, showControls:true, ratio:'4/3', loop: true, quality:'small',addRaster:true, lightCrop:true}">vito acconci theme song 1973</a>
 
   <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>

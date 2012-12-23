@@ -69,7 +69,7 @@ function onYouTubePlayerAPIReady() {
 		defaults:{
 			containment:"body",
 			ratio:"16/9",
-			showYTLogo:false,
+			showYTLogo:true,
 			videoURL:null,
 			startAt:0,
 			autoPlay:true,
@@ -79,7 +79,6 @@ function onYouTubePlayerAPIReady() {
 			mute:false,
 			loop:true,
 			showControls:true,
-			printUrl:true,
 			onReady:function(event){},
 			onStateChange: function(event){},
 			onPlaybackQualityChange: function(event){},
@@ -512,7 +511,7 @@ function onYouTubePlayerAPIReady() {
 
 			var idx=jQuery("<span/>").addClass("mb_YTVPTime");
 
-			var viewOnYT = jQuery(jQuery.mbYTPlayer.controls.ytLogo).on("click",function(){window.open(data.videoURL,"viewOnYT")});
+			var viewOnYT = jQuery(jQuery.mbYTPlayer.controls.ytLogo).on("click",function(){window.open(data.videoURL.indexOf("http")>=0 ? data.videoURL : "http://youtu.be/" + data.videoURL,"viewOnYT")});
 			var viewOnlyYT = jQuery(jQuery.mbYTPlayer.controls.onlyYT).toggle(
 					function(){
 						jQuery(YTPlayer.wrapper).css({zIndex:10000}).CSSAnimate({opacity:1},1000,0);
@@ -544,8 +543,9 @@ function onYouTubePlayerAPIReady() {
 			progressBar.append(loadedBar).append(timeBar);
 			buttonBar.append(playpause).append(MuteUnmute).append(idx);
 
-			if(data.printUrl && data.videoURL.indexOf("http")>=0)
+			if(data.showYTLogo){
 				buttonBar.append(movieUrl);
+			}
 
 			if(YTPlayer.isBackground)
 				buttonBar.append(onlyVideo);

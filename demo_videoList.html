@@ -15,118 +15,118 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 04/01/13 17.13
+  ~  last modified: 10/01/13 23.56
   ~  ******************************************************************************/
   -->
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>youtube Chromeless fullscreen</title>
-	<link href="css/YTPlayer.css" media="all" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title>youtube Chromeless fullscreen</title>
+    <link href="css/YTPlayer.css" media="all" rel="stylesheet" type="text/css">
 
-	<style type="text/css">
+    <style type="text/css">
 
-		body{
-			background: #444;
-			margin:0;
-		}
+        body{
+            background: #444;
+            margin:0;
+        }
 
-		#content{
-			color:white;
-			font:40px/40px Calibri;
-			text-align:left;
-			padding-top:200px;
-			text-shadow:#666666 2px 2px 4px;
-			margin-left:100px;
-		}
+        #content{
+            color:white;
+            font:40px/40px Calibri;
+            text-align:left;
+            padding-top:200px;
+            text-shadow:#666666 2px 2px 4px;
+            margin-left:100px;
+        }
 
-		.movie{
-			display:none;
-		}
+        .movie{
+            display:none;
+        }
 
-		.dida{
-			position:fixed;
-			bottom:0;
-			font: 12px/14px Arial, sans-serif;
-			color:white;
-			padding:10px;
-		}
+        .dida{
+            position:fixed;
+            bottom:0;
+            font: 12px/14px Arial, sans-serif;
+            color:white;
+            padding:10px;
+        }
 
-		button{
-			display:block;
-			background:transparent;
-			border:none;
-			color:white;
-			font-size:18px;
-			cursor:pointer;
-		}
+        button{
+            display:block;
+            background:transparent;
+            border:none;
+            color:white;
+            font-size:18px;
+            cursor:pointer;
+        }
 
-		button.command{
-			display:inline-block;
-		}
+        button.command{
+            display:inline-block;
+        }
 
-		button:hover, button.sel{
-			color: #ffcc00;
-		}
+        button:hover, button.sel{
+            color: #ffcc00;
+        }
 
-	</style>
+    </style>
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script type="text/javascript" src="inc/jquery.metadata.js"></script>
-	<script type="text/javascript" src="inc/jquery.mb.CSSAnimate.js"></script>
-	<script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
-	<script type="text/javascript">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="inc/jquery.metadata.js"></script>
+    <script type="text/javascript" src="inc/jquery.mb.CSSAnimate.js"></script>
+    <script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
+    <script type="text/javascript">
 
-		jQuery(function(){
+        jQuery(function(){
 
-			jQuery("button").not(".command").click(function(){
-				jQuery("button").not(".command").removeClass("sel");
-				jQuery(this).addClass("sel");
-			});
+            jQuery("button").not(".command").click(function(){
+                jQuery("button").not(".command").removeClass("sel");
+                jQuery(this).addClass("sel");
+            });
 
-      //debug functions
-			jQuery(document).bind("YTPStart", function(){ jQuery("#eventListener").html("YTPStart")});
-			jQuery(document).bind("YTPEnd", function(){ jQuery("#eventListener").html("YTPStop")});
-			jQuery(document).bind("YTPPause", function(){ jQuery("#eventListener").html("YTPPause")});
-			jQuery(document).bind("YTPBuffering", function(){ jQuery("#eventListener").html("YTPBuffering")});
+            //debug functions
+            jQuery("#bgndVideo").on("YTPStart", function(){ jQuery("#eventListener").html("YTPStart")});
+            jQuery("#bgndVideo").on("YTPEnd", function(){ jQuery("#eventListener").html("YTPEnd")});
+            jQuery("#bgndVideo").on("YTPPause", function(){ jQuery("#eventListener").html("YTPPause")});
+            jQuery("#bgndVideo").on("YTPBuffering", function(){ jQuery("#eventListener").html("YTPBuffering")});
 
-      jQuery("#bgndVideo").mb_YTPlayer();
+            jQuery("#bgndVideo").mb_YTPlayer();
 
-		});
+        });
 
-	</script>
+    </script>
 
 </head>
 <body>
 <div id="content">
 
-	<img src="http://pupunzi.com/images/logo.png" alt="mb">
-	<br><br>
-	jQuery.mb.YTPlayer as background<br><br>
-	<div class="console">
-		<button class="command" onclick="jQuery('#bgndVideo').getPlayer().playVideo()"> play </button>
-		<button class="command" onclick="jQuery('#bgndVideo').getPlayer().pauseVideo()"> pause </button>
-		<button class="command" onclick="jQuery('#bgndVideo').setYTPVolume(100)"> switch volume </button>
-		<button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> quality </button>
-		<br>
-		<br>
-		<span style="font-size: 18px;">events: </span><span id="eventListener" style="font-size: 18px;">(trace player events)</span>
-		<br>
-		<br>
-		<button class="sel" onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=mAf6zKRb1wI')"> vito acconci theme song 1973   </button>
-		<button onclick="jQuery('#bgndVideo').changeMovie('dZaD9CHZecE',{ratio:'4/3'})"> Vito Acconci - Undertone 1972 (extract) </button>
-		<button onclick="jQuery('#bgndVideo').changeMovie('http://youtu.be/3ovA7zeviRo',{ratio:'4/3'})"> Dan Graham - Body Press, 1972  </button>
-		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=z5krhw54oqs',{ratio:'4/3'})"> Fluxus - Wolf Vostell - Sun in your head    </button>
-		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=u9k1FaMIYTs&feature=related')"> nam june paik - 03  </button>
-		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=VuaJAgx0x_4')"> nam june paik </button>
-		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=rkfOgavdhak')"> Bruce Nauman - Pinch Neck 1968 </button>
-		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=UJQmV8aPNao')"> Bill Viola - Acceptance, 2008  </button>
-		<button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=WHoE01WKDhM&feature=related')"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
-	</div>
+    <img src="http://pupunzi.com/images/logo.png" alt="mb">
+    <br><br>
+    jQuery.mb.YTPlayer as background<br><br>
+    <div class="console">
+        <button class="command" onclick="jQuery('#bgndVideo').getPlayer().playVideo()"> play </button>
+        <button class="command" onclick="jQuery('#bgndVideo').getPlayer().pauseVideo()"> pause </button>
+        <button class="command" onclick="jQuery('#bgndVideo').setYTPVolume(100)"> switch volume </button>
+        <button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> quality </button>
+        <br>
+        <br>
+        <span style="font-size: 18px;">events: </span><span id="eventListener" style="font-size: 18px;">(trace player events)</span>
+        <br>
+        <br>
+        <button class="sel" onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=mAf6zKRb1wI')"> vito acconci theme song 1973   </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie('dZaD9CHZecE',{ratio:'4/3'})"> Vito Acconci - Undertone 1972 (extract) </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie('http://youtu.be/3ovA7zeviRo',{ratio:'4/3'})"> Dan Graham - Body Press, 1972  </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=z5krhw54oqs',{ratio:'4/3'})"> Fluxus - Wolf Vostell - Sun in your head    </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=u9k1FaMIYTs&feature=related')"> nam june paik - 03  </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=VuaJAgx0x_4')"> nam june paik </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=rkfOgavdhak')"> Bruce Nauman - Pinch Neck 1968 </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=UJQmV8aPNao')"> Bill Viola - Acceptance, 2008  </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=WHoE01WKDhM&feature=related')"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
+    </div>
 
-	<a id="bgndVideo" href="http://www.youtube.com/watch?v=mAf6zKRb1wI" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, optimizeDisplay:true, showControls:true, ratio:'4/3', loop: true, quality:'small',addRaster:true, lightCrop:true}">vito acconci theme song 1973</a>
+    <a id="bgndVideo" href="http://www.youtube.com/watch?v=mAf6zKRb1wI" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:false}, optimizeDisplay:true, showControls:true, ratio:'4/3', loop: false, quality:'small',addRaster:true, lightCrop:true}">vito acconci theme song 1973</a>
 
-  <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
+    <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
 </div>
 <div class="dida"></div>
 

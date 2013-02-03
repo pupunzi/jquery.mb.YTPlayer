@@ -13,6 +13,7 @@
 	"version": "2.2.1",
 	"author": {
 		"name": "Pupunzi (Matteo Bicocchi)",
+		"email": "matteo@open-lab.com",
 		"url": "http://pupunzi.com"
 	},
 	"maintainers": [
@@ -33,7 +34,8 @@
 		}
 	],
 	"bugs": "https://github.com/pupunzi/jquery.mb.YTPlayer/issues",
-	"homepage": "http://pupunzi.com/#mb.components/mb.YTPlayer/YTPlayer.html",
+	"homepage": "http://pupunzi.com",
+	"demo": "http://pupunzi.com/#mb.components/mb.YTPlayer/YTPlayer.html",
 	"docs": "https://github.com/pupunzi/jquery.mb.YTPlayer/wiki",
 	"download": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer/",
 	"dependencies": {

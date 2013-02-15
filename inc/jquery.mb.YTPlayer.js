@@ -418,7 +418,7 @@ function onYouTubePlayerAPIReady() {
 			YTPlayer.player.playVideo();
 		},
 		
-		stopYTPLoops: function () {
+		stopLoops: function () {
 			var YTPlayer = jQuery(this).get(0);
 			var data = YTPlayer.opt;
 			if (data.loop == 1) {
@@ -640,7 +640,7 @@ function onYouTubePlayerAPIReady() {
 	jQuery.fn.playerDestroy = jQuery.mbYTPlayer.playerDestroy;
 	jQuery.fn.buildYTPControls = jQuery.mbYTPlayer.buildYTPControls;
 	jQuery.fn.playYTP = jQuery.mbYTPlayer.playYTP;
-	jQuery.fn.stopYTPLoops = jQuery.mbYTPlayer.stopYTPLoops;
+	jQuery.fn.stopLoops = jQuery.mbYTPlayer.stopLoops;
 	jQuery.fn.stopYTP = jQuery.mbYTPlayer.stopYTP;
 	jQuery.fn.pauseYTP = jQuery.mbYTPlayer.pauseYTP;
 	jQuery.fn.muteYTPVolume = jQuery.mbYTPlayer.muteYTPVolume;

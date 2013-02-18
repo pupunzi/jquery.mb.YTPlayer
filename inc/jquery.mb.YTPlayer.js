@@ -80,6 +80,7 @@ function onYouTubePlayerAPIReady() {
 			mute                   : false,
 			loop                   : true,
 			showControls           : true,
+			showAnnotations        : true,
 			printUrl               : true,
 			onReady                : function (event) {},
 			onStateChange          : function (event) {},
@@ -143,8 +144,9 @@ function onYouTubePlayerAPIReady() {
 				var playerID = "mbYTP_" + YTPlayer.id;
 				var videoID = this.opt.videoURL ? this.opt.videoURL.getVideoID() : $YTPlayer.attr("href") ? $YTPlayer.attr("href").getVideoID() : false;
 
+				YTPlayer.opt.showAnnotations = (YTPlayer.opt.showAnnotations) ? '0' : '3';
 				// 'start':this.opt.startAt,'modestbranding':1, 'allowfullscreen':true, 'wmode':"transparent"
-				var playerVars = { 'autoplay': 0, 'modestbranding': 1, 'controls': 0, 'showinfo': 0, 'rel': 0, 'enablejsapi': 1, 'version': 3, 'playerapiid': playerID, 'origin': '*', 'allowfullscreen': true, 'wmode': "transparent"};
+				var playerVars = { 'autoplay': 0, 'modestbranding': 1, 'controls': 0, 'showinfo': 0, 'rel': 0, 'enablejsapi': 1, 'version': 3, 'playerapiid': playerID, 'origin': '*', 'allowfullscreen': true, 'wmode': "transparent", 'iv_load_policy': YTPlayer.opt.showAnnotations};
 
 				var canPlayHTML5 = false;
 				var v = document.createElement('video');
@@ -417,6 +419,21 @@ function onYouTubePlayerAPIReady() {
 			playBtn.html(jQuery.mbYTPlayer.controls.pause);
 			YTPlayer.player.playVideo();
 		},
+		
+		toggleLoops: function () {
+			var YTPlayer = jQuery(this).get(0);
+			var data = YTPlayer.opt;
+			if (data.loop == 1) {
+				data.loop = 0;
+			} else {
+				if(data.startAt) {
+					YTPlayer.player.seekTo(data.startAt);
+				} else {
+					YTPlayer.player.playVideo();
+				}
+				data.loop = 1;
+			}
+		},
 
 		stopYTP: function () {
 			var YTPlayer = jQuery(this).get(0);
@@ -625,6 +642,7 @@ function onYouTubePlayerAPIReady() {
 	jQuery.fn.playerDestroy = jQuery.mbYTPlayer.playerDestroy;
 	jQuery.fn.buildYTPControls = jQuery.mbYTPlayer.buildYTPControls;
 	jQuery.fn.playYTP = jQuery.mbYTPlayer.playYTP;
+	jQuery.fn.toggleLoops = jQuery.mbYTPlayer.toggleLoops;
 	jQuery.fn.stopYTP = jQuery.mbYTPlayer.stopYTP;
 	jQuery.fn.pauseYTP = jQuery.mbYTPlayer.pauseYTP;
 	jQuery.fn.muteYTPVolume = jQuery.mbYTPlayer.muteYTPVolume;

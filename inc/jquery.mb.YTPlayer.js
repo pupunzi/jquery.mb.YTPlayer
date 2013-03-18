@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 18/03/13 22.19
+ *  last modified: 18/03/13 22.42
  *  *****************************************************************************
  */
 
@@ -66,7 +66,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name           : "jquery.mb.YTPlayer",
-		version        : "2.3.1",
+		version        : "2.3.2",
 		author         : "Matteo Bicocchi",
 		defaults       : {
 			containment            : "body",

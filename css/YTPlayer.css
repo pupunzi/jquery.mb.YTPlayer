@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/01/13 17.13
+ *  last modified: 18/03/13 20.19
  *  *****************************************************************************
  */
 
@@ -57,6 +57,8 @@
   -webkit-transform: none!important;
   -o-transform: none!important;
   transform: none!important;
+  margin:0!important;
+  padding:0!important
 }
 
 /*CONTROL BAR*/
@@ -84,9 +86,10 @@
   opacity:.1;
 }
 
-.mb_YTVPBar:hover{
+.mb_YTVPBar.visible, .mb_YTVPBar:hover{
   opacity:1;
 }
+
 
 .mb_YTVPBar .buttonBar{
 

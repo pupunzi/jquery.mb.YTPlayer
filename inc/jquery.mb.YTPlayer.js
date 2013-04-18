@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 18/04/13 21.46
+ *  last modified: 19/04/13 0.39
  *  *****************************************************************************
  */
 
@@ -171,7 +171,7 @@ function onYouTubePlayerAPIReady() {
 				}
 
 				var wrapper = jQuery("<div/>").addClass("mbYTP_wrapper").attr("id", "wrapper_" + playerID);
-				wrapper.css({position: "absolute", zIndex: 1, minWidth: "100%", minHeight: "100%", overflow: "hidden", opacity: 0});
+				wrapper.css({position: "absolute", zIndex: 0, minWidth: "100%", minHeight: "100%",left:0, top:0, overflow: "hidden", opacity: 0});
 				playerBox.css({position: "absolute", zIndex: 0, width: "100%", height: "100%", top: 0, left: 0, overflow: "hidden", opacity: this.opt.opacity});
 				wrapper.append(playerBox);
 
@@ -617,16 +617,19 @@ function onYouTubePlayerAPIReady() {
 
 			clearInterval(YTPlayer.getState);
 			var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
+
 			YTPlayer.getState = setInterval(function () {
 				var prog = jQuery(YTPlayer).manageYTPProgress();
 				controlBar.find(".mb_YTVPTime").html(jQuery.mbYTPlayer.formatTime(prog.currentTime) + " / " + jQuery.mbYTPlayer.formatTime(prog.totalTime));
-				if (data.loop && parseFloat(YTPlayer.player.getDuration() - 1) < YTPlayer.player.getCurrentTime() && YTPlayer.player.getPlayerState() == 1) {
+				if (parseFloat(YTPlayer.player.getDuration() - 1) < YTPlayer.player.getCurrentTime() && YTPlayer.player.getPlayerState() == 1) {
 					YTPlayer.player.seekTo(startAt);
 					//YTPlayer.player.play();
 					jQuery(YTPlayer).trigger("YTPEnd");
+					console.debug(YTPlayer);
 					//jQuery(YTPlayer).playYTP();
 				}
 			}, 1);
+
 		},
 		formatTime      : function (s) {
 			var min = Math.floor(s / 60);

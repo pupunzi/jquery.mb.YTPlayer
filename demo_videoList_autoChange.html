@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+  ~ /*******************************************************************************
+  ~  jquery.mb.components
+  ~  file: demo_videoList_autoChange.html
+  ~
+  ~  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
+  ~  Open lab srl, Firenze - Italy
+  ~  email: matteo@open-lab.com
+  ~  site: 	http://pupunzi.com
+  ~  blog:	http://pupunzi.open-lab.com
+  ~ 	http://open-lab.com
+  ~
+  ~  Licences: MIT, GPL
+  ~  http://www.opensource.org/licenses/mit-license.php
+  ~  http://www.gnu.org/licenses/gpl.html
+  ~
+  ~  last modified: 19/04/13 0.45
+  ~  ******************************************************************************/
+  -->
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+	<script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
+	<link href="css/YTPlayer.css" media="all" rel="stylesheet" type="text/css">
+	<style>
+		body{
+			border:none;
+			margin:0;
+			padding:30px;
+			background: #444;
+			font-family:Arial, Helvetica, sans-serif;
+		}
+		.player{
+			display:inline-block;
+			vertical-align:top;
+			position:relative;
+			width:500px;
+			height:350px;
+			margin-top:100px!important;
+			left:0;
+			overflow: hidden;
+			border-radius: 4px;
+			-moz-box-shadow: 0 0 10px rgba(0,0,0,.5);
+			box-shadow: 0 0 10px rgba(0,0,0,.5);
+		}
+
+	</style>
+</head>
+<body>
+<div id="pippo" style="position:relative; top:0;left:0;z-index:10">
+	<h1 style="color:white"> jQuery.mb.YTPlayer </h1>
+	<h2 style="color:white">  using the HTML5 iFrame Youtube API </h2>
+</div>
+
+<script>
+    var videos = ["VuaJAgx0x_4", "3ovA7zeviRo","u9k1FaMIYTs"];
+    var videoCounter=1;
+
+    jQuery(function(){
+        jQuery("#myPlayerID").mb_YTPlayer();
+
+        $("#myPlayerID").on("YTPEnd", function(){
+            console.debug(videoCounter, videos.length)
+            if(videoCounter>=videos.length)
+                videoCounter = 0;
+            $("#myPlayerID").changeMovie(videos[videoCounter]);
+            videoCounter++;
+        });
+    });
+
+</script>
+<a class="player" id="myPlayerID" data-property="{videoURL:videos[0],containment:'body',autoPlay:true, mute:true, startAt:0,opacity:1, loop:false}">My video</a>
+
+<a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
+
+</body>
+</html>

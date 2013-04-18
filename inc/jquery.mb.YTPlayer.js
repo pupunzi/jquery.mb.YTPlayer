@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 18/03/13 22.42
+ *  last modified: 18/04/13 21.46
  *  *****************************************************************************
  */
 
@@ -75,6 +75,7 @@ function onYouTubePlayerAPIReady() {
 			videoURL               : null,
 			startAt                : 0,
 			autoPlay               : true,
+			vol                    :100,
 			addRaster              : false,
 			opacity                : 1,
 			quality                : "default",
@@ -83,6 +84,7 @@ function onYouTubePlayerAPIReady() {
 			showControls           : true,
 			showAnnotations        : false,
 			printUrl               : true,
+			stopMovieOnClick       :false,
 			onReady                : function (event) {},
 			onStateChange          : function (event) {},
 			onPlaybackQualityChange: function (event) {},
@@ -240,7 +242,7 @@ function onYouTubePlayerAPIReady() {
 									YTPlayer.playerEl = YTPlayer.player.getIframe();
 									$YTPlayer.optimizeDisplay();
 
-									$(window).on("resize.YTP",function () {
+									jQuery(window).on("resize.YTP",function () {
 										$YTPlayer.optimizeDisplay();
 									});
 
@@ -259,11 +261,11 @@ function onYouTubePlayerAPIReady() {
 												$YTPlayer.pauseYTP();
 
 /*
-												if (YTPlayer.opt.mute) {
-													jQuery(YTPlayer).muteYTPVolume();
-												}else{
-													jQuery(YTPlayer).unmuteYTPVolume();
-												}
+												 if (YTPlayer.opt.mute) {
+												 jQuery(YTPlayer).muteYTPVolume();
+												 }else{
+												 jQuery(YTPlayer).unmuteYTPVolume();
+												 }
 */
 											}
 										}, 1);
@@ -272,11 +274,11 @@ function onYouTubePlayerAPIReady() {
 										YTPlayer.player.setVolume(YTPlayer.opt.vol);
 
 /*
-										if (YTPlayer.opt.mute) {
-											jQuery(YTPlayer).muteYTPVolume();
-										}else{
-											jQuery(YTPlayer).unmuteYTPVolume();
-										}
+										 if (YTPlayer.opt.mute) {
+										 jQuery(YTPlayer).muteYTPVolume();
+										 }else{
+										 jQuery(YTPlayer).unmuteYTPVolume();
+										 }
 */
 									}
 
@@ -451,6 +453,9 @@ function onYouTubePlayerAPIReady() {
 			var playBtn = controls.find(".mb_YTVPPlaypause");
 			playBtn.html(jQuery.mbYTPlayer.controls.pause);
 			YTPlayer.player.playVideo();
+
+			YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.opt.opacity}, 2000);
+
 		},
 
 		toggleLoops: function () {

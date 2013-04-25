@@ -156,8 +156,12 @@ function onYouTubePlayerAPIReady() {
 					canPlayHTML5 = true;
 				}
 
-				if (canPlayHTML5 && !jQuery.browser.msie)
+				if (canPlayHTML5) // && !jQuery.browser.msie
 					jQuery.extend(playerVars, {'html5': 1});
+
+				if(jQuery.browser.msie && jQuery.browser.version < 9 ){
+					this.opt.opacity = 1;
+				}
 
 				var playerBox = jQuery("<div/>").attr("id", playerID).addClass("playerBox");
 				var overlay = jQuery("<div/>").css({position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}).addClass("YTPOverlay"); //YTPlayer.isBackground ? "fixed" :

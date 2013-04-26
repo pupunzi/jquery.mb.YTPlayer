@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 23/04/13 18.26
+ *  last modified: 26/04/13 16.54
  *  *****************************************************************************
  */
 
@@ -99,8 +99,8 @@ function onYouTubePlayerAPIReady() {
 			onlyYT: "<img src='images/onlyVideo.png'>",
 			ytLogo: "<img src='images/YTLogo.png'>"
 		},
-		rasterImg      : "",
-		rasterImgRetina: "",
+		rasterImg      : "images/raster.png",
+		rasterImgRetina: "images/raster@2x.png",
 
 		buildPlayer: function (options) {
 
@@ -171,7 +171,10 @@ function onYouTubePlayerAPIReady() {
 
 				if (YTPlayer.opt.addRaster) {
 					var retina = (window.retina || window.devicePixelRatio > 1);
-					overlay.css({backgroundImage: "url(" + (retina ? jQuery.mbYTPlayer.rasterImgRetina : jQuery.mbYTPlayer.rasterImg) + ")"});
+					overlay.addClass(retina ? "raster retina" : "raster");
+//					overlay.css({backgroundImage: "url(" + (retina ? jQuery.mbYTPlayer.rasterImgRetina : jQuery.mbYTPlayer.rasterImg) + ")"});
+				}else{
+					overlay.removeClass("raster retina");
 				}
 
 				var wrapper = jQuery("<div/>").addClass("mbYTP_wrapper").attr("id", "wrapper_" + playerID);
@@ -200,6 +203,8 @@ function onYouTubePlayerAPIReady() {
 
 				playerBox.css({opacity: 1});
 				playerBox.after(overlay);
+
+				YTPlayer.overlay = overlay;
 
 
 				if(!YTPlayer.isBackground){
@@ -538,6 +543,15 @@ function onYouTubePlayerAPIReady() {
 			}else{
 				jQuery(YTPlayer).unmuteYTPVolume();
 			}
+
+			if (YTPlayer.opt.addRaster) {
+				var retina = (window.retina || window.devicePixelRatio > 1);
+				YTPlayer.overlay.addClass(retina ? "raster retina" : "raster");
+			}else{
+				YTPlayer.overlay.removeClass("raster");
+				YTPlayer.overlay.removeClass("retina");
+			}
+
 
 
 			$("#controlBar_" + YTPlayer.id).remove();

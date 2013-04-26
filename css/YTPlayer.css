@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 18/03/13 20.19
+ *  last modified: 26/04/13 16.50
  *  *****************************************************************************
  */
 
@@ -184,6 +184,10 @@
   -webkit-box-shadow:#666666 1px 1px 3px;
 }
 
-.YTPOverlay{
-  /*box-shadow: inset 0 0 5px rgba(0,0,0,.5);*/
+.YTPOverlay.raster{
+  background: url("../images/raster.png");
+}
+
+.YTPOverlay.raster.retina{
+  background: url("../images/raster@2x.png");
 }

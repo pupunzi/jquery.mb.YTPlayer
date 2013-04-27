@@ -15,13 +15,14 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 26/04/13 16.57
+  ~  last modified: 28/04/13 1.40
   ~  ******************************************************************************/
   -->
 
 <html>
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>youtube Chromeless Player - mb.YTPlayer</title>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 	<script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
 	<link href="css/YTPlayer.css" media="all" rel="stylesheet" type="text/css">
@@ -52,6 +53,7 @@
 
 
 		jQuery(function(){
+
             if (self.location.href == top.location.href){
                 $("body").css({font:"normal 13px/22px 'trebuchet MS', verdana, sans-serif"});
                 var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");

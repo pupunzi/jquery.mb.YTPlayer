@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 26/04/13 16.57
+  ~  last modified: 28/04/13 1.33
   ~  ******************************************************************************/
   -->
 <html>
@@ -118,14 +118,14 @@
         <br>
         <br>
         <button class="sel" onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=mAf6zKRb1wI')"> vito acconci theme song 1973   </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie('dZaD9CHZecE',{ratio:'4/3'})"> Vito Acconci - Undertone 1972 (extract) </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie('http://youtu.be/3ovA7zeviRo',{ratio:'4/3'})"> Dan Graham - Body Press, 1972  </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=z5krhw54oqs',{ratio:'4/3'})"> Fluxus - Wolf Vostell - Sun in your head    </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=u9k1FaMIYTs&feature=related')"> nam june paik - 03  </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=VuaJAgx0x_4')"> nam june paik </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=rkfOgavdhak')"> Bruce Nauman - Pinch Neck 1968 </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=UJQmV8aPNao')"> Bill Viola - Acceptance, 2008  </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie('http://www.youtube.com/watch?v=WHoE01WKDhM&feature=related')"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'dZaD9CHZecE',ratio:'4/3'})"> Vito Acconci - Undertone 1972 (extract) </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://youtu.be/3ovA7zeviRo',ratio:'4/3'})"> Dan Graham - Body Press, 1972  </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=z5krhw54oqs',ratio:'4/3'})"> Fluxus - Wolf Vostell - Sun in your head    </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=u9k1FaMIYTs&feature=related'})"> nam june paik - 03  </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=VuaJAgx0x_4'})"> nam june paik </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=rkfOgavdhak'})"> Bruce Nauman - Pinch Neck 1968 </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=UJQmV8aPNao'})"> Bill Viola - Acceptance, 2008  </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=WHoE01WKDhM&feature=related'})"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
     </div>
 
     <a id="bgndVideo" href="http://www.youtube.com/watch?v=mAf6zKRb1wI" class="movie {opacity:.8, isBgndMovie:{width:'window',mute:true}, optimizeDisplay:true, showControls:true, ratio:'4/3', loop: false, quality:'small',addRaster:true, lightCrop:true}">vito acconci theme song 1973</a>

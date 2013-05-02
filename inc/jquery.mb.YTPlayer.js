@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 26/04/13 16.54
+ *  last modified: 03/05/13 1.01
  *  *****************************************************************************
  */
 
@@ -56,10 +56,11 @@ String.prototype.getVideoID=function(){
 var isDevice = 'ontouchstart' in window;
 
 function onYouTubePlayerAPIReady() {
-	if(jQuery.mbYTPlayer.YTAPIReady)
+	if(ytp.YTAPIReady)
 		return;
+
+	ytp.YTAPIReady=true;
 	jQuery(document).trigger("YTAPIReady");
-	jQuery.mbYTPlayer.YTAPIReady=true;
 }
 
 (function (jQuery) {
@@ -182,7 +183,6 @@ function onYouTubePlayerAPIReady() {
 				playerBox.css({position: "absolute", zIndex: 0, width: "100%", height: "100%", top: 0, left: 0, overflow: "hidden", opacity: this.opt.opacity});
 				wrapper.append(playerBox);
 
-
 				if (YTPlayer.isBackground && ytp.isInit)
 					return;
 
@@ -218,12 +218,16 @@ function onYouTubePlayerAPIReady() {
 				// add YT API to the header
 				//jQuery("#YTAPI").remove();
 
-				if(!jQuery.mbYTPlayer.YTAPIReady){
+				if(!ytp.YTAPIReady){
 					var tag = document.createElement('script');
 					tag.src = "http://www.youtube.com/player_api";
 					tag.id = "YTAPI";
 					var firstScriptTag = document.getElementsByTagName('script')[0];
 					firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+				}else{
+					setTimeout(function(){
+						jQuery(document).trigger("YTAPIReady");
+					}, 200)
 				}
 
 				jQuery(document).on("YTAPIReady", function () {
@@ -234,10 +238,9 @@ function onYouTubePlayerAPIReady() {
 					if(YTPlayer.isBackground && ytp.stopMovieOnClick)
 						jQuery(document).off("mousedown.ytplayer").on("mousedown,.ytplayer",function(e){
 							var target = jQuery(e.target);
-							if(target.is("a") || target.parents().is("a")){
-								player.pauseYTP();
-								YTPlayer.wrapper.css({opacity:0});
-							}
+							 if(target.is("a") || target.parents().is("a")){
+								 $YTPlayer.pauseYTP();
+							 }
 						});
 
 					if (YTPlayer.isBackground)
@@ -415,7 +418,6 @@ function onYouTubePlayerAPIReady() {
 							}
 						});
 					});
-
 				})
 			});
 		},
@@ -572,7 +574,7 @@ function onYouTubePlayerAPIReady() {
 
 		playerDestroy: function () {
 			var YTPlayer = this.get(0);
-			jQuery.mbYTPlayer.YTAPIReady = false;
+			ytp.YTAPIReady = false;
 			ytp.isInit = false;
 			YTPlayer.opt.isInit = false;
 			YTPlayer.videoID = null;
@@ -845,7 +847,5 @@ function onYouTubePlayerAPIReady() {
 	jQuery.fn.unmuteYTPVolume = jQuery.mbYTPlayer.unmuteYTPVolume;
 	jQuery.fn.setYTPVolume = jQuery.mbYTPlayer.setYTPVolume;
 	jQuery.fn.manageYTPProgress = jQuery.mbYTPlayer.manageYTPProgress;
-
-	jQuery.mbYTPlayer.YTAPIReady = false;
 
 })(jQuery);

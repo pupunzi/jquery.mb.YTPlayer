@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 03/05/13 1.03
+  ~  last modified: 04/05/13 18.36
   ~  ******************************************************************************/
   -->
 
@@ -61,8 +61,6 @@
 		});
 
         function loadVideo(){
-
-
             var request = $.ajax({
                 url     : "ajaxVideo.html",
                 type    : "GET",
@@ -81,6 +79,7 @@
                 $("#contentPlaceholder").html("error: "+textStatus);
             });
         }
+
         function loadText(){
             var request = $.ajax({
                 url     : "ajaxText.html",

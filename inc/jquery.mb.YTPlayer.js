@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/05/13 18.52
+ *  last modified: 04/05/13 18.54
  *  *****************************************************************************
  */
 
@@ -208,6 +208,7 @@ function onYouTubePlayerAPIReady() {
 				YTPlayer.wrapper = wrapper;
 
 				playerBox.css({opacity: 1});
+
 				if (!isDevice){
 					playerBox.after(overlay);
 					YTPlayer.overlay = overlay;
@@ -271,6 +272,7 @@ function onYouTubePlayerAPIReady() {
 										$YTPlayer.optimizeDisplay();
 										playerBox.css({opacity: 1});
 										YTPlayer.wrapper.css({opacity: 1});
+										$YTPlayer.optimizeDisplay();
 									},
 									'onStateChange': function(){}
 								}

@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/05/13 18.44
+ *  last modified: 04/05/13 18.52
  *  *****************************************************************************
  */
 
@@ -173,7 +173,6 @@ function onYouTubePlayerAPIReady() {
 				YTPlayer.isBackground = YTPlayer.opt.containment.get(0).tagName.toLowerCase() == "body";
 
 				if (isDevice && YTPlayer.isBackground){
-					alert(this)
 					$YTPlayer.hide();
 					return;
 				}

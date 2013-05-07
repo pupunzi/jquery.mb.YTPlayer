@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 07/05/13 21.49
+ *  last modified: 08/05/13 1.15
  *  *****************************************************************************
  */
 
@@ -535,7 +535,7 @@ function onYouTubePlayerAPIReady() {
 			jQuery(YTPlayer).on("YTPError", function(){
 				setTimeout(function(){
 					jQuery(YTPlayer).trigger("YTPEnd");
-				},3000)
+				},1000)
 			})
 
 			jQuery(YTPlayer).on("YTPEnd", function(){

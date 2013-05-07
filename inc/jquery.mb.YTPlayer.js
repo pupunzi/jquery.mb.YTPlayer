@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/05/13 18.54
+ *  last modified: 07/05/13 21.49
  *  *****************************************************************************
  */
 
@@ -243,12 +243,12 @@ function onYouTubePlayerAPIReady() {
 					if ((YTPlayer.isBackground && ytp.isInit) || YTPlayer.opt.isInit)
 						return;
 
-					if(YTPlayer.isBackground && ytp.stopMovieOnClick)
+					if(YTPlayer.isBackground && YTPlayer.opt.stopMovieOnClick)
 						jQuery(document).off("mousedown.ytplayer").on("mousedown,.ytplayer",function(e){
 							var target = jQuery(e.target);
-							 if(target.is("a") || target.parents().is("a")){
-								 $YTPlayer.pauseYTP();
-							 }
+							if(target.is("a") || target.parents().is("a")){
+								$YTPlayer.pauseYTP();
+							}
 						});
 
 					if (YTPlayer.isBackground)
@@ -448,13 +448,12 @@ function onYouTubePlayerAPIReady() {
 			});
 		},
 
-
 		getDataFromFeed: function (videoID, YTPlayer) {
 			//Get video info from FEEDS API
 			//todo: add video title and other info
 
 			YTPlayer.videoID = videoID;
-			if (!jQuery.browser.msie) { //YTPlayer.opt.ratio == "auto" &&
+			if (!jQuery.browser.msie) { //!(jQuery.browser.msie && jQuery.browser.version<9)
 
 				jQuery.getJSON('http://gdata.youtube.com/feeds/api/videos/' + videoID + '?v=2&alt=jsonc', function (data, status, xhr) {
 
@@ -490,14 +489,17 @@ function onYouTubePlayerAPIReady() {
 						YTPlayer.isInit = true;
 						jQuery(document).trigger("getVideoInfo_" + YTPlayer.opt.id);
 					}
-				},2000)
+				},2500)
 
 			} else {
 				YTPlayer.opt.ratio == "auto" ? YTPlayer.opt.ratio = "16/9" : YTPlayer.opt.ratio;
 
 				if(!YTPlayer.isInit){
 					YTPlayer.isInit = true;
-					jQuery(document).trigger("getVideoInfo_" + YTPlayer.opt.id);
+					setTimeout(function(){
+						jQuery(document).trigger("getVideoInfo_" + YTPlayer.opt.id);
+					},100)
+
 				}
 				jQuery(YTPlayer).trigger("YTPChanged");
 			}
@@ -579,8 +581,6 @@ function onYouTubePlayerAPIReady() {
 				YTPlayer.overlay.removeClass("raster");
 				YTPlayer.overlay.removeClass("retina");
 			}
-
-
 
 			$("#controlBar_" + YTPlayer.id).remove();
 

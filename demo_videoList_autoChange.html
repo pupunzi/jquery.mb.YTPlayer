@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 25/05/13 14.54
+  ~  last modified: 26/05/13 17.20
   ~  ******************************************************************************/
   -->
 
@@ -90,10 +90,8 @@
             {videoURL: "u9k1FaMIYTs",containment:'body',autoPlay:true, mute:false, startAt:0,opacity:1, loop:false, ratio:"4/3", addRaster:true}
         ];
 
-        /*to shuffle:
-        jQuery("#myPlayerID").YTPlaylist(videos, true, ...
-        */
         jQuery("#myPlayerID").YTPlaylist(videos, false, function(video){
+            console.debug(video.videoData);
             jQuery("#videoID").html(video.videoData.id);
             jQuery("#videoTitle").html(video.videoData.title);
             jQuery("#videoDuration").html(jQuery.mbYTPlayer.formatTime(video.videoData.duration));

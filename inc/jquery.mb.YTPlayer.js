@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 26/05/13 16.47
+ *  last modified: 31/05/13 1.05
  *  *****************************************************************************
  */
 
@@ -67,7 +67,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name           : "jquery.mb.YTPlayer",
-		version        : "2.5.0",
+		version        : "2.5.2",
 		author         : "Matteo Bicocchi",
 		defaults       : {
 			containment            : "body",
@@ -93,13 +93,24 @@ function onYouTubePlayerAPIReady() {
 		},
 		//todo: use @font-face instead
 		controls       : {
-			play  : "<img src='images/play.png'>",
-			pause : "<img src='images/pause.png'>",
-			mute  : "<img src='images/mute.png'>",
-			unmute: "<img src='images/unmute.png'>",
-			onlyYT: "<img src='images/onlyVideo.png'>",
-			ytLogo: "<img src='images/YTLogo.png'>"
+			play  : "P",
+			pause : "p",
+			mute  : "M",
+			unmute: "A",
+			onlyYT: "O",
+			showSite: "R",
+			ytLogo: "Y"
 		},
+		/*
+		 controls       : {
+		 play  : "<img src='images/play.png'>",
+		 pause : "<img src='images/pause.png'>",
+		 mute  : "<img src='images/mute.png'>",
+		 unmute: "<img src='images/unmute.png'>",
+		 onlyYT: "<img src='images/onlyVideo.png'>",
+		 ytLogo: "<img src='images/YTLogo.png'>"
+		 },
+		 */
 		rasterImg      : "images/raster.png",
 		rasterImgRetina: "images/raster@2x.png",
 
@@ -717,14 +728,14 @@ function onYouTubePlayerAPIReady() {
 			var data = YTPlayer.opt;
 			var controlBar = jQuery("<span/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTVPBar").css({whiteSpace: "noWrap", position: YTPlayer.isBackground ? "fixed" : "absolute", zIndex: YTPlayer.isBackground ? 10000 : 1000}).hide();
 			var buttonBar = jQuery("<div/>").addClass("buttonBar");
-			var playpause = jQuery("<span>" + jQuery.mbYTPlayer.controls.play + "</span>").addClass("mb_YTVPPlaypause").click(function () {
+			var playpause = jQuery("<span>" + jQuery.mbYTPlayer.controls.play + "</span>").addClass("mb_YTVPPlaypause ytpicon").click(function () {
 				if (YTPlayer.player.getPlayerState() == 1)
 					jQuery(YTPlayer).pauseYTP();
 				else
 					jQuery(YTPlayer).playYTP();
 			});
 
-			var MuteUnmute = jQuery("<span>" + jQuery.mbYTPlayer.controls.mute + "</span>").addClass("mb_YTVPMuteUnmute").click(function () {
+			var MuteUnmute = jQuery("<span>" + jQuery.mbYTPlayer.controls.mute + "</span>").addClass("mb_YTVPMuteUnmute ytpicon").click(function () {
 				if (YTPlayer.player.getVolume()==0) {
 					jQuery(YTPlayer).unmuteYTPVolume();
 				} else {
@@ -734,24 +745,26 @@ function onYouTubePlayerAPIReady() {
 
 			var idx = jQuery("<span/>").addClass("mb_YTVPTime");
 
-			var viewOnYT = jQuery(jQuery.mbYTPlayer.controls.ytLogo).on("click", function () {window.open(data.videoURL, "viewOnYT")});
-			var viewOnlyYT = jQuery(jQuery.mbYTPlayer.controls.onlyYT).on("click",
+			var vURL = data.videoURL;
+			if(vURL.indexOf("http") < 0)
+				vURL = "http://www.youtube.com/watch?v="+data.videoURL;
+			var movieUrl = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.ytLogo).addClass("mb_YTVPUrl ytpicon").attr("title", "view on YouTube").on("click", function () {window.open(vURL, "viewOnYT")});
+			var onlyVideo = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.onlyYT).addClass("mb_OnlyYT ytpicon").on("click",
 					function () {
 						if(!YTPlayer.isAlone){
 							if(YTPlayer.player.getPlayerState() != 1)
 								return;
 
 							jQuery(YTPlayer.wrapper).css({zIndex: 10000}).CSSAnimate({opacity: 1}, 1000, 0);
+							jQuery(this).html(jQuery.mbYTPlayer.controls.showSite)
 							YTPlayer.isAlone = true;
 						}else{
 							jQuery(YTPlayer.wrapper).CSSAnimate({opacity: YTPlayer.opt.opacity}, 500);
 							jQuery(YTPlayer.wrapper).css({zIndex: -1});
+							jQuery(this).html(jQuery.mbYTPlayer.controls.onlyYT)
 							YTPlayer.isAlone = false;
 						}
 					});
-
-			var movieUrl = jQuery("<span/>").addClass("mb_YTVPUrl").append(viewOnYT);
-			var onlyVideo = jQuery("<span/>").addClass("mb_OnlyYT").append(viewOnlyYT);
 
 			var progressBar = jQuery("<div/>").addClass("mb_YTVPProgress").css("position", "absolute").click(function (e) {
 				timeBar.css({width: (e.clientX - timeBar.offset().left)});
@@ -770,8 +783,10 @@ function onYouTubePlayerAPIReady() {
 			progressBar.append(loadedBar).append(timeBar);
 			buttonBar.append(playpause).append(MuteUnmute).append(idx);
 
-			if (data.printUrl && data.videoURL.indexOf("http") >= 0)
+			if (data.printUrl){
 				buttonBar.append(movieUrl);
+
+			}
 
 			if (YTPlayer.isBackground)
 				buttonBar.append(onlyVideo);

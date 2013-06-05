@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 30/05/13 23.11
+  ~  last modified: 03/06/13 23.13
   ~  ******************************************************************************/
   -->
 
@@ -79,9 +79,10 @@
 	<button onclick="jQuery('#P1').pauseYTP()">pause</button>
 	<button onclick="jQuery('#P1').toggleVolume()">mute/unmute</button>
 </div>
-<a id="P2" class="player" data-property="{videoURL:'BsekcY04xvQ',containment:'body',autoPlay:true, mute:true, startAt:0,opacity:1}">My video</a>
+<a id="P2" class="player" data-property="{videoURL:'BsekcY04xvQ',containment:'body',autoPlay:false, mute:true, startAt:0,opacity:1}">My video</a>
 
 <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
+<button onclick="jQuery('#P2').playYTP(); jQuery('#P2').one('YTPStart',function(){jQuery('#P2').fullscreen()})">fullscreen</button>
 
 </body>
 </html>

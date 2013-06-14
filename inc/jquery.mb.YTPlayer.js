@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 06/06/13 1.55
+ *  last modified: 15/06/13 0.58
  *  *****************************************************************************
  */
 
@@ -67,7 +67,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name           : "jquery.mb.YTPlayer",
-		version        : "2.5.3",
+		version        : "2.5.4",
 		author         : "Matteo Bicocchi",
 		defaults       : {
 			containment            : "body",
@@ -79,17 +79,17 @@ function onYouTubePlayerAPIReady() {
 			vol                    :100,
 			addRaster              : false,
 			opacity                : 1,
-			quality                : "default",
+			quality                : "default", //or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres”
 			mute                   : false,
 			loop                   : true,
 			showControls           : true,
 			showAnnotations        : false,
 			printUrl               : true,
 			stopMovieOnClick       :false,
-			onReady                : function (event) {},
-			onStateChange          : function (event) {},
-			onPlaybackQualityChange: function (event) {},
-			onError                : function (event) {}
+			onReady                : function (player) {},
+			onStateChange          : function (player) {},
+			onPlaybackQualityChange: function (player) {},
+			onError                : function (player) {}
 		},
 		//todo: use @font-face instead
 		controls       : {
@@ -167,9 +167,8 @@ function onYouTubePlayerAPIReady() {
 					canPlayHTML5 = true;
 				}
 
-				if (canPlayHTML5) // && !jQuery.browser.msie
+				if (canPlayHTML5 ) // && !jQuery.browser.msie
 					jQuery.extend(playerVars, {'html5': 1});
-
 
 				if(jQuery.browser.msie && jQuery.browser.version < 9 ){
 					this.opt.opacity = 1;
@@ -361,6 +360,9 @@ function onYouTubePlayerAPIReady() {
 										return;
 									var state = event.target.getPlayerState();
 
+									if (typeof YTPlayer.opt.onStateChange == "function")
+										YTPlayer.opt.onStateChange($YTPlayer, state);
+
 									var playerBox = jQuery(YTPlayer.playerEl);
 									var controls = jQuery("#controlBar_" + YTPlayer.id);
 
@@ -451,10 +453,16 @@ function onYouTubePlayerAPIReady() {
 										jQuery(YTPlayer).trigger("YTPPause");
 									}
 								},
-								'onPlaybackQualityChange': function () {},
+								'onPlaybackQualityChange': function (e) {
+									if (typeof YTPlayer.opt.onPlaybackQualityChange == "function")
+										YTPlayer.opt.onPlaybackQualityChange($YTPlayer);
+								},
 								'onError'                : function (err) {
+									if(err.data!=5)
+										jQuery(YTPlayer).trigger("YTPError");
 
-									jQuery(YTPlayer).trigger("YTPError");
+									if (typeof YTPlayer.opt.onError == "function")
+										YTPlayer.opt.onError($YTPlayer, err);
 
 								}
 							}
@@ -549,7 +557,7 @@ function onYouTubePlayerAPIReady() {
 				});
 
 			jQuery(YTPlayer).on("YTPError", function(){
-				setTimeout(function(){
+				YTPlayer.err = setTimeout(function(){
 					jQuery(YTPlayer).trigger("YTPEnd");
 				},1000)
 			})
@@ -558,9 +566,13 @@ function onYouTubePlayerAPIReady() {
 				YTPlayer.videoCounter++;
 				if(YTPlayer.videoCounter>=YTPlayer.videoLength)
 					YTPlayer.videoCounter = 0;
-
 				jQuery(YTPlayer).changeMovie(videos[YTPlayer.videoCounter]);
 			});
+
+			jQuery(YTPlayer).on("YTPStart", function(){
+				clearTimeout(YTPlayer.err);
+			});
+
 		},
 
 		playNext: function(){
@@ -619,7 +631,6 @@ function onYouTubePlayerAPIReady() {
 
 			jQuery(YTPlayer).optimizeDisplay();
 			jQuery.mbYTPlayer.checkForState(YTPlayer);
-
 
 		},
 

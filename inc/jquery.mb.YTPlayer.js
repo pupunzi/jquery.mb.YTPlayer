@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 22/06/13 1.05
+ *  last modified: 22/06/13 1.20
  *  *****************************************************************************
  */
 
@@ -67,7 +67,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name           : "jquery.mb.YTPlayer",
-		version        : "2.5.5",
+		version        : "2.5.4",
 		author         : "Matteo Bicocchi",
 		defaults       : {
 			containment            : "body",
@@ -101,6 +101,16 @@ function onYouTubePlayerAPIReady() {
 			showSite: "R",
 			ytLogo: "Y"
 		},
+		/*
+		 controls       : {
+		 play  : "<img src='images/play.png'>",
+		 pause : "<img src='images/pause.png'>",
+		 mute  : "<img src='images/mute.png'>",
+		 unmute: "<img src='images/unmute.png'>",
+		 onlyYT: "<img src='images/onlyVideo.png'>",
+		 ytLogo: "<img src='images/YTLogo.png'>"
+		 },
+		 */
 		rasterImg      : "images/raster.png",
 		rasterImgRetina: "images/raster@2x.png",
 
@@ -226,7 +236,6 @@ function onYouTubePlayerAPIReady() {
 				//jQuery("#YTAPI").remove();
 
 				if(!ytp.YTAPIReady){
-
 					var tag = document.createElement('script');
 					tag.src = "http://www.youtube.com/player_api";
 					tag.id = "YTAPI";
@@ -455,7 +464,8 @@ function onYouTubePlayerAPIReady() {
 										YTPlayer.opt.onPlaybackQualityChange($YTPlayer);
 								},
 								'onError'                : function (err) {
-									if(err.data!=5)
+
+									if(err.data == 2)
 										jQuery(YTPlayer).trigger("YTPError");
 
 									if (typeof YTPlayer.opt.onError == "function")
@@ -758,7 +768,6 @@ function onYouTubePlayerAPIReady() {
 		},
 
 		buildYTPControls: function () {
-
 			var YTPlayer = this.get(0);
 			var data = YTPlayer.opt;
 
@@ -770,7 +779,6 @@ function onYouTubePlayerAPIReady() {
 			var controlBar = jQuery("<span/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTVPBar").css({whiteSpace: "noWrap", position: YTPlayer.isBackground ? "fixed" : "absolute", zIndex: YTPlayer.isBackground ? 10000 : 1000}).hide();
 			var buttonBar = jQuery("<div/>").addClass("buttonBar");
 			var playpause = jQuery("<span>" + jQuery.mbYTPlayer.controls.play + "</span>").addClass("mb_YTVPPlaypause ytpicon").click(function () {
-
 				if (YTPlayer.player.getPlayerState() == 1)
 					jQuery(YTPlayer).pauseYTP();
 				else
@@ -915,7 +923,6 @@ function onYouTubePlayerAPIReady() {
 		}
 		return newArray;
 	};
-
 
 	jQuery.fn.mb_YTPlayer = jQuery.mbYTPlayer.buildPlayer;
 	jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.YTPlaylist;

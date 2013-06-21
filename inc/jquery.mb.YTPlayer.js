@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 15/06/13 0.58
+ *  last modified: 22/06/13 1.05
  *  *****************************************************************************
  */
 
@@ -67,7 +67,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name           : "jquery.mb.YTPlayer",
-		version        : "2.5.4",
+		version        : "2.5.5",
 		author         : "Matteo Bicocchi",
 		defaults       : {
 			containment            : "body",
@@ -101,16 +101,6 @@ function onYouTubePlayerAPIReady() {
 			showSite: "R",
 			ytLogo: "Y"
 		},
-		/*
-		 controls       : {
-		 play  : "<img src='images/play.png'>",
-		 pause : "<img src='images/pause.png'>",
-		 mute  : "<img src='images/mute.png'>",
-		 unmute: "<img src='images/unmute.png'>",
-		 onlyYT: "<img src='images/onlyVideo.png'>",
-		 ytLogo: "<img src='images/YTLogo.png'>"
-		 },
-		 */
 		rasterImg      : "images/raster.png",
 		rasterImgRetina: "images/raster@2x.png",
 
@@ -236,6 +226,7 @@ function onYouTubePlayerAPIReady() {
 				//jQuery("#YTAPI").remove();
 
 				if(!ytp.YTAPIReady){
+
 					var tag = document.createElement('script');
 					tag.src = "http://www.youtube.com/player_api";
 					tag.id = "YTAPI";
@@ -296,6 +287,12 @@ function onYouTubePlayerAPIReady() {
 								'onReady': function (event) {
 
 									YTPlayer.player = event.target;
+
+									if(YTPlayer.isReady)
+										return;
+
+									YTPlayer.isReady = true;
+
 									YTPlayer.playerEl = YTPlayer.player.getIframe();
 									$YTPlayer.optimizeDisplay();
 
@@ -474,7 +471,6 @@ function onYouTubePlayerAPIReady() {
 
 		getDataFromFeed: function (videoID, YTPlayer) {
 			//Get video info from FEEDS API
-			//todo: add video title and other info
 
 			YTPlayer.videoID = videoID;
 			if (!jQuery.browser.msie) { //!(jQuery.browser.msie && jQuery.browser.version<9)
@@ -623,8 +619,6 @@ function onYouTubePlayerAPIReady() {
 
 			if (YTPlayer.opt.showControls)
 				jQuery(YTPlayer).buildYTPControls();
-			else
-				jQuery("controlBar_" + YTPlayer.id).remove();
 
 			if(!jQuery.browser.msie)
 				jQuery.mbYTPlayer.getDataFromFeed(YTPlayer.videoID, YTPlayer);
@@ -745,7 +739,6 @@ function onYouTubePlayerAPIReady() {
 
 		manageYTPProgress: function () {
 			var YTPlayer = this.get(0);
-			var data = YTPlayer.opt;
 			var controls = jQuery("#controlBar_" + YTPlayer.id);
 			var progressBar = controls.find(".mb_YTVPProgress");
 			var loadedBar = controls.find(".mb_YTVPLoaded");
@@ -765,11 +758,19 @@ function onYouTubePlayerAPIReady() {
 		},
 
 		buildYTPControls: function () {
+
 			var YTPlayer = this.get(0);
 			var data = YTPlayer.opt;
+
+
+
+			if(jQuery("#controlBar_"+ YTPlayer.id).length)
+				return;
+
 			var controlBar = jQuery("<span/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTVPBar").css({whiteSpace: "noWrap", position: YTPlayer.isBackground ? "fixed" : "absolute", zIndex: YTPlayer.isBackground ? 10000 : 1000}).hide();
 			var buttonBar = jQuery("<div/>").addClass("buttonBar");
 			var playpause = jQuery("<span>" + jQuery.mbYTPlayer.controls.play + "</span>").addClass("mb_YTVPPlaypause ytpicon").click(function () {
+
 				if (YTPlayer.player.getPlayerState() == 1)
 					jQuery(YTPlayer).pauseYTP();
 				else
@@ -827,7 +828,6 @@ function onYouTubePlayerAPIReady() {
 			}
 			controlBar.fadeIn();
 
-			//clearInterval(YTPlayer.getState);
 		},
 
 		checkForState:function(YTPlayer){

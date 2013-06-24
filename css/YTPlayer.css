@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 30/05/13 23.47
+ *  last modified: 23/06/13 18.19
  *  *****************************************************************************
  */
 
@@ -51,6 +51,13 @@
 
 .mb_YTVPlayer{
   display:block;
+  transform:translateZ(0);
+  transform-style: preserve-3d;
+  perspective: 1000;
+  backface-visibility: hidden;
+  transform:translate3d(0,0,0);
+  animation-timing-function: linear;
+
 }
 
 .mbYTP_wrapper iframe{

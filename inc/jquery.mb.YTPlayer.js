@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 24/06/13 13.17
+ *  last modified: 24/06/13 19.03
  *  *****************************************************************************
  */
 
@@ -311,6 +311,8 @@ function onYouTubePlayerAPIReady() {
 										YTPlayer.player.seekTo(parseFloat(YTPlayer.opt.startAt), true);
 
 									if (!YTPlayer.opt.autoPlay) {
+
+										$YTPlayer.stopYTP();
 										YTPlayer.checkForStartAt = setInterval(function () {
 											if (YTPlayer.player.getCurrentTime() >= YTPlayer.opt.startAt) {
 												clearInterval(YTPlayer.checkForStartAt);
@@ -430,7 +432,7 @@ function onYouTubePlayerAPIReady() {
 											YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
 										} else if(!YTPlayer.isBackground) {
 											YTPlayer.wrapper.css({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity});
-											$YTPlayer.css({background: "transparent"});
+											$YTPlayer.css({background: "rgba(0,0,0,0.5)"});
 										}else{
 											setTimeout(function () {
 												jQuery(YTPlayer.playerEl).CSSAnimate({opacity: 1}, 2000);
@@ -462,7 +464,6 @@ function onYouTubePlayerAPIReady() {
 
 									if (typeof YTPlayer.opt.onError == "function")
 										YTPlayer.opt.onError($YTPlayer, err);
-
 								}
 							}
 						});
@@ -497,8 +498,11 @@ function onYouTubePlayerAPIReady() {
 						YTPlayer.isInit = true;
 
 						if (!YTPlayer.isBackground) {
-							var bgndURL = videoData.thumbnail.hqDefault;
-							jQuery(YTPlayer).css({background: "url(" + bgndURL + ") center center", backgroundSize: "cover"});
+							var bgndURL = YTPlayer.videoData.thumbnail.hqDefault;
+
+							console.debug(YTPlayer.videoData);
+
+							jQuery(YTPlayer).css({background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center", backgroundSize: "cover"});
 						}
 
 						jQuery(document).trigger("getVideoInfo_" + YTPlayer.opt.id);
@@ -900,6 +904,11 @@ function onYouTubePlayerAPIReady() {
 						YTPlayer.player.pauseVideo();
 						YTPlayer.wrapper.CSSAnimate({opacity: 0}, 2000,function(){
 							YTPlayer.player.seekTo(startAt);
+
+							if (!YTPlayer.isBackground) {
+								var bgndURL = YTPlayer.videoData.thumbnail.hqDefault;
+								jQuery(YTPlayer).css({background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center", backgroundSize: "cover"});
+							}
 						});
 					}else
 						YTPlayer.player.seekTo(startAt);

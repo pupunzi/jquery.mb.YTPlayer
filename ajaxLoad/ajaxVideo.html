@@ -14,24 +14,17 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 03/05/13 1.03
+  ~  last modified: 25/06/13 22.32
   ~  ******************************************************************************/
   -->
 
 <div class="player" id="videoFragment" data-property="{videoURL:'BsekcY04xvQ',containment:'self',autoPlay:true, mute:true, startAt:0, opacity:1}"></div>
 <script>
-
-    jQuery.mbYTPlayer.controls = {
-        play  : "<img src='../images/play.png'>",
-        pause : "<img src='../images/pause.png'>",
-        mute  : "<img src='../images/mute.png'>",
-        unmute: "<img src='../images/unmute.png'>",
-        onlyYT: "<img src='../images/onlyVideo.png'>",
-        ytLogo: "<img src='../images/YTLogo.png'>"
-    };
-    var ID = "videoFragment"+ new Date().getTime();
+    //Change the ID of the video placeholder to let the YT API work on multiple calls
+    var ID = "videoFragment" + new Date().getTime();
     var el = jQuery("#videoFragment").get(0);
     jQuery("#videoFragment").attr("id", ID);
-    jQuery("#"+ID).mb_YTPlayer();
 
+    // Init the video
+    jQuery("#"+ID).mb_YTPlayer();
 </script>

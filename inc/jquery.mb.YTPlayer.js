@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 30/08/13 23.31
+ *  last modified: 02/10/13 22.42
  *  *****************************************************************************
  */
 
@@ -145,11 +145,10 @@ function onYouTubePlayerAPIReady() {
 
 				if (YTPlayer.opt.isBgndMovie && YTPlayer.opt.isBgndMovie.mute != undefined)
 					YTPlayer.opt.mute = YTPlayer.opt.isBgndMovie.mute;
+				/************************************************************/
 
 				if (!YTPlayer.opt.videoURL)
 					YTPlayer.opt.videoURL = $YTPlayer.attr("href");
-
-				/************************************************************/
 
 				var playerID = "mbYTP_" + YTPlayer.id;
 				var videoID = this.opt.videoURL ? this.opt.videoURL.getVideoID() : $YTPlayer.attr("href") ? $YTPlayer.attr("href").getVideoID() : false;

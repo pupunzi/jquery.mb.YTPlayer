@@ -782,6 +782,11 @@ function onYouTubePlayerAPIReady() {
 			YTPlayer.player.pauseVideo();
 		},
 
+    seekToYTP: function(val) {
+      var YTPlayer = this.get(0);
+      YTPlayer.player.seekTo(val,true);
+    },
+
 		setYTPVolume: function (val) {
 			var YTPlayer = this.get(0);
 			if (!val && !YTPlayer.opt.vol && player.getVolume() == 0)
@@ -1004,6 +1009,7 @@ function onYouTubePlayerAPIReady() {
 	jQuery.fn.toggleLoops = jQuery.mbYTPlayer.toggleLoops;
 	jQuery.fn.stopYTP = jQuery.mbYTPlayer.stopYTP;
 	jQuery.fn.pauseYTP = jQuery.mbYTPlayer.pauseYTP;
+  jQuery.fn.seekToYTP = jQuery.mbYTPlayer.seekToYTP;
 	jQuery.fn.muteYTPVolume = jQuery.mbYTPlayer.muteYTPVolume;
 	jQuery.fn.unmuteYTPVolume = jQuery.mbYTPlayer.unmuteYTPVolume;
 	jQuery.fn.setYTPVolume = jQuery.mbYTPlayer.setYTPVolume;

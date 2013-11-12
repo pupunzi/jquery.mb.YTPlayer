@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 02/10/13 22.42
+ *  last modified: 12/11/13 20.07
  *  *****************************************************************************
  */
 
@@ -67,7 +67,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name           : "jquery.mb.YTPlayer",
-		version        : "2.5.7",
+		version        : "2.5.8",
 		author         : "Matteo Bicocchi",
 		defaults       : {
 			containment            : "body",
@@ -581,6 +581,15 @@ function onYouTubePlayerAPIReady() {
 			jQuery(YTPlayer).changeMovie(YTPlayer.videos[YTPlayer.videoCounter]);
 		},
 
+		playPrev: function(){
+			var YTPlayer = this.get(0);
+			YTPlayer.videoCounter--;
+			if(YTPlayer.videoCounter<=0)
+				YTPlayer.videoCounter = YTPlayer.videoLength;
+			jQuery(YTPlayer.playerEl).css({opacity:0});
+			jQuery(YTPlayer).changeMovie(YTPlayer.videos[YTPlayer.videoCounter]);
+		},
+
 		changeMovie: function (opt) {
 			var YTPlayer = this.get(0);
 			var data = YTPlayer.opt;
@@ -999,6 +1008,7 @@ function onYouTubePlayerAPIReady() {
 	jQuery.fn.mb_YTPlayer = jQuery.mbYTPlayer.buildPlayer;
 	jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.YTPlaylist;
 	jQuery.fn.playNext = jQuery.mbYTPlayer.playNext;
+	jQuery.fn.playPrev = jQuery.mbYTPlayer.playPrev;
 	jQuery.fn.changeMovie = jQuery.mbYTPlayer.changeMovie;
 	jQuery.fn.getVideoID = jQuery.mbYTPlayer.getVideoID;
 	jQuery.fn.getPlayer = jQuery.mbYTPlayer.getPlayer;

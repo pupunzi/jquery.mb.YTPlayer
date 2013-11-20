@@ -882,9 +882,9 @@ function onYouTubePlayerAPIReady() {
 				YTPlayer.timeW = e.clientX - timeBar.offset().left;
 				controlBar.find(".mb_YTVPLoaded").css({width: 0});
 				var totalTime = Math.floor(YTPlayer.player.getDuration());
-				YTPlayer.goto = (timeBar.outerWidth() * totalTime) / progressBar.outerWidth();
+				YTPlayer['goto'] = (timeBar.outerWidth() * totalTime) / progressBar.outerWidth();
 
-				YTPlayer.player.seekTo(parseFloat(YTPlayer.goto), true);
+				YTPlayer.player.seekTo(parseFloat(YTPlayer['goto']), true);
 				controlBar.find(".mb_YTVPLoaded").css({width: 0});
 			});
 

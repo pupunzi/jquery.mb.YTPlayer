@@ -14,72 +14,15 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 23/11/13 18.09
+ *  last modified: 23/11/13 21.05
  *  *****************************************************************************
  */
 
-/*Browser detection patch*/
-if (!jQuery.browser) {
-	jQuery.browser = {};
-	jQuery.browser.mozilla = !1;
-	jQuery.browser.webkit = !1;
-	jQuery.browser.opera = !1;
-	jQuery.browser.msie = !1;
-	var nAgt = navigator.userAgent;
-	jQuery.browser.ua = nAgt;
-	jQuery.browser.name = navigator.appName;
-	jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion);
-	jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
-	var nameOffset, verOffset, ix;
-	if (-1 != (verOffset = nAgt.indexOf("Opera")))jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = nAgt.substring(verOffset + 6), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)); else if (-1 != (verOffset = nAgt.indexOf("MSIE")))jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer", jQuery.browser.fullVersion = nAgt.substring(verOffset + 5); else if (-1 != nAgt.indexOf("Trident")) {
-		jQuery.browser.msie = !0;
-		jQuery.browser.name = "Microsoft Internet Explorer";
-		var start = nAgt.indexOf("rv:") + 3, end = start + 4;
-		jQuery.browser.fullVersion = nAgt.substring(start, end)
-	} else-1 != (verOffset = nAgt.indexOf("Chrome")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Chrome", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7)) : -1 != (verOffset = nAgt.indexOf("Safari")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("AppleWebkit")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("Firefox")) ? (jQuery.browser.mozilla = !0, jQuery.browser.name = "Firefox", jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)) : (nameOffset = nAgt.lastIndexOf(" ") + 1) < (verOffset = nAgt.lastIndexOf("/")) && (jQuery.browser.name = nAgt.substring(nameOffset, verOffset), jQuery.browser.fullVersion = nAgt.substring(verOffset + 1), jQuery.browser.name.toLowerCase() == jQuery.browser.name.toUpperCase() && (jQuery.browser.name = navigator.appName));
-	-1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
-	-1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
-	jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10);
-	isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10));
-	jQuery.browser.version = jQuery.browser.majorVersion;
-}
-
-
-/*******************************************************************************
- * jQuery.mb.components: jquery.mb.CSSAnimate
- ******************************************************************************/
-
-jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuery(this);if(0!==c.length&&a){"function"==typeof b&&(f=b,b=jQuery.fx.speeds._default);"function"==typeof k&&(f=k,k=0);"function"==typeof l&&(f=l,l="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof b)for(var j in jQuery.fx.speeds)if(b==j){b=jQuery.fx.speeds[j];break}else b=null;if(jQuery.support.transition){var e="",h="transitionEnd";jQuery.browser.webkit?(e="-webkit-",h="webkitTransitionEnd"):jQuery.browser.mozilla? (e="-moz-",h="transitionend"):jQuery.browser.opera?(e="-o-",h="otransitionend"):jQuery.browser.msie&&(e="-ms-",h="msTransitionEnd");j=[];for(d in a){var g=d;"transform"===g&&(g=e+"transform",a[g]=a[d],delete a[d]);"transform-origin"===g&&(g=e+"transform-origin",a[g]=a[d],delete a[d]);j.push(g);c.css(g)||c.css(g,0)}d=j.join(",");c.css(e+"transition-property",d);c.css(e+"transition-duration",b+"ms");c.css(e+"transition-delay",k+"ms");c.css(e+"transition-timing-function",l);c.css(e+"backface-visibility", "hidden");setTimeout(function(){c.css(a)},0);setTimeout(function(){c.called||!f?c.called=!1:f()},b+20);c.on(h,function(a){c.off(h);c.css(e+"transition","");a.stopPropagation();"function"==typeof f&&(c.called=!0,f());return!1})}else{for(var d in a)"transform"===d&&delete a[d],"transform-origin"===d&&delete a[d],"auto"===a[d]&&delete a[d];if(!f||"string"===typeof f)f="linear";c.animate(a,b,f)}}})}; jQuery.fn.CSSAnimateStop=function(){var a="",b="transitionEnd";jQuery.browser.webkit?(a="-webkit-",b="webkitTransitionEnd"):jQuery.browser.mozilla?(a="-moz-",b="transitionend"):jQuery.browser.opera?(a="-o-",b="otransitionend"):jQuery.browser.msie&&(a="-ms-",b="msTransitionEnd");jQuery(this).css(a+"transition","");jQuery(this).off(b)}; jQuery.support.transition=function(){var a=(document.body||document.documentElement).style;return void 0!==a.transition||void 0!==a.WebkitTransition||void 0!==a.MozTransition||void 0!==a.MsTransition||void 0!==a.OTransition}();
-
-/*
- * Metadata - jQuery plugin for parsing metadata from elements
- * Copyright (c) 2006 John Resig, Yehuda Katz, Jörn Zaefferer, Paul McLanahan
- * Dual licensed under the MIT and GPL licenses:
- *   http://www.opensource.org/licenses/mit-license.php
- *   http://www.gnu.org/licenses/gpl.html
- */
-
-(function(c){c.extend({metadata:{defaults:{type:"class",name:"metadata",cre:/({.*})/,single:"metadata"},setType:function(b,c){this.defaults.type=b;this.defaults.name=c},get:function(b,f){var d=c.extend({},this.defaults,f);d.single.length||(d.single="metadata");var a=c.data(b,d.single);if(a)return a;a="{}";if("class"==d.type){var e=d.cre.exec(b.className);e&&(a=e[1])}else if("elem"==d.type){if(!b.getElementsByTagName)return;e=b.getElementsByTagName(d.name);e.length&&(a=c.trim(e[0].innerHTML))}else void 0!= b.getAttribute&&(e=b.getAttribute(d.name))&&(a=e);0>a.indexOf("{")&&(a="{"+a+"}");a=eval("("+a+")");c.data(b,d.single,a);return a}}});c.fn.metadata=function(b){return c.metadata.get(this[0],b)}})(jQuery);
-
-/***************************************************************************************/
 if(typeof ytp != "object")
 	ytp ={};
 
-String.prototype.getVideoID=function(){
-	var movieURL;
-	if(this.substr(0,16)=="http://youtu.be/"){
-		movieURL= this.replace("http://youtu.be/","");
-	}else if(this.indexOf("http")>-1){
-		movieURL = this.match(/[\\?&]v=([^&#]*)/)[1];
-	}else{
-		movieURL = this
-	}
-	return movieURL;
-};
-
-var isDevice = 'ontouchstart' in window;
-
 function onYouTubePlayerAPIReady() {
+
 	if(ytp.YTAPIReady)
 		return;
 
@@ -87,11 +30,69 @@ function onYouTubePlayerAPIReady() {
 	jQuery(document).trigger("YTAPIReady");
 }
 
-(function (jQuery) {
+(function (jQuery, ytp) {
+
+	ytp.isDevice = 'ontouchstart' in window;
+
+	/*Browser detection patch*/
+	if (!jQuery.browser) {
+		jQuery.browser = {};
+		jQuery.browser.mozilla = !1;
+		jQuery.browser.webkit = !1;
+		jQuery.browser.opera = !1;
+		jQuery.browser.msie = !1;
+		var nAgt = navigator.userAgent;
+		jQuery.browser.ua = nAgt;
+		jQuery.browser.name = navigator.appName;
+		jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion);
+		jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
+		var nameOffset, verOffset, ix;
+		if (-1 != (verOffset = nAgt.indexOf("Opera")))jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = nAgt.substring(verOffset + 6), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)); else if (-1 != (verOffset = nAgt.indexOf("MSIE")))jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer", jQuery.browser.fullVersion = nAgt.substring(verOffset + 5); else if (-1 != nAgt.indexOf("Trident")) {
+			jQuery.browser.msie = !0;
+			jQuery.browser.name = "Microsoft Internet Explorer";
+			var start = nAgt.indexOf("rv:") + 3, end = start + 4;
+			jQuery.browser.fullVersion = nAgt.substring(start, end)
+		} else-1 != (verOffset = nAgt.indexOf("Chrome")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Chrome", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7)) : -1 != (verOffset = nAgt.indexOf("Safari")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("AppleWebkit")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("Firefox")) ? (jQuery.browser.mozilla = !0, jQuery.browser.name = "Firefox", jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)) : (nameOffset = nAgt.lastIndexOf(" ") + 1) < (verOffset = nAgt.lastIndexOf("/")) && (jQuery.browser.name = nAgt.substring(nameOffset, verOffset), jQuery.browser.fullVersion = nAgt.substring(verOffset + 1), jQuery.browser.name.toLowerCase() == jQuery.browser.name.toUpperCase() && (jQuery.browser.name = navigator.appName));
+		-1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
+		-1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
+		jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10);
+		isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10));
+		jQuery.browser.version = jQuery.browser.majorVersion
+	}
+
+	/*******************************************************************************
+	 * jQuery.mb.components: jquery.mb.CSSAnimate
+	 ******************************************************************************/
+
+	jQuery.fn.CSSAnimate=function(a,b,k,l,f){return this.each(function(){var c=jQuery(this);if(0!==c.length&&a){"function"==typeof b&&(f=b,b=jQuery.fx.speeds._default);"function"==typeof k&&(f=k,k=0);"function"==typeof l&&(f=l,l="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof b)for(var j in jQuery.fx.speeds)if(b==j){b=jQuery.fx.speeds[j];break}else b=null;if(jQuery.support.transition){var e="",h="transitionEnd";jQuery.browser.webkit?(e="-webkit-",h="webkitTransitionEnd"):jQuery.browser.mozilla? (e="-moz-",h="transitionend"):jQuery.browser.opera?(e="-o-",h="otransitionend"):jQuery.browser.msie&&(e="-ms-",h="msTransitionEnd");j=[];for(d in a){var g=d;"transform"===g&&(g=e+"transform",a[g]=a[d],delete a[d]);"transform-origin"===g&&(g=e+"transform-origin",a[g]=a[d],delete a[d]);j.push(g);c.css(g)||c.css(g,0)}d=j.join(",");c.css(e+"transition-property",d);c.css(e+"transition-duration",b+"ms");c.css(e+"transition-delay",k+"ms");c.css(e+"transition-timing-function",l);c.css(e+"backface-visibility", "hidden");setTimeout(function(){c.css(a)},0);setTimeout(function(){c.called||!f?c.called=!1:f()},b+20);c.on(h,function(a){c.off(h);c.css(e+"transition","");a.stopPropagation();"function"==typeof f&&(c.called=!0,f());return!1})}else{for(var d in a)"transform"===d&&delete a[d],"transform-origin"===d&&delete a[d],"auto"===a[d]&&delete a[d];if(!f||"string"===typeof f)f="linear";c.animate(a,b,f)}}})}; jQuery.fn.CSSAnimateStop=function(){var a="",b="transitionEnd";jQuery.browser.webkit?(a="-webkit-",b="webkitTransitionEnd"):jQuery.browser.mozilla?(a="-moz-",b="transitionend"):jQuery.browser.opera?(a="-o-",b="otransitionend"):jQuery.browser.msie&&(a="-ms-",b="msTransitionEnd");jQuery(this).css(a+"transition","");jQuery(this).off(b)}; jQuery.support.transition=function(){var a=(document.body||document.documentElement).style;return void 0!==a.transition||void 0!==a.WebkitTransition||void 0!==a.MozTransition||void 0!==a.MsTransition||void 0!==a.OTransition}();
+
+	/*
+	 * Metadata - jQuery plugin for parsing metadata from elements
+	 * Copyright (c) 2006 John Resig, Yehuda Katz, Jörn Zaefferer, Paul McLanahan
+	 * Dual licensed under the MIT and GPL licenses:
+	 *   http://www.opensource.org/licenses/mit-license.php
+	 *   http://www.gnu.org/licenses/gpl.html
+	 */
+
+	(function(c){c.extend({metadata:{defaults:{type:"class",name:"metadata",cre:/({.*})/,single:"metadata"},setType:function(b,c){this.defaults.type=b;this.defaults.name=c},get:function(b,f){var d=c.extend({},this.defaults,f);d.single.length||(d.single="metadata");var a=c.data(b,d.single);if(a)return a;a="{}";if("class"==d.type){var e=d.cre.exec(b.className);e&&(a=e[1])}else if("elem"==d.type){if(!b.getElementsByTagName)return;e=b.getElementsByTagName(d.name);e.length&&(a=c.trim(e[0].innerHTML))}else void 0!= b.getAttribute&&(e=b.getAttribute(d.name))&&(a=e);0>a.indexOf("{")&&(a="{"+a+"}");a=eval("("+a+")");c.data(b,d.single,a);return a}}});c.fn.metadata=function(b){return c.metadata.get(this[0],b)}})(jQuery);
+
+
+	String.prototype.getVideoID=function(){
+		var movieURL;
+		if(this.substr(0,16)=="http://youtu.be/"){
+			movieURL= this.replace("http://youtu.be/","");
+		}else if(this.indexOf("http")>-1){
+			movieURL = this.match(/[\\?&]v=([^&#]*)/)[1];
+		}else{
+			movieURL = this
+		}
+		return movieURL;
+	};
+
 
 	jQuery.mbYTPlayer = {
 		name           : "jquery.mb.YTPlayer",
-		version        : "2.5.9",
+		version        : "2.6.0",
 		author         : "Matteo Bicocchi",
 		defaults       : {
 			containment            : "body",
@@ -204,7 +205,7 @@ function onYouTubePlayerAPIReady() {
 
 				YTPlayer.isBackground = YTPlayer.opt.containment.get(0).tagName.toLowerCase() == "body";
 
-				if (isDevice && YTPlayer.isBackground){
+				if (ytp.isDevice && YTPlayer.isBackground){
 					$YTPlayer.hide();
 					return;
 				}
@@ -241,7 +242,7 @@ function onYouTubePlayerAPIReady() {
 
 				playerBox.css({opacity: 1});
 
-				if (!isDevice){
+				if (!ytp.isDevice){
 					playerBox.after(overlay);
 					YTPlayer.overlay = overlay;
 				}
@@ -294,7 +295,7 @@ function onYouTubePlayerAPIReady() {
 
 					jQuery(document).on("getVideoInfo_" + YTPlayer.opt.id, function () {
 
-						if(isDevice && !YTPlayer.isBackground){
+						if(ytp.isDevice && !YTPlayer.isBackground){
 							new YT.Player(playerID, {
 								height: '100%',
 								width: '100%',
@@ -337,18 +338,19 @@ function onYouTubePlayerAPIReady() {
 									if (YTPlayer.opt.showControls)
 										jQuery(YTPlayer).buildYTPControls();
 
-									//YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
+									YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 
 									if (YTPlayer.opt.startAt > 0)
 										YTPlayer.player.seekTo(parseFloat(YTPlayer.opt.startAt), true);
 
 									if (!YTPlayer.opt.autoPlay) {
-
-										$YTPlayer.stopYTP();
+										//	$YTPlayer.stopYTP();
+										YTPlayer.player.pauseVideo();
 										YTPlayer.checkForStartAt = setInterval(function () {
 											if (YTPlayer.player.getCurrentTime() >= YTPlayer.opt.startAt) {
 												clearInterval(YTPlayer.checkForStartAt);
-												$YTPlayer.pauseYTP();
+
+												//YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
 
 												if (YTPlayer.opt.mute) {
 													jQuery(YTPlayer).muteYTPVolume();
@@ -475,6 +477,10 @@ function onYouTubePlayerAPIReady() {
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.pause);
 
 										jQuery(YTPlayer).trigger("YTPStart");
+
+										if (typeof _gaq != "undefined")
+											_gaq.push(['_trackEvent', 'YTPlayer', 'Play', (YTPlayer.title || YTPlayer.videoID.toString())]);
+
 									}
 
 									if (state == 2) { // pause
@@ -679,38 +685,42 @@ function onYouTubePlayerAPIReady() {
 
 		fullscreen: function(real) {
 
-			if(typeof real == "string")
-				real = eval(real);
-
-			if((jQuery.browser.msie || jQuery.browser.opera || self.location.href != top.location.href))
-				real=false;
-
 			var YTPlayer = this.get(0);
 
 			var controls = jQuery("#controlBar_" + YTPlayer.id);
 			var fullScreenBtn = controls.find(".mb_OnlyYT");
 			var videoWrapper = jQuery(YTPlayer.wrapper);
+			if(real){
+				var fullscreenchange = jQuery.browser.mozilla ? "mozfullscreenchange" : jQuery.browser.webkit ? "webkitfullscreenchange" : "fullscreenchange";
+				jQuery(document).off(fullscreenchange);
+				jQuery(document).on(fullscreenchange, function() {
+					var isFullScreen = RunPrefixMethod(document, "IsFullScreen") || RunPrefixMethod(document, "FullScreen");
 
-			if(real)
-				setTimeout(function(){
-					var fullscreenchange = jQuery.browser.mozilla ? "mozfullscreenchange" : jQuery.browser.webkit ? "webkitfullscreenchange" : jQuery.browser.msie ? "msfullscreenchange" :  jQuery.browser.opera ? "ofullscreenchange" : "fullscreenchange";
-					jQuery(document).one(fullscreenchange, function(e) {
-						var isFullScreen = RunPrefixMethod(document, "IsFullScreen") || RunPrefixMethod(document, "FullScreen");
-						if (!isFullScreen) {
-							YTPlayer.isAlone = false;
-							fullScreenBtn.html(jQuery.mbYTPlayer.controls.onlyYT)
+					if (!isFullScreen) {
+						jQuery(YTPlayer).removeClass("fullscreen");
+						YTPlayer.isAlone = false;
+						fullScreenBtn.html(jQuery.mbYTPlayer.controls.onlyYT)
+						jQuery(YTPlayer).setVideoQuality(YTPlayer.opt.quality);
+
+						if (YTPlayer.isBackground){
 							jQuery("body").after(controls);
+						}else{
+							YTPlayer.wrapper.before(controls);
 						}
-					});
-				},2000);
+
+						jQuery(window).resize();
+
+					}else{
+						jQuery(YTPlayer).setVideoQuality("default");
+					}
+				});
+			}
 
 			if (!YTPlayer.isAlone) {
-				if (YTPlayer.player.getPlayerState() >= 1) {
+
 
 					if(YTPlayer.player.getPlayerState() != 1 && YTPlayer.player.getPlayerState() != 2)
 						jQuery(YTPlayer).playYTP();
-
-					jQuery(YTPlayer).setVideoQuality("default");
 
 					if(real){
 						YTPlayer.wrapper.append(controls);
@@ -723,8 +733,9 @@ function onYouTubePlayerAPIReady() {
 
 					fullScreenBtn.html(jQuery.mbYTPlayer.controls.showSite)
 					YTPlayer.isAlone = true;
-				}
+
 			} else {
+
 				if(real){
 					cancelFullscreen();
 				} else{
@@ -951,7 +962,7 @@ function onYouTubePlayerAPIReady() {
 					if(!data.loop){
 						YTPlayer.player.pauseVideo();
 						YTPlayer.wrapper.CSSAnimate({opacity: 0}, 2000,function(){
-							YTPlayer.player.seekTo(startAt);
+							YTPlayer.player.seekTo(startAt, true);
 
 							if (!YTPlayer.isBackground) {
 								var bgndURL = YTPlayer.videoData.thumbnail.hqDefault;
@@ -1026,7 +1037,6 @@ function onYouTubePlayerAPIReady() {
 		return newArray;
 	};
 
-
 	jQuery.fn.mb_YTPlayer = jQuery.mbYTPlayer.buildPlayer;
 	jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.YTPlaylist;
 	jQuery.fn.playNext = jQuery.mbYTPlayer.playNext;
@@ -1048,4 +1058,4 @@ function onYouTubePlayerAPIReady() {
 	jQuery.fn.setVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
 	jQuery.fn.manageYTPProgress = jQuery.mbYTPlayer.manageYTPProgress;
 
-})(jQuery);
+})(jQuery, ytp);

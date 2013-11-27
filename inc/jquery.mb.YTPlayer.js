@@ -437,6 +437,7 @@ function onYouTubePlayerAPIReady() {
 										if (YTPlayer.state == state)
 											return;
 										YTPlayer.state = state;
+										YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.play);
 										jQuery(YTPlayer).trigger("YTPBuffering");
 									}

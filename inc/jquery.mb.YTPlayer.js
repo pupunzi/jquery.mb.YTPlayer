@@ -616,8 +616,8 @@ function onYouTubePlayerAPIReady() {
 		playPrev: function(){
 			var YTPlayer = this.get(0);
 			YTPlayer.videoCounter--;
-			if(YTPlayer.videoCounter<=0)
-				YTPlayer.videoCounter = YTPlayer.videoLength;
+			if(YTPlayer.videoCounter<0)
+				YTPlayer.videoCounter = YTPlayer.videoLength-1;
 			jQuery(YTPlayer.playerEl).css({opacity:0});
 			jQuery(YTPlayer).changeMovie(YTPlayer.videos[YTPlayer.videoCounter]);
 		},

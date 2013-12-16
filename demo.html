@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 23/11/13 21.05
+  ~  last modified: 06/12/13 20.00
   ~  ******************************************************************************/
   -->
 
@@ -32,7 +32,7 @@
             border:none;
             margin:0;
             padding:30px;
-            background: #444;
+            background: #e4a51b;
             font:normal 16px/20px Lekton, sans-serif;
         }
 
@@ -60,26 +60,64 @@
                 $("#wrapper").prepend(logo);
                 $("#logo").fadeIn();
             }
+            //debug functions
+            jQuery("#bgndVideo").on("YTPStart", function(){
+                jQuery("#eventListener").html("YTPStart");
+                jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
+            });
+            jQuery("#bgndVideo").on("YTPEnd", function(){
+                jQuery("#eventListener").html("YTPEnd");
+                jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
+            });
+            jQuery("#bgndVideo").on("YTPPause", function(){
+                jQuery("#eventListener").html("YTPPause");
+                jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
+            });
+            jQuery("#bgndVideo").on("YTPBuffering", function(){
+                jQuery("#eventListener").html("YTPBuffering");
+                jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
+            });
 
             jQuery(".player").mb_YTPlayer();
 		});
 
-	</script>
+        var v = false;
+        function changeVideo(){
+            var vID = v ? "7SnmCUwOsts" : "BsekcY04xvQ";
+            jQuery('#bgndVideo').changeMovie({videoURL:vID});
+
+            $("#vidData").toggle(1000);
+            v = !v;
+        }
+
+
+    </script>
 </head>
 <body>
 <div id="wrapper" style="position:relative; padding:30px 20px;z-index:10">
 	<h1 style="color:white"> jQuery.mb.YTPlayer </h1>
-	<h2 style="color:white">  using the HTML5 iFrame Youtube API </h2>
+	<h2 style="color:white">  A Background HTML5 player for YouTube videos</h2>
+
+    <div class="console">
+        <button class="command" onclick="jQuery('#bgndVideo').getPlayer().playVideo()"> play </button>
+        <button class="command" onclick="jQuery('#bgndVideo').getPlayer().pauseVideo()"> pause </button>
+        <button class="command" onclick="changeVideo();"> switch video </button>
+        <button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> quality </button>
+        <br>
+        <br>
+        <span style="font-size: 18px;">events: </span><span id="eventListener" style="font-size: 18px;">(trace player events)</span>
+
+        <h3 id="vidData" style="color:white">
+            AIMLESS
+            <br> music by Pietro Bicocchi
+            <br> video by Matteo Bicocchi
+        </h3>
+    </div>
+
+
 </div>
 
-<div id="P1" class="player" style="display:block; margin: auto; background: rgba(0,0,0,0.5)" data-property="{videoURL:'http://www.youtube.com/watch?v=l_tHTmd5pgk',containment:'self',startAt:50,mute:false,autoPlay:false,loop:false,opacity:.8,printUrl:true}"></div><!--3ovA7zeviRo-->
-<div class="controls" style="text-align: center">
-<br>
-    <button onclick="jQuery('#P1').playYTP()">play</button>
-	<button onclick="jQuery('#P1').pauseYTP()">pause</button>
-	<button onclick="jQuery('#P1').toggleVolume()">mute/unmute</button>
-</div>
-<a id="P2" class="player" data-property="{videoURL:'BsekcY04xvQ',containment:'body',autoPlay:true, mute:true, startAt:0, opacity:1}">My video</a>
+<a id="bgndVideo" class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=7SnmCUwOsts',containment:'body',autoPlay:true, mute:false, startAt:0, opacity:1, addRaster:false, quality:'default'}">My video</a> <!--BsekcY04xvQ-->
 
 <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
 

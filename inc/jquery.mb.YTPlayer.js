@@ -100,6 +100,7 @@ function onYouTubePlayerAPIReady() {
 			showYTLogo             : false,
 			videoURL               : null,
 			startAt                : 0,
+			stopAt                : 0,
 			autoPlay               : true,
 			vol                    :100,
 			addRaster              : false,
@@ -343,14 +344,13 @@ function onYouTubePlayerAPIReady() {
 									if (YTPlayer.opt.startAt > 0)
 										YTPlayer.player.seekTo(parseFloat(YTPlayer.opt.startAt), true);
 
+									YTPlayer.player.setVolume(YTPlayer.opt.vol);
+
 									if (!YTPlayer.opt.autoPlay) {
-										//	$YTPlayer.stopYTP();
 										YTPlayer.player.pauseVideo();
 										YTPlayer.checkForStartAt = setInterval(function () {
 											if (YTPlayer.player.getCurrentTime() >= YTPlayer.opt.startAt) {
 												clearInterval(YTPlayer.checkForStartAt);
-
-												//YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
 
 												if (YTPlayer.opt.mute) {
 													jQuery(YTPlayer).muteYTPVolume();
@@ -362,7 +362,6 @@ function onYouTubePlayerAPIReady() {
 
 									} else {
 										$YTPlayer.playYTP();
-										YTPlayer.player.setVolume(YTPlayer.opt.vol);
 
 										if (YTPlayer.opt.mute) {
 											jQuery(YTPlayer).muteYTPVolume();
@@ -946,7 +945,6 @@ function onYouTubePlayerAPIReady() {
 				jQuery("body").after(controlBar);
 			}
 			controlBar.fadeIn();
-
 		},
 
 		checkForState:function(YTPlayer){
@@ -954,12 +952,13 @@ function onYouTubePlayerAPIReady() {
 			var controlBar = jQuery("#controlBar_" + YTPlayer.id);
 			var data = YTPlayer.opt;
 			var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
+			var stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
 
 			YTPlayer.getState = setInterval(function () {
 				var prog = jQuery(YTPlayer).manageYTPProgress();
 
 				controlBar.find(".mb_YTVPTime").html(jQuery.mbYTPlayer.formatTime(prog.currentTime) + " / " + jQuery.mbYTPlayer.formatTime(prog.totalTime));
-				if (parseFloat(YTPlayer.player.getDuration() - 3) < YTPlayer.player.getCurrentTime() && YTPlayer.player.getPlayerState() == 1 && !YTPlayer.isPlayList) {
+				if (YTPlayer.player.getPlayerState() == 1 && !YTPlayer.isPlayList && (parseFloat(YTPlayer.player.getDuration() - 3) < YTPlayer.player.getCurrentTime() || (stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) >  stopAt)) ) {
 					if(!data.loop){
 						YTPlayer.player.pauseVideo();
 						YTPlayer.wrapper.CSSAnimate({opacity: 0}, 2000,function(){

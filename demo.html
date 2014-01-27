@@ -4,7 +4,7 @@
   ~  jquery.mb.components
   ~  file: demo.html
   ~
-  ~  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
+  ~  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
   ~  Open lab srl, Firenze - Italy
   ~  email: matteo@open-lab.com
   ~  site: 	http://pupunzi.com
@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 06/12/13 20.00
+  ~  last modified: 09/01/14 22.04
   ~  ******************************************************************************/
   -->
 
@@ -53,7 +53,6 @@
     </style>
 
     <script>
-
 		jQuery(function(){
             if (self.location.href == top.location.href){
                 var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
@@ -64,6 +63,11 @@
             jQuery("#bgndVideo").on("YTPStart", function(){
                 jQuery("#eventListener").html("YTPStart");
                 jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
+            });
+            jQuery("#bgndVideo").on("YTPLoop", function(e){
+                jQuery("#eventListener").html("YTPLoop");
+                jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
+                jQuery("#eventListener").append(" :: "+ e.counter);
             });
             jQuery("#bgndVideo").on("YTPEnd", function(){
                 jQuery("#eventListener").html("YTPEnd");
@@ -78,19 +82,20 @@
                 jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
             });
 
-            jQuery(".player").mb_YTPlayer();
+            jQuery(".player").mb_YTPlayer({
+                onReady: function(){
+                    jQuery("#eventListener").append(" (Player is ready)");
+                }
+            });
 		});
 
         var v = false;
         function changeVideo(){
             var vID = v ? "7SnmCUwOsts" : "BsekcY04xvQ";
             jQuery('#bgndVideo').changeMovie({videoURL:vID});
-
             $("#vidData").toggle(1000);
             v = !v;
         }
-
-
     </script>
 </head>
 <body>
@@ -117,7 +122,7 @@
 
 </div>
 
-<a id="bgndVideo" class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=7SnmCUwOsts',containment:'body',autoPlay:true, mute:false, startAt:0, opacity:1, addRaster:false, quality:'default'}">My video</a> <!--BsekcY04xvQ-->
+<a id="bgndVideo" class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=7SnmCUwOsts',containment:'body', showControls:true, autoPlay:true, loop:true, mute:false, startAt:0, opacity:1, addRaster:false, quality:'default'}">My video</a> <!--BsekcY04xvQ-->
 
 <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
 

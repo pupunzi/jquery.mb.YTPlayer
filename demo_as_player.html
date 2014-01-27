@@ -4,7 +4,7 @@
   ~  jquery.mb.components
   ~  file: demo_as_player.html
   ~
-  ~  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
+  ~  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
   ~  Open lab srl, Firenze - Italy
   ~  email: matteo@open-lab.com
   ~  site: 	http://pupunzi.com
@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 06/12/13 20.00
+  ~  last modified: 07/01/14 22.50
   ~  ******************************************************************************/
   -->
 
@@ -75,12 +75,13 @@
 	<h2 style="color:white">  using the HTML5 iFrame Youtube API </h2>
 </div>
 
-<div id="P1" class="player" style="display:block; margin: auto; background: rgba(0,0,0,0.5)" data-property="{videoURL:'http://www.youtube.com/watch?v=l_tHTmd5pgk',containment:'self',startAt:50,mute:false,autoPlay:false,loop:false,opacity:.8,printUrl:true}"></div><!--3ovA7zeviRo-->
+<div id="P1" class="player" style="display:block; margin: auto; background: rgba(0,0,0,0.5)" data-property="{videoURL:'http://www.youtube.com/watch?v=l_tHTmd5pgk',containment:'self',startAt:20,mute:false,autoPlay:false,loop:false,opacity:.8,printUrl:true}"></div><!--3ovA7zeviRo-->
 <div class="controls" style="text-align: center">
 <br>
     <button onclick="jQuery('#P1').playYTP()">play</button>
 	<button onclick="jQuery('#P1').pauseYTP()">pause</button>
 	<button onclick="jQuery('#P1').toggleVolume()">mute/unmute</button>
+	<button onclick="jQuery('#P1').fullscreen()">go fullscreen</button>
 </div>
 <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
 

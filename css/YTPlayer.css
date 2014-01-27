@@ -3,7 +3,7 @@
  *  jquery.mb.components
  *  file: YTPlayer.css
  *
- *  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
+ *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
  *  Open lab srl, Firenze - Italy
  *  email: matteo@open-lab.com
  *  site: 	http://pupunzi.com
@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 06/12/13 20.00
+ *  last modified: 07/01/14 22.50
  *  *****************************************************************************
  */
 
@@ -68,6 +68,11 @@
   top: 0!important;
   left: 0!important;
   margin: 0!important;
+  border: none !important;
+}
+
+.mb_YTVPlayer.fullscreen .mbYTP_wrapper{
+  opacity:1 !important;
 }
 
 

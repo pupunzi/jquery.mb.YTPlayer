@@ -527,7 +527,9 @@ function onYouTubePlayerAPIReady() {
 				},1500)
 
 			} else {
-				YTPlayer.opt.ratio == "auto" ? YTPlayer.opt.ratio = "16/9" : YTPlayer.opt.ratio;
+				if(YTPlayer.opt.ratio == "auto"){
+					YTPlayer.opt.ratio = "16/9";
+				}
 
 				if(!YTPlayer.hasData){
 					YTPlayer.hasData = true;

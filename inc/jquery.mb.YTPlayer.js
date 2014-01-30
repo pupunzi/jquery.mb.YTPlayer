@@ -296,7 +296,8 @@ function onYouTubePlayerAPIReady() {
 								width: '100%',
 								videoId: YTPlayer.videoID,
 								events: {
-									'onReady': function(){
+									'onReady': function(event){
+										YTPlayer.player = event.target;
 										playerBox.css({opacity: 1});
 										YTPlayer.wrapper.css({opacity: 1});
 										$YTPlayer.optimizeDisplay();

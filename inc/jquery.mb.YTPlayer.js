@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 24/06/13 19.03
+ *  last modified: 16/02/14 21.40
  *  *****************************************************************************
  */
 
@@ -921,7 +921,7 @@ function onYouTubePlayerAPIReady() {
 		formatTime      : function (s) {
 			var min = Math.floor(s / 60);
 			var sec = Math.floor(s - (60 * min));
-			return (min < 9 ? "0" + min : min) + " : " + (sec < 9 ? "0" + sec : sec);
+			return (min <= 9 ? "0" + min : min) + " : " + (sec <= 9 ? "0" + sec : sec);
 		}
 	};
 

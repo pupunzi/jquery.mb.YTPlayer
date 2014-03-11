@@ -1020,8 +1020,8 @@ function onYouTubePlayerAPIReady() {
 		var win = {};
 		var el = !YTPlayer.isBackground ? data.containment : jQuery(window);
 
-		win.width = el.width();
-		win.height = el.height();
+		win.width = el.outerWidth();
+		win.height = el.outerHeight();
 
 		var margin = 24;
 		var vid = {};

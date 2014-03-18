@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 09/01/14 22.04
+  ~  last modified: 24/02/14 21.36
   ~  ******************************************************************************/
   -->
 
@@ -63,6 +63,7 @@
             jQuery("#bgndVideo").on("YTPStart", function(){
                 jQuery("#eventListener").html("YTPStart");
                 jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
+                jQuery("#eventListener").append(" :: (quality= "+ jQuery("#bgndVideo").getPlayer().getPlaybackQuality()+")");
             });
             jQuery("#bgndVideo").on("YTPLoop", function(e){
                 jQuery("#eventListener").html("YTPLoop");
@@ -104,8 +105,8 @@
 	<h2 style="color:white">  A Background HTML5 player for YouTube videos</h2>
 
     <div class="console">
-        <button class="command" onclick="jQuery('#bgndVideo').getPlayer().playVideo()"> play </button>
-        <button class="command" onclick="jQuery('#bgndVideo').getPlayer().pauseVideo()"> pause </button>
+        <button class="command" onclick="jQuery('#bgndVideo').playYTP()"> play </button>
+        <button class="command" onclick="jQuery('#bgndVideo').pauseYTP()"> pause </button>
         <button class="command" onclick="changeVideo();"> switch video </button>
         <button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> quality </button>
         <br>
@@ -123,7 +124,6 @@
 </div>
 
 <a id="bgndVideo" class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=7SnmCUwOsts',containment:'body', showControls:true, autoPlay:true, loop:true, mute:false, startAt:0, opacity:1, addRaster:false, quality:'default'}">My video</a> <!--BsekcY04xvQ-->
-
 <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
 
 </body>

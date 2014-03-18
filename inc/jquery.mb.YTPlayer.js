@@ -327,7 +327,8 @@ function onYouTubePlayerAPIReady() {
 								width: '100%',
 								videoId: YTPlayer.videoID,
 								events: {
-									'onReady': function(){
+									'onReady': function(event){
+										YTPlayer.player = event.target;
 										playerBox.css({opacity: 1});
 										YTPlayer.wrapper.css({opacity: 1});
 										$YTPlayer.optimizeDisplay();
@@ -1050,8 +1051,8 @@ function onYouTubePlayerAPIReady() {
 		var win = {};
 		var el = !YTPlayer.isBackground ? data.containment : jQuery(window);
 
-		win.width = el.width();
-		win.height = el.height();
+		win.width = el.outerWidth();
+		win.height = el.outerHeight();
 
 		var margin = 24;
 		var vid = {};

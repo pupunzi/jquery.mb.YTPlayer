@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 19/03/14 1.07
+ *  last modified: 30/03/14 17.07
  *  *****************************************************************************
  */
 
@@ -100,7 +100,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name           : "jquery.mb.YTPlayer",
-		version        : "2.6.3",
+		version        : "2.6.4",
 		author         : "Matteo Bicocchi",
 		defaults       : {
 			containment            : "body",
@@ -362,17 +362,18 @@ function onYouTubePlayerAPIReady() {
 
 									YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 									YTPlayer.player.setVolume(YTPlayer.opt.vol);
-									YTPlayer.player.seekTo(parseFloat(YTPlayer.opt.startAt), true);
 
 									jQuery.mbYTPlayer.checkForState(YTPlayer);
 
 									YTPlayer.checkForStartAt = setInterval(function () {
+
+										YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
+
 										if (YTPlayer.player.getCurrentTime() >= YTPlayer.opt.startAt && YTPlayer.player.getDuration()>0) {
 											clearInterval(YTPlayer.checkForStartAt);
 
 											if (typeof YTPlayer.opt.onReady == "function")
 												YTPlayer.opt.onReady($YTPlayer);
-
 
 											if (YTPlayer.opt.autoPlay)
 												$YTPlayer.playYTP();
@@ -979,7 +980,7 @@ function onYouTubePlayerAPIReady() {
 		},
 
 		checkForState:function(YTPlayer){
-
+			clearInterval(YTPlayer.getState);
 			YTPlayer.getState = setInterval(function () {
 				var prog = jQuery(YTPlayer).manageYTPProgress();
 				var $YTPlayer = jQuery(YTPlayer);
@@ -1019,7 +1020,6 @@ function onYouTubePlayerAPIReady() {
 						});
 					}else
 						YTPlayer.player.seekTo(startAt, true);
-					clearInterval(YTPlayer.getState);
 				}
 			}, 1);
 

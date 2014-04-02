@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 28/03/14 23.35
+  ~  last modified: 02/04/14 22.04
   ~  ******************************************************************************/
   -->
 
@@ -34,6 +34,17 @@
             padding:30px;
             background: #e4a51b;
             font:normal 16px/20px Lekton, sans-serif;
+        }
+        #testText{
+            position: absolute;
+            font-size: 45px;
+            color: #ffffff;
+            width: 400px;
+            height: 70px;
+            top:50%;
+            left: 50%;
+            margin-top: -35px;
+            margin-left: -200px;
         }
 
     </style>
@@ -55,10 +66,12 @@
 	<h1 style="color:white"> jQuery.mb.YTPlayer </h1>
 	<h2 style="color:white">  A Background HTML5 player for YouTube videos</h2>
 
-    <div id="customElement" style="width: 100%; height: 300px; background: red;"></div>
+    <div id="customElement" style="width: 100%; height: 300px; background: red;">
+        <div id="testText">this is a text</div>
+    </div>
 </div>
 
-<a id="video" class="player" data-property="{videoURL:'7SnmCUwOsts',containment:'#customElement', showControls:true, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, addRaster:false, quality:'default'}">My video</a> <!--BsekcY04xvQ-->
+<a id="video" class="player" data-property="{videoURL:'7SnmCUwOsts',containment:'#customElement', showControls:false, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, addRaster:false, quality:'default'}">My video</a> <!--BsekcY04xvQ-->
 
 <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
 

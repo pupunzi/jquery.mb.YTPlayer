@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 02/04/14 0.50
+ *  last modified: 02/04/14 22.26
  *  *****************************************************************************
  */
 
@@ -709,7 +709,7 @@ function onYouTubePlayerAPIReady() {
 
 			var controls = jQuery("#controlBar_" + YTPlayer.id);
 			var fullScreenBtn = controls.find(".mb_OnlyYT");
-			var videoWrapper = YTPlayer.isBackground ? YTPlayer.wrapper : YTPlayer.opt.containment;
+			var videoWrapper = YTPlayer.isBackground ? YTPlayer.wrapper : YTPlayer.wrapper;
 			//var videoWrapper = YTPlayer.wrapper;
 
 			if(real){
@@ -747,14 +747,16 @@ function onYouTubePlayerAPIReady() {
 				if(real){
 
 					var playerState = YTPlayer.player.getPlayerState();
-					YTPlayer.wrapper.append(controls);
+					videoWrapper.css({opacity:0});
 					launchFullscreen(videoWrapper.get(0));
-					videoWrapper.css({opacity:0}).addClass("fullscreen");
 					setTimeout(function(){
-						videoWrapper.CSSAnimate({ opacity:1},1000);
-
+						videoWrapper.CSSAnimate({opacity:1},1000);
+						YTPlayer.wrapper.append(controls);
+						videoWrapper.addClass("fullscreen");
+						jQuery(YTPlayer).optimizeDisplay();
+						console.debug(YTPlayer);
 						YTPlayer.player.seekTo(YTPlayer.player.getCurrentTime() +.1, true);
-					},2000)
+					},500)
 				} else
 					videoWrapper.css({zIndex: 10000}).CSSAnimate({opacity: 1}, 1000);
 
@@ -1062,7 +1064,8 @@ function onYouTubePlayerAPIReady() {
 		var data = YTPlayer.opt;
 		var playerBox = jQuery(YTPlayer.playerEl);
 		var win = {};
-		var el = !YTPlayer.isBackground ? data.containment : jQuery(window);
+//		var el = !YTPlayer.isBackground ? data.containment : jQuery(window);
+		var el = YTPlayer.wrapper;
 
 		win.width = el.outerWidth();
 		win.height = el.outerHeight();

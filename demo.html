@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 30/03/14 17.03
+  ~  last modified: 13/04/14 21.29
   ~  ******************************************************************************/
   -->
 
@@ -73,6 +73,7 @@
             jQuery("#bgndVideo").on("YTPEnd", function(){
                 jQuery("#eventListener").html("YTPEnd");
                 jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
+                console.debug("YTPEnd")
             });
             jQuery("#bgndVideo").on("YTPPause", function(){
                 jQuery("#eventListener").html("YTPPause");

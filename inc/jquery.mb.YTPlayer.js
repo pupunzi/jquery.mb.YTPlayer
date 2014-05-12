@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 13/04/14 21.44
+ *  last modified: 08/05/14 23.16
  *  *****************************************************************************
  */
 
@@ -242,7 +242,7 @@ function onYouTubePlayerAPIReady() {
 				if (YTPlayer.isBackground && ytp.backgroundIsInited)
 					return;
 
-				YTPlayer.opt.containment.children().each(function () {
+				YTPlayer.opt.containment.children()..not("script, style").each(function () {
 					if (jQuery(this).css("position") == "static")
 						jQuery(this).css("position", "relative");
 				});

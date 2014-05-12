@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 08/05/14 23.16
+ *  last modified: 12/05/14 19.53
  *  *****************************************************************************
  */
 
@@ -99,7 +99,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name            : "jquery.mb.YTPlayer",
-		version         : "2.6.6",
+		version         : "2.6.7",
 		author          : "Matteo Bicocchi",
 		defaults        : {
 			containment            : "body",
@@ -242,7 +242,7 @@ function onYouTubePlayerAPIReady() {
 				if (YTPlayer.isBackground && ytp.backgroundIsInited)
 					return;
 
-				YTPlayer.opt.containment.children()..not("script, style").each(function () {
+				YTPlayer.opt.containment.children().not("script, style").each(function () {
 					if (jQuery(this).css("position") == "static")
 						jQuery(this).css("position", "relative");
 				});
@@ -482,7 +482,7 @@ function onYouTubePlayerAPIReady() {
 
 										jQuery(YTPlayer).trigger("YTPStart");
 
-										if (typeof _gaq != "undefined" && YTPlayer.opt.gaTrack)
+										if (typeof _gaq != "undefined" && eval(YTPlayer.opt.gaTrack))
 											_gaq.push(['_trackEvent', 'YTPlayer', 'Play', (YTPlayer.title || YTPlayer.videoID.toString())]);
 
 									}

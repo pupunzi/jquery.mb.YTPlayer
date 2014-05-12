@@ -363,16 +363,11 @@ function onYouTubePlayerAPIReady() {
 
 									var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
 
-									//if(jQuery.browser.webkit)
-									//YTPlayer.player.loadVideoById(YTPlayer.videoID.toString(), startAt, YTPlayer.opt.quality);
-
-//									YTPlayer.player.setVolume(0);
 									YTPlayer.player.stopVideo();
 									jQuery.mbYTPlayer.checkForState(YTPlayer);
 
 									YTPlayer.checkForStartAt = setInterval(function () {
 
-										//if(!jQuery.browser.webkit)
 										YTPlayer.player.seekTo(startAt, true);
 
 										if (YTPlayer.player.getCurrentTime() >= startAt && YTPlayer.player.getDuration() > 0) {
@@ -381,18 +376,16 @@ function onYouTubePlayerAPIReady() {
 											if (typeof YTPlayer.opt.onReady == "function")
 												YTPlayer.opt.onReady($YTPlayer);
 
+											if (YTPlayer.opt.autoPlay)
+												$YTPlayer.playYTP();
+											else {
+												$YTPlayer.pauseYTP();
+											}
+
 											setTimeout(function () {
 												$YTPlayer.css("background-image", "none");
 												YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
-
-												if (YTPlayer.opt.autoPlay)
-													$YTPlayer.playYTP();
-												else {
-													$YTPlayer.pauseYTP();
-//													YTPlayer.player.setVolume(YTPlayer.opt.vol);
-												}
-
-											}, 100);
+											}, 1000);
 
 											jQuery.mbYTPlayer.checkForState(YTPlayer);
 										}
@@ -457,8 +450,6 @@ function onYouTubePlayerAPIReady() {
 										if (YTPlayer.state == state)
 											return;
 
-										clearTimeout(YTPlayer.fadeOnStart);
-
 										YTPlayer.state = state;
 										YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.play);
@@ -484,6 +475,8 @@ function onYouTubePlayerAPIReady() {
 											$YTPlayer.muteYTPVolume();
 											YTPlayer.opt.mute = false;
 										}
+
+										YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.pause);
 

@@ -71,6 +71,7 @@
                 jQuery("#eventListener").append(" :: "+ e.counter);
             });
             jQuery("#bgndVideo").on("YTPEnd", function(){
+                alert("ENDED!");
                 jQuery("#eventListener").html("YTPEnd");
                 jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
                 console.debug("YTPEnd")

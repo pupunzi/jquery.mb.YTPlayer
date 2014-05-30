@@ -14,15 +14,13 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 12/05/14 19.53
+ *  last modified: 28/05/14 0.10
  *  *****************************************************************************
  */
 
-if(typeof ytp != "object")
-	ytp ={};
+var ytp = ytp || {};
 
 function onYouTubePlayerAPIReady() {
-
 	if(ytp.YTAPIReady)
 		return;
 
@@ -371,6 +369,11 @@ function onYouTubePlayerAPIReady() {
 										YTPlayer.player.seekTo(startAt, true);
 
 										if (YTPlayer.player.getCurrentTime() >= startAt && YTPlayer.player.getDuration() > 0) {
+
+											YTPlayer.player.mute();
+
+											YTPlayer.player.pauseVideo();
+
 											clearInterval(YTPlayer.checkForStartAt);
 
 											if (typeof YTPlayer.opt.onReady == "function")
@@ -378,11 +381,18 @@ function onYouTubePlayerAPIReady() {
 
 											if (YTPlayer.opt.autoPlay)
 												$YTPlayer.playYTP();
-											else {
-												$YTPlayer.pauseYTP();
-											}
+
 
 											setTimeout(function () {
+
+												if (YTPlayer.opt.autoPlay)
+													$YTPlayer.playYTP();
+												else
+													YTPlayer.player.pauseVideo();
+
+												if (!YTPlayer.opt.mute)
+													YTPlayer.player.unMute();
+
 												$YTPlayer.css("background-image", "none");
 												YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
 											}, 1000);

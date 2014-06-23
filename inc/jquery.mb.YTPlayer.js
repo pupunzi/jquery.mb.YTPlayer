@@ -146,7 +146,7 @@ function onYouTubePlayerAPIReady() {
 				var property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ? eval('(' + $YTPlayer.data("property") + ')') : $YTPlayer.data("property");
 
 				if(typeof property.vol != "undefined")
-					property.vol = property.vol == 0 ? property.vol=1: property.vol;
+					property.vol = property.vol == 0 ? property.vol = 1: property.vol;
 
 				jQuery.extend(YTPlayer.opt, jQuery.mbYTPlayer.defaults, options, property);
 
@@ -156,7 +156,7 @@ function onYouTubePlayerAPIReady() {
 					YTPlayer.opt.realfullscreen = false;
 
 				if (!$YTPlayer.attr("id"))
-					$YTPlayer.attr("id", "id_" + new Date().getTime());
+					$YTPlayer.attr("id", "YTP_" + new Date().getTime());
 
 				YTPlayer.opt.id = YTPlayer.id;
 				YTPlayer.isAlone = false;

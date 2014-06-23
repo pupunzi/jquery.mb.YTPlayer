@@ -92,7 +92,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name            : "jquery.mb.YTPlayer",
-		version         : "2.6.8",
+		version         : "2.6.9",
 		author          : "Matteo Bicocchi",
 		defaults        : {
 			containment            : "body",
@@ -145,7 +145,8 @@ function onYouTubePlayerAPIReady() {
 
 				var property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ? eval('(' + $YTPlayer.data("property") + ')') : $YTPlayer.data("property");
 
-				property.vol = property.vol == 0 ? property.vol=1: property.vol;
+				if(typeof property.vol != "undefined")
+					property.vol = property.vol == 0 ? property.vol=1: property.vol;
 
 				jQuery.extend(YTPlayer.opt, jQuery.mbYTPlayer.defaults, options, property);
 

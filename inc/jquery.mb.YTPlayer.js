@@ -2,7 +2,7 @@
  — jquery.mb.components                                                                           —
  —                                                                                                —
  —  file: jquery.mb.YTPlayer.js                                                                   —
- —  last modified: 22/06/14 18.41                                                                 —
+ —  last modified: 23/06/14 22.49                                                                 —
  —                                                                                                —
  —  Open lab srl, Firenze - Italy                                                                 —
  —                                                                                                —
@@ -92,7 +92,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name            : "jquery.mb.YTPlayer",
-		version         : "2.6.9",
+		version         : "2.7.0",
 		author          : "Matteo Bicocchi",
 		defaults        : {
 			containment            : "body",

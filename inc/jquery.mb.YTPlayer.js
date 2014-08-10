@@ -149,9 +149,14 @@ function onYouTubePlayerAPIReady() {
 					property.vol = property.vol == 0 ? property.vol = 1: property.vol;
 
 				jQuery.extend(YTPlayer.opt, jQuery.mbYTPlayer.defaults, options, property);
-
-				var canGoFullscreen = !(jQuery.browser.msie || jQuery.browser.opera || self.location.href != top.location.href);
-
+				
+				
+				try{
+		                    var canGoFullscreen = !(jQuery.browser.msie || jQuery.browser.opera || self.location.href != top.location.href);
+		                } catch(Exception){
+		                    var canGoFullscreen = false;
+		                }
+		                
 				if (!canGoFullscreen)
 					YTPlayer.opt.realfullscreen = false;
 

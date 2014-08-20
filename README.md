@@ -1,4 +1,4 @@
-# mb.YTPlayer
+# jquery.mb.YTPlayer
 
 __An open source jQuery component to easily build your custom Youtube® player or to use a Youtube® video as background for your page.__
 

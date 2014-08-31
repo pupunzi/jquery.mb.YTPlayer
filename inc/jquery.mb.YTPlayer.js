@@ -143,7 +143,7 @@ function onYouTubePlayerAPIReady() {
 
 				var property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ? eval('(' + $YTPlayer.data("property") + ')') : $YTPlayer.data("property");
 
-				if(typeof property.vol != "undefined")
+				if(typeof property != "undefined" && typeof property.vol != "undefined")
 					property.vol = property.vol == 0 ? property.vol = 1: property.vol;
 
 				jQuery.extend(YTPlayer.opt, jQuery.mbYTPlayer.defaults, options, property);

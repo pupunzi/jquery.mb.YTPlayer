@@ -143,7 +143,7 @@ function onYouTubePlayerAPIReady() {
 
 				var property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ? eval('(' + $YTPlayer.data("property") + ')') : $YTPlayer.data("property");
 
-				if(typeof property.vol != "undefined")
+				if(typeof property!="undefined" && typeof property.vol != "undefined")
 					property.vol = property.vol == 0 ? property.vol = 1: property.vol;
 
 				jQuery.extend(YTPlayer.opt, jQuery.mbYTPlayer.defaults, options, property);
@@ -948,7 +948,8 @@ function onYouTubePlayerAPIReady() {
 
 			var idx = jQuery("<span/>").addClass("mb_YTVPTime");
 
-			var vURL = data.videoURL;
+			var vURL = data.videoURL ? data.videoURL : "";
+
 			if (vURL.indexOf("http") < 0)
 				vURL = jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/watch?v=" + data.videoURL;
 			var movieUrl = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.ytLogo).addClass("mb_YTVPUrl ytpicon").attr("title", "view on YouTube").on("click", function () {window.open(vURL, "viewOnYT")});

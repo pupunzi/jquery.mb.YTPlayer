@@ -201,10 +201,26 @@ function onYouTubePlayerAPIReady() {
 				}
 
 				if (YTPlayer.opt.addRaster) {
+					var classN = YTPlayer.opt.addRaster == "dot" ? "raster-dot" : "raster";
+
 					var retina = (window.retina || window.devicePixelRatio > 1);
-					overlay.addClass(retina ? "raster retina" : "raster");
+					overlay.addClass(retina ? classN + " retina" : classN);
 				} else {
-					overlay.removeClass("raster retina");
+
+					overlay.removeClass(function (index, classNames) {
+						var current_classes = classNames.split(" "), // change the list into an array
+								classes_to_remove = []; // array of classes which are to be removed
+
+						$.each(current_classes, function (index, class_name) {
+							// if the classname begins with bg add it to the classes_to_remove array
+							if (/raster-.*/.test(class_name)) {
+								classes_to_remove.push(class_name);
+							}
+						});
+						classes_to_remove.push("retina");
+						// turn the array back into a string
+						return classes_to_remove.join(" ");
+					})
 				}
 
 				var wrapper = jQuery("<div/>").addClass("mbYTP_wrapper").attr("id", "wrapper_" + playerID);

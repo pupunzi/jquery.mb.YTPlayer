@@ -75,17 +75,19 @@ function onYouTubePlayerAPIReady() {
 
 	/******************************************************************************/
 
-	var getYTPVideoID=function(url){
-		var movieURL;
-		if(url.substr(0,16)=="http://youtu.be/"){
-			movieURL= url.replace("http://youtu.be/","");
-		}else if(url.indexOf("http")>-1){
-			movieURL = url.match(/[\\?&]v=([^&#]*)/)[1];
-		}else{
-			movieURL = url
-		}
-		return movieURL;
-	};
+        var getYTPVideoID=function(url) {
+                var movieURL;
+                if(url.substr(0,16)=="http://youtu.be/"){
+                        movieURL= url.replace("http://youtu.be/","");
+                }else if(url.substr(0,17)=="https://youtu.be/"){
+                        movieURL= url.replace("https://youtu.be/","");
+                }else if(url.indexOf("http")>-1){
+                        movieURL = url.match(/[\\?&]v=([^&#]*)/)[1];
+                }else{
+                        movieURL = url
+                }
+                return movieURL;
+        };
 
 
 	jQuery.mbYTPlayer = {

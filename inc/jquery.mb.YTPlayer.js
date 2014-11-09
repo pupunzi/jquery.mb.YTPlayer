@@ -451,6 +451,7 @@ function onYouTubePlayerAPIReady() {
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.play);
 										jQuery(YTPlayer).trigger("YTPEnd");
 									}
+
 //------------------------------------------------------------------ buffering
 									if (state == 3) {
 										if (YTPlayer.state == state)
@@ -464,6 +465,7 @@ function onYouTubePlayerAPIReady() {
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.play);
 										jQuery(YTPlayer).trigger("YTPBuffering");
 									}
+
 //------------------------------------------------------------------ unstarted
 									if (state == -1) {
 										if (YTPlayer.state == state)
@@ -471,6 +473,7 @@ function onYouTubePlayerAPIReady() {
 										YTPlayer.state = state;
 										jQuery(YTPlayer).trigger("YTPUnstarted");
 									}
+
 //------------------------------------------------------------------ playing
 									if (state == 1) {
 										if (YTPlayer.state == state)
@@ -490,6 +493,7 @@ function onYouTubePlayerAPIReady() {
 										if (typeof ga != "undefined" && eval(YTPlayer.opt.gaTrack))
 											ga('send', 'event', 'YTPlayer', 'play', (YTPlayer.title || YTPlayer.videoID.toString()));
 									}
+
 //------------------------------------------------------------------ paused
 									if (state == 2) {
 										if (YTPlayer.state == state)

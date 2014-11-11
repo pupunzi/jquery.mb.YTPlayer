@@ -230,7 +230,7 @@ function onYouTubePlayerAPIReady() {
 
 				var wrapper = jQuery("<div/>").addClass("mbYTP_wrapper").attr("id", "wrapper_" + playerID);
 				wrapper.css({position: "absolute", zIndex: 0, minWidth: "100%", minHeight: "100%", left: 0, top: 0, overflow: "hidden", opacity: 0});
-				playerBox.css({position: "absolute", zIndex: 0, width: "100%", height: "100%", top: 0, left: 0, overflow: "hidden", opacity: this.opt.opacity});
+				playerBox.css({position: "absolute", zIndex: 0, width: "100%", height: "100%", top: 0, left: 0, overflow: "hidden"});
 				wrapper.append(playerBox);
 
 
@@ -382,13 +382,18 @@ function onYouTubePlayerAPIReady() {
 											YTPlayer.player.pauseVideo();
 
 											setTimeout(function(){
+
+												YTPlayer.canTrigger = true;
 												if (YTPlayer.opt.autoPlay){
 													$YTPlayer.playYTP();
 													$YTPlayer.css("background-image", "none");
+													YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
 												} else  {
 													YTPlayer.player.pauseVideo();
 												}
-												YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
+
+
+
 											},100)
 
 										}else{
@@ -444,12 +449,14 @@ function onYouTubePlayerAPIReady() {
 										if (!data.loop && YTPlayer.isBackground)
 											YTPlayer.wrapper.CSSAnimate({opacity: 0}, 2000);
 										else if (data.loop) {
-											YTPlayer.wrapper.css({opacity: 0});
+											//YTPlayer.wrapper.css({opacity: 0});
 											YTPlayer.loop++;
 										}
 
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.play);
-										jQuery(YTPlayer).trigger("YTPEnd");
+
+										if(YTPlayer.canTrigger)
+											jQuery(YTPlayer).trigger("YTPEnd");
 									}
 
 //------------------------------------------------------------------ buffering
@@ -463,7 +470,9 @@ function onYouTubePlayerAPIReady() {
 											YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.play);
-										jQuery(YTPlayer).trigger("YTPBuffering");
+
+										if(YTPlayer.canTrigger)
+											jQuery(YTPlayer).trigger("YTPBuffering");
 									}
 
 //------------------------------------------------------------------ unstarted
@@ -471,13 +480,16 @@ function onYouTubePlayerAPIReady() {
 										if (YTPlayer.state == state)
 											return;
 										YTPlayer.state = state;
-										jQuery(YTPlayer).trigger("YTPUnstarted");
+
+										if(YTPlayer.canTrigger)
+											jQuery(YTPlayer).trigger("YTPUnstarted");
 									}
 
 //------------------------------------------------------------------ playing
 									if (state == 1) {
 										if (YTPlayer.state == state)
 											return;
+
 										YTPlayer.state = state;
 
 										if(!jQuery.browser.chrome)
@@ -485,7 +497,8 @@ function onYouTubePlayerAPIReady() {
 
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.pause);
 
-										jQuery(YTPlayer).trigger("YTPStart");
+										if(YTPlayer.canTrigger)
+											jQuery(YTPlayer).trigger("YTPStart");
 
 										if (typeof _gaq != "undefined" && eval(YTPlayer.opt.gaTrack))
 											_gaq.push(['_trackEvent', 'YTPlayer', 'Play', (YTPlayer.title || YTPlayer.videoID.toString())]);
@@ -500,14 +513,18 @@ function onYouTubePlayerAPIReady() {
 											return;
 										YTPlayer.state = state;
 										controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.play);
-										jQuery(YTPlayer).trigger("YTPPause");
+
+										if(YTPlayer.canTrigger)
+											jQuery(YTPlayer).trigger("YTPPause");
 									}
 
 								},
+
 								'onPlaybackQualityChange': function (e) {
 									if (typeof YTPlayer.opt.onPlaybackQualityChange == "function")
 										YTPlayer.opt.onPlaybackQualityChange($YTPlayer);
 								},
+
 								'onError'                : function (err) {
 
 									if (err.data == 150)
@@ -1040,10 +1057,12 @@ function onYouTubePlayerAPIReady() {
 						controlBar.find(".mb_YTVPTime").html("-- : -- / -- : --");
 					}
 
-				if ( !document.hasFocus() ){
+				if ( !document.hasFocus()){
 
-					YTPlayer.hasFocus = false;
-					$YTPlayer.pauseYTP();
+					if(YTPlayer.state == 1){
+						YTPlayer.hasFocus = false;
+						$YTPlayer.pauseYTP();
+					}
 
 				} else if(document.hasFocus() && !YTPlayer.hasFocus){
 

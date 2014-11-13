@@ -51,7 +51,6 @@
             -moz-box-shadow: 0 0 10px rgba(0,0,0,.5);
             box-shadow: 0 0 10px rgba(0,0,0,.5);
         }
-
     </style>
 
     <script>
@@ -111,8 +110,10 @@
         <button class="command" onclick="jQuery('#bgndVideo').playYTP()"> play </button>
         <button class="command" onclick="jQuery('#bgndVideo').pauseYTP()"> pause </button>
         <button class="command" onclick="changeVideo();"> switch video </button>
-        <button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> quality </button>
-        <button class="command" onclick="alert(jQuery('#bgndVideo').get(0).player.getVolume())"> volume </button>
+        <button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> get quality </button>
+        <button class="command" onclick="alert(jQuery('#bgndVideo').get(0).player.getVolume())"> get volume </button>
+        <button class="command" onclick="jQuery('#bgndVideo').toggleVolume()"> mute/unmute </button>
+        <button class="command" onclick="jQuery('#bgndVideo').fullscreen()"> full screen </button>
         <br>
         <br>
         <span style="font-size: 18px;">events: </span><span id="eventListener" style="font-size: 18px;">(trace player events)</span>

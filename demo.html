@@ -54,14 +54,18 @@
     </style>
 
     <script>
+
+        var bgVideo;
 		jQuery(function(){
+
             if (self.location.href == top.location.href){
                 var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
                 $("#wrapper").prepend(logo);
                 $("#logo").fadeIn();
             }
             //debug functions
-            jQuery("#bgndVideo").on("YTPStart", function(){
+            jQuery("#bgndVideo").on("YTPStart", function(e){
+
                 jQuery("#eventListener").html("YTPStart");
                 jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
                 jQuery("#eventListener").append(" :: (quality= "+ jQuery("#bgndVideo").getPlayer().getPlaybackQuality()+")");
@@ -76,7 +80,7 @@
                 jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
                 console.debug("YTPEnd")
             });
-            jQuery("#bgndVideo").on("YTPPause", function(){
+            jQuery("#bgndVideo").on("YTPPause", function(e){
                 jQuery("#eventListener").html("YTPPause");
                 jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
             });
@@ -84,8 +88,20 @@
                 jQuery("#eventListener").html("YTPBuffering");
                 jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
             });
+            jQuery("#bgndVideo").on("YTPTime", function(e){
+                console.debug(e.time);
+                if (e.time == 20){
+                    jQuery("#wrapper_mbYTP_bgndVideo").hide();
+                    console.debug(e.time, "FIRED")
+                }
+                if (e.time == 25){
+                    jQuery("#wrapper_mbYTP_bgndVideo").show();
+                    console.debug(e.time, "FIRED")
+                }
 
-            jQuery(".player").mb_YTPlayer({
+            });
+
+            bgVideo = jQuery("#bgndVideo").YTPlayer({
                 onReady: function(){
                     jQuery("#eventListener").append(" (Player is ready)");
                 }
@@ -95,13 +111,15 @@
         var v = false;
         function changeVideo(){
             var vID = v ? "7SnmCUwOsts" : "BsekcY04xvQ";
-            jQuery('#bgndVideo').changeMovie({videoURL:vID});
+            bgVideo.changeMovie({videoURL:vID});
             $("#vidData").toggle(1000);
             v = !v;
         }
+
     </script>
 </head>
 <body>
+<div id="foo"></div>
 <div id="wrapper" style="position:relative; padding:30px 20px;z-index:10">
 	<h1 style="color:white"> jQuery.mb.YTPlayer </h1>
 	<h2 style="color:white">  A Background HTML5 player for YouTube videos</h2>
@@ -124,7 +142,6 @@
             <br> video by Matteo Bicocchi
         </h3>
     </div>
-
 
 </div>
 

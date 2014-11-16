@@ -27,7 +27,7 @@
 
     <title>youtube Chromeless Player - mb.YTPlayer</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
-    <script type="text/javascript" src="inc/jquery.mb.YTPlayer.min.js"></script>
+    <script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
     <link href="css/YTPlayer.css" media="all" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <style>
@@ -78,10 +78,10 @@
             border-radius: 10px;
 
         }
+
     </style>
 
     <script>
-<<<<<<< HEAD
         jQuery(function () {
             if (self.location.href == top.location.href) {
                 var logo = $("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'>" +
@@ -96,28 +96,6 @@
                     YTPConsole.append(player.id + " player is ready");
                     YTPConsole.append("<br>");
                 }
-=======
-
-        var bgVideo;
-		jQuery(function(){
-
-            if (self.location.href == top.location.href){
-                var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
-                $("#wrapper").prepend(logo);
-                $("#logo").fadeIn();
-            }
-            //debug functions
-            jQuery("#bgndVideo").on("YTPStart", function(e){
-
-                jQuery("#eventListener").html("YTPStart");
-                jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
-                jQuery("#eventListener").append(" :: (quality= "+ jQuery("#bgndVideo").getPlayer().getPlaybackQuality()+")");
-            });
-            jQuery("#bgndVideo").on("YTPLoop", function(e){
-                jQuery("#eventListener").html("YTPLoop");
-                jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
-                jQuery("#eventListener").append(" :: "+ e.counter);
->>>>>>> FETCH_HEAD
             });
 
             /* DEBUG ******************************************************************************************/
@@ -128,15 +106,9 @@
                 YTPConsole.append(e.type + " - " + jQuery("#bgndVideo").getPlayer().getPlayerState() + " - time: " + e.time);
                 YTPConsole.append("<br>");
             });
-<<<<<<< HEAD
             // EVENT: YTPChanged
             myPlayer.on("YTPChanged", function (e) {
                 YTPConsole.html("");
-=======
-            jQuery("#bgndVideo").on("YTPPause", function(e){
-                jQuery("#eventListener").html("YTPPause");
-                jQuery("#eventListener").append(" :: (state= "+ jQuery("#bgndVideo").getPlayer().getPlayerState()+")");
->>>>>>> FETCH_HEAD
             });
 
             // EVENT: YTPData
@@ -152,20 +124,7 @@
                 YTPConsole.append("******************************");
                 YTPConsole.append("<br>");
             });
-            jQuery("#bgndVideo").on("YTPTime", function(e){
-                console.debug(e.time);
-                if (e.time == 20){
-                    jQuery("#wrapper_mbYTP_bgndVideo").hide();
-                    console.debug(e.time, "FIRED")
-                }
-                if (e.time == 25){
-                    jQuery("#wrapper_mbYTP_bgndVideo").show();
-                    console.debug(e.time, "FIRED")
-                }
 
-            });
-
-<<<<<<< HEAD
             // EVENT: YTPTime
             myPlayer.on("YTPTime", function (e) {
                 var currentTime = e.time;
@@ -174,11 +133,6 @@
                 if (traceLog) {
                     YTPConsole.append(e.type + " actual time is: " + currentTime);
                     YTPConsole.append("<br>");
-=======
-            bgVideo = jQuery("#bgndVideo").YTPlayer({
-                onReady: function(){
-                    jQuery("#eventListener").append(" (Player is ready)");
->>>>>>> FETCH_HEAD
                 }
             });
 
@@ -189,26 +143,19 @@
         var v = false;
         function changeVideo() {
             var vID = v ? "7SnmCUwOsts" : "BsekcY04xvQ";
-<<<<<<< HEAD
             jQuery('#bgndVideo').changeMovie({videoURL: vID});
-=======
-            bgVideo.changeMovie({videoURL:vID});
->>>>>>> FETCH_HEAD
             $("#vidData").toggle(1000);
             v = !v;
         }
-
     </script>
 </head>
 <body>
-<div id="foo"></div>
 <div id="wrapper" style="position:relative; padding:30px 20px;z-index:10">
     <h1 style="color:white"> jQuery.mb.YTPlayer </h1>
 
     <h2 style="color:white"> A Background HTML5 player for YouTube videos</h2>
 
     <div class="console">
-<<<<<<< HEAD
         <button class="command" onclick="jQuery('#bgndVideo').playYTP()"> play</button>
         <button class="command" onclick="jQuery('#bgndVideo').pauseYTP()"> pause</button>
         <button class="command" onclick="changeVideo();"> switch video</button>
@@ -216,18 +163,6 @@
         <button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getVolume())"> volume</button>
         <button class="command" onclick="jQuery('#debug').toggle()"> show/hide debug</button>
         <button onclick="console.log($('#bgndVideo').getDataFromFeed())">get feed data on console</button>
-=======
-        <button class="command" onclick="jQuery('#bgndVideo').playYTP()"> play </button>
-        <button class="command" onclick="jQuery('#bgndVideo').pauseYTP()"> pause </button>
-        <button class="command" onclick="changeVideo();"> switch video </button>
-        <button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> get quality </button>
-        <button class="command" onclick="alert(jQuery('#bgndVideo').get(0).player.getVolume())"> get volume </button>
-        <button class="command" onclick="jQuery('#bgndVideo').toggleVolume()"> mute/unmute </button>
-        <button class="command" onclick="jQuery('#bgndVideo').fullscreen()"> full screen </button>
-        <br>
-        <br>
-        <span style="font-size: 18px;">events: </span><span id="eventListener" style="font-size: 18px;">(trace player events)</span>
->>>>>>> FETCH_HEAD
 
         <h3 id="vidData" style="color:white">
             AIMLESS
@@ -237,16 +172,12 @@
     </div>
 </div>
 
-<<<<<<< HEAD
 <a id="bgndVideo" class="player"
    data-property="{videoURL:'7SnmCUwOsts',containment:'body', showControls:true, autoPlay:true, loop:false, vol:50, mute:true, startAt:10, opacity:1, addRaster:false, quality:'default'}">My
     video</a> <!--BsekcY04xvQ-->
 
 <div id="debug" style="display: none">
     <span style="font-size: 18px;">EVENT CONSOLE: </span>
-=======
-</div>
->>>>>>> FETCH_HEAD
 
     <div id="eventListener"></div>
 </div>

@@ -95,7 +95,7 @@ function onYouTubePlayerAPIReady() {
 
 	ytp.isDevice = jQuery.browser.mobile;
 
-
+	
 	/* todo:
 		setPlaybackRate()
 		playlist
@@ -129,6 +129,7 @@ function onYouTubePlayerAPIReady() {
 			gaTrack                : true,
 			onReady                : function (player) {}
 		},
+
 		/*@fontface icons*/
 		controls: {
 			play    : "P",
@@ -390,7 +391,6 @@ function onYouTubePlayerAPIReady() {
 
 											YTPlayer.player.pauseVideo();
 
-<<<<<<< HEAD
 											setTimeout(function () {
 
 												YTPlayer.canTrigger = true;
@@ -406,22 +406,6 @@ function onYouTubePlayerAPIReady() {
 											}, 100)
 
 										} else {
-=======
-											setTimeout(function(){
-												YTPlayer.canTrigger = true;
-												if (YTPlayer.opt.autoPlay){
-
-													$YTPlayer.playYTP();
-													$YTPlayer.css("background-image", "none");
-													YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
-
-												} else  {
-													YTPlayer.player.pauseVideo();
-												}
-											},100)
-
-										}else{
->>>>>>> FETCH_HEAD
 											YTPlayer.player.playVideo();
 											YTPlayer.player.seekTo(startAt, true);
 										}
@@ -450,60 +434,16 @@ function onYouTubePlayerAPIReady() {
 
 									var controls = jQuery("#controlBar_" + YTPlayer.id);
 									var data = YTPlayer.opt;
-<<<<<<< HEAD
 
 									var eventType;
 
 									switch (state) {
 										case -1: //------------------------------------------------ unstarted
-=======
-//------------------------------------------------------------------ ended
-									if (state == 0) {
-										if (YTPlayer.state == state)
-											return;
-
-										YTPlayer.state = state;
-										YTPlayer.player.pauseVideo();
-										var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
-
-										if (data.loop) {
-											YTPlayer.wrapper.css({opacity: 0});
-											$YTPlayer.playYTP();
-											YTPlayer.player.seekTo(startAt, true);
-										} else if (!YTPlayer.isBackground) {
-											YTPlayer.player.seekTo(startAt, true);
-											$YTPlayer.playYTP();
-											setTimeout(function () {
-												$YTPlayer.pauseYTP();
-											}, 10);
-										}
-
-										if (!data.loop && YTPlayer.isBackground)
-											YTPlayer.wrapper.CSSAnimate({opacity: 0}, 2000);
-
-										else if (data.loop) {
-											//YTPlayer.wrapper.css({opacity: 0});
-											YTPlayer.loop++;
-											jQuery(YTPlayer).trigger("YTPLoop", {
-												counter: YTPlayer.loop
-											});
-
-										}
->>>>>>> FETCH_HEAD
 
 											eventType = "YTPUnstarted";
 											break;
 
-<<<<<<< HEAD
 										case 0:  //------------------------------------------------ ended
-=======
-										if(YTPlayer.canTrigger)
-											$YTPlayer.trigger("YTPEnd", {
-												time: YTPlayer.player.getCurrentTime(),
-												duration: YTPlayer.player.getDuration()
-											});
-									}
->>>>>>> FETCH_HEAD
 
 											eventType = "YTPEnd";
 											YTPlayer.player.pauseVideo();
@@ -528,29 +468,11 @@ function onYouTubePlayerAPIReady() {
 												YTPlayer.loop++;
 											}
 
-<<<<<<< HEAD
 											controls.find(".mb_YTVPPlaypause").html(jQuery.mbYTPlayer.controls.play);
-=======
-										if(YTPlayer.canTrigger)
-											$YTPlayer.trigger("YTPBuffering", {
-												time: YTPlayer.player.getCurrentTime(),
-												duration: YTPlayer.player.getDuration()
-											});
-									}
->>>>>>> FETCH_HEAD
 
 											break;
 
-<<<<<<< HEAD
 										case 1:  //------------------------------------------------ play
-=======
-										if(YTPlayer.canTrigger)
-											$YTPlayer.trigger("YTPUnstarted", {
-												time: YTPlayer.player.getCurrentTime(),
-												duration: YTPlayer.player.getDuration()
-											});
-									}
->>>>>>> FETCH_HEAD
 
 											eventType = "YTPStart";
 
@@ -562,16 +484,8 @@ function onYouTubePlayerAPIReady() {
 											if (typeof _gaq != "undefined" && eval(YTPlayer.opt.gaTrack))
 												_gaq.push(['_trackEvent', 'YTPlayer', 'Play', (YTPlayer.title || YTPlayer.videoID.toString())]);
 
-<<<<<<< HEAD
 											if (typeof ga != "undefined" && eval(YTPlayer.opt.gaTrack))
 												ga('send', 'event', 'YTPlayer', 'play', (YTPlayer.title || YTPlayer.videoID.toString()));
-=======
-										if(YTPlayer.canTrigger)
-											$YTPlayer.trigger("YTPStart", {
-												time: YTPlayer.player.getCurrentTime(),
-												duration: YTPlayer.player.getDuration()
-											});
->>>>>>> FETCH_HEAD
 
 											break;
 
@@ -601,13 +515,6 @@ function onYouTubePlayerAPIReady() {
 										default:
 											break;
 
-<<<<<<< HEAD
-=======
-										var YTPPause = jQuery.Event("YTPPause");
-										YTPPause.time = YTPlayer.player.getCurrentTime();
-										if(YTPlayer.canTrigger)
-											$YTPlayer.trigger(YTPPause);
->>>>>>> FETCH_HEAD
 									}
 
 									// Trigger state events
@@ -633,10 +540,10 @@ function onYouTubePlayerAPIReady() {
 									if (err.data == 150) {
 										console.log("Embedding this video is restricted by Youtube.");
 										if (YTPlayer.isPlayList)
-											$YTPlayer.playNext();
+											jQuery(YTPlayer).playNext();
 									}
 									if (err.data == 2 && YTPlayer.isPlayList)
-										$YTPlayer.playNext();
+										jQuery(YTPlayer).playNext();
 
 									if (typeof YTPlayer.opt.onError == "function")
 										YTPlayer.opt.onError($YTPlayer, err);
@@ -1157,21 +1064,7 @@ function onYouTubePlayerAPIReady() {
 				else
 					$YTPlayer.removeClass("isMuted");
 
-<<<<<<< HEAD
 				if (YTPlayer.opt.showControls)
-=======
-				var roundTime = Math.round(YTPlayer.player.getCurrentTime());
-
-				if(roundTime != YTPlayer.time){
-					var YTPTime = jQuery.Event("YTPTime");
-					YTPlayer.time = roundTime;
-					YTPTime.time = YTPlayer.time;
-					if(YTPlayer.canTrigger)
-						$YTPlayer.trigger(YTPTime);
-				}
-
-				if(YTPlayer.opt.showControls)
->>>>>>> FETCH_HEAD
 					if (prog.totalTime) {
 						controlBar.find(".mb_YTVPTime").html(jQuery.mbYTPlayer.formatTime(prog.currentTime) + " / " + jQuery.mbYTPlayer.formatTime(prog.totalTime));
 					} else {
@@ -1302,10 +1195,6 @@ function onYouTubePlayerAPIReady() {
 	};
 
 	/*Exposed method for external use*/
-<<<<<<< HEAD
-=======
-
->>>>>>> FETCH_HEAD
 	jQuery.fn.YTPlayer = jQuery.mbYTPlayer.buildPlayer;
 	jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.YTPlaylist;
 	jQuery.fn.playNext = jQuery.mbYTPlayer.playNext;
@@ -1332,10 +1221,6 @@ function onYouTubePlayerAPIReady() {
 	jQuery.fn.mb_YTPlayer = jQuery.fn.YTPlayer;
 	jQuery.fn.muteYTPVolume = jQuery.mbYTPlayer.muteYTP;
 	jQuery.fn.unmuteYTPVolume = jQuery.mbYTPlayer.unmuteYTP;
-
-
-	/** @deprecated Use jQuery.fn.YTPlayer **/
-	jQuery.fn.mb_YTPlayer = jQuery.fn.YTPlayer;
 
 
 })(jQuery, ytp);

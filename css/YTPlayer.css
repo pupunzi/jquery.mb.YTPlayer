@@ -154,6 +154,7 @@
   -o-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 .mb_YTVPBar:hover .buttonBar{
   background: rgba(0,0,0,0.4);
 }

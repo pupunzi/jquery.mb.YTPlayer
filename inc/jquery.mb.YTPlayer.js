@@ -93,13 +93,10 @@ function onYouTubePlayerAPIReady() {
 		return {videoID: videoID, playlistID: playlistID};
 	};
 
-	ytp.isDevice = jQuery.browser.mobile;
-
-	
 	/* todo:
-		setPlaybackRate()
-		playlist
-	*/
+	 setPlaybackRate()
+	 playlist
+	 */
 
 
 	jQuery.mbYTPlayer = {
@@ -211,7 +208,7 @@ function onYouTubePlayerAPIReady() {
 					YTPlayer.isPlayer = true;
 				}
 
-				if (ytp.isDevice && YTPlayer.isBackground) {
+				if (jQuery.browser.mobile && YTPlayer.isBackground) {
 					$YTPlayer.remove();
 					return;
 				}
@@ -265,7 +262,7 @@ function onYouTubePlayerAPIReady() {
 
 				playerBox.css({opacity: 1});
 
-				if (!ytp.isDevice) {
+				if (!jQuery.browser.mobile) {
 					playerBox.after(overlay);
 					YTPlayer.overlay = overlay;
 				}
@@ -318,7 +315,7 @@ function onYouTubePlayerAPIReady() {
 						YTPlayer.isInit = true;
 
 						//if is mobile fallback to the default YT player
-						if (ytp.isDevice && !YTPlayer.isBackground) {
+						if (jQuery.browser.mobile && !YTPlayer.isBackground) {
 							new YT.Player(playerID, {
 								videoId: YTPlayer.videoID.toString(),
 								height : '100%',
@@ -863,7 +860,7 @@ function onYouTubePlayerAPIReady() {
 			playBtn.html(jQuery.mbYTPlayer.controls.pause);
 			YTPlayer.player.playVideo();
 
-//			YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
+			YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
 			jQuery(YTPlayer).on("YTPStart", function () {
 				jQuery(YTPlayer).css("background-image", "none");
 			})
@@ -941,7 +938,6 @@ function onYouTubePlayerAPIReady() {
 
 			jQuery(YTPlayer).removeClass("isMuted");
 			jQuery(YTPlayer).trigger("YTPUnmuted");
-
 		},
 
 		manageYTPProgress: function () {
@@ -1071,7 +1067,6 @@ function onYouTubePlayerAPIReady() {
 						controlBar.find(".mb_YTVPTime").html("-- : -- / -- : --");
 					}
 
-
 				if (!document.hasFocus()) {
 
 					if (YTPlayer.state == 1) {
@@ -1130,8 +1125,6 @@ function onYouTubePlayerAPIReady() {
 			return (min <= 9 ? "0" + min : min) + " : " + (sec <= 9 ? "0" + sec : sec);
 		}
 	};
-
-
 
 	jQuery.fn.toggleVolume = function () {
 		var YTPlayer = this.get(0);

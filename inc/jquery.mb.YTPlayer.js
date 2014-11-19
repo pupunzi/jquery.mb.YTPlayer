@@ -122,6 +122,7 @@ function onYouTubePlayerAPIReady() {
 			showAnnotations        : false,
 			showYTLogo             : true,
 			stopMovieOnClick       : false,
+			stopMovieOnBlur        : true,
 			realfullscreen         : true,
 			gaTrack                : true,
 			onReady                : function (player) {}
@@ -1067,18 +1068,19 @@ function onYouTubePlayerAPIReady() {
 						controlBar.find(".mb_YTVPTime").html("-- : -- / -- : --");
 					}
 
-				if (!document.hasFocus()) {
+				if(YTPlayer.opt.stopMovieOnBlur)
+					if (!document.hasFocus()) {
 
-					if (YTPlayer.state == 1) {
-						YTPlayer.hasFocus = false;
-						$YTPlayer.pauseYTP();
+						if (YTPlayer.state == 1) {
+							YTPlayer.hasFocus = false;
+							$YTPlayer.pauseYTP();
+						}
+
+					} else if (document.hasFocus() && !YTPlayer.hasFocus) {
+
+						YTPlayer.hasFocus = true;
+						$YTPlayer.playYTP();
 					}
-
-				} else if (document.hasFocus() && !YTPlayer.hasFocus) {
-
-					YTPlayer.hasFocus = true;
-					$YTPlayer.playYTP();
-				}
 
 				if (YTPlayer.player.getPlayerState() == 1 && (parseFloat(YTPlayer.player.getDuration() - 3) < YTPlayer.player.getCurrentTime() || (stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) > stopAt))) {
 

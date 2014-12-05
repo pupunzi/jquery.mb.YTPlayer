@@ -101,7 +101,7 @@
                 jQuery(this).addClass("sel");
             });
 
-            var myPlayer = jQuery("#bgndVideo").mb_YTPlayer({
+            var myPlayer = jQuery("#bgndVideo").YTPlayer({
                 onReady: function (player) {
                     YTPConsole.append(player.id + " player is ready");
                     YTPConsole.append("<br>");
@@ -113,7 +113,7 @@
 
             // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
             myPlayer.on("YTPStart YTPEnd YTPLoop YTPPause YTPBuffering", function (e) {
-                YTPConsole.append(e.type + " - " + jQuery("#bgndVideo").getPlayer().getPlayerState() + " - time: " + e.time);
+                YTPConsole.append("event type:: " + e.type + " - " + jQuery("#bgndVideo").getPlayer().getPlayerState() + " - time: " + e.time);
                 YTPConsole.append("<br>");
             });
             // EVENT: YTPChanged
@@ -122,18 +122,32 @@
             });
 
             // EVENT: YTPData
+
+            function printOutObj(obj){
+                for (var x in obj){
+                    if(typeof obj[x] == "object"){
+                        printOutObj(obj[x]);
+                        YTPConsole.append("<br>");
+                        continue;
+                    }
+                    YTPConsole.append("<br>");
+                    YTPConsole.append(x + ":: "+ obj[x]);
+                }
+            }
+
             myPlayer.on("YTPData", function (e) {
                 YTPConsole.append("******************************");
                 YTPConsole.append("<br>");
-                YTPConsole.append(e.type);
+                YTPConsole.append("Available data for the video ID "+e.prop.id +":");
                 YTPConsole.append("<br>");
-                YTPConsole.append(e.prop.title);
-                YTPConsole.append("<br>");
-                YTPConsole.append(e.prop.description.replace(/\n/g, "<br/>"));
+                YTPConsole.append("event type:: " + e.type);
+
+                printOutObj(e.prop);
+
                 YTPConsole.append("<br>");
                 YTPConsole.append("******************************");
                 YTPConsole.append("<br>");
-                
+
                 $(".dida").html(e.prop.title + "<br>via " + e.prop.uploader);
 
             });
@@ -141,10 +155,9 @@
             // EVENT: YTPTime
             myPlayer.on("YTPTime", function (e) {
                 var currentTime = e.time;
-                var player = e.target.wrapper;
                 var traceLog = currentTime / 5 == Math.floor(currentTime / 5);
                 if (traceLog) {
-                    YTPConsole.append(e.type + " actual time is: " + currentTime);
+                    YTPConsole.append("event type:: " + e.type + " actual time is: " + currentTime);
                     YTPConsole.append("<br>");
                 }
             });
@@ -160,7 +173,8 @@
 <body>
 <div id="wrapper">
     <h1>jQuery.mb.YTPlayer as background</h1>
-    <div class="console">
+
+    <div class="actions">
         <button class="command" onclick="jQuery('#bgndVideo').getPlayer().playVideo()"> play </button>
         <button class="command" onclick="jQuery('#bgndVideo').getPlayer().pauseVideo()"> pause </button>
         <button class="command" onclick="jQuery('#bgndVideo').toggleVolume()"> toggle volume </button>
@@ -170,8 +184,12 @@
         <br>
         Video info from the YT feed:
         <div class="dida"></div>
+
+
         <br>
         <br>
+
+
         <h2>Choose the video to play</h2>
         <button class="sel" onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=mAf6zKRb1wI'})"> vito acconci theme song 1973   </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'dZaD9CHZecE',ratio:'4/3'})"> Vito Acconci - Undertone 1972 (extract) </button>
@@ -179,9 +197,8 @@
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=z5krhw54oqs',ratio:'4/3'})"> Fluxus - Wolf Vostell - Sun in your head    </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=u9k1FaMIYTs'})"> nam june paik - 03  </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=VuaJAgx0x_4'})"> nam june paik </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=rkfOgavdhak'})"> Bruce Nauman - Pinch Neck 1968 </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=rkfOgavdhak',ratio:'4/3'})"> Bruce Nauman - Pinch Neck 1968 </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=UJQmV8aPNao'})"> Bill Viola - Acceptance, 2008  </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=WHoE01WKDhM',autoPlay:true})"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
     </div>
 
 

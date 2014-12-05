@@ -90,7 +90,7 @@
             }
 
 
-            var myPlayer = jQuery("#bgndVideo").mb_YTPlayer({
+            var myPlayer = jQuery("#bgndVideo").YTPlayer({
                 onReady: function (player) {
                     YTPConsole.append(player.id + " player is ready");
                     YTPConsole.append("<br>");
@@ -98,6 +98,7 @@
             });
 
             /* DEBUG ******************************************************************************************/
+
             var YTPConsole = jQuery("#eventListener");
 
             // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering

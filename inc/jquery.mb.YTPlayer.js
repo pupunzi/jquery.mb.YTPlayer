@@ -180,13 +180,8 @@ function onYouTubePlayerAPIReady() {
 				YTPlayer.opt.showAnnotations = (YTPlayer.opt.showAnnotations) ? '0' : '3';
 				var playerVars = { 'autoplay': 0, 'modestbranding': 1, 'controls': 0, 'showinfo': 0, 'rel': 0, 'enablejsapi': 1, 'version': 3, 'playerapiid': playerID, 'origin': '*', 'allowfullscreen': true, 'wmode': 'transparent', 'iv_load_policy': YTPlayer.opt.showAnnotations};
 
-				var canPlayHTML5 = false;
 				var v = document.createElement('video');
-				if (v.canPlayType) {
-					canPlayHTML5 = true;
-				}
-
-				if (canPlayHTML5)
+				if (v.canPlayType)
 					jQuery.extend(playerVars, {'html5': 1});
 
 				if (jQuery.browser.msie && jQuery.browser.version < 9) {

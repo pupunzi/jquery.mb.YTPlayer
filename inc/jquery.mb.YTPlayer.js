@@ -101,7 +101,7 @@ function onYouTubePlayerAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name   : "jquery.mb.YTPlayer",
-		version: "2.7.6",
+		version: "2.7.7",
 		author : "Matteo Bicocchi",
 
 		defaults: {

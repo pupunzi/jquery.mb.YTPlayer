@@ -42,7 +42,7 @@
         .player {
             display: inline-block;
             vertical-align: top;
-            position: relative;
+            position: relative
             width: 500px;
             height: 350px;
             margin-top: 100px;
@@ -103,6 +103,8 @@
 
             // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
             myPlayer.on("YTPStart YTPEnd YTPLoop YTPPause YTPBuffering", function (e) {
+
+
                 YTPConsole.append(e.type + " - " + jQuery("#bgndVideo").getPlayer().getPlayerState() + " - time: " + e.time);
                 YTPConsole.append("<br>");
             });

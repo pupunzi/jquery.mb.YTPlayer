@@ -365,20 +365,17 @@ function onYouTubePlayerAPIReady() {
 
 									jQuery.mbYTPlayer.checkForState(YTPlayer);
 
-									YTPlayer.checkForStartAt = setInterval(function () {
+									YTPlayer.player.playVideo();
 
-										var canPlayVideo = (YTPlayer.player.getVideoLoadedFraction() > startAt / YTPlayer.player.getDuration());
+									YTPlayer.checkForStartAt = setInterval(function () {
+										var canPlayVideo = jQuery.browser.mozilla? true : (YTPlayer.player.getVideoLoadedFraction() > startAt / YTPlayer.player.getDuration());
 
 										if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {
-
 											clearInterval(YTPlayer.checkForStartAt);
-
 											YTPlayer.player.setVolume(0);
 											jQuery(YTPlayer).muteYTPVolume();
-
 											if (typeof YTPlayer.opt.onReady == "function")
 												YTPlayer.opt.onReady(YTPlayer);
-
 											if (!YTPlayer.opt.mute)
 												jQuery(YTPlayer).unmuteYTP();
 
@@ -401,7 +398,6 @@ function onYouTubePlayerAPIReady() {
 											}, 100)
 
 										} else {
-											YTPlayer.player.playVideo();
 											YTPlayer.player.seekTo(startAt, true);
 										}
 									}, jQuery.browser.chrome ? 1000 : 1);
@@ -515,6 +511,7 @@ function onYouTubePlayerAPIReady() {
 									// Trigger state events
 									var YTPevent = jQuery.Event(eventType);
 									YTPevent.time = YTPlayer.player.time;
+
 									if (YTPlayer.canTrigger)
 										jQuery(YTPlayer).trigger(YTPevent);
 

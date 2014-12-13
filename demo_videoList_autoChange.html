@@ -24,11 +24,11 @@
 <head>
     <meta charset="UTF-8">
     <title>youtube Chromeless Player - mb.YTPlayer</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
-    <script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
     <link href="css/YTPlayer.css" media="all" rel="stylesheet" type="text/css">
-
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="inc/jquery.mb.YTPlayer.js"></script>
     <style>
         body{
             border:none;
@@ -67,7 +67,6 @@
         <p style="color:white"> Title: <span id="videoTitle"></span> </p>
         <p style="color:white"> Duration: <span id="videoDuration"></span> </p>
         <p style="color:white"> viewCount: <span id="viewCount"></span> </p>
-
     </div>
     <button style="color:#000000; font-size: 22px" onclick="jQuery('#myPlayerID').playPrev()">play previous</button>
     <button style="color:#000000; font-size: 22px" onclick="jQuery('#myPlayerID').playNext()">play next</button>
@@ -76,13 +75,11 @@
 <script>
 
     jQuery(function(){
-
         if (self.location.href == top.location.href){
             var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
             $("#wrapper").prepend(logo);
             $("#logo").fadeIn();
         }
-
 
         var videos = [
             {videoURL:"VuaJAgx0x_4",containment:'body',autoPlay:true, mute:false, startAt:0, opacity:1, loop:false, ratio:"4/3", addRaster:true, quality:"large"},
@@ -99,7 +96,6 @@
             }
         });
     });
-
 
 </script>
 <a class="player" id="myPlayerID" >My video</a>

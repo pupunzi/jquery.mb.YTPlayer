@@ -24,10 +24,11 @@
 <head>
     <meta charset="UTF-8">
     <title>youtube Chromeless Player - mb.YTPlayer</title>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-	<script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
-	<link href="css/YTPlayer.css" media="all" rel="stylesheet" type="text/css">
+    <link href="css/YTPlayer.css" media="all" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="inc/jquery.mb.YTPlayer.js"></script>
     <style>
         body{
             border:none;
@@ -40,7 +41,6 @@
     </style>
 	<script>
 
-
 		jQuery(function(){
 
             if (self.location.href == top.location.href){
@@ -49,8 +49,7 @@
                 $("#logo").fadeIn();
             }
 
-
-            jQuery(".player").mb_YTPlayer();
+            var ytplayer = jQuery(".player").YTPlayer();
 		});
 
 	</script>
@@ -70,7 +69,10 @@
 </script>
 <a class="player" data-property="{videoURL:rndVideo,containment:'body',autoPlay:true, mute:true, startAt:0,opacity:1,ratio:'4/3', addRaster:true}">My video</a>
 
-<a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
+<a style="position: fixed;top:20px;right: 20px;"
+   href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=V6ZS8JPMZC446&lc=GB&item_name=mb%2eideas&item_number=MBIDEAS&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img
+        border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
+
 
 </body>
 </html>

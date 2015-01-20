@@ -24,34 +24,39 @@
     <meta charset="UTF-8">
     <title>youtube Chromeless Player - mb.YTPlayer</title>
     <link href="css/YTPlayer.css" media="all" rel="stylesheet" type="text/css">
-
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
-    <style type="text/css">
 
-        body{
-            background: #444;
-            margin:0;
-            font:normal 16px/20px Lekton, sans-serif;
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="inc/jquery.mb.YTPlayer.js"></script>
+    <style>
+        body {
+            border: none;
+            margin: 0;
+            padding: 30px;
+            background: #e4a51b;
+            font: normal 16px/20px Lekton, sans-serif;
         }
 
         #wrapper{
-            color:white;
-            font:normal 40px/40px Lekton, sans-serif;
-            text-align:left;
-            padding-top:100px;
-            text-shadow:#666666 2px 2px 4px;
-            margin-left:100px;
+            padding-top: 80px;
         }
 
-        .movie{
-            display:none;
+        #console {
+            position: fixed;
+            width: 350px;
+            padding: 5px;
+            height: 100%;
+            top: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.4);
+            overflow: auto;
+            color: #fff;
+            font-size: 13px;
         }
 
         .dida{
-            position:fixed;
-            bottom:0;
-            color:white;
-            padding:10px;
+            color: #fff;
+            font-size: 22px;
         }
 
         button{
@@ -63,18 +68,24 @@
             cursor:pointer;
         }
 
-        button.command{
-            display:inline-block;
-        }
-
         button:hover, button.sel{
             color: #ffcc00;
         }
 
+        button.command {
+            padding: 5px;
+            font-size: 16px;
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            line-height: 30px;
+            margin: 3px;
+            border: none;
+            border-radius: 10px;
+        }
+
     </style>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script type="text/javascript" src="inc/jquery.mb.YTPlayer.js"></script>
     <script type="text/javascript">
 
         jQuery(function(){
@@ -90,13 +101,69 @@
                 jQuery(this).addClass("sel");
             });
 
-            //debug functions
-            jQuery("#bgndVideo").on("YTPStart", function(){ jQuery("#eventListener").html("YTPStart")});
-            jQuery("#bgndVideo").on("YTPEnd", function(){ jQuery("#eventListener").html("YTPEnd")});
-            jQuery("#bgndVideo").on("YTPPause", function(){ jQuery("#eventListener").html("YTPPause")});
-            jQuery("#bgndVideo").on("YTPBuffering", function(){ jQuery("#eventListener").html("YTPBuffering")});
+            var myPlayer = jQuery("#bgndVideo").YTPlayer({
+                onReady: function (player) {
+                    YTPConsole.append(player.id + " player is ready");
+                    YTPConsole.append("<br>");
+                }
+            });
 
-            jQuery("#bgndVideo").mb_YTPlayer();
+            /* DEBUG ******************************************************************************************/
+            var YTPConsole = jQuery("#eventListener");
+
+            // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
+            myPlayer.on("YTPStart YTPEnd YTPLoop YTPPause YTPBuffering", function (e) {
+                YTPConsole.append("event type:: " + e.type + " - " + jQuery("#bgndVideo").getPlayer().getPlayerState() + " - time: " + e.time);
+                YTPConsole.append("<br>");
+            });
+            // EVENT: YTPChanged
+            myPlayer.on("YTPChanged", function (e) {
+                YTPConsole.html("");
+            });
+
+            // EVENT: YTPData
+
+            function printOutObj(obj){
+                for (var x in obj){
+                    if(typeof obj[x] == "object"){
+                        printOutObj(obj[x]);
+                        YTPConsole.append("<br>");
+                        continue;
+                    }
+                    YTPConsole.append("<br>");
+                    YTPConsole.append(x + ":: "+ obj[x]);
+                }
+            }
+
+            myPlayer.on("YTPData", function (e) {
+                YTPConsole.append("******************************");
+                YTPConsole.append("<br>");
+                YTPConsole.append("Available data for the video ID "+e.prop.id +":");
+                YTPConsole.append("<br>");
+                YTPConsole.append("event type:: " + e.type);
+
+                printOutObj(e.prop);
+
+                YTPConsole.append("<br>");
+                YTPConsole.append("******************************");
+                YTPConsole.append("<br>");
+
+                $(".dida").html(e.prop.title + "<br>via " + e.prop.uploader);
+
+            });
+
+            // EVENT: YTPTime
+            myPlayer.on("YTPTime", function (e) {
+                var currentTime = e.time;
+                var traceLog = currentTime / 5 == Math.floor(currentTime / 5);
+                if (traceLog) {
+                    YTPConsole.append("event type:: " + e.type + " actual time is: " + currentTime);
+                    YTPConsole.append("<br>");
+                }
+            });
+
+            /* DEBUG END ******************************************************************************************/
+
 
         });
 
@@ -105,35 +172,51 @@
 </head>
 <body>
 <div id="wrapper">
-    jQuery.mb.YTPlayer as background<br><br>
-    <div class="console">
+    <h1>jQuery.mb.YTPlayer as background</h1>
+
+    <div class="actions">
         <button class="command" onclick="jQuery('#bgndVideo').getPlayer().playVideo()"> play </button>
         <button class="command" onclick="jQuery('#bgndVideo').getPlayer().pauseVideo()"> pause </button>
-        <button class="command" onclick="jQuery('#bgndVideo').setYTPVolume(100)"> switch volume </button>
+        <button class="command" onclick="jQuery('#bgndVideo').toggleVolume()"> toggle volume </button>
         <button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> quality </button>
+        <button class="command" onclick="jQuery('#console').toggle()"> show/hide the console</button>
         <br>
         <br>
-        <span style="font-size: 18px;">events: </span><span id="eventListener" style="font-size: 18px;">(trace player events)</span>
+        Video info from the YT feed:
+        <div class="dida"></div>
+
+
         <br>
         <br>
+
+
+        <h2>Choose the video to play</h2>
         <button class="sel" onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=mAf6zKRb1wI'})"> vito acconci theme song 1973   </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'dZaD9CHZecE',ratio:'4/3'})"> Vito Acconci - Undertone 1972 (extract) </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://youtu.be/3ovA7zeviRo',ratio:'4/3'})"> Dan Graham - Body Press, 1972  </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=z5krhw54oqs',ratio:'4/3'})"> Fluxus - Wolf Vostell - Sun in your head    </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=u9k1FaMIYTs'})"> nam june paik - 03  </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=VuaJAgx0x_4'})"> nam june paik </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=rkfOgavdhak'})"> Bruce Nauman - Pinch Neck 1968 </button>
+        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=rkfOgavdhak',ratio:'4/3'})"> Bruce Nauman - Pinch Neck 1968 </button>
         <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=UJQmV8aPNao'})"> Bill Viola - Acceptance, 2008  </button>
-        <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=WHoE01WKDhM',autoPlay:true})"> Bill Viola - "The Messenger" (1986) (3 minute excerpt) </button>
     </div>
 
 
 
     <a id="bgndVideo"  data-property="{videoURL:'http://www.youtube.com/watch?v=mAf6zKRb1wI',containment:'body',autoPlay:true, mute:true, startAt:0,opacity:1,ratio:'4/3', addRaster:true}">My video</a>
 
-    <a style="position: fixed;top:20px;right: 20px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=V6ZS8JPMZC446&amp;lc=GB&amp;item_name=mb%2eideas&amp;item_number=MBIDEAS&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
+    <a style="position: fixed;top:20px;right: 20px;"
+       href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=V6ZS8JPMZC446&lc=GB&item_name=mb%2eideas&item_number=MBIDEAS&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img
+            border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
+
 </div>
-<div class="dida"></div>
+
+<div id="console" style="display: none">
+    <span style="font-size: 18px;">EVENT CONSOLE: </span>
+
+    <div id="eventListener"></div>
+</div>
+
 
 </body>
 

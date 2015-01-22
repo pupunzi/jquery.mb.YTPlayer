@@ -93,9 +93,9 @@ function onYouTubePlayerAPIReady() {
 		return {videoID: videoID, playlistID: playlistID};
 	};
 
-	/* todo:
-	 setPlaybackRate()
-	 playlist
+	 /* todo:
+	   setPlaybackRate()
+	   playlist
 	 */
 
 	jQuery.mbYTPlayer = {
@@ -104,8 +104,9 @@ function onYouTubePlayerAPIReady() {
 		author : "Matteo Bicocchi",
 
 		defaults: {
+
 			containment            : "body",
-			ratio                  : "16/9",
+			ratio                  : "auto", // "auto", "16/9", "4/3"
 			videoURL               : null,
 			playlistURL            : null,
 			startAt                : 0,
@@ -125,6 +126,7 @@ function onYouTubePlayerAPIReady() {
 			realfullscreen         : true,
 			gaTrack                : true,
 			onReady                : function (player) {}
+
 		},
 
 		/* @fontface icons */
@@ -265,9 +267,12 @@ function onYouTubePlayerAPIReady() {
 				});
 
 				if (YTPlayer.isBackground) {
+
 //					jQuery("body").css({position: "relative", minWidth: "100%", minHeight: "100%", zIndex: 1, boxSizing: "border-box"});
+					jQuery("body").css({boxSizing: "border-box"});
 					wrapper.css({position: "fixed", top: 0, left: 0, zIndex: 0, webkitTransform: "translateZ(0)"});
 					$YTPlayer.hide();
+
 				} else if (YTPlayer.opt.containment.css("position") == "static")
 					YTPlayer.opt.containment.css({position: "relative"});
 
@@ -441,7 +446,6 @@ function onYouTubePlayerAPIReady() {
 									YTPlayer.state = state;
 
 									var controls = jQuery("#controlBar_" + YTPlayer.id);
-									var data = YTPlayer.opt;
 
 									var eventType;
 
@@ -489,6 +493,9 @@ function onYouTubePlayerAPIReady() {
 												YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 
 											controls.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
+											setTimeout(function(){
+												controls.show(1000);
+											},2000);
 
 											break;
 
@@ -959,6 +966,8 @@ function onYouTubePlayerAPIReady() {
 				return;
 
 			var controlBar = jQuery("<span/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTPBar").css({whiteSpace: "noWrap", position: YTPlayer.isBackground ? "fixed" : "absolute", zIndex: YTPlayer.isBackground ? 10000 : 1000}).hide();
+			YTPlayer.controlBar = controlBar;
+
 			var buttonBar = jQuery("<div/>").addClass("buttonBar");
 
 			var playpause = jQuery("<span>" + jQuery.mbYTPlayer.controls.play + "</span>").addClass("mb_YTPPlaypause ytpicon").click(function () {
@@ -1017,7 +1026,6 @@ function onYouTubePlayerAPIReady() {
 			} else {
 				jQuery("body").after(controlBar);
 			}
-			controlBar.fadeIn();
 		},
 
 		checkForState: function (YTPlayer) {

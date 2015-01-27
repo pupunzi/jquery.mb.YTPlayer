@@ -310,7 +310,7 @@ function onYouTubePlayerAPIReady() {
 						return;
 
 					if (YTPlayer.isBackground && YTPlayer.opt.stopMovieOnClick)
-						jQuery(document).off("mousedown.ytplayer").on("mousedown,.ytplayer", function (e) {
+						jQuery(document).off("mousedown.ytplayer").on("mousedown.ytplayer", function (e) {
 							var target = jQuery(e.target);
 							if (target.is("a") || target.parents().is("a")) {
 								$YTPlayer.pauseYTP();
@@ -391,7 +391,8 @@ function onYouTubePlayerAPIReady() {
 										var canPlayVideo = jQuery.browser.mozilla && !window.MediaSource ? true : (YTPlayer.player.getVideoLoadedFraction() > startAt / YTPlayer.player.getDuration());
 
 										if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {
-											clearInterval(YTPlayer.checkForStartAt);
+
+												clearInterval(YTPlayer.checkForStartAt);
 											YTPlayer.player.setVolume(0);
 											jQuery(YTPlayer).muteYTPVolume();
 											if (typeof YTPlayer.opt.onReady == "function")
@@ -519,7 +520,6 @@ function onYouTubePlayerAPIReady() {
 								'onPlaybackQualityChange': function (e) {
 
 									var quality = e.target.getPlaybackQuality();
-
 									var YTPQualityChange = jQuery.Event("YTPQualityChange");
 									YTPQualityChange.quality = quality;
 									jQuery(YTPlayer).trigger(YTPQualityChange);
@@ -545,6 +545,8 @@ function onYouTubePlayerAPIReady() {
 				})
 			});
 		},
+
+//		todo: This API is deprecated. Find another way to retreive the Data informations.
 
 		getDataFromFeed: function (YTPlayer) {
 			//Get video info from FEEDS API

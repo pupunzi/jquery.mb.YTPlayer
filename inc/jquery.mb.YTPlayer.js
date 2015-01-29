@@ -424,6 +424,8 @@ function onYouTubePlayerAPIReady() {
 										}
 									}, 1000);
 //									}, jQuery.browser.chrome ? 1000 : 1);
+									var YTPready = jQuery.Event("YTPReady");
+									jQuery(YTPlayer).trigger(YTPready);
 								},
 
 								'onStateChange': function (event) {

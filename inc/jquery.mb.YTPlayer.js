@@ -1074,7 +1074,7 @@ function onYouTubePlayerAPIReady() {
 							$YTPlayer.pauseYTP();
 						}
 
-					} else if (document.hasFocus() && !YTPlayer.hasFocus) {
+					} else if (document.hasFocus() && !YTPlayer.hasFocus && !(YTPlayer.state == -1 || YTPlayer.state == 0)) {
 
 						YTPlayer.hasFocus = true;
 						$YTPlayer.playYTP();

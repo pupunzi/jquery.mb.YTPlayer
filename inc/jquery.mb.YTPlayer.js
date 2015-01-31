@@ -425,6 +425,8 @@ function onYouTubePlayerAPIReady() {
 										}
 									}, 1000);
 //									}, jQuery.browser.chrome ? 1000 : 1);
+									var YTPready = jQuery.Event("YTPReady");
+									jQuery(YTPlayer).trigger(YTPready);
 								},
 
 								'onStateChange': function (event) {
@@ -1071,7 +1073,7 @@ function onYouTubePlayerAPIReady() {
 							$YTPlayer.pauseYTP();
 						}
 
-					} else if (document.hasFocus() && !YTPlayer.hasFocus) {
+					} else if (document.hasFocus() && !YTPlayer.hasFocus && !(YTPlayer.state == -1 || YTPlayer.state == 0)) {
 
 						YTPlayer.hasFocus = true;
 						$YTPlayer.playYTP();

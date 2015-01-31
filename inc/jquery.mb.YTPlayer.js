@@ -93,14 +93,14 @@ function onYouTubePlayerAPIReady() {
 		return {videoID: videoID, playlistID: playlistID};
 	};
 
-	 /* todo:
-	   setPlaybackRate()
-	   playlist
+	/* todo:
+	 setPlaybackRate()
+	 playlist
 	 */
 
 	jQuery.mbYTPlayer = {
 		name   : "jquery.mb.YTPlayer",
-		version: "2.7.9",
+		version: "2.8.0",
 		author : "Matteo Bicocchi",
 
 		defaults: {
@@ -125,6 +125,7 @@ function onYouTubePlayerAPIReady() {
 			stopMovieOnBlur        : true,
 			realfullscreen         : true,
 			gaTrack                : true,
+			optimizeDisplay        : true,
 			onReady                : function (player) {}
 
 		},
@@ -216,15 +217,15 @@ function onYouTubePlayerAPIReady() {
 				if (YTPlayer.isBackground && ytp.backgroundIsInited)
 					return;
 
-				var isPlayer = YTPlayer.opt.containment.is(jQuery(this)) && jQuery(this).children().length == 0;
-
+				var isPlayer = YTPlayer.opt.containment.is(jQuery(this));
+				YTPlayer.canPlayOnMobile = isPlayer && jQuery(this).children().length == 0;
 				if (!isPlayer) {
 					$YTPlayer.hide();
 				} else {
 					YTPlayer.isPlayer = true;
 				}
 
-				if (jQuery.browser.mobile && YTPlayer.isBackground) {
+				if (jQuery.browser.mobile && !YTPlayer.canPlayOnMobile) {
 					$YTPlayer.remove();
 					return;
 				}
@@ -334,7 +335,7 @@ function onYouTubePlayerAPIReady() {
 						YTPlayer.isInit = true;
 
 						//if is mobile && isPlayer fallback to the default YT player
-						if (jQuery.browser.mobile && YTPlayer.isPlayer) {
+						if (jQuery.browser.mobile && YTPlayer.canPlayOnMobile) {
 							new YT.Player(playerID, {
 								videoId: YTPlayer.videoID.toString(),
 								height : '100%',
@@ -392,7 +393,7 @@ function onYouTubePlayerAPIReady() {
 
 										if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {
 
-												clearInterval(YTPlayer.checkForStartAt);
+											clearInterval(YTPlayer.checkForStartAt);
 											YTPlayer.player.setVolume(0);
 											jQuery(YTPlayer).muteYTPVolume();
 											if (typeof YTPlayer.opt.onReady == "function")
@@ -520,6 +521,7 @@ function onYouTubePlayerAPIReady() {
 								'onPlaybackQualityChange': function (e) {
 
 									var quality = e.target.getPlaybackQuality();
+
 									var YTPQualityChange = jQuery.Event("YTPQualityChange");
 									YTPQualityChange.quality = quality;
 									jQuery(YTPlayer).trigger(YTPQualityChange);
@@ -675,14 +677,12 @@ function onYouTubePlayerAPIReady() {
 
 			jQuery(YTPlayer.playerEl).CSSAnimate({opacity: 0}, timer);
 
-
 			setTimeout(function () {
 				var quality = !jQuery.browser.chrome ? YTPlayer.opt.quality : "default";
 
 				jQuery(YTPlayer).getPlayer().cueVideoByUrl(encodeURI(jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/v/" + YTPlayer.videoID), 1, quality);
 
 				jQuery(YTPlayer).playYTP();
-
 
 				jQuery(YTPlayer).one("YTPStart", function () {
 					YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 1000);
@@ -797,7 +797,6 @@ function onYouTubePlayerAPIReady() {
 					}, 500)
 				} else
 					videoWrapper.css({zIndex: 10000}).CSSAnimate({opacity: 1}, 1000);
-
 
 				fullScreenBtn.html(jQuery.mbYTPlayer.controls.showSite);
 				YTPlayer.isAlone = true;
@@ -1152,22 +1151,34 @@ function onYouTubePlayerAPIReady() {
 		var margin = 24;
 		var overprint = 100;
 		var vid = {};
-		vid.width = win.width + ((win.width * margin) / 100);
-		vid.height = data.ratio == "16/9" ? Math.ceil((9 * win.width) / 16) : Math.ceil((3 * win.width) / 4);
-		vid.marginTop = -((vid.height - win.height) / 2);
-		vid.marginLeft = -((win.width * (margin / 2)) / 100);
 
-		if (vid.height < win.height) {
-			vid.height = win.height + ((win.height * margin) / 100);
-			vid.width = data.ratio == "16/9" ? Math.floor((16 * win.height) / 9) : Math.floor((4 * win.height) / 3);
-			vid.marginTop = -((win.height * (margin / 2)) / 100);
-			vid.marginLeft = -((vid.width - win.width) / 2);
+		if(data.optimizeDisplay) {
+
+			vid.width = win.width + ((win.width * margin) / 100);
+			vid.height = data.ratio == "16/9" ? Math.ceil((9 * win.width) / 16) : Math.ceil((3 * win.width) / 4);
+			vid.marginTop = -((vid.height - win.height) / 2);
+			vid.marginLeft = -((win.width * (margin / 2)) / 100);
+
+			if (vid.height < win.height) {
+				vid.height = win.height + ((win.height * margin) / 100);
+				vid.width = data.ratio == "16/9" ? Math.floor((16 * win.height) / 9) : Math.floor((4 * win.height) / 3);
+				vid.marginTop = -((win.height * (margin / 2)) / 100);
+				vid.marginLeft = -((vid.width - win.width) / 2);
+			}
+
+			vid.width += overprint;
+			vid.height += overprint;
+			vid.marginTop -= overprint / 2;
+			vid.marginLeft -= overprint / 2;
+
+		}else{
+
+			vid.width = "100%";
+			vid.height = "100%";
+			vid.marginTop = 0;
+			vid.marginLeft -= 0;
+
 		}
-
-		vid.width += overprint;
-		vid.height += overprint;
-		vid.marginTop -= overprint / 2;
-		vid.marginLeft -= overprint / 2;
 
 		playerBox.css({width: vid.width, height: vid.height, marginTop: vid.marginTop, marginLeft: vid.marginLeft});
 	};

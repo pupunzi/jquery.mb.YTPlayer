@@ -736,7 +736,8 @@ function onYouTubePlayerAPIReady() {
 
 		playerDestroy: function () {
 			var YTPlayer = this.get(0);
-			clearInterval(YTPlayer.checkForStartAt)
+			clearInterval(YTPlayer.checkForStartAt);
+			clearInterval(YTPlayer.getState);
 			ytp.YTAPIReady = false;
 			ytp.backgroundIsInited = false;
 			YTPlayer.isInit = false;
@@ -1043,6 +1044,11 @@ function onYouTubePlayerAPIReady() {
 			clearInterval(YTPlayer.getState);
 
 			YTPlayer.getState = setInterval(function () {
+				//Checking if player has been removed from scene
+				if ( !$.contains(document, YTPlayer) ) {
+					$(YTPlayer).playerDestroy()
+					return
+				}
 				var prog = jQuery(YTPlayer).manageYTPProgress();
 				var $YTPlayer = jQuery(YTPlayer);
 				var controlBar = jQuery("#controlBar_" + YTPlayer.id);

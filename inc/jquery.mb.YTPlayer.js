@@ -643,6 +643,7 @@ function onYouTubePlayerAPIReady() {
 			var playerBox = YTPlayer.wrapper;
 			playerBox.remove();
 			jQuery("#controlBar_" + YTPlayer.id).remove();
+			clearInterval(YTPlayer.checkForStartAt);
 		},
 
 		fullscreen: function (real) {

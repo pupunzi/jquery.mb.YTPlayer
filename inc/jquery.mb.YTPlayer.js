@@ -388,6 +388,11 @@ function onYouTubePlayerAPIReady() {
 									jQuery.mbYTPlayer.checkForState(YTPlayer);
 
 									YTPlayer.checkForStartAt = setInterval(function () {
+										//Checking if player has been removed from scene
+										if (!$(YTPlayer).parent) {
+											$(YTPlayer).playerDestroy()
+											return
+										}
 
 										var canPlayVideo = jQuery.browser.mozilla && !window.MediaSource ? true : (YTPlayer.player.getVideoLoadedFraction() > startAt / YTPlayer.player.getDuration());
 
@@ -731,6 +736,7 @@ function onYouTubePlayerAPIReady() {
 
 		playerDestroy: function () {
 			var YTPlayer = this.get(0);
+			clearInterval(YTPlayer.checkForStartAt)
 			ytp.YTAPIReady = false;
 			ytp.backgroundIsInited = false;
 			YTPlayer.isInit = false;

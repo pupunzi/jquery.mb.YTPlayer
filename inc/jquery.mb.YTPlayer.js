@@ -389,7 +389,7 @@ function onYouTubePlayerAPIReady() {
 
 									YTPlayer.checkForStartAt = setInterval(function () {
 										//Checking if player has been removed from scene
-										if (!YTPlayer.parentElement) {
+										if ( !$.contains(document, YTPlayer) ) {
 											$(YTPlayer).playerDestroy()
 											return
 										}

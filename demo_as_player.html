@@ -29,6 +29,7 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="inc/jquery.mb.YTPlayer.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <style>
         body{
             border:none;
@@ -38,16 +39,23 @@
             font:normal 16px/20px Lekton, sans-serif;
         }
 
+        h1, h2{
+            font-family: 'Lobster', cursive;
+            font-size: 40px;
+            text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+            font-weight: 200;
+        }
+
         .player{
             display:inline-block;
             vertical-align:top;
             position:relative;
             width:500px;
-            height:350px;
+            height:300px;
             margin-top:100px;
             left:0;
             overflow: hidden;
-            border-radius: 0;
+            border-radius: 10px;
             border: 5px solid #fff;
             -moz-box-shadow: 0 0 10px rgba(0,0,0,.5);
             box-shadow: 0 0 10px rgba(0,0,0,.5);
@@ -70,13 +78,11 @@
 
         #P1.addGradientOverlay .YTPOverlay{
             background: linear-gradient(135deg, rgba(228, 165, 27, .5) 0%,rgba(0,158,195,.8) 100%);
-            -webkit-filter: blur(3px); -moz-filter: blur(3px); -o-filter: blur(3px); -ms-filter: blur(3px); filter: blur(3px);
         }
 
-        #P1.addGradientOverlay{
+        #P1.addGradientOverlay iframe{
             -webkit-filter: blur(10px); -moz-filter: blur(10px); -o-filter: blur(10px); -ms-filter: blur(10px); filter: blur(10px);
         }
-
 
         button {
             padding: 5px;
@@ -119,18 +125,14 @@
     <script>
 
         jQuery(function(){
-            if (self.location.href == top.location.href){
-                var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
-                $("#wrapper").prepend(logo);
-                $("#logo").fadeIn();
-            }
+            var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 
             var myPlayer = jQuery("#P1").YTPlayer();
 
             // EVENT: YTPData
             var YTPConsole = jQuery("#eventListener");
             myPlayer.on("YTPData", function (e) {
-                $(".dida").html(e.prop.title + "<br>via " + e.prop.uploader);
+                $(".dida").html(e.prop.title + "<br>@" + e.prop.uploader);
             });
         });
 
@@ -138,8 +140,7 @@
 </head>
 <body>
 <div id="wrapper" style="position:relative; padding:30px 20px;z-index:10">
-    <h1 style="color:white"> jQuery.mb.YTPlayer </h1>
-    <h2 style="color:white">  As a customized player </h2>
+    <h1 style="color:white"> jQuery.mb.YTPlayer as a customized player </h1>
 </div>
 
 <div id="P1" class="player" style="display:block; margin: auto; background: rgba(0,0,0,0.5)" data-property="{videoURL:'http://www.youtube.com/watch?v=l_tHTmd5pgk',containment:'self',startAt:0,mute:false,autoPlay:false,loop:false,opacity:1,showYTLogo:true, realfullscreen:true}"></div><!--3ovA7zeviRo-->
@@ -152,7 +153,7 @@
     <button onclick="jQuery('#P1').toggleClass('addGradientOverlay')">special effect</button>
 </div>
 <div class="dida"></div>
-<a style="position: fixed;top:20px;right: 20px;"
+<a style="position: fixed;bottom:30px;right: 30px;"
    href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=V6ZS8JPMZC446&lc=GB&item_name=mb%2eideas&item_number=MBIDEAS&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img
         border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
 

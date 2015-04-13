@@ -565,10 +565,12 @@ function onYouTubePlayerAPIReady() {
 		},
 
 		YTPlaylist: function (videos, shuffle, callback) {
-			var YTPlayer = this.get(0);
+			var $YTPlayer = this;
+			var YTPlayer = $YTPlayer.get(0);
 			YTPlayer.isPlayList = true;
 			if (shuffle)
 				videos = jQuery.shuffle(videos);
+
 			if (!YTPlayer.videoID) {
 				YTPlayer.videos = videos;
 				YTPlayer.videoCounter = 0;
@@ -576,13 +578,17 @@ function onYouTubePlayerAPIReady() {
 				jQuery(YTPlayer).data("property", videos[0]);
 				jQuery(YTPlayer).mb_YTPlayer();
 			}
+
 			if (typeof callback == "function")
 				jQuery(YTPlayer).on("YTPChanged", function () {
 					callback(YTPlayer);
 				});
+
 			jQuery(YTPlayer).on("YTPEnd", function () {
 				jQuery(YTPlayer).playNext();
 			});
+
+			return $YTPlayer;
 		},
 
 		playNext: function () {

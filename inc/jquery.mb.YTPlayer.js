@@ -292,7 +292,7 @@ function onYouTubePlayerAPIReady() {
 				if (!ytp.YTAPIReady) {
 					jQuery("#YTAPI").remove();
 					var tag = jQuery("<script></script>").attr({"src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/player_api?v=" + jQuery.mbYTPlayer.version, "id": "YTAPI"});
-					jQuery("head title").after(tag);
+					jQuery("head").prepend(tag);
 				} else {
 					setTimeout(function () {
 						jQuery(document).trigger("YTAPIReady");

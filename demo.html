@@ -343,7 +343,7 @@
 
     <div class="slider"
          data-filter="saturate"
-         data-scale="200"><span>saturate</span>
+         data-scale="1000"><span>saturate</span>
     </div>
 
     <div class="slider"
@@ -356,6 +356,11 @@
          data-scale="500"><span>contrast</span>
     </div>
 
+    <div class="slider"
+         data-filter="blur"
+         data-scale="50"><span>blur</span>
+    </div>
+
     <div id="filterScript">
 
     </div>
@@ -363,6 +368,15 @@
     <button id="toggleFilters"
             onclick="jQuery('#bgndVideo').YTPToggleFilters(function(a){if(!a) {$('#toggleFilters').html('enable filters')} else {$('#toggleFilters').html('disable filters')}})">
         disable filters
+    </button>
+    <script>
+        function rFCallback(f){
+            $(".slider[data-filter="+f+"]").updateVal(0);
+        }
+    </script>
+    <button id="removeFilters"
+            onclick="jQuery('#bgndVideo').YTPRemoveFilter(rFCallback)">
+        remove filters
     </button>
 
 </div>

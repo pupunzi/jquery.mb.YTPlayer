@@ -21,7 +21,7 @@
 
 var ytp = ytp || {};
 
-function onYouTubePlayerAPIReady() {
+function onYouTubeIframeAPIReady() {
 	if(ytp.YTAPIReady)
 		return;
 
@@ -170,7 +170,8 @@ function onYouTubePlayerAPIReady() {
 					saturate  : {value: 0, unit: "%"},
 					sepia     : {value: 0, unit: "%"},
 					brightness: {value: 0, unit: "%"},
-					contrast  : {value: 0, unit: "%"}
+					contrast  : {value: 0, unit: "%"},
+					blur      : {value: 0, unit: "px"}
 				};
 
 				$YTPlayer.addClass("mb_YTPlayer");
@@ -291,7 +292,7 @@ function onYouTubePlayerAPIReady() {
 
 				if (!ytp.YTAPIReady) {
 					jQuery("#YTAPI").remove();
-					var tag = jQuery("<script></script>").attr({"src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/player_api?v=" + jQuery.mbYTPlayer.version, "id": "YTAPI"});
+					var tag = jQuery("<script></script>").attr({"src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version, "id": "YTAPI"});
 					jQuery("head").prepend(tag);
 				} else {
 					setTimeout(function () {
@@ -898,26 +899,11 @@ function onYouTubePlayerAPIReady() {
 
 		applyFilter: function (filter, value) {
 			var YTPlayer = this.get(0);
-			var iframe = jQuery(YTPlayer.playerEl);
-
 			YTPlayer.filters[filter].value = value;
 
 			if(YTPlayer.filtersEnabled)
 				this.YTPEnableFilters();
 
-			/*
-			 var filterStyle = "";
-
-			 for (var key in YTPlayer.filters) {
-
-			 if (YTPlayer.filters[key].value)
-			 filterStyle += key.replace("_", "-") + "(" + YTPlayer.filters[key].value + YTPlayer.filters[key].unit + ") ";
-			 }
-
-			 iframe.css("-webkit-filter", filterStyle);
-			 iframe.css("filter", filterStyle);
-
-			 */
 			return this;
 		},
 
@@ -983,14 +969,25 @@ function onYouTubePlayerAPIReady() {
 
 		},
 
-		removeFilter: function (filter) {
+		removeFilter: function (filter, callback) {
+
+			if (typeof filter == "function"){
+				callback = filter;
+				filter = null;
+			}
 
 			var YTPlayer = this.get(0);
 			if (!filter)
 				for (var key in YTPlayer.filters) {
-					this.applyFilter(YTPlayer.filters[key], 0)
-				} else
-				this.applyFilter(filter, 0);
+					this.YTPApplyFilter(key, 0)
+					if(typeof callback == "function")
+						callback(key);
+				} else{
+				this.YTPApplyFilter(filter, 0);
+
+				if(typeof callback == "function")
+					callback(filter);
+			}
 
 			return this;
 		},

@@ -82,15 +82,14 @@
             font-size: 13px;
         }
 
-        #tools{
-            position: absolute;
-            bottom:50px;
-            right: 200px;
-            z-index: 1000;
+        .dida{
+            color: #fff;
+            font-size: 20px;
+            margin-top: 20px;
         }
 
-
         button, .button {
+            transition: all .4s;
             display: inline-block;
             padding: 0px 10px;
             font-size: 16px;
@@ -128,7 +127,6 @@
 
 
         .goto .button{
-            transition: all .4s;
             font-size: 40px;
             font-family: 'Lobster', cursive;
             padding: 20px;
@@ -209,12 +207,17 @@
                 }
             });
 
+            myPlayer.on("YTPData", function (e) {
+                $(".dida").html(e.prop.title + "<br>@" + e.prop.uploader);
+            });
+
+
             /* DEBUG ******************************************************************************************/
 
             var YTPConsole = jQuery("#eventListener");
             // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
-            myPlayer.on("YTPStart YTPEnd YTPLoop YTPPause YTPBuffering", function (e) {
-                YTPConsole.append(e.type + " - " + jQuery("#bgndVideo").getPlayer().getPlayerState() + " - time: " + e.time);
+            myPlayer.on("YTPStart YTPEnd YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted", function (e) {
+                YTPConsole.append("event: " + e.type + " (" + jQuery("#bgndVideo").getPlayer().getPlayerState() + ") > time: " + e.time);
                 YTPConsole.append("<br>");
             });
             // EVENT: YTPChanged
@@ -243,13 +246,14 @@
                 var traceLog = currentTime / 5 == Math.floor(currentTime / 5);
 
                 if (traceLog && YTPConsole.is(":visible")) {
-                    YTPConsole.append(player.attr("id")+ " > " + e.type + " actual time is: " + currentTime);
+                    YTPConsole.append(myPlayer.attr("id")+ " > " + e.type + " > actual time is: " + currentTime);
                     YTPConsole.append("<br>");
                 }
             });
 
             /* DEBUG END ******************************************************************************************/
 
+            /* FILTER SLIDERS ******************************************************************************************/
             // create sliders for filters adjustment
             var $slider = $(".slider").simpleSlider({
                 initialval: 0, //function (el) {return Math.random() * el.opt.scale},
@@ -286,39 +290,44 @@
             myPlayer.on("YTPFiltersApplied", function(){
                 var filters = myPlayer.get(0).filters;
                 for (var key in filters){
-                    $(".slider[data-filter="+key+"]").updateVal(filters[key].value);
+                    $(".slider[data-filter="+key+"]").updateSliderVal(filters[key].value);
                 }
             })
 
         });
+        /* END FILTER SLIDERS ******************************************************************************************/
 
         var v = false;
         function changeVideo() {
             var vID = v ? "7SnmCUwOsts" : "BsekcY04xvQ";
             jQuery('#bgndVideo').changeMovie({videoURL: vID});
-            $("#vidData").toggle(1000);
             v = !v;
         }
     </script>
 </head>
 <body>
-<div id="wrapper" style="position:relative; padding:30px 20px;z-index:10">
-    <h1 style="color:white"> jQuery.mb.YTPlayer </h1>
-
-    <h2 style="color:white"> An HTML5 Background player for YouTube videos</h2>
-
+<div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
     <div class="console">
         <button class="command" onclick="jQuery('#bgndVideo').playYTP()"> play</button>
         <button class="command" onclick="jQuery('#bgndVideo').pauseYTP()"> pause</button>
         <button onclick="jQuery('#bgndVideo').toggleVolume()">mute/unmute</button>
-        <button onclick="jQuery('#bgndVideo').setYTPVolume(20)">set volume to 20</button>
-        <button onclick="jQuery('#bgndVideo').YTPApplyFilter('sepia', 100)">apply sepia filter</button>
-
+        <!--<button onclick="jQuery('#bgndVideo').setYTPVolume(20)">set volume to 20</button>-->
+        <!--<button onclick="jQuery('#bgndVideo').YTPApplyFilter('sepia', 100)">apply sepia filter</button>-->
+        <button onclick="jQuery('#bgndVideo').fullscreen()">go fullscreen</button>
+        <button class="command" onclick="changeVideo();">change video</button>
+        <button id="debugBtn" class="command" onclick="jQuery('#debug').toggle()"> show/hide the console</button>
         <!--<button onclick="console.log($('#bgndVideo').getDataFromFeed())">get feed data on console</button>-->
     </div>
+<br>
+<br>
+    <h1 style="color:white">jQuery.mb.YTPlayer</h1>
+    <h2 style="color:white">An HTML5 Background player for YouTube videos</h2>
+
 </div>
+
 <div id="filtersControl">
-    <h2>Apply filters</h2>
+
+    <h2 style="color:white">Apply filters</h2>
 
     <div class="slider"
          data-filter="grayscale"><span>grayscale</span>
@@ -361,9 +370,7 @@
          data-scale="50"><span>blur</span>
     </div>
 
-    <div id="filterScript">
-
-    </div>
+    <div id="filterScript"></div>
 <br><br>
     <button id="toggleFilters"
             onclick="jQuery('#bgndVideo').YTPToggleFilters(function(a){if(!a) {$('#toggleFilters').html('enable filters')} else {$('#toggleFilters').html('disable filters')}})">
@@ -371,13 +378,16 @@
     </button>
     <script>
         function rFCallback(f){
-            $(".slider[data-filter="+f+"]").updateVal(0);
+            $(".slider[data-filter="+f+"]").updateSliderVal(0);
         }
     </script>
     <button id="removeFilters"
             onclick="jQuery('#bgndVideo').YTPRemoveFilter(rFCallback)">
         remove filters
     </button>
+
+    <div class="dida"></div>
+
 
 </div>
 
@@ -386,10 +396,7 @@
     <a class="button" href="http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer" target="_blank">Download it</a>
 </div>
 
-<div id="tools">
-    <button id="debugBtn" class="command" onclick="jQuery('#debug').toggle()"> show/hide the console</button>
-    <button class="command" onclick="changeVideo();"> switch video</button>
-</div>
+
 
 <div id="debug" style="display: none">
     <span style="font-size: 18px;">EVENT CONSOLE: </span>

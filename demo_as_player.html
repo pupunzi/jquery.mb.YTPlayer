@@ -118,7 +118,7 @@
         .mb_YTPBar .mb_YTPLoaded{
             height:10px;
             width:0;
-            background: #b80d16;
+            background: #000;
             left:0;
         }
 
@@ -129,7 +129,7 @@
         .mb_YTPBar .mb_YTPseekbar{
             height:10px;
             width:0;
-            background:#fff;
+            background:#b80d16;
             bottom:0;
             left:0;
             box-shadow:none;
@@ -261,7 +261,7 @@
             myPlayer.on("YTPFiltersApplied", function(){
                 var filters = myPlayer.get(0).filters;
                 for (var key in filters){
-                    $(".slider[data-filter="+key+"]").updateVal(filters[key].value);
+                    $(".slider[data-filter="+key+"]").updateSliderVal(filters[key].value);
                 }
             })
         });
@@ -319,7 +319,13 @@
          data-filter="contrast"
          data-scale="500"><span>contrast</span>
     </div>
-    
+
+    <div class="slider"
+         data-filter="blur"
+         data-scale="50"><span>blur</span>
+    </div>
+
+
     <div id="filterScript">
         
     </div>

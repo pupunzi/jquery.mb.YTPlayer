@@ -337,6 +337,7 @@ function onYouTubeIframeAPIReady() {
 									YTPlayer.playerEl = YTPlayer.player.getIframe();
 									$YTPlayer.optimizeDisplay();
 									YTPlayer.videoID = videoID;
+
 									jQuery(window).on("resize.YTP", function () {
 										$YTPlayer.optimizeDisplay();
 									});
@@ -346,8 +347,10 @@ function onYouTubeIframeAPIReady() {
 									// Trigger state events
 									var YTPevent = jQuery.Event("YTPUnstarted");
 									YTPevent.time = YTPlayer.player.time;
+
 									if (YTPlayer.canTrigger)
 										jQuery(YTPlayer).trigger(YTPevent);
+
 								},
 
 								'onStateChange': function (event) {
@@ -398,7 +401,6 @@ function onYouTubeIframeAPIReady() {
 
 										case 3:  //------------------------------------------------ buffer
 
-											//if (!jQuery.browser.chrome)
 											YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 											eventType = "YTPBuffering";
 											controls.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
@@ -447,10 +449,9 @@ function onYouTubeIframeAPIReady() {
 				})
 
 			});
-
 		},
 
-//		todo: This API is deprecated. Find another way to retreive the Data informations.
+//		todo: This API is deprecated. Find another way to retrieve the video data information.
 		getDataFromFeed: function (YTPlayer) {
 			//Get video info from FEEDS API
 

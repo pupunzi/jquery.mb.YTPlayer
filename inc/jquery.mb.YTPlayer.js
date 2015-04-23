@@ -615,6 +615,7 @@ function onYouTubeIframeAPIReady() {
 					if (!isFullScreen) {
 						YTPlayer.isAlone = false;
 						fullScreenBtn.html(jQuery.mbYTPlayer.controls.onlyYT);
+
 						jQuery(YTPlayer).setVideoQuality(YTPlayer.opt.quality);
 						videoWrapper.removeClass("fullscreen");
 						videoWrapper.CSSAnimate({opacity: YTPlayer.opt.opacity}, 500);
@@ -1169,6 +1170,9 @@ function onYouTubeIframeAPIReady() {
 				jQuery(YTPlayer).playerDestroy();
 				return
 			}
+
+			if(jQuery.browser.chrome)
+				YTPlayer.opt.quality = "default";
 
 			YTPlayer.player.pauseVideo();
 			jQuery(YTPlayer).muteYTPVolume();

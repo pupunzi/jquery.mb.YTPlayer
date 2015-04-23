@@ -1,23 +1,23 @@
-/*___________________________________________________________________________________________________________________________________________________
- _ jquery.mb.components                                                                                                                             _
- _                                                                                                                                                  _
- _ file: jquery.mb.YTPlayer.js                                                                                                                      _
- _ last modified: 19/08/14 20.13                                                                                                                    _
- _                                                                                                                                                  _
- _ Open Lab s.r.l., Florence - Italy                                                                                                                _
- _                                                                                                                                                  _
- _ email: matteo@open-lab.com                                                                                                                       _
- _ site: http://pupunzi.com                                                                                                                         _
- _       http://open-lab.com                                                                                                                        _
- _ blog: http://pupunzi.open-lab.com                                                                                                                _
- _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
- _                                                                                                                                                  _
- _ Licences: MIT, GPL                                                                                                                               _
- _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
- _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
- _                                                                                                                                                  _
- _ Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                              _
- ___________________________________________________________________________________________________________________________________________________*/
+/*_________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                   _
+ _                                                                                                                        _
+ _ File: jquery.mb.YTPlayer.js                                                                                            _
+ _ Last modified: 08/04/15                                                                                                _
+ _                                                                                                                        _
+ _ Open Lab s.r.l., Florence - Italy                                                                                      _
+ _                                                                                                                        _
+ _ Email: matteo@open-lab.com                                                                                             _
+ _ Site: http://pupunzi.com                                                                                               _
+ _       http://open-lab.com                                                                                              _
+ _ Blog: http://pupunzi.open-lab.com                                                                                      _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                        _
+ _                                                                                                                        _
+ _ Licences:                                                                                                              _
+ _    MIT - http://www.opensource.org/licenses/mit-license.php                                                            _
+ _    GPL - http://www.gnu.org/licenses/gpl.html                                                                          _
+ _                                                                                                                        _
+ _ Copyright (c) 2001-2015. Matteo Bicocchi (Pupunzi);                                                                    _
+ _________________________________________________________________________________________________________________________*/
 
 var ytp = ytp || {};
 
@@ -1355,6 +1355,5 @@ function onYouTubeIframeAPIReady() {
 	jQuery.fn.playNext = jQuery.mbYTPlayer.playNext;
 	jQuery.fn.playPrev = jQuery.mbYTPlayer.playPrev;
 	jQuery.fn.changeMovie = jQuery.mbYTPlayer.changeMovie;
-
 
 })(jQuery, ytp);

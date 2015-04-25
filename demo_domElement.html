@@ -75,26 +75,15 @@
 
         button:focus {outline:none;}
 
-/*
-        #customElement.addGradientOverlay iframe{
-            -webkit-filter: blur(10px); -moz-filter: blur(10px); -o-filter: blur(10px); -ms-filter: blur(10px); filter: blur(10px);
-        }
-*/
-
-        #customElement.addGradientOverlay iframe{
-            -webkit-filter: grayscale(1);
-            filter: grayscale(1);
-        }
-
-
 
     </style>
 
     <script>
+        var myPlayer;
         jQuery(function () {
             var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 
-            var myPlayer = jQuery(".player").YTPlayer();
+            myPlayer = jQuery(".player").YTPlayer();
         });
     </script>
 </head>
@@ -108,7 +97,7 @@
     </div>
 
     <div style="padding: 20px; text-align: center">
-        <button onclick="jQuery('#customElement').toggleClass('addGradientOverlay')">toggle black and white</button>
+        <button onclick="myPlayer.YTPtoggleFilter('grayscale', 100)">toggle black and white</button>
 
     </div>
 

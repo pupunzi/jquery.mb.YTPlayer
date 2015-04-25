@@ -116,7 +116,7 @@
 
             // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
             myPlayer.on("YTPStart YTPEnd YTPLoop YTPPause YTPBuffering", function (e) {
-                YTPConsole.append("event type:: " + e.type + " - " + jQuery("#bgndVideo").getPlayer().getPlayerState() + " - time: " + e.time);
+                YTPConsole.append("event type:: " + e.type + " - " + jQuery("#bgndVideo").YTPGetPlayer().getPlayerState() + " - time: " + e.time);
                 YTPConsole.append("<br>");
             });
             // EVENT: YTPChanged
@@ -178,10 +178,10 @@
     <h1>jQuery.mb.YTPlayer as background</h1>
 
     <div class="actions">
-        <button class="command" onclick="jQuery('#bgndVideo').getPlayer().playVideo()"> play </button>
-        <button class="command" onclick="jQuery('#bgndVideo').getPlayer().pauseVideo()"> pause </button>
+        <button class="command" onclick="jQuery('#bgndVideo').YTPGetPlayer().playVideo()"> play </button>
+        <button class="command" onclick="jQuery('#bgndVideo').YTPGetPlayer().pauseVideo()"> pause </button>
         <button class="command" onclick="jQuery('#bgndVideo').toggleVolume()"> toggle volume </button>
-        <button class="command" onclick="alert(jQuery('#bgndVideo').getPlayer().getPlaybackQuality())"> quality </button>
+        <button class="command" onclick="alert(jQuery('#bgndVideo').YTPGetPlayer().getPlaybackQuality())"> quality </button>
         <button class="command" onclick="jQuery('#console').toggle()"> show/hide the console</button>
         <br>
         <br>

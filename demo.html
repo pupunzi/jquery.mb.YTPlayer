@@ -293,7 +293,7 @@
             var YTPConsole = jQuery("#eventListener");
             // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
             myPlayer.on("YTPStart YTPEnd YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted", function (e) {
-                YTPConsole.append("event: " + e.type + " (" + jQuery("#bgndVideo").getPlayer().getPlayerState() + ") > time: " + e.time);
+                YTPConsole.append("event: " + e.type + " (" + jQuery("#bgndVideo").YTPGetPlayer().getPlayerState() + ") > time: " + e.time);
                 YTPConsole.append("<br>");
             });
             // EVENT: YTPChanged
@@ -457,9 +457,9 @@
 <div id="changeVideo">
     <h2 style="color:white">Change video</h2>
 
-    <button class="command" onclick="jQuery('#bgndVideo').changeMovie({videoURL: '7SnmCUwOsts', mute:false, addRaster:false})">video 1</button>
-    <button class="command" onclick="jQuery('#bgndVideo').changeMovie({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 2</button>
-    <button class="command" onclick="jQuery('#bgndVideo').changeMovie({videoURL: 'kcihcYEOeic', mute:false, startAt:10, addRaster:false})">video 3</button>
+    <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: '7SnmCUwOsts', mute:false, addRaster:false})">video 1</button>
+    <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 2</button>
+    <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'kcihcYEOeic', mute:false, startAt:10, addRaster:false})">video 3</button>
 
     <label for="videoID">Or insert here the ID or the complete URL of the Youtube video:</label>
     <input id="videoID" type="text" value="r1xohS2u69E">
@@ -471,7 +471,7 @@
     <input id="audio" type="checkbox" checked> Audio is ON
     <br>
     <br>
-    <button onclick="jQuery('#bgndVideo').changeMovie({videoURL: $('#videoID').val()})">change video</button>
+    <button onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: $('#videoID').val()})">change video</button>
 
     <h2 style="color: #FFFFFF; text-align: left">Current video:</h2>
     <div class="dida"></div>
@@ -480,7 +480,7 @@
 
 
 <div class="goto">
-    <button id="togglePlay" class="command" onclick="jQuery('#bgndVideo').togglePlayYTP(changeLabel)">pause</button>
+    <button id="togglePlay" class="command" onclick="jQuery('#bgndVideo').YTPTogglePlay(changeLabel)">pause</button>
     <br>
     <br>
     <br>

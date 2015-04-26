@@ -163,17 +163,17 @@ function onYouTubeIframeAPIReady() {
 				YTPlayer.state = {};
 
 				YTPlayer.filtersEnabled = true;
-				YTPlayer.filters = {
-					grayscale : {value: 0, unit: "%"},
-					hue_rotate: {value: 0, unit: "deg"},
-					invert    : {value: 0, unit: "%"},
-					opacity   : {value: 0, unit: "%"},
-					saturate  : {value: 0, unit: "%"},
-					sepia     : {value: 0, unit: "%"},
-					brightness: {value: 0, unit: "%"},
-					contrast  : {value: 0, unit: "%"},
-					blur      : {value: 0, unit: "px"}
-				};
+YTPlayer.filters = {
+	grayscale : {value: 0, unit: "%"},
+	hue_rotate: {value: 0, unit: "deg"},
+	invert    : {value: 0, unit: "%"},
+	opacity   : {value: 0, unit: "%"},
+	saturate  : {value: 0, unit: "%"},
+	sepia     : {value: 0, unit: "%"},
+	brightness: {value: 0, unit: "%"},
+	contrast  : {value: 0, unit: "%"},
+	blur      : {value: 0, unit: "px"}
+};
 
 				$YTPlayer.addClass("mb_YTPlayer");
 				var property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ? eval('(' + $YTPlayer.data("property") + ')') : $YTPlayer.data("property");
@@ -861,19 +861,6 @@ function onYouTubeIframeAPIReady() {
 			return this;
 		},
 
-		toggleFilter: function (filter, value) {
-			var YTPlayer = this.get(0);
-			if(!YTPlayer.filters[filter].value)
-				YTPlayer.filters[filter].value = value;
-			else
-				YTPlayer.filters[filter].value = 0;
-
-			if(YTPlayer.filtersEnabled)
-				this.YTPEnableFilters();
-
-			return this;
-		},
-
 		applyFilters: function (filters) {
 			var YTPlayer = this.get(0);
 
@@ -884,6 +871,20 @@ function onYouTubeIframeAPIReady() {
 				}
 				jQuery(YTPlayer).trigger("YTPFiltersApplied");
 			});
+
+			return this;
+		},
+
+
+		toggleFilter: function (filter, value) {
+			var YTPlayer = this.get(0);
+			if(!YTPlayer.filters[filter].value)
+				YTPlayer.filters[filter].value = value;
+			else
+				YTPlayer.filters[filter].value = 0;
+
+			if(YTPlayer.filtersEnabled)
+				this.YTPEnableFilters();
 
 			return this;
 		},
@@ -1020,7 +1021,7 @@ function onYouTubeIframeAPIReady() {
 
 			var movieUrl = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.ytLogo).addClass("mb_YTPUrl ytpicon").attr("title", "view on YouTube").on("click", function () {window.open(vURL, "viewOnYT")});
 
-			var onlyVideo = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.onlyYT).addClass("mb_OnlyYT ytpicon").on("click", function () {jQuery(YTPlayer).fullscreen(data.realfullscreen);});
+			var onlyVideo = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.onlyYT).addClass("mb_OnlyYT ytpicon").on("click", function () {jQuery(YTPlayer).YTPFullscreen(data.realfullscreen);});
 
 			var progressBar = jQuery("<div/>").addClass("mb_YTPProgress").css("position", "absolute").click(function (e) {
 				timeBar.css({width: (e.clientX - timeBar.offset().left)});
@@ -1345,7 +1346,7 @@ function onYouTubeIframeAPIReady() {
 	jQuery.fn.YTPGetVideoID = jQuery.mbYTPlayer.getVideoID;
 	jQuery.fn.YTPGetPlayer = jQuery.mbYTPlayer.getPlayer;
 	jQuery.fn.YTPPlayerDestroy = jQuery.mbYTPlayer.playerDestroy;
-	jQuery.fn.fullscreen = jQuery.mbYTPlayer.fullscreen;
+	jQuery.fn.YTPFullscreen = jQuery.mbYTPlayer.fullscreen;
 	jQuery.fn.YTPPlay = jQuery.mbYTPlayer.play;
 	jQuery.fn.YTPTogglePlay = jQuery.mbYTPlayer.togglePlay;
 	jQuery.fn.YTPToggleLoops = jQuery.mbYTPlayer.toggleLoops;
@@ -1354,17 +1355,18 @@ function onYouTubeIframeAPIReady() {
 	jQuery.fn.YTPSeekTo = jQuery.mbYTPlayer.seekTo;
 	jQuery.fn.YTPMute = jQuery.mbYTPlayer.mute;
 	jQuery.fn.YTPUnmute = jQuery.mbYTPlayer.unmute;
+	jQuery.fn.YTPToggleVolume = jQuery.mbYTPlayer.toggleVolume;
 	jQuery.fn.YTPSetVolume = jQuery.mbYTPlayer.setVolume;
 	jQuery.fn.YTPSetVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
 	jQuery.fn.YTPManageProgress = jQuery.mbYTPlayer.manageProgress;
 	jQuery.fn.YTPGetDataFromFeed = jQuery.mbYTPlayer.getVideoData;
+
 	jQuery.fn.YTPApplyFilter = jQuery.mbYTPlayer.applyFilter;
 	jQuery.fn.YTPApplyFilters = jQuery.mbYTPlayer.applyFilters;
 	jQuery.fn.YTPtoggleFilter = jQuery.mbYTPlayer.toggleFilter;
 	jQuery.fn.YTPRemoveFilter = jQuery.mbYTPlayer.removeFilter;
 	jQuery.fn.YTPDisableFilters = jQuery.mbYTPlayer.disableFilters;
 	jQuery.fn.YTPEnableFilters = jQuery.mbYTPlayer.enableFilters;
-	jQuery.fn.YTPToggleFilters = jQuery.mbYTPlayer.toggleFilters;
 
 
 	/** @deprecated */
@@ -1376,7 +1378,7 @@ function onYouTubeIframeAPIReady() {
 	jQuery.fn.getVideoID = jQuery.mbYTPlayer.getVideoID;
 	jQuery.fn.getPlayer = jQuery.mbYTPlayer.getPlayer;
 	jQuery.fn.playerDestroy = jQuery.mbYTPlayer.playerDestroy;
-	jQuery.fn.fullscreen = jQuery.mbYTPlayer.fullscreen;
+	jQuery.fn.YTPFullscreen = jQuery.mbYTPlayer.YTPFullscreen;
 	jQuery.fn.playYTP = jQuery.mbYTPlayer.play;
 	jQuery.fn.togglePlayYTP = jQuery.mbYTPlayer.togglePlay;
 	jQuery.fn.toggleLoops = jQuery.mbYTPlayer.toggleLoops;

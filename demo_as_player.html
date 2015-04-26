@@ -37,6 +37,7 @@
             padding:30px;
             background: #334346;
             font:normal 16px/20px Lekton, sans-serif;
+            min-width: 1280px;
         }
 
         h1, h2{
@@ -72,13 +73,13 @@
             font-size: 20px;
             position: relative;
             width: 800px;
-            margin: 20px auto;
+            margin: 0 60px;
         }
 
         .controls{
             position: relative;
             width: 800px;
-            margin: 20px auto;
+            margin: 0 50px;
         }
 
 
@@ -138,8 +139,8 @@
 
         #filtersControl{
             position: absolute;
-            top:120px;
-            left: 50px;
+            top:70px;
+            right: 50px;
             width: 300px;
             margin: 30px auto;
         }
@@ -271,10 +272,10 @@
 <body>
 <div id="wrapper" style="position:relative; padding:30px 20px;z-index:10">
     <h1 style="color:white"> jQuery.mb.YTPlayer as a customized player </h1>
-</div>
+
 
 <!-- l_tHTmd5pgk  0YcRwnE6Lzg-->
-<div id="P1" class="player" style="display:block; margin: auto; background: rgba(0,0,0,0.5)" data-property="{videoURL:'l_tHTmd5pgk',containment:'self',showControls:true,startAt:6,mute:false,autoPlay:false,loop:false,opacity:1,showYTLogo:true}"></div><!--3ovA7zeviRo-->
+<div id="P1" class="player" style="display:block; margin: 50px; background: rgba(0,0,0,0.5)" data-property="{videoURL:'l_tHTmd5pgk',containment:'self',showControls:true,startAt:6,mute:false,autoPlay:false,loop:false,opacity:1,showYTLogo:true}"></div><!--3ovA7zeviRo-->
 
 <div id="filtersControl">
     <h2>Apply filters</h2>
@@ -342,10 +343,10 @@
     <button onclick="jQuery('#P1').YTPPlay()">play</button>
     <button onclick="jQuery('#P1').YTPPause()">pause</button>
     <button onclick="jQuery('#P1').toggleVolume()">mute/unmute</button>
-    <button onclick="jQuery('#P1').fullscreen()">go fullscreen</button>
+    <button onclick="jQuery('#P1').YTPFullscreen()">go fullscreen</button>
 </div>
 
-
+</div>
 <div class="dida"></div>
 
 <a style="position: fixed;bottom:30px;right: 30px;"

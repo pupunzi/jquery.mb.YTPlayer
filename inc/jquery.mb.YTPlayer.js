@@ -125,7 +125,6 @@ function onYouTubeIframeAPIReady() {
 			showControls    : true,
 			showAnnotations : false,
 			showYTLogo      : true,
-			stopMovieOnClick: false,
 			stopMovieOnBlur : true,
 			realfullscreen  : true,
 			gaTrack         : true,
@@ -163,17 +162,17 @@ function onYouTubeIframeAPIReady() {
 				YTPlayer.state = {};
 
 				YTPlayer.filtersEnabled = true;
-YTPlayer.filters = {
-	grayscale : {value: 0, unit: "%"},
-	hue_rotate: {value: 0, unit: "deg"},
-	invert    : {value: 0, unit: "%"},
-	opacity   : {value: 0, unit: "%"},
-	saturate  : {value: 0, unit: "%"},
-	sepia     : {value: 0, unit: "%"},
-	brightness: {value: 0, unit: "%"},
-	contrast  : {value: 0, unit: "%"},
-	blur      : {value: 0, unit: "px"}
-};
+				YTPlayer.filters = {
+					grayscale : {value: 0, unit: "%"},
+					hue_rotate: {value: 0, unit: "deg"},
+					invert    : {value: 0, unit: "%"},
+					opacity   : {value: 0, unit: "%"},
+					saturate  : {value: 0, unit: "%"},
+					sepia     : {value: 0, unit: "%"},
+					brightness: {value: 0, unit: "%"},
+					contrast  : {value: 0, unit: "%"},
+					blur      : {value: 0, unit: "px"}
+				};
 
 				$YTPlayer.addClass("mb_YTPlayer");
 				var property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ? eval('(' + $YTPlayer.data("property") + ')') : $YTPlayer.data("property");
@@ -288,13 +287,7 @@ YTPlayer.filters = {
 				jQuery(document).on("YTAPIReady", function () {
 					if ((YTPlayer.isBackground && ytp.backgroundIsInited) || YTPlayer.isInit)
 						return;
-					if (YTPlayer.isBackground && YTPlayer.opt.stopMovieOnClick)
-						jQuery(document).off("mousedown.ytplayer").on("mousedown.ytplayer", function (e) {
-							var target = jQuery(e.target);
-							if (target.is("a") || target.parents().is("a")) {
-								$YTPlayer.YTPPause();
-							}
-						});
+
 					if (YTPlayer.isBackground) {
 						ytp.backgroundIsInited = true;
 					}
@@ -780,7 +773,7 @@ YTPlayer.filters = {
 				jQuery(YTPlayer).YTPUnmute();
 			else if ((!val && YTPlayer.player.getVolume() > 0) || (val && YTPlayer.opt.vol == val)) {
 
-					if (!YTPlayer.isMute)
+				if (!YTPlayer.isMute)
 					jQuery(YTPlayer).YTPMute();
 				else
 					jQuery(YTPlayer).YTPUnmute();
@@ -1370,33 +1363,24 @@ YTPlayer.filters = {
 
 
 	/** @deprecated */
-	jQuery.fn.YTPlayer = jQuery.mbYTPlayer.buildPlayer;
-	jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.playlist;
-	jQuery.fn.YTPPlayNext = jQuery.mbYTPlayer.playNext;
-	jQuery.fn.YTPPlayPrev = jQuery.mbYTPlayer.playPrev;
-	jQuery.fn.YTPChangeMovie = jQuery.mbYTPlayer.changeMovie;
+	jQuery.fn.mb_YTPlayer = jQuery.mbYTPlayer.buildPlayer;
+	jQuery.fn.playNext = jQuery.mbYTPlayer.playNext;
+	jQuery.fn.playPrev = jQuery.mbYTPlayer.playPrev;
+	jQuery.fn.changeMovie = jQuery.mbYTPlayer.changeMovie;
 	jQuery.fn.getVideoID = jQuery.mbYTPlayer.getVideoID;
 	jQuery.fn.getPlayer = jQuery.mbYTPlayer.getPlayer;
 	jQuery.fn.playerDestroy = jQuery.mbYTPlayer.playerDestroy;
-	jQuery.fn.YTPFullscreen = jQuery.mbYTPlayer.YTPFullscreen;
+	jQuery.fn.fullscreen = jQuery.mbYTPlayer.fullscreen;
+	jQuery.fn.buildYTPControls = jQuery.mbYTPlayer.buildControls;
 	jQuery.fn.playYTP = jQuery.mbYTPlayer.play;
-	jQuery.fn.togglePlayYTP = jQuery.mbYTPlayer.togglePlay;
 	jQuery.fn.toggleLoops = jQuery.mbYTPlayer.toggleLoops;
 	jQuery.fn.stopYTP = jQuery.mbYTPlayer.stop;
 	jQuery.fn.pauseYTP = jQuery.mbYTPlayer.pause;
 	jQuery.fn.seekToYTP = jQuery.mbYTPlayer.seekTo;
-	jQuery.fn.muteYTP = jQuery.mbYTPlayer.mute;
-	jQuery.fn.unmuteYTP = jQuery.mbYTPlayer.unmute;
-	jQuery.fn.setYTPVolume = jQuery.mbYTPlayer.setVolume;
-	jQuery.fn.setVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
-	jQuery.fn.manageYTPProgress = jQuery.mbYTPlayer.manageYTPProgress;
-	jQuery.fn.getDataFromFeed = jQuery.mbYTPlayer.getVideoData;
-	jQuery.fn.mb_YTPlayer = jQuery.fn.YTPlayer;
 	jQuery.fn.muteYTPVolume = jQuery.mbYTPlayer.mute;
 	jQuery.fn.unmuteYTPVolume = jQuery.mbYTPlayer.unmute;
-	jQuery.fn.playNext = jQuery.mbYTPlayer.playNext;
-	jQuery.fn.playPrev = jQuery.mbYTPlayer.playPrev;
-	jQuery.fn.changeMovie = jQuery.mbYTPlayer.changeMovie;
-
+	jQuery.fn.setYTPVolume = jQuery.mbYTPlayer.setVolume;
+	jQuery.fn.setVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
+	jQuery.fn.manageYTPProgress = jQuery.mbYTPlayer.manageProgress;
 
 })(jQuery, ytp);

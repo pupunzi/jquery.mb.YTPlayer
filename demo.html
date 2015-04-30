@@ -150,6 +150,26 @@
             border-radius: 100%;
         }
 
+        #togglePlay.pause{
+            background-color: rgb(0, 0, 0);
+            color: #fff;
+        }
+
+        #togglePlay.pause:hover{
+            background-color: #fff;
+            color: #333;
+        }
+
+        #togglePlay.play{
+            background-color: #fff;
+            color: #333;
+        }
+
+        #togglePlay.play:hover{
+            background-color: rgb(0, 0, 0);
+            color: #fff;
+        }
+
         .goto {
             position: absolute;
             left:0;
@@ -373,7 +393,15 @@
 
         function changeLabel(state){
             $("#togglePlay").html(state != 1 ? "pause" : "play");
+
+            $("#togglePlay").removeClass(state != 1 ? "play" : "pause");
+            $("#togglePlay").addClass(state != 1 ? "pause" : "play");
         }
+
+        function checkForVal(val){
+            return val || 0;
+        }
+
     </script>
 </head>
 <body>
@@ -468,10 +496,10 @@
     <input id="stopAt" type="number" placeholder="stops at">
     <br>
     <br>
-    <input id="audio" type="checkbox" checked> Audio is ON
+    <input id="audioOff" type="checkbox" checked> Audio is OFF
     <br>
     <br>
-    <button onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: $('#videoID').val()})">change video</button>
+    <button onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: $('#videoID').val(), startAt: checkForVal($('#startAt').val()), stopAt: checkForVal($('#stopAt').val()), mute: $('#audioOff').is(':checked') })">change video</button>
 
     <h2 style="color: #FFFFFF; text-align: left">Current video:</h2>
     <div class="dida"></div>
@@ -480,7 +508,7 @@
 
 
 <div class="goto">
-    <button id="togglePlay" class="command" onclick="jQuery('#bgndVideo').YTPTogglePlay(changeLabel)">pause</button>
+    <button id="togglePlay" class="command pause" onclick="jQuery('#bgndVideo').YTPTogglePlay(changeLabel)">pause</button>
     <br>
     <br>
     <br>

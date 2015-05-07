@@ -18,7 +18,7 @@
  _                                                                                                                                                  _
  _ Copyright (c) 2001-2015. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
-//https://console.developers.google.com/project/mbytplayer
+//https://console.developers.google.com/
 
 var ytp = ytp || {};
 

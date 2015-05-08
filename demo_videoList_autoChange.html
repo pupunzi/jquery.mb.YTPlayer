@@ -29,6 +29,7 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="inc/jquery.mb.YTPlayer.js"></script>
+    <script src="inc/apikey.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
     <style>
@@ -88,9 +89,6 @@
             {videoURL: "3ovA7zeviRo",containment:'body',autoPlay:true, mute:true, startAt:10, stopAt:20, opacity:1, loop:false, ratio:"4/3", addRaster:false, quality:"large"},
             {videoURL: "u9k1FaMIYTs",containment:'body',autoPlay:true, mute:false, startAt:0, opacity:1, loop:false, ratio:"4/3", addRaster:true, quality:"large"}
         ];
-
-//        jQuery.mbCookie.remove("YYTPlayer_data_VuaJAgx0x_4");
-        jQuery.mbYTPlayer.defaults.apiKey = "AIzaSyB_z8WrsKw2kIplh5kBc6xTawEDu91V5dQ";
 
         var myPlayListPlayer =jQuery("#myPlayerID").YTPlaylist(videos, false, function(video){
             if(video.videoData){

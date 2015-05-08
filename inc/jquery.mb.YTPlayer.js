@@ -491,7 +491,7 @@ function onYouTubeIframeAPIReady() {
 			}else if(YTPlayer.opt.apiKey){
 				// Get video info from API3 (needs api key)
 				// snippet,player,contentDetails,statistics,status
-				$.getJSON("https://www.googleapis.com/youtube/v3/videos?id="+YTPlayer.videoID+"&key="+YTPlayer.opt.apiKey+"&part=snippet", function(data){
+				jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?id="+YTPlayer.videoID+"&key="+YTPlayer.opt.apiKey+"&part=snippet", function(data){
 
 					YTPlayer.dataReceived = true;
 					jQuery(YTPlayer).trigger("YTPChanged");

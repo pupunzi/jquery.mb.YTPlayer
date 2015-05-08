@@ -80,10 +80,33 @@ function onYouTubeIframeAPIReady() {
 	/******************************************************************************/
 
 	/*******************************************************************************
-	 * jQuery.mbCookie
+	 * jQuery.mbLocalStorage
 	 ******************************************************************************/
-	jQuery.mbCookie={set:function(a,b,c,d){b=JSON.stringify(b),c||(c=7),d=d?"; domain="+d:"";var f,e=new Date;e.setTime(e.getTime()+1e3*60*60*24*c),f="; expires="+e.toGMTString(),document.cookie=a+"="+b+f+"; path=/"+d},get:function(a){for(var b=a+"=",c=document.cookie.split(";"),d=0;d<c.length;d++){for(var e=c[d];" "==e.charAt(0);)e=e.substring(1,e.length);if(0==e.indexOf(b))return JSON.parse(e.substring(b.length,e.length))}return null},remove:function(a){jQuery.mbCookie.set(a,"",-1)}};
+
+	jQuery.mbStorage = {
+
+		set: function(name, val){
+			val = JSON.stringify(val);
+			localStorage.setItem(name, val);
+		},
+
+		get: function(name){
+			if(localStorage[name])
+				return JSON.parse(localStorage[name]);
+			else
+				return null;
+		},
+
+		remove: function(name){
+			if(name)
+				localStorage.removeItem(name);
+			else
+				localStorage.clear();
+		}
+	};
+
 	/******************************************************************************/
+
 
 	var getYTPVideoID = function (url) {
 
@@ -461,7 +484,8 @@ function onYouTubeIframeAPIReady() {
 
 		getDataFromFeed: function (YTPlayer) {
 			var YTPData = jQuery.Event("YTPData");
-			YTPlayer.videoData = jQuery.mbCookie.get("YYTPlayer_data_"+YTPlayer.videoID);
+
+			YTPlayer.videoData = jQuery.mbStorage.get("YYTPlayer_data_"+YTPlayer.videoID);
 
 			jQuery(YTPlayer).on("YTPData", function(){
 				if (!YTPlayer.hasData) {
@@ -511,7 +535,7 @@ function onYouTubeIframeAPIReady() {
 						YTPlayer.videoData.thumb_high = data.thumbnails.high ? data.thumbnails.high.url : null;
 						YTPlayer.videoData.thumb_medium = data.thumbnails.medium ? data.thumbnails.medium.url : null;
 
-						jQuery.mbCookie.set("YYTPlayer_data_"+YTPlayer.videoID, YTPlayer.videoData);
+						jQuery.mbStorage.set("YYTPlayer_data_"+YTPlayer.videoID, YTPlayer.videoData);
 
 					}
 
@@ -536,13 +560,16 @@ function onYouTubeIframeAPIReady() {
 				YTPlayer.opt.ratio == "auto" ? "16/9" : "4/3";
 
 			}
-
 			setTimeout(function () {
 				if (!YTPlayer.dataReceived && !YTPlayer.hasData) {
 					YTPlayer.hasData = false;
 					jQuery(YTPlayer).trigger("YTPChanged");
 				}
 			}, 1500)
+		},
+
+		removeStoredData: function(){
+			jQuery.mbStorage.remove();
 		},
 
 		getVideoData: function () {

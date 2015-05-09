@@ -1302,6 +1302,8 @@ function onYouTubeIframeAPIReady() {
 
 					clearInterval(YTPlayer.checkForStartAt);
 
+					YTPlayer.isReady = true;
+
 					if (typeof YTPlayer.opt.onReady == "function")
 						YTPlayer.opt.onReady(YTPlayer);
 
@@ -1327,8 +1329,6 @@ function onYouTubeIframeAPIReady() {
 						YTPlayer.player.pauseVideo();
 
 					}
-
-					YTPlayer.isReady = true;
 
 					if(YTPlayer.isPlayer){
 						YTPlayer.loading.html("Ready");

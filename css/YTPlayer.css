@@ -48,6 +48,29 @@
   box-sizing: border-box;
 }
 
+
+.mb_YTPlayer .loading {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.51);
+  text-align: center;
+  padding: 2px 4px;
+  border-radius: 5px;
+
+  -webkit-animation: fade .1s infinite alternate; /* Chrome, Safari, Opera */
+  animation: fade .1s infinite alternate;
+
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes fade { 0% {opacity: .5;} 100% {opacity: 1;} }
+
+/* Standard syntax */
+@keyframes fade { 0% {opacity: .5;} 100% {opacity: 1;} }
+
 .mb_YTPlayer.fullscreen{
   display:block!important;
   position: fixed!important;
@@ -270,4 +293,5 @@
   height: auto;
   width: 100%;
 }
+
 

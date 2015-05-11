@@ -59,6 +59,7 @@
   text-align: center;
   padding: 2px 4px;
   border-radius: 5px;
+  font-family: "Droid Sans", sans-serif;
 
   -webkit-animation: fade .1s infinite alternate; /* Chrome, Safari, Opera */
   animation: fade .1s infinite alternate;

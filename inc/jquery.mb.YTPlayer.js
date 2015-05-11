@@ -2,7 +2,7 @@
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.YTPlayer.js                                                                                                                      _
- _ last modified: 23/04/15 20.33                                                                                                                    _
+ _ last modified: 10/05/15 23.22                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -411,7 +411,8 @@ function onYouTubeIframeAPIReady() {
 
 											eventType = "YTPStart";
 
-											YTPlayer.controlBar.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.pause);
+											if(YTPlayer.controlBar)
+												YTPlayer.controlBar.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.pause);
 											if (typeof _gaq != "undefined" && eval(YTPlayer.opt.gaTrack))
 												_gaq.push(['_trackEvent', 'YTPlayer', 'Play', (YTPlayer.videoData.title || YTPlayer.videoID.toString())]);
 											if (typeof ga != "undefined" && eval(YTPlayer.opt.gaTrack))
@@ -421,14 +422,16 @@ function onYouTubeIframeAPIReady() {
 										case 2:  //------------------------------------------------ pause
 
 											eventType = "YTPPause";
-											YTPlayer.controlBar.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
+											if(YTPlayer.controlBar)
+												YTPlayer.controlBar.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
 											break;
 
 										case 3:  //------------------------------------------------ buffer
 
 											YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 											eventType = "YTPBuffering";
-											YTPlayer.controlBar.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
+											if(YTPlayer.controlBar)
+												YTPlayer.controlBar.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
 											break;
 
 										case 5:  //------------------------------------------------ cued
@@ -1348,7 +1351,8 @@ function onYouTubeIframeAPIReady() {
 						},100)
 					}
 
-					YTPlayer.controlBar.slideDown(1000);
+					if(YTPlayer.controlBar)
+						YTPlayer.controlBar.slideDown(1000);
 
 				} else {
 

@@ -44,7 +44,7 @@
   transform:translateZ(0) translate3d(0,0,0);
   transform-style: preserve-3d;
   perspective: 1000;
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   box-sizing: border-box;
 }
 

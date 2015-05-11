@@ -41,13 +41,12 @@
 
 .mb_YTPlayer{
   display:block;
-  transform:translateZ(0);
+  transform:translateZ(0) translate3d(0,0,0);
   transform-style: preserve-3d;
   perspective: 1000;
   backface-visibility: hidden;
   box-sizing: border-box;
 }
-
 
 .mb_YTPlayer .loading {
   position: absolute;

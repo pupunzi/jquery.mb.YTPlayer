@@ -269,7 +269,7 @@ function onYouTubeIframeAPIReady() {
 
 				if (YTPlayer.isBackground) {
 					jQuery("body").css({boxSizing: "border-box"});
-					wrapper.css({position: "fixed", top: 0, left: 0, zIndex: 0, webkitTransform: "translateZ(0)"});
+					wrapper.css({position: "fixed", top: 0, left: 0, zIndex: 0});
 					$YTPlayer.hide();
 				} else if (YTPlayer.opt.containment.css("position") == "static")
 					YTPlayer.opt.containment.css({position: "relative"});

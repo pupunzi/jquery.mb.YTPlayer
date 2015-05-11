@@ -39,7 +39,7 @@
   outline: 0;
 }
 
-.mb_YTPlayer{
+.mbYTP_wrapper{
   display:block;
   transform:translateZ(0) translate3d(0,0,0);
   transform-style: preserve-3d;
@@ -48,7 +48,7 @@
   box-sizing: border-box;
 }
 
-.mb_YTPlayer .loading {
+.mbYTP_wrapper .loading {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -71,7 +71,7 @@
 /* Standard syntax */
 @keyframes fade { 0% {opacity: .5;} 100% {opacity: 1;} }
 
-.mb_YTPlayer.fullscreen{
+.mbYTP_wrapper.fullscreen{
   display:block!important;
   position: fixed!important;
   width: 100%!important;
@@ -80,9 +80,6 @@
   left: 0!important;
   margin: 0!important;
   border: none !important;
-}
-
-.mb_YTPlayer.fullscreen .mbYTP_wrapper{
   opacity:1 !important;
 }
 

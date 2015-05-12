@@ -115,9 +115,9 @@ function onYouTubeIframeAPIReady() {
 		name   : "jquery.mb.YTPlayer",
 		version: "2.9.1",
 		author : "Matteo Bicocchi",
+		apiKey         : "",
 
 		defaults: {
-			apiKey         : "",
 			containment    : "body",
 			ratio          : "auto", // "auto", "16/9", "4/3"
 			videoURL       : null,
@@ -496,10 +496,10 @@ function onYouTubeIframeAPIReady() {
 
 				},500);
 
-			} else if(YTPlayer.opt.apiKey) {
+			} else if(jQuery.mbYTPlayer.apiKey) {
 				// Get video info from API3 (needs api key)
 				// snippet,player,contentDetails,statistics,status
-				jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?id="+YTPlayer.videoID+"&key="+YTPlayer.opt.apiKey+"&part=snippet", function(data){
+				jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?id="+YTPlayer.videoID+"&key="+jQuery.mbYTPlayer.apiKey+"&part=snippet", function(data){
 
 					YTPlayer.dataReceived = true;
 					jQuery(YTPlayer).trigger("YTPChanged");

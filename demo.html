@@ -193,7 +193,7 @@ button:hover, .button:hover {
 
 #filtersControl{
     position: absolute;
-    top:50px;
+    top:0;
     left: 10px;
     width: 350px;
     margin: 30px auto;
@@ -250,7 +250,7 @@ button:hover, .button:hover {
 
 #changeVideo {
     position: absolute;
-    top:50px;
+    top: 0;
     right: 10px;
     width: 350px;
     margin: 30px auto;
@@ -260,12 +260,6 @@ button:hover, .button:hover {
     border-radius: 10px;
     color: #FFFFFF;
     box-sizing: border-box;
-}
-
-#loadBox{
-    background-color: rgba(168, 168, 168, 0.20);
-    border-radius: 10px;
-    padding: 20px;
 }
 
 #changeVideo label {
@@ -294,6 +288,11 @@ button:hover, .button:hover {
     width: 20px;
 }
 
+#loadBox{
+    background-color: rgba(168, 168, 168, 0.20);
+    border-radius: 10px;
+    padding: 20px;
+}
 
 </style>
 
@@ -311,6 +310,7 @@ button:hover, .button:hover {
 
         myPlayer.on("YTPData", function (e) {
             $(".dida").html(e.prop.title + "<br>@" + e.prop.channelTitle);
+            $("#videoData").show();
         });
 
         /* DEBUG ******************************************************************************************/
@@ -493,7 +493,8 @@ button:hover, .button:hover {
         <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: '7SnmCUwOsts', mute:false, addRaster:false})">video 1</button>
         <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 2</button>
         <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'kcihcYEOeic', mute:false, startAt:10, addRaster:false})">video 3</button>
-
+        <br>
+        <br>
         <div id="loadBox">
             <label for="videoID">Or insert here the ID or the complete URL of the Youtube video:</label>
             <input id="videoID" type="text" value="r1xohS2u69E" onfocus="$('#loadOptions').slideDown()">
@@ -510,8 +511,10 @@ button:hover, .button:hover {
             <br>
             <button onclick="$('#loadOptions').slideUp(); jQuery('#bgndVideo').YTPChangeMovie({videoURL: $('#videoID').val(), startAt: checkForVal($('#startAt').val()), stopAt: checkForVal($('#stopAt').val()), mute: $('#audioOff').is(':checked') })">change video</button>
 
-            <h2 style="color: #FFFFFF; text-align: left">Current video:</h2>
-            <div class="dida"></div>
+            <div id="videoData" style="display: none">
+                <h2 style="color: #FFFFFF; text-align: left">Current video:</h2>
+                <div class="dida"></div>
+            </div>
             <br>
             <button onclick="jQuery.mbYTPlayer.removeStoredData()"> Remove stored data </button>
         </div>

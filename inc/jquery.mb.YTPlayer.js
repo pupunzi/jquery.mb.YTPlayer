@@ -511,7 +511,7 @@ function onYouTubeIframeAPIReady() {
 						YTPlayer.videoData.channelTitle = data.channelTitle;
 						YTPlayer.videoData.title = data.title;
 						YTPlayer.videoData.description = data.description.length < 400 ? data.description : data.description.substring(0,400) + " ...";
-						YTPlayer.videoData.aspectratio = YTPlayer.opt.ratio == "auto" ? "16/9" : "4/3" ;
+						YTPlayer.videoData.aspectratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 
 						YTPlayer.opt.ratio = YTPlayer.videoData.aspectratio;
 
@@ -545,7 +545,7 @@ function onYouTubeIframeAPIReady() {
 				}
 
 				YTPlayer.videoData = null;
-				YTPlayer.opt.ratio == "auto" ? "16/9" : "4/3";
+				YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 
 			}
 
@@ -1397,6 +1397,7 @@ function onYouTubeIframeAPIReady() {
 		var overprint = 100;
 		var vid = {};
 		if (data.optimizeDisplay) {
+
 			vid.width = win.width + ((win.width * margin) / 100);
 			vid.height = data.ratio == "16/9" ? Math.ceil((9 * win.width) / 16) : Math.ceil((3 * win.width) / 4);
 			vid.marginTop = -((vid.height - win.height) / 2);
@@ -1411,11 +1412,14 @@ function onYouTubeIframeAPIReady() {
 			vid.height += overprint;
 			vid.marginTop -= overprint / 2;
 			vid.marginLeft -= overprint / 2;
+
 		} else {
+
 			vid.width = "100%";
 			vid.height = "100%";
 			vid.marginTop = 0;
-			vid.marginLeft -= 0;
+			vid.marginLeft = 0;
+
 		}
 		playerBox.css({width: vid.width, height: vid.height, marginTop: vid.marginTop, marginLeft: vid.marginLeft});
 	};

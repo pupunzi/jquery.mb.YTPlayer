@@ -120,8 +120,9 @@
                 YTPConsole.append("event type:: " + e.type + " - " + jQuery("#bgndVideo").YTPGetPlayer().getPlayerState() + " - time: " + e.time);
                 YTPConsole.append("<br>");
             });
-            // EVENT: YTPChanged
-            myPlayer.on("YTPChanged", function (e) {
+
+            // EVENT: YTPChanged clear the console
+            myPlayer.on("YTPChanged", function () {
                 YTPConsole.html("");
             });
 
@@ -156,7 +157,7 @@
 
             });
 
-            // EVENT: YTPTime
+            // EVENT: YTPTime fired each second
             myPlayer.on("YTPTime", function (e) {
                 var currentTime = e.time;
                 var traceLog = currentTime / 5 == Math.floor(currentTime / 5);

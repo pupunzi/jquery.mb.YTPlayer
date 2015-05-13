@@ -85,7 +85,6 @@ function onYouTubeIframeAPIReady() {
 	jQuery.mbStorage={set:function(a,b){b=JSON.stringify(b),localStorage.setItem(a,b)},get:function(a){return localStorage[a]?JSON.parse(localStorage[a]):null},remove:function(a){a?localStorage.removeItem(a):localStorage.clear()}};
 	/******************************************************************************/
 
-
 	var getYTPVideoID = function (url) {
 
 		var videoID, playlistID;

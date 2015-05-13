@@ -483,7 +483,7 @@ function onYouTubeIframeAPIReady() {
 
 				setTimeout(function () {
 
-					YTPlayer.opt.ratio == "auto" ? YTPlayer.opt.ratio = "16/9" : YTPlayer.opt.ratio;
+					YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 					YTPlayer.dataReceived = true;
 					jQuery(YTPlayer).trigger("YTPChanged");
 
@@ -544,7 +544,7 @@ function onYouTubeIframeAPIReady() {
 				}
 
 				YTPlayer.videoData = null;
-				YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
+				YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 
 			}
 
@@ -1395,6 +1395,7 @@ function onYouTubeIframeAPIReady() {
 		var margin = 24;
 		var overprint = 100;
 		var vid = {};
+
 		if (data.optimizeDisplay) {
 
 			vid.width = win.width + ((win.width * margin) / 100);

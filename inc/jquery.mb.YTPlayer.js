@@ -112,7 +112,7 @@ function onYouTubeIframeAPIReady() {
 
 	jQuery.mbYTPlayer = {
 		name   : "jquery.mb.YTPlayer",
-		version: "2.9.1",
+		version: "2.9.2 beta",
 		author : "Matteo Bicocchi",
 		apiKey         : "",
 

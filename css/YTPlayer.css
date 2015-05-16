@@ -71,7 +71,7 @@
 /* Standard syntax */
 @keyframes fade { 0% {opacity: .5;} 100% {opacity: 1;} }
 
-.mbYTP_wrapper.fullscreen{
+.fullscreen{
   display:block!important;
   position: fixed!important;
   width: 100%!important;

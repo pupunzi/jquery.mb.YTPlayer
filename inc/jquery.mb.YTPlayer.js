@@ -1333,7 +1333,6 @@ function onYouTubeIframeAPIReady() {
 					YTPlayer.canTrigger = true;
 
 					if (YTPlayer.opt.autoPlay) {
-
 						$YTPlayer.YTPPlay();
 						$YTPlayer.css("background-image", "none");
 						jQuery(YTPlayer.playerEl).CSSAnimate({opacity: 1}, 1000);
@@ -1341,6 +1340,11 @@ function onYouTubeIframeAPIReady() {
 
 					} else {
 						YTPlayer.player.pauseVideo();
+
+						if(!YTPlayer.isPlayer){
+							jQuery(YTPlayer.playerEl).CSSAnimate({opacity: 1}, 1000);
+							YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 1000);
+						}
 					}
 
 					if(YTPlayer.isPlayer && !YTPlayer.opt.autoPlay){

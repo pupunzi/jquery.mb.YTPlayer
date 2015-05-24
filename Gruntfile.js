@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 				separator: ';'
 			},
 			dist: {
-				src: [ 'inc/*.js','../jquery.mb.browser/inc/jquery.mb.browser.min.js','../jquery.mb.storage/inc/jquery.mb.storage.min.js','../jquery.mb.CSSAnimate/inc/jquery.mb.CSSAnimate.min.js','../jquery.mb.simpleSlider/inc/jquery.mb.simpleSlider.min.js'],
+				src: [ 'src/*.js','../jquery.mb.browser/inc/jquery.mb.browser.min.js','../jquery.mb.storage/inc/jquery.mb.storage.min.js','../jquery.mb.CSSAnimate/inc/jquery.mb.CSSAnimate.min.js','../jquery.mb.simpleSlider/inc/jquery.mb.simpleSlider.min.js'],
 				dest: 'dist/<%= pkg.name %>.js'
 			}
 		},
@@ -25,16 +25,30 @@ module.exports = function(grunt) {
 			}
 		},
 
+		cssmin: {
+			options: {
+				shorthandCompacting: false,
+				roundingPrecision: -1
+			},
+			dist: {
+				files: {
+					'dist/css/<%= pkg.name %>.min.css': ['css/*.css']
+				}
+			}
+		},
+
 		watch: {
-			files: ['inc/*.js', 'Gruntfile.js'],
-			tasks: ['concat', 'uglify']
+			files: ['css/*.css','src/*.js', 'Gruntfile.js'],
+			tasks: ['concat', 'uglify', 'cssmin']
 		}
+
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['concat', 'uglify']);
+	grunt.registerTask('default', ['concat', 'uglify', 'cssmin']);
 
 };

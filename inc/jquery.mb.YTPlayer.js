@@ -183,7 +183,7 @@ function onYouTubeIframeAPIReady() {
 				$YTPlayer.addClass("mb_YTPlayer");
 				var property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ? eval('(' + $YTPlayer.data("property") + ')') : $YTPlayer.data("property");
 				if (typeof property != "undefined" && typeof property.vol != "undefined")
-					property.vol = property.vol == 0 ? property.vol = 1 : property.vol;
+					property.vol = property.vol === 0 ? property.vol = 1 : property.vol;
 
 				jQuery.extend(YTPlayer.opt, jQuery.mbYTPlayer.defaults, options, property);
 
@@ -225,7 +225,7 @@ function onYouTubeIframeAPIReady() {
 				YTPlayer.opt.showAnnotations = (YTPlayer.opt.showAnnotations) ? '0' : '3';
 				var playerVars = { 'autoplay': 0, 'modestbranding': 1, 'controls': 0, 'showinfo': 0, 'rel': 0, 'enablejsapi': 1, 'version': 3, 'playerapiid': playerID, 'origin': '*', 'allowfullscreen': true, 'wmode': 'transparent', 'iv_load_policy': YTPlayer.opt.showAnnotations};
 
-				if (document.createElement('video').canPlayType) //&& window.MediaSource  && !YTPlayer.isRetina
+				if (document.createElement('video').canPlayType)
 					jQuery.extend(playerVars, {'html5': 1});
 
 				if (jQuery.browser.msie && jQuery.browser.version < 9)
@@ -234,16 +234,14 @@ function onYouTubeIframeAPIReady() {
 				var playerBox = jQuery("<div/>").attr("id", playerID).addClass("playerBox");
 				var overlay = jQuery("<div/>").css({position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}).addClass("YTPOverlay");
 				YTPlayer.isSelf = YTPlayer.opt.containment == "self";
-
 				YTPlayer.defaultOpt.containment = YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery(this) : jQuery(YTPlayer.opt.containment);
-
 				YTPlayer.isBackground = YTPlayer.opt.containment.get(0).tagName.toLowerCase() == "body";
 
 				if (YTPlayer.isBackground && ytp.backgroundIsInited)
 					return;
-				var isPlayer = YTPlayer.opt.containment.is(jQuery(this));
 
-				YTPlayer.canPlayOnMobile = isPlayer && jQuery(this).children().length == 0;
+				var isPlayer = YTPlayer.opt.containment.is(jQuery(this));
+				YTPlayer.canPlayOnMobile = isPlayer && jQuery(this).children().length === 0;
 
 				if (!isPlayer) {
 					$YTPlayer.hide();

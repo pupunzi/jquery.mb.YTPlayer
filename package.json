@@ -1,6 +1,6 @@
 {
-  "name": "jquery.mb.YTPlayer",
-  "title": "jQuery mb.YTPlayer",
+  "name": "jquery.mb.ytplayer",
+  "title": "jquery.mb.YTPlayer",
   "description": "This plugin let you play any public YouTube video as background of your page. It can also be used as a customized player in page.",
   "keywords": [
     "jquery-plugin",
@@ -11,21 +11,12 @@
     "player",
     "custom"
   ],
-  "version": "2.9.1",
+  "version": "2.9.2",
   "author": "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)",
   "maintainers": [
     "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)"
   ],
-  "license": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/pupunzi/jquery.mb.YTPlayer/blob/master/licences/MIT-LICENSE.txt"
-    },
-    {
-      "type": "GPL",
-      "url": "https://github.com/pupunzi/jquery.mb.YTPlayer/blob/master/licences/GPL-LICENSE.txt"
-    }
-  ],
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/pupunzi/jquery.mb.YTPlayer/issues"
   },
@@ -36,13 +27,13 @@
   "dependencies": {
     "jquery": ">=1.8"
   },
-  "main": "inc/jquery.mb.YTPlayer.src.js",
+  "main": "src/jquery.mb.YTPlayer.src.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pupunzi/jquery.mb.YTPlayer"
+    "url": "git+https://github.com/pupunzi/jquery.mb.YTPlayer.git"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -50,6 +41,10 @@
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-cssmin": "^0.12.3",
     "grunt-contrib-uglify": "^0.9.1",
-    "grunt-contrib-watch": "^0.6.1"
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-include-replace": "^3.0.0"
+  },
+  "directories": {
+    "example": "examples"
   }
 }

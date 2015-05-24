@@ -3,6 +3,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
+
 		copy: {
 			dist: {
 				files: [
@@ -10,6 +11,8 @@ module.exports = function(grunt) {
 					{flatten: true, expand: true, cwd: '../jquery.mb.storage/inc/', src: ['jquery.mb.storage.min.js'], dest: 'src/dep/'},
 					{flatten: true, expand: true, cwd: '../jquery.mb.CSSAnimate/inc/', src: ['jquery.mb.CSSAnimate.min.js'], dest: 'src/dep/'},
 					{flatten: true, expand: true, cwd: '../jquery.mb.simpleSlider/inc/', src: ['jquery.mb.simpleSlider.min.js'], dest: 'src/dep/'},
+					{flatten: false, expand: true, cwd: 'src/css/font/', src: ['**'],  dest: 'dist/css/font/'},
+					{flatten: false, expand: true, cwd: 'src/css/images/', src: ['**'],  dest: 'dist/css/images/'},
 					{flatten: true, expand: true, cwd: 'src/', src: ['index.tmpl'], dest: 'dist/',
 						rename: function(dest, src) {
 							return dest + src.replace('.tmpl','.html');
@@ -24,14 +27,14 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [ 'src/*.js','src/dep/*.js'],
-				dest: 'dist/<%= pkg.name %>.js'
+				dest: 'dist/<%= pkg.title %>.js'
 			}
 		},
 
 		uglify: {
 			options: {
 				banner: '/*' +
-						'<%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %>\n' +
+						'<%= pkg.title %> <%= grunt.template.today("dd-mm-yyyy") %>\n' +
 						' _ jquery.mb.components                                                                                                                             _\n' +
 						' _ email: matteo@open-lab.com                                                                                                                       _\n' +
 						' _ Copyright (c) 2001-<%= grunt.template.today("yyyy") %>. Matteo Bicocchi (Pupunzi);                                                                                              _\n' +
@@ -42,7 +45,7 @@ module.exports = function(grunt) {
 
 			dist: {
 				files: {
-					'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+					'dist/<%= pkg.title %>.min.js': ['<%= concat.dist.dest %>']
 				}
 			}
 		},
@@ -59,19 +62,36 @@ module.exports = function(grunt) {
 			}
 		},
 
+		includereplace: {
+			dist: {
+				options: {
+					prefix: '{{ ',
+					suffix: ' }}',
+					globals: {
+						version: '<%= pkg.version %>'
+					}
+				},
+				files: [
+					{src: 'dist/*.js', expand: true},
+					{src: 'dist/css/*.css', expand: true}
+				]
+			}
+		},
+
 		watch: {
 			files: ['src/css/*.css','src/*.js','src/*.html', 'Gruntfile.js'],
-			tasks: ['copy','concat', 'uglify', 'cssmin']
+			tasks: ['copy','concat', 'uglify', 'cssmin', 'includereplace']
 		}
 
 	});
 
+	grunt.loadNpmTasks('grunt-include-replace');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['copy','concat', 'uglify', 'cssmin']);
+	grunt.registerTask('default', ['copy','concat', 'uglify', 'cssmin', 'includereplace']);
 
 };

@@ -3,6 +3,18 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
+
+		copy: {
+			dist: {
+				files: [
+					{flatten: true, expand: false, src: ['../jquery.mb.browser/inc/jquery.mb.browser.min.js'], dest: 'src/dep/'},
+					{flatten: true, expand: false, src: ['../jquery.mb.storage/inc/jquery.mb.storage.min.js'], dest: 'src/dep/'},
+					{flatten: true, expand: false, src: ['../jquery.mb.CSSAnimate/inc/jquery.mb.CSSAnimate.min.js'], dest: 'src/dep/'},
+					{flatten: true, expand: false, src: ['../jquery.mb.simpleSlider/inc/jquery.mb.simpleSlider.min.js'], dest: 'src/dep/'}
+				]
+			}
+		},
+
 		concat: {
 			options: {
 				separator: ';'
@@ -39,16 +51,17 @@ module.exports = function(grunt) {
 
 		watch: {
 			files: ['src/css/*.css','src/*.js', 'Gruntfile.js'],
-			tasks: ['concat', 'uglify', 'cssmin']
+			tasks: ['copy','concat', 'uglify', 'cssmin']
 		}
 
 	});
 
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['concat', 'uglify', 'cssmin']);
+	grunt.registerTask('default', ['copy','concat', 'uglify', 'cssmin']);
 
 };

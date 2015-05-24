@@ -73,6 +73,7 @@ module.exports = function(grunt) {
 				},
 				files: [
 					{src: 'dist/*.js', expand: true},
+					{src: 'dist/*.html', expand: true},
 					{src: 'dist/css/*.css', expand: true}
 				]
 			}

@@ -6,7 +6,7 @@
     "pupunzi <matteo@open-lab.com>"
   ],
   "description": "This plugin let you play any public YouTube video as background of your page. It can also be used as a customized player in page.",
-  "main": "inc/jquery.mb.YTPlayer.js",
+  "main": "inc/jquery.mb.YTPlayer.src.js",
   "keywords": [
     "jquery-plugin",
     "video",

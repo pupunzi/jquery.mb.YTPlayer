@@ -32,13 +32,13 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'dist/css/<%= pkg.name %>.min.css': ['css/*.css']
+					'dist/css/<%= pkg.name %>.min.css': ['src/css/*.css']
 				}
 			}
 		},
 
 		watch: {
-			files: ['css/*.css','src/*.js', 'Gruntfile.js'],
+			files: ['src/css/*.css','src/*.js', 'Gruntfile.js'],
 			tasks: ['concat', 'uglify', 'cssmin']
 		}
 

@@ -3,14 +3,17 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
-
 		copy: {
 			dist: {
 				files: [
-					{flatten: true, expand: false, src: ['../jquery.mb.browser/inc/jquery.mb.browser.min.js'], dest: 'src/dep/'},
-					{flatten: true, expand: false, src: ['../jquery.mb.storage/inc/jquery.mb.storage.min.js'], dest: 'src/dep/'},
-					{flatten: true, expand: false, src: ['../jquery.mb.CSSAnimate/inc/jquery.mb.CSSAnimate.min.js'], dest: 'src/dep/'},
-					{flatten: true, expand: false, src: ['../jquery.mb.simpleSlider/inc/jquery.mb.simpleSlider.min.js'], dest: 'src/dep/'}
+					{flatten: true, expand: true, cwd: '../jquery.mb.browser/inc/', src: ['jquery.mb.browser.min.js'], dest: 'src/dep/'},
+					{flatten: true, expand: true, cwd: '../jquery.mb.storage/inc/', src: ['jquery.mb.storage.min.js'], dest: 'src/dep/'},
+					{flatten: true, expand: true, cwd: '../jquery.mb.CSSAnimate/inc/', src: ['jquery.mb.CSSAnimate.min.js'], dest: 'src/dep/'},
+					{flatten: true, expand: true, cwd: '../jquery.mb.simpleSlider/inc/', src: ['jquery.mb.simpleSlider.min.js'], dest: 'src/dep/'},
+					{flatten: true, expand: true, cwd: 'src/', src: ['index.tmpl'], dest: 'dist/',
+						rename: function(dest, src) {
+							return dest + src.replace('.tmpl','.html');
+						}}
 				]
 			}
 		},
@@ -20,14 +23,21 @@ module.exports = function(grunt) {
 				separator: ';'
 			},
 			dist: {
-				src: [ 'src/*.js','../jquery.mb.browser/inc/jquery.mb.browser.min.js','../jquery.mb.storage/inc/jquery.mb.storage.min.js','../jquery.mb.CSSAnimate/inc/jquery.mb.CSSAnimate.min.js','../jquery.mb.simpleSlider/inc/jquery.mb.simpleSlider.min.js'],
+				src: [ 'src/*.js','src/dep/*.js'],
 				dest: 'dist/<%= pkg.name %>.js'
 			}
 		},
 
 		uglify: {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+				banner: '/*' +
+						'<%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %>\n' +
+						' _ jquery.mb.components                                                                                                                             _\n' +
+						' _ email: matteo@open-lab.com                                                                                                                       _\n' +
+						' _ Copyright (c) 2001-<%= grunt.template.today("yyyy") %>. Matteo Bicocchi (Pupunzi);                                                                                              _\n' +
+						' _ blog: http://pupunzi.open-lab.com                                                                                                                _\n' +
+						' _ Open Lab s.r.l., Florence - Italy                                                                                                                _\n' +
+						' */\n'
 			},
 
 			dist: {
@@ -50,7 +60,7 @@ module.exports = function(grunt) {
 		},
 
 		watch: {
-			files: ['src/css/*.css','src/*.js', 'Gruntfile.js'],
+			files: ['src/css/*.css','src/*.js','src/*.html', 'Gruntfile.js'],
 			tasks: ['copy','concat', 'uglify', 'cssmin']
 		}
 

@@ -1,8 +1,7 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-
 
 		copy: {
 			dist: {
@@ -11,12 +10,13 @@ module.exports = function(grunt) {
 					{flatten: true, expand: true, cwd: '../jquery.mb.storage/inc/', src: ['jquery.mb.storage.min.js'], dest: 'src/dep/'},
 					{flatten: true, expand: true, cwd: '../jquery.mb.CSSAnimate/inc/', src: ['jquery.mb.CSSAnimate.min.js'], dest: 'src/dep/'},
 					{flatten: true, expand: true, cwd: '../jquery.mb.simpleSlider/inc/', src: ['jquery.mb.simpleSlider.min.js'], dest: 'src/dep/'},
-					{flatten: false, expand: true, cwd: 'src/css/font/', src: ['**'],  dest: 'dist/css/font/'},
-					{flatten: false, expand: true, cwd: 'src/css/images/', src: ['**'],  dest: 'dist/css/images/'},
+					{flatten: false, expand: true, cwd: 'src/css/font/', src: ['**'], dest: 'dist/css/font/'},
+					{flatten: false, expand: true, cwd: 'src/css/images/', src: ['**'], dest: 'dist/css/images/'},
 					{flatten: true, expand: true, cwd: 'src/', src: ['index.tmpl'], dest: 'dist/',
-						rename: function(dest, src) {
-							return dest + src.replace('.tmpl','.html');
-						}}
+						rename: function (dest, src) {
+							return dest + src.replace('.tmpl', '.html');
+						}
+					}
 				]
 			}
 		},
@@ -25,8 +25,8 @@ module.exports = function(grunt) {
 			options: {
 				separator: ';'
 			},
-			dist: {
-				src: [ 'src/*.js','src/dep/*.js'],
+			dist   : {
+				src : [ 'src/*.js', 'src/dep/*.js'],
 				dest: 'dist/<%= pkg.title %>.js'
 			}
 		},
@@ -35,11 +35,11 @@ module.exports = function(grunt) {
 			options: {
 				banner: '/*' +
 						'<%= pkg.title %> <%= grunt.template.today("dd-mm-yyyy") %>\n' +
-						' _ jquery.mb.components                                                                                                                             _\n' +
-						' _ email: matteo@open-lab.com                                                                                                                       _\n' +
-						' _ Copyright (c) 2001-<%= grunt.template.today("yyyy") %>. Matteo Bicocchi (Pupunzi);                                                                                              _\n' +
-						' _ blog: http://pupunzi.open-lab.com                                                                                                                _\n' +
-						' _ Open Lab s.r.l., Florence - Italy                                                                                                                _\n' +
+						' _ jquery.mb.components \n' +
+						' _ email: matteo@open-lab.com \n' +
+						' _ Copyright (c) 2001-<%= grunt.template.today("yyyy") %>. Matteo Bicocchi (Pupunzi); \n' +
+						' _ blog: http://pupunzi.open-lab.com \n' +
+						' _ Open Lab s.r.l., Florence - Italy \n' +
 						' */\n'
 			},
 
@@ -53,9 +53,9 @@ module.exports = function(grunt) {
 		cssmin: {
 			options: {
 				shorthandCompacting: false,
-				roundingPrecision: -1
+				roundingPrecision  : -1
 			},
-			dist: {
+			dist   : {
 				files: {
 					'dist/css/<%= pkg.name %>.min.css': ['src/css/*.css']
 				}
@@ -65,13 +65,13 @@ module.exports = function(grunt) {
 		includereplace: {
 			dist: {
 				options: {
-					prefix: '{{ ',
-					suffix: ' }}',
+					prefix : '{{ ',
+					suffix : ' }}',
 					globals: {
 						version: '<%= pkg.version %>'
 					}
 				},
-				files: [
+				files  : [
 					{src: 'dist/*.js', expand: true},
 					{src: 'dist/*.html', expand: true},
 					{src: 'dist/css/*.css', expand: true}
@@ -79,9 +79,77 @@ module.exports = function(grunt) {
 			}
 		},
 
+		jsbeautifier: {
+			files  : ['src/*.js', '!dist/*.min.js', 'src/*.html', 'src/css/*.css'],
+			options: {
+				html: {
+					braceStyle         : "expand",
+					indentChar         : " ",
+					indentScripts      : "keep",
+					indentSize         : 4,
+					maxPreserveNewlines: 1,
+					preserveNewlines   : false,
+					unformatted        : ["a", "sub", "sup", "b", "i", "u"],
+					wrapLineLength     : 0
+				},
+				css : {
+					indentChar         : " ",
+					maxPreserveNewlines: 1,
+					preserveNewlines   : false,
+					indentSize         : 4
+				},
+				js  : {
+					braceStyle             : "collapse",
+					breakChainedMethods    : false,
+					e4x                    : false,
+					evalCode               : false,
+					indentChar             : "\t",
+					indentLevel            : 0,
+					indentSize             : 2,
+					indentWithTabs         : false,
+					jslintHappy            : false,
+					keepArrayIndentation   : true,
+					keepFunctionIndentation: true,
+					maxPreserveNewlines    : 1,
+					preserveNewlines       : false,
+					spaceBeforeConditional : false,
+					spaceInParen           : true,
+					unescapeStrings        : false,
+					wrapLineLength         : 0,
+					endWithNewline         : true
+				}
+			}
+		},
+
+		buildnumber: {
+			options: {
+				field: 'buildnum'
+			},
+			files: ['package.json', 'bower.json']
+		},
+
+		bump: {
+			options: {
+				files             : ['package.json', 'bower.json'],
+				updateConfigs     : [],
+				commit            : true,
+				commitMessage     : 'Release v%VERSION% stable',
+				commitFiles       : ['-a'],
+				createTag         : true,
+				tagName           : '%VERSION%',
+				tagMessage        : 'Version %VERSION%',
+				push              : true,
+				pushTo            : 'https://github.com/pupunzi/jquery.mb.YTPlayer.git',
+				gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
+				globalReplace     : true,
+				prereleaseName    : 'alpha',
+				regExp            : false
+			}
+		},
+
 		watch: {
-			files: ['src/css/*.css','src/*.js','src/*.html', 'Gruntfile.js'],
-			tasks: ['copy','concat', 'uglify', 'cssmin', 'includereplace']
+			files: ['src/css/*.css', 'src/*.js', 'src/*.html', 'Gruntfile.js'],
+			tasks: ['default']
 		}
 
 	});
@@ -92,7 +160,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks("grunt-jsbeautifier");
 
-	grunt.registerTask('default', ['copy','concat', 'uglify', 'cssmin', 'includereplace']);
+	grunt.loadNpmTasks('grunt-build-number');
+	grunt.loadNpmTasks('grunt-bump');
+
+	grunt.registerTask('default', ['jsbeautifier', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace', 'buildnumber']);
 
 };

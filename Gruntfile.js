@@ -80,15 +80,16 @@ module.exports = function (grunt) {
 		},
 
 		jsbeautifier: {
-			files  : ['src/*.js', '!dist/*.min.js', 'src/*.html', 'src/css/*.css'],
+			files  : ['src/*.js', '!dist/*.min.js', 'src/*.html', 'src/*.tmpl', 'src/css/*.css'],
 			options: {
 				html: {
-					braceStyle         : "expand",
-					indentChar         : " ",
+					braceStyle         : "collapse",
+					indentChar         : "\t",
 					indentScripts      : "keep",
-					indentSize         : 4,
+					indentSize         : 1,
 					maxPreserveNewlines: 1,
 					preserveNewlines   : false,
+					spaceInParen       : true,
 					unformatted        : ["a", "sub", "sup", "b", "i", "u"],
 					wrapLineLength     : 0
 				},
@@ -125,7 +126,7 @@ module.exports = function (grunt) {
 			options: {
 				field: 'buildnum'
 			},
-			files: ['package.json', 'bower.json']
+			files  : ['package.json', 'bower.json']
 		},
 
 		bump: {

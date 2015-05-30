@@ -1,8 +1,8 @@
 /*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
- _ file: jquery.mb.YTPlayer.js                                                                                                                      _
- _ last modified: 16/05/15 21.29                                                                                                                    _
+ _ file: jquery.mb.YTPlayer.src.js                                                                                                                  _
+ _ last modified: 29/05/15 23.33                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -87,7 +87,7 @@ function onYouTubeIframeAPIReady() {
 				/**
 				 *
 				 * @param options
-				 * @returns {*}
+				 * @returns [players]
 				 */
 				buildPlayer: function( options ) {
 						return this.each( function() {

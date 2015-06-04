@@ -88,7 +88,7 @@ module.exports = function (grunt) {
 					indentScripts      : "keep",
 					indentSize         : 1,
 					maxPreserveNewlines: 1,
-					preserveNewlines   : false,
+					preserveNewlines   : true,
 					spaceInParen       : true,
 					unformatted        : ["a", "sub", "sup", "b", "i", "u"],
 					wrapLineLength     : 0

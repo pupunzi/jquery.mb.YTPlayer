@@ -68,7 +68,8 @@ module.exports = function (grunt) {
 					prefix : '{{ ',
 					suffix : ' }}',
 					globals: {
-						version: '<%= pkg.version %>'
+						version: '<%= pkg.version %>',
+						build: '<%= grunt.file.readJSON("package.json").buildnum %>'
 					}
 				},
 				files  : [
@@ -166,6 +167,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-build-number');
 	grunt.loadNpmTasks('grunt-bump');
 
-	grunt.registerTask('default', ['jsbeautifier', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace', 'buildnumber']);
+	grunt.registerTask('default', ['buildnumber', 'jsbeautifier', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace']);
 
 };

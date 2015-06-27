@@ -69,7 +69,7 @@ module.exports = function (grunt) {
 					suffix : ' }}',
 					globals: {
 						version: '<%= pkg.version %>',
-						build: '<%= grunt.file.readJSON("package.json").buildnum %>'
+						buildnum: '<%= grunt.file.readJSON("package.json").buildnum %>'
 					}
 				},
 				files  : [

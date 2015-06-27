@@ -1378,29 +1378,35 @@ function onYouTubeIframeAPIReady() {
 				}
 				return newArray;
 		};
+
 		/* Exposed public method */
 		jQuery.fn.YTPlayer = jQuery.mbYTPlayer.buildPlayer;
-		jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.playlist;
-		jQuery.fn.YTPPlayNext = jQuery.mbYTPlayer.playNext;
-		jQuery.fn.YTPPlayPrev = jQuery.mbYTPlayer.playPrev;
-		jQuery.fn.YTPChangeMovie = jQuery.mbYTPlayer.changeMovie;
-		jQuery.fn.YTPGetVideoID = jQuery.mbYTPlayer.getVideoID;
 		jQuery.fn.YTPGetPlayer = jQuery.mbYTPlayer.getPlayer;
+		jQuery.fn.YTPGetVideoID = jQuery.mbYTPlayer.getVideoID;
+		jQuery.fn.YTPChangeMovie = jQuery.mbYTPlayer.changeMovie;
 		jQuery.fn.YTPPlayerDestroy = jQuery.mbYTPlayer.playerDestroy;
-		jQuery.fn.YTPFullscreen = jQuery.mbYTPlayer.fullscreen;
+
 		jQuery.fn.YTPPlay = jQuery.mbYTPlayer.play;
 		jQuery.fn.YTPTogglePlay = jQuery.mbYTPlayer.togglePlay;
-		jQuery.fn.YTPToggleLoops = jQuery.mbYTPlayer.toggleLoops;
 		jQuery.fn.YTPStop = jQuery.mbYTPlayer.stop;
 		jQuery.fn.YTPPause = jQuery.mbYTPlayer.pause;
 		jQuery.fn.YTPSeekTo = jQuery.mbYTPlayer.seekTo;
+
+		jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.playlist;
+		jQuery.fn.YTPPlayNext = jQuery.mbYTPlayer.playNext;
+		jQuery.fn.YTPPlayPrev = jQuery.mbYTPlayer.playPrev;
+
 		jQuery.fn.YTPMute = jQuery.mbYTPlayer.mute;
 		jQuery.fn.YTPUnmute = jQuery.mbYTPlayer.unmute;
 		jQuery.fn.YTPToggleVolume = jQuery.mbYTPlayer.toggleVolume;
 		jQuery.fn.YTPSetVolume = jQuery.mbYTPlayer.setVolume;
+
+		jQuery.fn.YTPGetVideoData = jQuery.mbYTPlayer.getVideoData;
+		jQuery.fn.YTPFullscreen = jQuery.mbYTPlayer.fullscreen;
+		jQuery.fn.YTPToggleLoops = jQuery.mbYTPlayer.toggleLoops;
 		jQuery.fn.YTPSetVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
 		jQuery.fn.YTPManageProgress = jQuery.mbYTPlayer.manageProgress;
-		jQuery.fn.YTPGetVideoData = jQuery.mbYTPlayer.getVideoData;
+
 		jQuery.fn.YTPApplyFilter = jQuery.mbYTPlayer.applyFilter;
 		jQuery.fn.YTPApplyFilters = jQuery.mbYTPlayer.applyFilters;
 		jQuery.fn.YTPToggleFilter = jQuery.mbYTPlayer.toggleFilter;
@@ -1408,6 +1414,8 @@ function onYouTubeIframeAPIReady() {
 		jQuery.fn.YTPRemoveFilter = jQuery.mbYTPlayer.removeFilter;
 		jQuery.fn.YTPDisableFilters = jQuery.mbYTPlayer.disableFilters;
 		jQuery.fn.YTPEnableFilters = jQuery.mbYTPlayer.enableFilters;
+
+
 		/**
 		 *
 		 * @deprecated
@@ -1433,4 +1441,6 @@ function onYouTubeIframeAPIReady() {
 		jQuery.fn.setVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
 		jQuery.fn.manageYTPProgress = jQuery.mbYTPlayer.manageProgress;
 		jQuery.fn.YTPGetDataFromFeed = jQuery.mbYTPlayer.getVideoData;
+
+
 } )( jQuery, ytp );

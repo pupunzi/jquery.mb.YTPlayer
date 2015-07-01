@@ -1177,7 +1177,7 @@ function onYouTubeIframeAPIReady() {
 										YTPlayer.isCompact = false;
 										if( !YTPlayer.isMute && YTPlayer.volumeBar ) YTPlayer.volumeBar.updateSliderVal( YTPlayer.opt.vol );
 								}
-								if( YTPlayer.player.getPlayerState() == 1 && ( parseFloat( YTPlayer.player.getDuration() - 3 ) < YTPlayer.player.getCurrentTime() || ( stopAt > 0 && parseFloat( YTPlayer.player.getCurrentTime() ) > stopAt ) ) ) {
+								if( YTPlayer.player.getPlayerState() == 1 && ( parseFloat( YTPlayer.player.getDuration() - 1 ) < YTPlayer.player.getCurrentTime() || ( stopAt > 0 && parseFloat( YTPlayer.player.getCurrentTime() ) > stopAt ) ) ) {
 										if( YTPlayer.isEnded ) return;
 										YTPlayer.isEnded = true;
 										setTimeout( function() {
@@ -1205,7 +1205,14 @@ function onYouTubeIframeAPIReady() {
 																} );
 														}
 												} );
-										} else YTPlayer.player.seekTo( startAt, true );
+										} else {
+
+												startAt = startAt || 1;
+
+												YTPlayer.player.pauseVideo();
+												YTPlayer.player.seekTo( startAt, true );
+												$YTPlayer.YTPPlay();
+										}
 								}
 						}, interval );
 				},

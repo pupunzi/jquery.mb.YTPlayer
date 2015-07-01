@@ -1177,12 +1177,12 @@ function onYouTubeIframeAPIReady() {
 										YTPlayer.isCompact = false;
 										if( !YTPlayer.isMute && YTPlayer.volumeBar ) YTPlayer.volumeBar.updateSliderVal( YTPlayer.opt.vol );
 								}
-								if( YTPlayer.player.getPlayerState() == 1 && ( parseFloat( YTPlayer.player.getDuration() - 1 ) < YTPlayer.player.getCurrentTime() || ( stopAt > 0 && parseFloat( YTPlayer.player.getCurrentTime() ) > stopAt ) ) ) {
+								if( YTPlayer.player.getPlayerState() == 1 && ( parseFloat( YTPlayer.player.getDuration() - 1.5 ) < YTPlayer.player.getCurrentTime() || ( stopAt > 0 && parseFloat( YTPlayer.player.getCurrentTime() ) > stopAt ) ) ) {
 										if( YTPlayer.isEnded ) return;
 										YTPlayer.isEnded = true;
 										setTimeout( function() {
 												YTPlayer.isEnded = false
-										}, 2000 );
+										}, 1000 );
 										if( YTPlayer.isPlayList ) {
 												clearInterval( YTPlayer.getState );
 												var YTPEnd = jQuery.Event( "YTPEnd" );
@@ -1212,6 +1212,7 @@ function onYouTubeIframeAPIReady() {
 												YTPlayer.player.pauseVideo();
 												YTPlayer.player.seekTo( startAt, true );
 												$YTPlayer.YTPPlay();
+
 										}
 								}
 						}, interval );

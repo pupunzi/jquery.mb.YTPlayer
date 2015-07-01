@@ -2,7 +2,7 @@
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.YTPlayer.src.js                                                                                                                  _
- _ last modified: 29/05/15 23.33                                                                                                                    _
+ _ last modified: 01/07/15 19.35                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -25,26 +25,28 @@ function onYouTubeIframeAPIReady() {
 		ytp.YTAPIReady = true;
 		jQuery( document ).trigger( "YTAPIReady" );
 }
-( function( jQuery, ytp ) {
-		var getYTPVideoID = function( url ) {
-				var videoID, playlistID;
-				if( url.indexOf( "youtu.be" ) > 0 ) {
-						videoID = url.substr( url.lastIndexOf( "/" ) + 1, url.length );
-						playlistID = videoID.indexOf( "?list=" ) > 0 ? videoID.substr( videoID.lastIndexOf( "=" ), videoID.length ) : null;
-						videoID = playlistID ? videoID.substr( 0, videoID.lastIndexOf( "?" ) ) : videoID;
-				} else if( url.indexOf( "http" ) > -1 ) {
-						videoID = url.match( /[\\?&]v=([^&#]*)/ )[ 1 ];
-						playlistID = url.indexOf( "list=" ) > 0 ? url.match( /[\\?&]list=([^&#]*)/ )[ 1 ] : null;
-				} else {
-						videoID = url.length > 15 ? null : url;
-						playlistID = videoID ? null : url;
-				}
-				return {
-						videoID: videoID,
-						playlistID: playlistID
-				};
+
+var getYTPVideoID = function( url ) {
+		var videoID, playlistID;
+		if( url.indexOf( "youtu.be" ) > 0 ) {
+				videoID = url.substr( url.lastIndexOf( "/" ) + 1, url.length );
+				playlistID = videoID.indexOf( "?list=" ) > 0 ? videoID.substr( videoID.lastIndexOf( "=" ), videoID.length ) : null;
+				videoID = playlistID ? videoID.substr( 0, videoID.lastIndexOf( "?" ) ) : videoID;
+		} else if( url.indexOf( "http" ) > -1 ) {
+				videoID = url.match( /[\\?&]v=([^&#]*)/ )[ 1 ];
+				playlistID = url.indexOf( "list=" ) > 0 ? url.match( /[\\?&]list=([^&#]*)/ )[ 1 ] : null;
+		} else {
+				videoID = url.length > 15 ? null : url;
+				playlistID = videoID ? null : url;
+		}
+		return {
+				videoID: videoID,
+				playlistID: playlistID
 		};
-		/* todo: setPlaybackRate() playlist */
+};
+
+( function( jQuery, ytp ) {
+
 		jQuery.mbYTPlayer = {
 				name: "jquery.mb.YTPlayer",
 				version: "{{ version }}",

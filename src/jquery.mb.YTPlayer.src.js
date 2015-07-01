@@ -1127,7 +1127,7 @@ function onYouTubeIframeAPIReady() {
 				 *
 				 * */
 				checkForState: function( YTPlayer ) {
-						var interval = YTPlayer.opt.showControls ? 100 : 1000;
+						var interval = YTPlayer.opt.showControls ? 100 : 700;
 						clearInterval( YTPlayer.getState );
 						//Checking if player has been removed from scene
 						if( !jQuery.contains( document, YTPlayer ) ) {

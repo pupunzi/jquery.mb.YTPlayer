@@ -33,7 +33,8 @@ var getYTPVideoID = function( url ) {
 				playlistID = videoID.indexOf( "?list=" ) > 0 ? videoID.substr( videoID.lastIndexOf( "=" ), videoID.length ) : null;
 				videoID = playlistID ? videoID.substr( 0, videoID.lastIndexOf( "?" ) ) : videoID;
 		} else if( url.indexOf( "http" ) > -1 ) {
-				videoID = url.match( /[\\?&]v=([^&#]*)/ )[ 1 ];
+			//videoID = url.match( /([\/&]v\/([^&#]*))|([\\?&]v=([^&#]*))/ )[ 1 ];
+			videoID = url.match( /[\\?&]v=([^&#]*)/ )[ 1 ];
 				playlistID = url.indexOf( "list=" ) > 0 ? url.match( /[\\?&]list=([^&#]*)/ )[ 1 ] : null;
 		} else {
 				videoID = url.length > 15 ? null : url;
@@ -420,7 +421,7 @@ var getYTPVideoID = function( url ) {
 				 * @param YTPlayer
 				 */
 				getDataFromAPI: function( YTPlayer ) {
-						YTPlayer.videoData = jQuery.mbStorage.get( "YYTPlayer_data_" + YTPlayer.videoID );
+						YTPlayer.videoData = jQuery.mbStorage.get( "YTPlayer_data_" + YTPlayer.videoID );
 						jQuery( YTPlayer ).off( "YTPData.YTPlayer" ).on( "YTPData.YTPlayer", function() {
 								if( YTPlayer.hasData ) {
 
@@ -466,7 +467,7 @@ var getYTPVideoID = function( url ) {
 												YTPlayer.videoData.thumb_max = data.thumbnails.maxres ? data.thumbnails.maxres.url : null;
 												YTPlayer.videoData.thumb_high = data.thumbnails.high ? data.thumbnails.high.url : null;
 												YTPlayer.videoData.thumb_medium = data.thumbnails.medium ? data.thumbnails.medium.url : null;
-												jQuery.mbStorage.set( "YYTPlayer_data_" + YTPlayer.videoID, YTPlayer.videoData );
+												jQuery.mbStorage.set( "YTPlayer_data_" + YTPlayer.videoID, YTPlayer.videoData );
 										}
 										parseYTPlayer_data( data.items[ 0 ].snippet );
 										YTPlayer.hasData = true;
@@ -544,7 +545,7 @@ var getYTPVideoID = function( url ) {
 								jQuery( YTPlayer ).data( "property", videos[ 0 ] );
 								jQuery( YTPlayer ).mb_YTPlayer();
 						}
-						if( typeof callback == "function" ) jQuery( YTPlayer ).on( "YTPChanged", function() {
+						if( typeof callback == "function" ) jQuery( YTPlayer ).one( "YTPChanged", function() {
 								callback( YTPlayer );
 						} );
 						jQuery( YTPlayer ).on( "YTPEnd", function() {

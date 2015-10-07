@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+  jquery.mb.components                                                                                                                              –
+                                                                                                                                                    –
+  file: test.html                                                                                                                                   –
+  last modified: 24/05/15 17.17                                                                                                                     –
+                                                                                                                                                    –
+  Open Lab s.r.l., Florence - Italy                                                                                                                 –
+                                                                                                                                                    –
+  email: matteo@open-lab.com                                                                                                                        –
+  site: http://pupunzi.com                                                                                                                          –
+        http://open-lab.com                                                                                                                         –
+  blog: http://pupunzi.open-lab.com                                                                                                                 –
+  Q&A:  http://jquery.pupunzi.com                                                                                                                   –
+                                                                                                                                                    –
+  Licences: MIT, GPL                                                                                                                                –
+     http://www.opensource.org/licenses/mit-license.php                                                                                             –
+     http://www.gnu.org/licenses/gpl.html                                                                                                           –
+                                                                                                                                                    –
+  Copyright (c) 2001-2015. Matteo Bicocchi (Pupunzi);                                                                                               –
+  –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>youtube Chromeless Player - mb.YTPlayer</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+    <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="../dist/jquery.mb.YTPlayer.min.js"></script>
+    <script src="assets/apikey.js"></script>
+
+    <style>
+        body{
+            border:none;
+            margin:0;
+            padding:30px;
+            background: #e4a51b;
+            font:normal 16px/20px Lekton, sans-serif;
+        }
+
+        h1, h2{
+            font-family: 'Lobster', cursive;
+            font-size: 40px;
+            text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+            font-weight: 200;
+        }
+
+        .player{
+            display:inline-block;
+            vertical-align:top;
+            position:relative;
+            width:500px;
+            height:350px;
+            margin-top:100px!important;
+            left:0;
+            overflow: hidden;
+            border-radius: 4px;
+            -moz-box-shadow: 0 0 10px rgba(0,0,0,.5);
+            box-shadow: 0 0 10px rgba(0,0,0,.5);
+        }
+
+    </style>
+</head>
+<body>
+<div id="wrapper" style="position:relative; padding-top: 100px; color:white">
+    <h1> jQuery.mb.YTPlayer </h1>
+    <h2>  This page shows a playlist of 3 videos continuously.</h2>
+    <p >You can also set to shuffle the list before playing them.</p>
+    <p >See the source to understand how to define the playlist and how to invoke the player.</p>
+    <div style="background: rgba(0,0,0,0.2); padding: 10px; margin: 10px;max-width: 300px;">
+        <h2 style="color:white">Video info:</h2>
+        <p style="color:white"> video ID: <span id="videoID"></span> </p>
+        <p style="color:white"> Title: <span id="videoTitle"></span> </p>
+    </div>
+    <button style="color:#000000; font-size: 22px; cursor: pointer" onclick="jQuery('#myPlayerID').playPrev()">play previous</button>
+    <button style="color:#000000; font-size: 22px; cursor: pointer" onclick="jQuery('#myPlayerID').playNext()">play next</button>
+</div>
+
+<script>
+
+    jQuery(function(){
+        var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
+
+        var videos = [
+            {videoURL:"yWaelIrAv9A",containment:'body',autoPlay:true, mute:false, startAt:0, loop:false, ratio:"auto", addRaster:false, quality:"large"},
+            {videoURL: "zr9leP_Dcm8",containment:'body',autoPlay:true, mute:true, startAt:0, loop:false, ratio:"auto", addRaster:false, quality:"large"},
+            {videoURL: "ekwF2bnHf84",containment:'body',autoPlay:true, mute:false, startAt:0, loop:false, ratio:"auto", addRaster:true, quality:"large"},
+            {videoURL: "GAHATYO18uA",containment:'body',autoPlay:true, mute:false, startAt:0, loop:false, ratio:"auto", addRaster:true, quality:"large"}
+        ];
+
+        var myPlayListPlayer =jQuery("#myPlayerID").YTPlaylist(videos, false, function(video){
+            if(video.videoData){
+                jQuery("#videoID").html(video.videoData.id);
+                jQuery("#videoTitle").html(video.videoData.title);
+            }
+        });
+    });
+
+</script>
+<a class="player" id="myPlayerID" >My video</a>
+
+<a style="position: fixed;bottom:30px;right: 30px;"
+   href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=V6ZS8JPMZC446&lc=GB&item_name=mb%2eideas&item_number=MBIDEAS&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img
+        border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
+
+</body>
+</html>

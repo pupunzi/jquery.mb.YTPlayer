@@ -44,11 +44,11 @@
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-include-replace": "^3.0.0",
-	  "grunt-bump": "^0.3.1",
-	  "grunt-jsbeautifier": "^0.2.10"
+    "grunt-bump": "^0.3.1",
+    "grunt-jsbeautifier": "^0.2.10"
   },
   "directories": {
     "example": "examples"
   },
-  "buildnum": "5689"
+  "buildnum": "5699"
 }

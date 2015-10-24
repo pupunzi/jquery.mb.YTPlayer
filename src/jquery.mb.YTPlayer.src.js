@@ -33,8 +33,8 @@ var getYTPVideoID = function( url ) {
 				playlistID = videoID.indexOf( "?list=" ) > 0 ? videoID.substr( videoID.lastIndexOf( "=" ), videoID.length ) : null;
 				videoID = playlistID ? videoID.substr( 0, videoID.lastIndexOf( "?" ) ) : videoID;
 		} else if( url.indexOf( "http" ) > -1 ) {
-			//videoID = url.match( /([\/&]v\/([^&#]*))|([\\?&]v=([^&#]*))/ )[ 1 ];
-			videoID = url.match( /[\\?&]v=([^&#]*)/ )[ 1 ];
+				//videoID = url.match( /([\/&]v\/([^&#]*))|([\\?&]v=([^&#]*))/ )[ 1 ];
+				videoID = url.match( /[\\?&]v=([^&#]*)/ )[ 1 ];
 				playlistID = url.indexOf( "list=" ) > 0 ? url.match( /[\\?&]list=([^&#]*)/ )[ 1 ] : null;
 		} else {
 				videoID = url.length > 15 ? null : url;
@@ -1130,7 +1130,7 @@ var getYTPVideoID = function( url ) {
 				 *
 				 * */
 				checkForState: function( YTPlayer ) {
-						var interval = YTPlayer.opt.showControls ? 100 : 700;
+						var interval = YTPlayer.opt.showControls ? 100 : 400;
 						clearInterval( YTPlayer.getState );
 						//Checking if player has been removed from scene
 						if( !jQuery.contains( document, YTPlayer ) ) {
@@ -1144,7 +1144,7 @@ var getYTPVideoID = function( url ) {
 								var prog = jQuery( YTPlayer ).YTPManageProgress();
 								var $YTPlayer = jQuery( YTPlayer );
 								var data = YTPlayer.opt;
-								var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 0;
+								var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
 								var stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
 								stopAt = stopAt < YTPlayer.player.getDuration() ? stopAt : 0;
 								if( YTPlayer.player.time != prog.currentTime ) {

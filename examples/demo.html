@@ -297,7 +297,7 @@ button:hover, .button:hover {
 
         var YTPConsole = jQuery("#eventListener");
         // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
-        myPlayer.on("YTPStart YTPEnd YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted", function (e) {
+        myPlayer.on("YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted", function (e) {
             YTPConsole.append("event: " + e.type + " (" + jQuery("#bgndVideo").YTPGetPlayer().getPlayerState() + ") > time: " + e.time);
             YTPConsole.append("<br>");
         });
@@ -522,8 +522,8 @@ button:hover, .button:hover {
         <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
     </a>
 
-    <!--7SnmCUwOsts-->
-    <a id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:false, autoPlay:true, loop:true, vol:50, mute:true, startAt:10,  stopAt:150, opacity:1, addRaster:true, quality:'hd720', optimizeDisplay:true}">My video</a> <!--BsekcY04xvQ-->
+    <!--7SnmCUwOsts--><!--BsekcY04xvQ-->
+    <div id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:true, autoPlay:true, loop:false, vol:50, mute:true, startAt:10,  stopAt:150, opacity:1, addRaster:true, quality:'hd720', optimizeDisplay:true}">My video</div>
 
 </div>
 

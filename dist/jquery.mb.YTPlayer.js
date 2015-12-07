@@ -50,8 +50,8 @@ var getYTPVideoID = function( url ) {
 
 		jQuery.mbYTPlayer = {
 				name: "jquery.mb.YTPlayer",
-				version: "2.9.5",
-				build: "{{ build }}",
+				version: "2.9.6",
+				build: "5705",
 				author: "Matteo Bicocchi",
 				apiKey: "",
 				defaults: {
@@ -363,7 +363,7 @@ var getYTPVideoID = function( url ) {
 																						eventType = "YTPEnd";
 																						break;
 																				case 1: //------------------------------------------------ play
-																						eventType = "YTPStart";
+																						eventType = "YTPPlay";
 																						if( YTPlayer.controlBar ) YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.pause );
 																						if( typeof _gaq != "undefined" && eval( YTPlayer.opt.gaTrack ) ) _gaq.push( [ '_trackEvent', 'YTPlayer', 'Play', ( YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString() ) ] );
 																						if( typeof ga != "undefined" && eval( YTPlayer.opt.gaTrack ) ) ga( 'send', 'event', 'YTPlayer', 'play', ( YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString() ) );
@@ -769,16 +769,20 @@ var getYTPVideoID = function( url ) {
 				play: function() {
 						var YTPlayer = this.get( 0 );
 						if( !YTPlayer.isReady ) return;
+
 						var controls = jQuery( "#controlBar_" + YTPlayer.id );
 						var playBtn = controls.find( ".mb_YTPPlaypause" );
 						playBtn.html( jQuery.mbYTPlayer.controls.pause );
+
 						YTPlayer.player.playVideo();
 						YTPlayer.wrapper.CSSAnimate( {
 								opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
 						}, 2000 );
+
 						jQuery( YTPlayer.playerEl ).CSSAnimate( {
 								opacity: 1
 						}, 1000 );
+
 						jQuery( YTPlayer ).css( "background-image", "none" );
 						return this;
 				},
@@ -1231,7 +1235,7 @@ var getYTPVideoID = function( url ) {
 								return
 						}
 						if( jQuery.browser.chrome ) YTPlayer.opt.quality = "default";
-						YTPlayer.player.pauseVideo();
+						//YTPlayer.player.pauseVideo();
 						jQuery( YTPlayer ).muteYTPVolume();
 						jQuery( "#controlBar_" + YTPlayer.id ).remove();
 						if( YTPlayer.opt.showControls ) jQuery.mbYTPlayer.buildControls( YTPlayer );
@@ -1262,14 +1266,23 @@ var getYTPVideoID = function( url ) {
 								if( YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo ) {
 										clearInterval( YTPlayer.checkForStartAt );
 										YTPlayer.isReady = true;
-										if( typeof YTPlayer.opt.onReady == "function" ) YTPlayer.opt.onReady( YTPlayer );
+										if( typeof YTPlayer.opt.onReady == "function" )
+												YTPlayer.opt.onReady( YTPlayer );
+
 										var YTPready = jQuery.Event( "YTPReady" );
 										jQuery( YTPlayer ).trigger( YTPready );
-										YTPlayer.player.pauseVideo();
+
+										//YTPlayer.player.pauseVideo();
+
 										if( !YTPlayer.opt.mute ) jQuery( YTPlayer ).YTPUnmute();
 										YTPlayer.canTrigger = true;
 										if( YTPlayer.opt.autoPlay ) {
 												$YTPlayer.YTPPlay();
+
+												var YTPStart = jQuery.Event( "YTPStart" );
+												YTPStart.time = YTPlayer.player.time;
+												jQuery( YTPlayer ).trigger( YTPStart );
+
 												$YTPlayer.css( "background-image", "none" );
 												jQuery( YTPlayer.playerEl ).CSSAnimate( {
 														opacity: 1
@@ -1288,6 +1301,7 @@ var getYTPVideoID = function( url ) {
 														}, 1000 );
 												}
 										}
+
 										if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) {
 												YTPlayer.loading.html( "Ready" );
 												setTimeout( function() {

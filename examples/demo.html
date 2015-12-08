@@ -281,23 +281,13 @@ button:hover, .button:hover {
 
         var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 
-        var myPlayer = jQuery("#bgndVideo").YTPlayer({
-            onReady: function (player) {
-                YTPConsole.append(player.id + " player is ready");
-                YTPConsole.append("<br>");
-            }
-        });
-
-        myPlayer.on("YTPData", function (e) {
-            $(".dida").html(e.prop.title + "<br>@" + e.prop.channelTitle);
-            $("#videoData").show();
-        });
+        var myPlayer = jQuery("#bgndVideo").YTPlayer();
 
         /* DEBUG ******************************************************************************************/
 
         var YTPConsole = jQuery("#eventListener");
         // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
-        myPlayer.on("YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted", function (e) {
+        myPlayer.on("YTPReady YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted YTPChangeMovie", function (e) {
             YTPConsole.append("event: " + e.type + " (" + jQuery("#bgndVideo").YTPGetPlayer().getPlayerState() + ") > time: " + e.time);
             YTPConsole.append("<br>");
         });
@@ -306,8 +296,16 @@ button:hover, .button:hover {
             YTPConsole.html("");
         });
 
+        myPlayer.on("YTPChangeMovie", function(e){
+            console.debug("videoId :: ", e.videoId);
+        });
+
         // EVENT: YTPData
         myPlayer.on("YTPData", function (e) {
+
+            $(".dida").html(e.prop.title + "<br>@" + e.prop.channelTitle);
+            $("#videoData").show();
+
             YTPConsole.append("******************************");
             YTPConsole.append("<br>");
             YTPConsole.append(e.type);

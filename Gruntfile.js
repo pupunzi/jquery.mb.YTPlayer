@@ -107,7 +107,7 @@ module.exports = function (grunt) {
 					evalCode               : false,
 					indentChar             : "\t",
 					indentLevel            : 0,
-					indentSize             : 2,
+					indentSize             : 1,
 					indentWithTabs         : false,
 					jslintHappy            : false,
 					keepArrayIndentation   : true,

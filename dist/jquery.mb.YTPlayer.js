@@ -50,8 +50,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "2.9.8",
-		build: "5750",
+		version: "2.9.9",
+		build: "5751",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -338,7 +338,7 @@ var getYTPVideoID = function( url ) {
 									YTPlayer.isReady = YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ? false : true;
 									YTPlayer.playerEl = YTPlayer.player.getIframe();
 
-									$( YTPlayer.playerEl ).unselectable();
+									jQuery( YTPlayer.playerEl ).unselectable();
 
 									$YTPlayer.optimizeDisplay();
 									YTPlayer.videoID = videoID;
@@ -1246,7 +1246,7 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.player.loopTime = undefined;
 
 						YTPlayer.preventTrigger = true;
-						$( YTPlayer ).YTPPause();
+						jQuery( YTPlayer ).YTPPause();
 
 						YTPlayer.wrapper.CSSAnimate( {
 							opacity: 0
@@ -1272,7 +1272,7 @@ var getYTPVideoID = function( url ) {
 					YTPlayer.player.loopTime = YTPlayer.player.loopTime ? ++YTPlayer.player.loopTime : 1;
 					startAt = startAt || 1;
 					YTPlayer.preventTrigger = true;
-					$( YTPlayer ).YTPPause();
+					jQuery( YTPlayer ).YTPPause();
 					YTPlayer.player.seekTo( startAt, true );
 					$YTPlayer.YTPPlay();
 
@@ -1294,7 +1294,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.opt.quality = "default";
 
 			YTPlayer.preventTrigger = true;
-			$( YTPlayer ).YTPPause();
+			jQuery( YTPlayer ).YTPPause();
 
 			jQuery( YTPlayer ).muteYTPVolume();
 			jQuery( "#controlBar_" + YTPlayer.id ).remove();
@@ -1334,7 +1334,7 @@ var getYTPVideoID = function( url ) {
 					jQuery( YTPlayer ).trigger( YTPready );
 
 					YTPlayer.preventTrigger = true;
-					$( YTPlayer ).YTPPause();
+					jQuery( YTPlayer ).YTPPause();
 
 					if( !YTPlayer.opt.mute ) jQuery( YTPlayer ).YTPUnmute();
 					YTPlayer.canTrigger = true;

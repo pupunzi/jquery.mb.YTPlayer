@@ -2,7 +2,7 @@
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.YTPlayer.src.js                                                                                                                  _
- _ last modified: 01/07/15 19.35                                                                                                                    _
+ _ last modified: 05/01/16 17.43                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -16,7 +16,7 @@
  _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
  _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
  _                                                                                                                                                  _
- _ Copyright (c) 2001-2015. Matteo Bicocchi (Pupunzi);                                                                                              _
+ _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 var ytp = ytp || {};
 
@@ -147,7 +147,8 @@ var getYTPVideoID = function( url ) {
 
 				if( !YTPlayer.hasChanged ) {
 					YTPlayer.defaultOpt = {};
-					jQuery.extend( YTPlayer.defaultOpt, jQuery.mbYTPlayer.defaults, options, property );
+					//					jQuery.extend( YTPlayer.defaultOpt, jQuery.mbYTPlayer.defaults, options, property );
+					jQuery.extend( YTPlayer.defaultOpt, jQuery.mbYTPlayer.defaults, options );
 				}
 
 				if( YTPlayer.opt.loop == "true" )
@@ -211,10 +212,12 @@ var getYTPVideoID = function( url ) {
 				} else {
 					YTPlayer.isPlayer = true;
 				}
+
 				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
 					$YTPlayer.remove();
 					return;
 				}
+
 				var wrapper = jQuery( "<div/>" ).addClass( "mbYTP_wrapper" ).attr( "id", "wrapper_" + playerID );
 				wrapper.css( {
 					position: "absolute",
@@ -261,6 +264,7 @@ var getYTPVideoID = function( url ) {
 				playerBox.css( {
 					opacity: 1
 				} );
+
 				if( !jQuery.browser.mobile ) {
 					playerBox.after( overlay );
 					YTPlayer.overlay = overlay;
@@ -298,6 +302,7 @@ var getYTPVideoID = function( url ) {
 					jQuery( YTPlayer ).on( "YTPChanged", function() {
 						if( YTPlayer.isInit ) return;
 						YTPlayer.isInit = true;
+
 						//if is mobile && isPlayer fallback to the default YT player
 						if( jQuery.browser.mobile && YTPlayer.canPlayOnMobile ) {
 							// Try to adjust the player dimention
@@ -328,6 +333,7 @@ var getYTPVideoID = function( url ) {
 							} );
 							return;
 						}
+
 						new YT.Player( playerID, {
 							videoId: YTPlayer.videoID.toString(),
 							playerVars: playerVars,
@@ -342,7 +348,7 @@ var getYTPVideoID = function( url ) {
 
 									$YTPlayer.optimizeDisplay();
 									YTPlayer.videoID = videoID;
-									jQuery( window ).on( "resize.YTP", function() {
+									jQuery( window ).off( "resize.YTP" ).on( "resize.YTP", function() {
 										$YTPlayer.optimizeDisplay();
 									} );
 
@@ -546,7 +552,8 @@ var getYTPVideoID = function( url ) {
 		 */
 		setVideoQuality: function( quality ) {
 			var YTPlayer = this.get( 0 );
-			if( !jQuery.browser.chrome ) YTPlayer.player.setPlaybackQuality( quality );
+			//if( !jQuery.browser.chrome )
+			YTPlayer.player.setPlaybackQuality( quality );
 		},
 		/**
 		 * @param videos
@@ -1173,7 +1180,9 @@ var getYTPVideoID = function( url ) {
 				clearInterval( YTPlayer.checkForStartAt );
 				return;
 			}
+
 			jQuery.mbYTPlayer.checkForStart( YTPlayer );
+
 			YTPlayer.getState = setInterval( function() {
 				var prog = jQuery( YTPlayer ).YTPManageProgress();
 				var $YTPlayer = jQuery( YTPlayer );
@@ -1278,24 +1287,34 @@ var getYTPVideoID = function( url ) {
 		 * */
 		checkForStart: function( YTPlayer ) {
 			var $YTPlayer = jQuery( YTPlayer );
+
 			//Checking if player has been removed from scene
 			if( !jQuery.contains( document, YTPlayer ) ) {
 				jQuery( YTPlayer ).YTPPlayerDestroy();
 				return
 			}
-			if( jQuery.browser.chrome )
-				YTPlayer.opt.quality = "default";
+
+			/*
+			 if( jQuery.browser.chrome )
+			 YTPlayer.opt.quality = "default";
+			 */
 
 			YTPlayer.preventTrigger = true;
 			jQuery( YTPlayer ).YTPPause();
 
 			jQuery( YTPlayer ).muteYTPVolume();
 			jQuery( "#controlBar_" + YTPlayer.id ).remove();
-			if( YTPlayer.opt.showControls ) jQuery.mbYTPlayer.buildControls( YTPlayer );
+
+			if( YTPlayer.opt.showControls )
+				jQuery.mbYTPlayer.buildControls( YTPlayer );
+
 			if( YTPlayer.opt.addRaster ) {
+
 				var classN = YTPlayer.opt.addRaster == "dot" ? "raster-dot" : "raster";
 				YTPlayer.overlay.addClass( YTPlayer.isRetina ? classN + " retina" : classN );
+
 			} else {
+
 				YTPlayer.overlay.removeClass( function( index, classNames ) {
 					// change the list into an array
 					var current_classes = classNames.split( " " ),
@@ -1311,12 +1330,29 @@ var getYTPVideoID = function( url ) {
 					// turn the array back into a string
 					return classes_to_remove.join( " " );
 				} )
+
 			}
+
+			console.time( "checkforStart" );
+
+			var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
+			YTPlayer.player.playVideo();
+			YTPlayer.player.seekTo( startAt, true );
+
 			YTPlayer.checkForStartAt = setInterval( function() {
+
 				jQuery( YTPlayer ).YTPMute();
-				var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
-				var canPlayVideo = ( YTPlayer.player.getVideoLoadedFraction() > startAt / YTPlayer.player.getDuration() );
+
+				var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
+
+				console.debug( YTPlayer.player.getCurrentTime(), startAt, YTPlayer.player.getVideoLoadedFraction() );
+
 				if( YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo ) {
+
+					//YTPlayer.player.playVideo();
+
+					console.timeEnd( "checkforStart" );
+
 					clearInterval( YTPlayer.checkForStartAt );
 					YTPlayer.isReady = true;
 					if( typeof YTPlayer.opt.onReady == "function" )
@@ -1346,14 +1382,17 @@ var getYTPVideoID = function( url ) {
 							opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
 						}, 1000 );
 					} else {
-						YTPlayer.player.pauseVideo();
+
+						$YTPlayer.YTPPause();
+						//YTPlayer.player.pauseVideo();
 						if( !YTPlayer.isPlayer ) {
 							jQuery( YTPlayer.playerEl ).CSSAnimate( {
 								opacity: 1
-							}, 1000 );
+							}, 500 );
+
 							YTPlayer.wrapper.CSSAnimate( {
 								opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-							}, 1000 );
+							}, 500 );
 						}
 					}
 
@@ -1361,16 +1400,18 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.loading.html( "Ready" );
 						setTimeout( function() {
 							YTPlayer.loading.fadeOut();
-
-
 						}, 100 )
 					}
 					if( YTPlayer.controlBar ) YTPlayer.controlBar.slideDown( 1000 );
-				} else {
+
+				} else if( jQuery.browser.safari ) {
 					//YTPlayer.player.playVideo();
-					if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
+					//if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
 				}
-			}, 1000 );
+
+			}, 1 );
+
+
 		},
 		/**
 		 *

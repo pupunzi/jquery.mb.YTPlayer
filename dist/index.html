@@ -1,13 +1,34 @@
 <!DOCTYPE html>
+<!--–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+  jquery.mb.components                                                                                                                              –
+                                                                                                                                                    –
+  file: index.tmpl                                                                                                                                  –
+  last modified: 05/01/16 17.43                                                                                                                     –
+                                                                                                                                                    –
+  Open Lab s.r.l., Florence - Italy                                                                                                                 –
+                                                                                                                                                    –
+  email: matteo@open-lab.com                                                                                                                        –
+  site: http://pupunzi.com                                                                                                                          –
+        http://open-lab.com                                                                                                                         –
+  blog: http://pupunzi.open-lab.com                                                                                                                 –
+  Q&A:  http://jquery.pupunzi.com                                                                                                                   –
+                                                                                                                                                    –
+  Licences: MIT, GPL                                                                                                                                –
+     http://www.opensource.org/licenses/mit-license.php                                                                                             –
+     http://www.gnu.org/licenses/gpl.html                                                                                                           –
+                                                                                                                                                    –
+  Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                               –
+  –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
+
 <html>
 
 <head>
 	<meta charset="UTF-8">
 	<title>youtube Chromeless Player - mb.YTPlayer</title>
 	<link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-	<link href="css/jquery.mb.YTPlayer.min.css?_bn=5751" media="all" rel="stylesheet" type="text/css">
+	<link href="css/jquery.mb.YTPlayer.min.css?_bn=5796" media="all" rel="stylesheet" type="text/css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-	<script src="jquery.mb.YTPlayer.min.js?_bn=5751"></script>
+	<script src="jquery.mb.YTPlayer.min.js?_bn=5796"></script>
 	<style>
 	*:focus {
 		outline: none;
@@ -152,54 +173,6 @@
 		z-index: 1000;
 	}
 	
-	#filterScript {
-		margin-top: 20px;
-		padding: 10px;
-		background-color: rgba(25, 34, 37, 0.35);
-		color: #fff;
-		border-radius: 10px;
-	}
-	
-	.slider {
-		position: relative;
-		width: 100%;
-		height: 25px;
-		border: 0 solid transparent;
-		background-color: rgba(168, 168, 168, 0.20);
-		border-radius: 4px;
-		margin-top: 10px;
-		overflow: hidden;
-	}
-	
-	.slider .level {
-		background-color: #3c6784;
-		height: 100%;
-	}
-	
-	.slider .desc {
-		position: absolute;
-		right: 0;
-		top: 0;
-		padding: 5px;
-		font-size: 12px;
-		line-height: 18px;
-		color: #fff;
-	}
-	
-	.slider span {
-		font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
-		/*text-transform: uppercase;*/
-		position: absolute;
-		top: 0;
-		font-size: 12px;
-		line-height: 18px;
-		color: #fff;
-		padding: 4px;
-		text-align: left;
-		width: 100%;
-		box-sizing: border-box;
-	}
-	
 	#changeVideo {
 		position: absolute;
 		top: 0;
@@ -246,32 +219,88 @@
 		border-radius: 10px;
 		padding: 20px;
 	}
+	/*Slider START ************************************************/
+	
+	#filterScript {
+		margin-top: 20px;
+		padding: 10px;
+		background-color: rgba(25, 34, 37, 0.35);
+		color: #fff;
+		border-radius: 10px;
+	}
+	
+	.slider {
+		position: relative;
+		width: 100%;
+		height: 25px;
+		border: 0 solid transparent;
+		background-color: rgba(255, 255, 255, 0.20);
+		border-radius: 4px;
+		margin-top: 10px;
+		overflow: hidden;
+	}
+	
+	.slider .level {
+		background-color: rgba(255, 255, 255, 0.80);
+		height: 100%;
+	}
+	
+	.slider .desc {
+		position: absolute;
+		right: 0;
+		top: 0;
+		padding: 5px;
+		font-size: 12px;
+		line-height: 18px;
+		color: #222222;
+	}
+	
+	.slider span {
+		font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+		/*text-transform: uppercase;*/
+		position: absolute;
+		top: 0;
+		font-size: 12px;
+		line-height: 18px;
+		color: #222222;
+		padding: 4px;
+		text-align: left;
+		width: 100%;
+		box-sizing: border-box;
+	}
+	/*Slider END ************************************************/
 	</style>
 	<script>
+	var isIframe = function() {
+		var a = !1;
+		try {
+			self.location.href != top.location.href && ( a = !0 )
+		} catch ( b ) {
+			a = !0
+		}
+		return a
+	};
+
 	jQuery( function() {
-		var isIframe = function() {
-			var a = !1;
-			try {
-				self.location.href != top.location.href && ( a = !0 )
-			} catch ( b ) {
-				a = !0
-			}
-			return a
-		};
+
 		if ( !isIframe() ) {
 			var logo = $( "<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>" );
 			$( "#wrapper" ).prepend( logo ), $( "#logo" ).fadeIn()
 		}
+
 		var myPlayer = jQuery( "#bgndVideo" ).YTPlayer( {
 			onReady: function( player ) {
 				YTPConsole.append( player.id + " player is ready" );
 				YTPConsole.append( "<br>" );
 			}
 		} );
+
+
 		myPlayer.on( "YTPData", function( e ) {
 			$( ".dida" ).html( e.prop.title + "<br>@" + e.prop.channelTitle );
 			$( "#videoData" ).show();
 		} );
+
 		/* DEBUG ******************************************************************************************/
 		var YTPConsole = jQuery( "#eventListener" );
 		// EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
@@ -306,6 +335,8 @@
 			}
 		} );
 		/* END DEBUG ******************************************************************************************/
+
+
 		/* FILTER SLIDERS ******************************************************************************************/
 		// create sliders for filters adjustment
 		var $slider = $( ".slider" ).simpleSlider( {
@@ -313,8 +344,11 @@
 			scale: 100,
 			callback: function( el ) {
 				var filter = $( el ).data( "filter" );
-				myPlayer.YTPApplyFilter( filter, +( el.value ).toFixed( 0 ) );
-				$( "span", el ).html( filter + "       (" + ( +( el.value ).toFixed( 0 ) ) + ")" );
+
+				var filterVal = +( el.value ).toFixed( 0 );
+				myPlayer.YTPApplyFilter( filter, filterVal );
+
+				$( "span", el ).html( filter + "       (" + filterVal + ")" );
 				var applFilters = [];
 				var desc = "$(selector).YTPApplyFilters({";
 				for ( var x = 0; x < $( ".slider" ).length; x++ ) {
@@ -330,6 +364,8 @@
 				$( "#filterScript" ).html( desc );
 			}
 		} );
+
+
 		//update applied filters
 		myPlayer.on( "YTPFiltersApplied", function() {
 			var filters = myPlayer.get( 0 ).filters;
@@ -339,20 +375,14 @@
 		} );
 	} );
 	/* END FILTER SLIDERS ******************************************************************************************/
-	/**
-	 *
-	 * @param state
-	 */
+
+
 	function changeLabel( state ) {
 		$( "#togglePlay" ).html( state != 1 ? "pause" : "play" );
 		$( "#togglePlay" ).removeClass( state != 1 ? "play" : "pause" );
 		$( "#togglePlay" ).addClass( state != 1 ? "pause" : "play" );
 	}
-	/**
-	 *
-	 * @param val
-	 * @returns {*|number}
-	 */
+
 	function checkForVal( val ) {
 		return val || 0;
 	}
@@ -414,7 +444,7 @@
 			<h2 style="color:white">Change video</h2>
 			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: '7SnmCUwOsts', mute:false, addRaster:false})">video 1</button>
 			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 2</button>
-			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'kcihcYEOeic', mute:false, startAt:10, addRaster:false})">video 3</button>
+			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'kcihcYEOeic', mute:false, startAt:10, stopAt: 363, addRaster:false})">video 3</button>
 			<br>
 			<br>
 			<div id="loadBox">

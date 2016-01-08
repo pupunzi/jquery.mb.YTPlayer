@@ -1333,7 +1333,7 @@ var getYTPVideoID = function( url ) {
 
 			}
 
-			console.time( "checkforStart" );
+			//console.time( "checkforStart" );
 
 			var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
 			YTPlayer.player.playVideo();
@@ -1345,13 +1345,13 @@ var getYTPVideoID = function( url ) {
 
 				var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
 
-				console.debug( YTPlayer.player.getCurrentTime(), startAt, YTPlayer.player.getVideoLoadedFraction() );
+				//console.debug( YTPlayer.player.getCurrentTime(), startAt, YTPlayer.player.getVideoLoadedFraction() );
 
 				if( YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo ) {
 
 					//YTPlayer.player.playVideo();
 
-					console.timeEnd( "checkforStart" );
+					//console.timeEnd( "checkforStart" );
 
 					clearInterval( YTPlayer.checkForStartAt );
 					YTPlayer.isReady = true;

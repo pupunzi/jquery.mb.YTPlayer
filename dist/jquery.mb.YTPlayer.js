@@ -50,8 +50,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "2.9.10",
-		build: "5797",
+		version: "2.9.11",
+		build: "5800",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -1253,6 +1253,8 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.wrapper.CSSAnimate( {
 							opacity: 0
 						}, 1000, function() {
+
+							if( YTPlayer.controlBar ) YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
 
 							var YTPEnd = jQuery.Event( "YTPEnd" );
 							YTPEnd.time = YTPlayer.player.time;

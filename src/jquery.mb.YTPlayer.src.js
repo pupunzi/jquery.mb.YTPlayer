@@ -1254,6 +1254,8 @@ var getYTPVideoID = function( url ) {
 							opacity: 0
 						}, 1000, function() {
 
+							if( YTPlayer.controlBar ) YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
+
 							var YTPEnd = jQuery.Event( "YTPEnd" );
 							YTPEnd.time = YTPlayer.player.time;
 							jQuery( YTPlayer ).trigger( YTPEnd );

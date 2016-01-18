@@ -14,7 +14,10 @@
     "html5",
     "player"
   ],
-  "license": "MIT",
+  "licenses": [
+    "MIT",
+    "GPL-2.0"
+  ],
   "ignore": [
     "**/.*",
     "node_modules",

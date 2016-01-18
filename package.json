@@ -16,7 +16,10 @@
   "maintainers": [
     "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)"
   ],
-  "license": "MIT",
+  "licenses": [
+    "MIT",
+    "GPL-2.0"
+  ],
   "bugs": {
     "url": "https://github.com/pupunzi/jquery.mb.YTPlayer/issues"
   },

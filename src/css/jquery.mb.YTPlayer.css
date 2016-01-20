@@ -91,7 +91,7 @@
     }
 }
 
-.fullscreen {
+.YTPFullscreen {
     display: block!important;
     position: fixed!important;
     width: 100%!important;

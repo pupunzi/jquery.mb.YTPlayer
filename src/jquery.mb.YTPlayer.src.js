@@ -1378,7 +1378,7 @@ var getYTPVideoID = function( url ) {
 
 					//console.timeEnd( "checkforStart" );
 
-					console.debug( "checkForStartAt:: checked ::  ", YTPlayer );
+					//	console.debug( "checkForStartAt:: checked ::  ", YTPlayer );
 
 					clearInterval( YTPlayer.checkForStartAt );
 

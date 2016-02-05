@@ -50,8 +50,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "2.9.11",
-		build: "5814",
+		version: "2.9.12",
+		build: "5815",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -1378,7 +1378,7 @@ var getYTPVideoID = function( url ) {
 
 					//console.timeEnd( "checkforStart" );
 
-					console.debug( "checkForStartAt:: checked ::  ", YTPlayer );
+					//	console.debug( "checkForStartAt:: checked ::  ", YTPlayer );
 
 					clearInterval( YTPlayer.checkForStartAt );
 

@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "2.9.11",
-		build: "5806",
+		build: "5814",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -77,7 +77,9 @@ var getYTPVideoID = function( url ) {
 			optimizeDisplay: true,
 			onReady: function( player ) {}
 		},
-		/* @fontface icons */
+		/**
+		 *  @fontface icons
+		 *  */
 		controls: {
 			play: "P",
 			pause: "p",
@@ -589,6 +591,12 @@ var getYTPVideoID = function( url ) {
 		 */
 		playNext: function() {
 			var YTPlayer = this.get( 0 );
+
+			if( YTPlayer.checkForStartAt ) {
+				clearTimeout( YTPlayer.checkForStartAt );
+				clearInterval( YTPlayer.getState );
+			}
+
 			YTPlayer.videoCounter++;
 			if( YTPlayer.videoCounter >= YTPlayer.videoLength ) YTPlayer.videoCounter = 0;
 			jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
@@ -600,6 +608,12 @@ var getYTPVideoID = function( url ) {
 		 */
 		playPrev: function() {
 			var YTPlayer = this.get( 0 );
+
+			if( YTPlayer.checkForStartAt ) {
+				clearInterval( YTPlayer.checkForStartAt );
+				clearInterval( YTPlayer.getState );
+			}
+
 			YTPlayer.videoCounter--;
 			if( YTPlayer.videoCounter < 0 ) YTPlayer.videoCounter = YTPlayer.videoLength - 1;
 			jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
@@ -652,7 +666,7 @@ var getYTPVideoID = function( url ) {
 
 		playerDestroy: function() {
 			var YTPlayer = this.get( 0 );
-			ytp.YTAPIReady = false;
+			ytp.YTAPIReady = true;
 			ytp.backgroundIsInited = false;
 			YTPlayer.isInit = false;
 			YTPlayer.videoID = null;
@@ -663,6 +677,7 @@ var getYTPVideoID = function( url ) {
 			clearInterval( YTPlayer.getState );
 			return this;
 		},
+
 		/**
 		 *
 		 * @param real
@@ -684,7 +699,7 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.isAlone = false;
 						fullScreenBtn.html( jQuery.mbYTPlayer.controls.onlyYT );
 						jQuery( YTPlayer ).YTPSetVideoQuality( YTPlayer.opt.quality );
-						videoWrapper.removeClass( "fullscreen" );
+						videoWrapper.removeClass( "YTPFullscreen" );
 						videoWrapper.CSSAnimate( {
 							opacity: YTPlayer.opt.opacity
 						}, 500 );
@@ -722,7 +737,7 @@ var getYTPVideoID = function( url ) {
 					videoWrapper.css( {
 						opacity: 0
 					} );
-					videoWrapper.addClass( "fullscreen" );
+					videoWrapper.addClass( "YTPFullscreen" );
 					launchFullscreen( videoWrapper.get( 0 ) );
 					setTimeout( function() {
 						videoWrapper.CSSAnimate( {
@@ -1188,7 +1203,7 @@ var getYTPVideoID = function( url ) {
 				var prog = jQuery( YTPlayer ).YTPManageProgress();
 				var $YTPlayer = jQuery( YTPlayer );
 				var data = YTPlayer.opt;
-				var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 0;
+				var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
 				var stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
 				stopAt = stopAt < YTPlayer.player.getDuration() ? stopAt : 0;
 				if( YTPlayer.player.time != prog.currentTime ) {
@@ -1282,7 +1297,7 @@ var getYTPVideoID = function( url ) {
 					}
 
 					YTPlayer.player.loopTime = YTPlayer.player.loopTime ? ++YTPlayer.player.loopTime : 1;
-					startAt = startAt || 0;
+					startAt = startAt || 1;
 					YTPlayer.preventTrigger = true;
 					jQuery( YTPlayer ).YTPPause();
 					YTPlayer.player.seekTo( startAt, true );
@@ -1345,7 +1360,7 @@ var getYTPVideoID = function( url ) {
 
 			//console.time( "checkforStart" );
 
-			var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 0;
+			var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
 			YTPlayer.player.playVideo();
 			YTPlayer.player.seekTo( startAt, true );
 
@@ -1363,7 +1378,10 @@ var getYTPVideoID = function( url ) {
 
 					//console.timeEnd( "checkforStart" );
 
+					console.debug( "checkForStartAt:: checked ::  ", YTPlayer );
+
 					clearInterval( YTPlayer.checkForStartAt );
+
 					YTPlayer.isReady = true;
 					if( typeof YTPlayer.opt.onReady == "function" )
 						YTPlayer.opt.onReady( YTPlayer );
@@ -1371,6 +1389,7 @@ var getYTPVideoID = function( url ) {
 					var YTPready = jQuery.Event( "YTPReady" );
 					YTPready.time = YTPlayer.player.time;
 					jQuery( YTPlayer ).trigger( YTPready );
+
 
 					YTPlayer.preventTrigger = true;
 					jQuery( YTPlayer ).YTPPause();

@@ -591,6 +591,12 @@ var getYTPVideoID = function( url ) {
 		 */
 		playNext: function() {
 			var YTPlayer = this.get( 0 );
+
+			if( YTPlayer.checkForStartAt ) {
+				clearTimeout( YTPlayer.checkForStartAt );
+				clearInterval( YTPlayer.getState );
+			}
+
 			YTPlayer.videoCounter++;
 			if( YTPlayer.videoCounter >= YTPlayer.videoLength ) YTPlayer.videoCounter = 0;
 			jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
@@ -602,6 +608,12 @@ var getYTPVideoID = function( url ) {
 		 */
 		playPrev: function() {
 			var YTPlayer = this.get( 0 );
+
+			if( YTPlayer.checkForStartAt ) {
+				clearInterval( YTPlayer.checkForStartAt );
+				clearInterval( YTPlayer.getState );
+			}
+
 			YTPlayer.videoCounter--;
 			if( YTPlayer.videoCounter < 0 ) YTPlayer.videoCounter = YTPlayer.videoLength - 1;
 			jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
@@ -1366,7 +1378,10 @@ var getYTPVideoID = function( url ) {
 
 					//console.timeEnd( "checkforStart" );
 
+					console.debug( "checkForStartAt:: checked ::  ", YTPlayer );
+
 					clearInterval( YTPlayer.checkForStartAt );
+
 					YTPlayer.isReady = true;
 					if( typeof YTPlayer.opt.onReady == "function" )
 						YTPlayer.opt.onReady( YTPlayer );
@@ -1374,6 +1389,7 @@ var getYTPVideoID = function( url ) {
 					var YTPready = jQuery.Event( "YTPReady" );
 					YTPready.time = YTPlayer.player.time;
 					jQuery( YTPlayer ).trigger( YTPready );
+
 
 					YTPlayer.preventTrigger = true;
 					jQuery( YTPlayer ).YTPPause();

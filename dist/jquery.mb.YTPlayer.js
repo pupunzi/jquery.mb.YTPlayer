@@ -50,8 +50,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "2.9.12",
-		build: "5815",
+		version: "2.9.13",
+		build: "5823",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -103,6 +103,9 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.opt = {};
 				YTPlayer.state = {};
 				YTPlayer.filtersEnabled = true;
+
+				YTPlayer.id = YTPlayer.id || "YTP_" + new Date().getTime();
+
 				YTPlayer.filters = {
 					grayscale: {
 						value: 0,
@@ -350,7 +353,9 @@ var getYTPVideoID = function( url ) {
 
 									$YTPlayer.optimizeDisplay();
 									YTPlayer.videoID = videoID;
-									jQuery( window ).off( "resize.YTP" ).on( "resize.YTP", function() {
+									jQuery( window ).off( "resize.YTP_" + YTPlayer.id ).on( "resize.YTP_" + YTPlayer.id, function() {
+
+										console.debug( YTPlayer.id )
 										$YTPlayer.optimizeDisplay();
 									} );
 

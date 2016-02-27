@@ -103,6 +103,9 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.opt = {};
 				YTPlayer.state = {};
 				YTPlayer.filtersEnabled = true;
+
+				YTPlayer.id = YTPlayer.id || "YTP_" + new Date().getTime();
+
 				YTPlayer.filters = {
 					grayscale: {
 						value: 0,
@@ -350,7 +353,7 @@ var getYTPVideoID = function( url ) {
 
 									$YTPlayer.optimizeDisplay();
 									YTPlayer.videoID = videoID;
-									jQuery( window ).off( "resize.YTP" ).on( "resize.YTP", function() {
+									jQuery( window ).off( "resize.YTP_" + YTPlayer.id ).on( "resize.YTP_" + YTPlayer.id, function() {
 										$YTPlayer.optimizeDisplay();
 									} );
 

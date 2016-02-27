@@ -50,8 +50,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "2.9.13",
-		build: "5823",
+		version: "2.9.14",
+		build: "5827",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -354,8 +354,6 @@ var getYTPVideoID = function( url ) {
 									$YTPlayer.optimizeDisplay();
 									YTPlayer.videoID = videoID;
 									jQuery( window ).off( "resize.YTP_" + YTPlayer.id ).on( "resize.YTP_" + YTPlayer.id, function() {
-
-										console.debug( YTPlayer.id )
 										$YTPlayer.optimizeDisplay();
 									} );
 

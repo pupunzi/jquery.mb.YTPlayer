@@ -26,9 +26,9 @@
 	<meta charset="UTF-8">
 	<title>youtube Chromeless Player - mb.YTPlayer</title>
 	<link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-	<link href="css/jquery.mb.YTPlayer.min.css?_bn=5827" media="all" rel="stylesheet" type="text/css">
+	<link href="css/jquery.mb.YTPlayer.min.css?_bn=5833" media="all" rel="stylesheet" type="text/css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.js"></script>
-	<script src="jquery.mb.YTPlayer.min.js?_bn=5827"></script>
+	<script src="jquery.mb.YTPlayer.min.js?_bn=5833"></script>
 	<script src="../examples/assets/apikey.js"></script>
 	<style>
 	*:focus {
@@ -440,6 +440,10 @@
 				<span>blur</span>
 			</div>
 			<div id="filterScript"></div>
+
+			<button class="command" onclick="jQuery('#bgndVideo').YTPAddMask('../examples/assets/mask-1.png')">Add mask</button>
+			<button class="command" onclick="jQuery('#bgndVideo').YTPRemoveMask()">Remove mask</button>
+
 		</div>
 		<div id="changeVideo">
 			<h2 style="color:white">Change video</h2>

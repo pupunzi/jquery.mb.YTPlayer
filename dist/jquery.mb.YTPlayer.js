@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "2.9.14",
-		build: "5827",
+		build: "5833",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -1070,6 +1070,39 @@ var getYTPVideoID = function( url ) {
 		},
 		/**
 		 *
+		 */
+		addMask: function( mask ) {
+			var YTPlayer = this.get( 0 );
+			var overlay = YTPlayer.overlay;
+			overlay.css( {
+				backgroundImage: "url(" + mask + ")",
+				backgroundRepeat: "no-repeat",
+				backgroundPosition: "center center",
+				backgroundSize: "cover",
+				backgroundBlendMode: "multiply"
+			} );
+
+			return this;
+
+		},
+		/**
+		 *
+		 */
+		removeMask: function() {
+			var YTPlayer = this.get( 0 );
+			var overlay = YTPlayer.overlay;
+			overlay.css( {
+				backgroundImage: "",
+				backgroundRepeat: "",
+				backgroundPosition: "",
+				backgroundSize: ""
+			} );
+
+			return this;
+
+		},
+		/**
+		 *
 		 * @returns {{totalTime: number, currentTime: number}}
 		 */
 		manageProgress: function() {
@@ -1361,8 +1394,6 @@ var getYTPVideoID = function( url ) {
 
 			}
 
-			//console.time( "checkforStart" );
-
 			var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
 			YTPlayer.player.playVideo();
 			YTPlayer.player.seekTo( startAt, true );
@@ -1372,8 +1403,6 @@ var getYTPVideoID = function( url ) {
 				jQuery( YTPlayer ).YTPMute();
 
 				var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
-
-				//console.debug( YTPlayer.player.getCurrentTime(), startAt, YTPlayer.player.getVideoLoadedFraction() );
 
 				if( YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo ) {
 
@@ -1478,14 +1507,15 @@ var getYTPVideoID = function( url ) {
 		var YTPlayer = this.get( 0 );
 		var data = YTPlayer.opt;
 		var playerBox = jQuery( YTPlayer.playerEl );
-		var win = {};
-		var el = YTPlayer.wrapper;
-		win.width = el.outerWidth();
-		win.height = el.outerHeight();
-		var margin = 24;
-		var overprint = 100;
 		var vid = {};
+
 		if( data.optimizeDisplay ) {
+			var margin = 24;
+			var overprint = 100;
+			var win = {};
+			var el = YTPlayer.wrapper;
+			win.width = el.outerWidth();
+			win.height = el.outerHeight();
 			vid.width = win.width + ( ( win.width * margin ) / 100 );
 			vid.height = data.ratio == "16/9" ? Math.ceil( ( 9 * win.width ) / 16 ) : Math.ceil( ( 3 * win.width ) / 4 );
 			vid.marginTop = -( ( vid.height - win.height ) / 2 );
@@ -1506,12 +1536,14 @@ var getYTPVideoID = function( url ) {
 			vid.marginTop = 0;
 			vid.marginLeft = 0;
 		}
+
 		playerBox.css( {
 			width: vid.width,
 			height: vid.height,
 			marginTop: vid.marginTop,
 			marginLeft: vid.marginLeft
 		} );
+
 	};
 	/**
 	 *
@@ -1578,6 +1610,9 @@ var getYTPVideoID = function( url ) {
 	jQuery.fn.YTPRemoveFilter = jQuery.mbYTPlayer.removeFilter;
 	jQuery.fn.YTPDisableFilters = jQuery.mbYTPlayer.disableFilters;
 	jQuery.fn.YTPEnableFilters = jQuery.mbYTPlayer.enableFilters;
+
+	jQuery.fn.YTPAddMask = jQuery.mbYTPlayer.addMask;
+	jQuery.fn.YTPRemoveMask = jQuery.mbYTPlayer.removeMask;
 
 
 	/**

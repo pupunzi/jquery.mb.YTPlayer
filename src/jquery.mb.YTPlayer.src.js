@@ -1074,14 +1074,23 @@ var getYTPVideoID = function( url ) {
 		addMask: function( mask ) {
 			var YTPlayer = this.get( 0 );
 			var overlay = YTPlayer.overlay;
-			overlay.css( {
-				backgroundImage: "url(" + mask + ")",
-				backgroundRepeat: "no-repeat",
-				backgroundPosition: "center center",
-				backgroundSize: "cover",
-				backgroundBlendMode: "multiply"
-			} );
 
+			overlay.CSSAnimate( {
+				opacity: 0
+			}, 500, function() {
+
+				overlay.css( {
+					backgroundImage: "url(" + mask + ")",
+					backgroundRepeat: "no-repeat",
+					backgroundPosition: "center center",
+					backgroundSize: "cover"
+				} );
+
+				overlay.CSSAnimate( {
+					opacity: 1
+				}, 500 );
+
+			} );
 			return this;
 
 		},
@@ -1091,11 +1100,19 @@ var getYTPVideoID = function( url ) {
 		removeMask: function() {
 			var YTPlayer = this.get( 0 );
 			var overlay = YTPlayer.overlay;
-			overlay.css( {
-				backgroundImage: "",
-				backgroundRepeat: "",
-				backgroundPosition: "",
-				backgroundSize: ""
+			overlay.CSSAnimate( {
+				opacity: 0
+			}, 500, function() {
+				overlay.css( {
+					backgroundImage: "",
+					backgroundRepeat: "",
+					backgroundPosition: "",
+					backgroundSize: ""
+				} );
+				overlay.CSSAnimate( {
+					opacity: 1
+				}, 500 );
+
 			} );
 
 			return this;

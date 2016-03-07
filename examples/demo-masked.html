@@ -325,7 +325,7 @@ button:hover, .button:hover {
         // EVENT: YTPChanged
         myPlayer.on("YTPChanged", function (e) {
             YTPConsole.html("");
-            jQuery('#bgndVideo').YTPAddMask('assets/mask-4.png')
+            jQuery('#bgndVideo').YTPAddMask('assets/mask-1.png')
         });
 
         myPlayer.on("YTPChangeMovie", function(e){
@@ -363,22 +363,19 @@ button:hover, .button:hover {
             /**
              * Change mask
              */
-/*
-            switch (currentTime) {
 
+            switch (currentTime) {
                 case 1:
+                    jQuery('#bgndVideo').YTPAddMask('assets/mask-2.png');
+                    break;
+                case 10:
                     jQuery('#bgndVideo').YTPAddMask('assets/mask-1.png');
                     break;
                 case 20:
-                    jQuery('#bgndVideo').YTPAddMask('assets/mask-2.png');
-                    break;
-
-                case 30:
-                    jQuery('#bgndVideo').YTPAddMask('assets/mask-3.png');
+                    jQuery('#bgndVideo').YTPAddMask('assets/mask-4.png' );
                     break;
 
             }
-*/
 
         });
 
@@ -467,7 +464,7 @@ button:hover, .button:hover {
 
         <h2 style="color:white">Add mask</h2>
 
-        <button class="command" onclick="jQuery('#bgndVideo').YTPAddMask('assets/mask-3.png')">Add mask</button>
+        <button class="command" onclick="jQuery('#bgndVideo').YTPAddMask('assets/mask-2.png')">Add mask</button>
         <button class="command" onclick="jQuery('#bgndVideo').YTPRemoveMask()">Remove mask</button>
 
     </div>

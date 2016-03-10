@@ -12,9 +12,12 @@
     "custom"
   ],
   "version": "2.9.14",
-  "author": "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)",
+	"author": {
+		"name": "Pupunzi (Matteo Bicocchi)",
+		"email": "matteo@open-lab.com"
+	},
   "maintainers": [
-    "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)"
+    "Matteo Bicocchi"
   ],
   "license": "MIT",
   "bugs": {

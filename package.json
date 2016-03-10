@@ -11,11 +11,11 @@
     "player",
     "custom"
   ],
-  "version": "2.9.14",
-	"author": {
-		"name": "Pupunzi (Matteo Bicocchi)",
-		"email": "matteo@open-lab.com"
-	},
+  "version": "2.9.5",
+  "author": {
+    "name": "Pupunzi (Matteo Bicocchi)",
+    "email": "matteo@open-lab.com"
+  },
   "contributors": [
     "Matteo Bicocchi"
   ],
@@ -56,5 +56,5 @@
   "directories": {
     "example": "examples"
   },
-  "buildnum": "5837"
+  "buildnum": "5839"
 }

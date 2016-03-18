@@ -324,6 +324,7 @@ var getYTPVideoID = function( url ) {
 								videoId: YTPlayer.videoID.toString(),
 								height: '100%',
 								width: '100%',
+								playerVars: playerVars,
 								events: {
 									'onReady': function( event ) {
 										YTPlayer.player = event.target;

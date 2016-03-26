@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+  jquery.mb.components                                                                                                                              –
+                                                                                                                                                    –
+  file: demo_multi_domElement.html                                                                                                                  –
+  last modified: 23/03/16 21.51                                                                                                                     –
+                                                                                                                                                    –
+  Open Lab s.r.l., Florence - Italy                                                                                                                 –
+                                                                                                                                                    –
+  email: matteo@open-lab.com                                                                                                                        –
+  site: http://pupunzi.com                                                                                                                          –
+        http://open-lab.com                                                                                                                         –
+  blog: http://pupunzi.open-lab.com                                                                                                                 –
+  Q&A:  http://jquery.pupunzi.com                                                                                                                   –
+                                                                                                                                                    –
+  Licences: MIT, GPL                                                                                                                                –
+     http://www.opensource.org/licenses/mit-license.php                                                                                             –
+     http://www.gnu.org/licenses/gpl.html                                                                                                           –
+                                                                                                                                                    –
+  Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                               –
+  –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>youtube Chromeless Player - mb.YTPlayer</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+    <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="../dist/jquery.mb.YTPlayer.min.js"></script>
+    <script src="assets/apikey.js"></script>
+    <style>
+
+        body{
+            background-color: #000;
+        }
+
+        .video {
+            display: block;
+            height: 600px;
+        }
+
+        .gap {
+            display: block;
+            width: 100%;
+            height: 50px;
+            background-color: transparent;
+        }
+    </style>
+
+    <script>
+        var myPlayer;
+        $(function() {
+            var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
+            // Initialise YTPlayer
+            myPlayer = $('.js-video').YTPlayer();
+        });
+    </script>
+</head>
+<body>
+<section id="container-1" class="video js-video" data-property="{videoURL:'UJQmV8aPNao',containment:'#container-1',autoPlay:true, mute:true, startAt:0, opacity:1}"></section>
+<div class="gap"></div>
+<section id="container-2" class="video js-video" data-property="{videoURL:'u9k1FaMIYTs',containment:'#container-2',autoPlay:true, mute:true, startAt:0, opacity:1}"></section>
+<div class="gap"></div>
+<section id="container-3" class="video js-video" data-property="{videoURL:'VuaJAgx0x_4',containment:'#container-3',autoPlay:true, mute:true, startAt:0, opacity:1}"></section>
+
+<a style="position: fixed;bottom:20px;right: 20px; z-index: 1"
+   href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=V6ZS8JPMZC446&lc=GB&item_name=mb%2eideas&item_number=MBIDEAS&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted"><img
+        border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright"></a>
+
+</body>
+</html>

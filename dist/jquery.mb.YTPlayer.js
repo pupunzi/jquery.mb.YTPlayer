@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.0",
-		build: "5679",
+		build: "5693",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -324,6 +324,7 @@ var getYTPVideoID = function( url ) {
 								videoId: YTPlayer.videoID.toString(),
 								height: '100%',
 								width: '100%',
+								playerVars: playerVars,
 								events: {
 									'onReady': function( event ) {
 										YTPlayer.player = event.target;
@@ -396,19 +397,19 @@ var getYTPVideoID = function( url ) {
 										case 1: //------------------------------------------------ play
 											eventType = "YTPPlay";
 											if( YTPlayer.controlBar ) YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.pause );
-
 											if( typeof _gaq != "undefined" && eval( YTPlayer.opt.gaTrack ) ) _gaq.push( [ '_trackEvent', 'YTPlayer', 'Play', ( YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString() ) ] );
 											if( typeof ga != "undefined" && eval( YTPlayer.opt.gaTrack ) ) ga( 'send', 'event', 'YTPlayer', 'play', ( YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString() ) );
-
 											break;
 										case 2: //------------------------------------------------ pause
 											eventType = "YTPPause";
-											if( YTPlayer.controlBar ) YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
+											if( YTPlayer.controlBar )
+												YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
 											break;
 										case 3: //------------------------------------------------ buffer
 											YTPlayer.player.setPlaybackQuality( YTPlayer.opt.quality );
 											eventType = "YTPBuffering";
-											if( YTPlayer.controlBar ) YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
+											if( YTPlayer.controlBar )
+												YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
 											break;
 										case 5: //------------------------------------------------ cued
 											eventType = "YTPCued";
@@ -420,6 +421,9 @@ var getYTPVideoID = function( url ) {
 									var YTPEvent = jQuery.Event( eventType );
 									YTPEvent.time = YTPlayer.player.time;
 									if( YTPlayer.canTrigger ) jQuery( YTPlayer ).trigger( YTPEvent );
+
+									//console.debug( eventType );
+
 								},
 								/**
 								 *
@@ -1458,11 +1462,19 @@ var getYTPVideoID = function( url ) {
 						}, 1000 );
 						YTPlayer.wrapper.CSSAnimate( {
 							opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-						}, 1000 );
+						}, 1000, function() {
+							/*
+							 Fix for Safari freeze
+							 */
+							if( jQuery.browser.safari )
+								setTimeout( function() {
+									$YTPlayer.YTPPlay();
+								}, 500 );
+						} );
 					} else {
 
-						$YTPlayer.YTPPause();
-						//YTPlayer.player.pauseVideo();
+						//$YTPlayer.YTPPause();
+						YTPlayer.player.pauseVideo();
 						if( !YTPlayer.isPlayer ) {
 							jQuery( YTPlayer.playerEl ).CSSAnimate( {
 								opacity: 1
@@ -1472,6 +1484,9 @@ var getYTPVideoID = function( url ) {
 								opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
 							}, 500 );
 						}
+
+						YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
+
 					}
 
 					if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) {
@@ -1483,8 +1498,8 @@ var getYTPVideoID = function( url ) {
 					if( YTPlayer.controlBar ) YTPlayer.controlBar.slideDown( 1000 );
 
 				} else if( jQuery.browser.safari ) {
-					//YTPlayer.player.playVideo();
-					//if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
+					YTPlayer.player.playVideo();
+					if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
 				}
 
 			}, 1 );

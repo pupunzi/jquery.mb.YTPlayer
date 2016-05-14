@@ -50,7 +50,7 @@
 <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
 <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.js"></script>
 <script src="../dist/jquery.mb.YTPlayer.min.js"></script>
 <script src="assets/apikey.js"></script>
 
@@ -257,7 +257,20 @@ button:hover, .button:hover {
 
         var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 
-        var myPlayer = jQuery("#bgndVideo").YTPlayer();
+        /**
+         * Initialize the player with a mask applied
+         */
+//        var myPlayer = jQuery("#bgndVideo").YTPlayer({mask:'assets/mask-1.png'});
+
+        var myPlayer = jQuery("#bgndVideo").YTPlayer({
+            mask:{
+                0:'assets/mask-1.png',  // at the beginning
+                5:'assets/mask-4.png',
+                25:'assets/mask-1.png',
+                30:'assets/mask-2.png',
+                30:'assets/mask-4.png'
+            }
+        });
 
         /* DEBUG ******************************************************************************************/
 
@@ -270,7 +283,6 @@ button:hover, .button:hover {
         // EVENT: YTPChanged
         myPlayer.on("YTPChanged", function (e) {
             YTPConsole.html("");
-            jQuery('#bgndVideo').YTPAddMask('assets/mask-1.png')
         });
 
         myPlayer.on("YTPChangeMovie", function(e){
@@ -308,67 +320,26 @@ button:hover, .button:hover {
             /**
              * Change mask
              */
-
+/*
             switch (currentTime) {
-                case 1:
-                    jQuery('#bgndVideo').YTPAddMask('assets/mask-2.png');
+                case 5:
+                    jQuery('#bgndVideo').YTPAddMask('assets/mask-4.png');
                     break;
-                case 10:
+                case 25:
                     jQuery('#bgndVideo').YTPAddMask('assets/mask-1.png');
                     break;
-                case 20:
+                case 30:
+                    jQuery('#bgndVideo').YTPAddMask('assets/mask-2.png' );
+                    break;
+                case 40:
                     jQuery('#bgndVideo').YTPAddMask('assets/mask-4.png' );
                     break;
-
             }
+*/
 
-        });
-
-        /* END DEBUG ******************************************************************************************/
-
-        /* FILTER SLIDERS ******************************************************************************************/
-        // create sliders for filters adjustment
-        var $slider = $(".slider").simpleSlider({
-            initialval: 0, //function (el) {return Math.random() * el.opt.scale},
-            scale     : 100,
-            callback  : function (el) {
-                var filter = $(el).data("filter");
-                myPlayer.YTPApplyFilter(filter, +(el.value).toFixed(0));
-
-                $("span",el).html(filter + "       (" + (+(el.value).toFixed(0)) + ")");
-
-                var applFilters = [];
-                var desc = "$(selector).YTPApplyFilters({";
-
-                for (var x=0; x < $(".slider").length; x++ ){
-                    var slider = $(".slider").eq(x).get(0);
-                    var $slaider = $(slider);
-
-                    if(slider.value)
-                        applFilters.push($slaider.data("filter") + ": " + (+(slider.value).toFixed(0)) );
-                };
-
-                for (var y in applFilters){
-                    var comma = y < applFilters.length-1 ? "," : "<br>";
-                    desc += "<br> &nbsp;&nbsp;&nbsp;" + applFilters[y] + comma;
-                }
-
-                desc += "})";
-
-                $("#filterScript").html(desc);
-            }
-        });
-
-        //update applied filters
-        myPlayer.on("YTPFiltersApplied", function(){
-            var filters = myPlayer.get(0).filters;
-            for (var key in filters){
-                $(".slider[data-filter="+key+"]").updateSliderVal(filters[key].value);
-            }
         });
 
     });
-    /* END FILTER SLIDERS ******************************************************************************************/
 
     /**
      *
@@ -396,7 +367,7 @@ button:hover, .button:hover {
 <div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
     <div class="console">
         <button onclick="jQuery('#bgndVideo').toggleVolume()">mute/unmute</button>
-        <button onclick="jQuery('#bgndVideo').YTPFullscreen()">go fullscreen</button>
+        <button onclick="jQuery('#bgndVideo').YTPFullscreen(false)">go fullscreen</button>
         <button id="debugBtn" class="command" onclick="jQuery('#debug').toggle()"> show/hide the console</button>
     </div>
     <br>
@@ -409,7 +380,7 @@ button:hover, .button:hover {
 
         <h2 style="color:white">Add mask</h2>
 
-        <button class="command" onclick="jQuery('#bgndVideo').YTPAddMask('assets/mask-2.png')">Add mask</button>
+        <button class="command" onclick="jQuery('#bgndVideo').YTPAddMask('assets/mask-4.png')">Add mask</button>
         <button class="command" onclick="jQuery('#bgndVideo').YTPRemoveMask()">Remove mask</button>
 
     </div>

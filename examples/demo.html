@@ -30,7 +30,7 @@
 <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-<script src="../dist/jquery.mb.YTPlayer.min.js"></script>
+<script src="../dist/jquery.mb.YTPlayer.js"></script>
 <script src="assets/apikey.js"></script>
 
 <style>
@@ -257,6 +257,7 @@ button:hover, .button:hover {
 .slider .level {
     background-color: rgba(255, 255, 255, 0.80);
     height: 100%;
+    border-right: 5px solid rgba(27,127,204,.8);
 }
 
 .slider .desc {
@@ -287,11 +288,18 @@ button:hover, .button:hover {
 </style>
 
 <script>
+    var myPlayer;
     jQuery(function () {
 
         var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 
-        var myPlayer = jQuery("#bgndVideo").YTPlayer();
+        myPlayer = jQuery("#bgndVideo").YTPlayer();
+
+        myPlayer.YTPApplyFilters({
+            grayscale: 50,
+            sepia: 83,
+            opacity: 29
+        });
 
         /* DEBUG ******************************************************************************************/
 
@@ -301,13 +309,16 @@ button:hover, .button:hover {
             YTPConsole.append("event: " + e.type + " (" + jQuery("#bgndVideo").YTPGetPlayer().getPlayerState() + ") > time: " + e.time);
             YTPConsole.append("<br>");
         });
+
+
+
         // EVENT: YTPChanged
         myPlayer.on("YTPChanged", function (e) {
             YTPConsole.html("");
         });
 
         myPlayer.on("YTPChangeMovie", function(e){
-            console.debug("videoId :: ", e.videoId);
+            // console.debug("videoId :: ", e.videoId);
         });
 
         // EVENT: YTPData
@@ -326,6 +337,11 @@ button:hover, .button:hover {
             YTPConsole.append("<br>");
             YTPConsole.append("******************************");
             YTPConsole.append("<br>");
+
+            /*
+                        if(myPlayer.YTPGetFilters())
+                            console.debug("filters: ", myPlayer.YTPGetFilters());
+            */
         });
 
         // EVENT: YTPTime
@@ -343,37 +359,39 @@ button:hover, .button:hover {
 
         /* FILTER SLIDERS ******************************************************************************************/
         // create sliders for filters adjustment
-        var $slider = $(".slider").simpleSlider({
-            initialval: 0, //function (el) {return Math.random() * el.opt.scale},
-            scale     : 100,
-            callback  : function (el) {
-                var filter = $(el).data("filter");
-                myPlayer.YTPApplyFilter(filter, +(el.value).toFixed(0));
+        $(".slider").each(function(){
+            var $slider = $(this);
+            $slider.simpleSlider({
+                initialval: 0, //function (el) {return Math.random() * el.opt.scale},
+                scale     : 100,
+                callback  : function (el) {
+                    var filter = $(el).data("filter");
+                    myPlayer.YTPApplyFilter(filter, +(el.value).toFixed(0));
 
-                $("span",el).html(filter + "       (" + (+(el.value).toFixed(0)) + ")");
+                    $("span",el).html(filter + "       (" + (+(el.value).toFixed(0)) + ")");
 
-                var applFilters = [];
-                var desc = "$(selector).YTPApplyFilters({";
+                    var applFilters = [];
+                    var desc = "$(selector).YTPApplyFilters({";
 
-                for (var x=0; x < $(".slider").length; x++ ){
-                    var slider = $(".slider").eq(x).get(0);
-                    var $slaider = $(slider);
+                    for (var x=0; x < $(".slider").length; x++ ){
+                        var slider = $(".slider").eq(x).get(0);
+                        var $slaider = $(slider);
 
-                    if(slider.value)
-                        applFilters.push($slaider.data("filter") + ": " + (+(slider.value).toFixed(0)) );
-                };
+                        if(slider.value)
+                            applFilters.push($slaider.data("filter") + ": " + (+(slider.value).toFixed(0)) );
+                    };
 
-                for (var y in applFilters){
-                    var comma = y < applFilters.length-1 ? "," : "<br>";
-                    desc += "<br> &nbsp;&nbsp;&nbsp;" + applFilters[y] + comma;
+                    for (var y in applFilters){
+                        var comma = y < applFilters.length-1 ? "," : "<br>";
+                        desc += "<br> &nbsp;&nbsp;&nbsp;" + applFilters[y] + comma;
+                    }
+
+                    desc += "})";
+
+                    $("#filterScript").html(desc);
                 }
-
-                desc += "})";
-
-                $("#filterScript").html(desc);
-            }
+            });
         });
-
         //update applied filters
         myPlayer.on("YTPFiltersApplied", function(){
             var filters = myPlayer.get(0).filters;
@@ -381,9 +399,9 @@ button:hover, .button:hover {
                 $(".slider[data-filter="+key+"]").updateSliderVal(filters[key].value);
             }
         });
+        /* END FILTER SLIDERS ******************************************************************************************/
 
     });
-    /* END FILTER SLIDERS ******************************************************************************************/
 
     /**
      *
@@ -423,7 +441,7 @@ button:hover, .button:hover {
     <div id="filtersControl">
 
         <h2 style="color:white">Apply filters</h2>
-        <h3 style="color: white">* Does not work in IE.</h3>
+        <h3 style="color: white">* Filters don't work in IE.</h3>
 
         <button id="toggleFilters"
                 onclick="jQuery('#bgndVideo').YTPToggleFilters(function(a){if(!a) {$('#toggleFilters').html('enable filters')} else {$('#toggleFilters').html('disable filters')}})">
@@ -444,16 +462,16 @@ button:hover, .button:hover {
         </div>
 
         <div class="slider"
+             data-filter="sepia"><span>sepia</span>
+        </div>
+
+        <div class="slider"
              data-filter="hue_rotate"
              data-scale="360"><span>hue rotate</span>
         </div>
 
         <div class="slider"
              data-filter="invert"><span>invert</span>
-        </div>
-
-        <div class="slider"
-             data-filter="sepia"><span>sepia</span>
         </div>
 
         <div class="slider"

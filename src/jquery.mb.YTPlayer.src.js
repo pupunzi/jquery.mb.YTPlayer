@@ -141,8 +141,8 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.loop = 0;
 				YTPlayer.opt = {};
 				YTPlayer.state = {};
+				YTPlayer.filters = jQuery.mbYTPlayer.filters;
 				YTPlayer.filtersEnabled = true;
-
 				YTPlayer.id = YTPlayer.id || "YTP_" + new Date().getTime();
 				$YTPlayer.addClass( "mb_YTPlayer" );
 				var property = $YTPlayer.data( "property" ) && typeof $YTPlayer.data( "property" ) == "string" ? eval( '(' + $YTPlayer.data( "property" ) + ')' ) : $YTPlayer.data( "property" );
@@ -420,9 +420,6 @@ var getYTPVideoID = function( url ) {
 									var YTPEvent = jQuery.Event( eventType );
 									YTPEvent.time = YTPlayer.player.time;
 									if( YTPlayer.canTrigger ) jQuery( YTPlayer ).trigger( YTPEvent );
-
-									//console.debug( eventType );
-
 								},
 								/**
 								 *
@@ -973,10 +970,10 @@ var getYTPVideoID = function( url ) {
 		 */
 		applyFilter: function( filter, value ) {
 			return this.each( function() {
-				var YTPlayer = this.get( 0 );
-				jQuery.mbYTPlayer.filters[ filter ].value = value;
+				var YTPlayer = this;
+				YTPlayer.filters[ filter ].value = value;
 				if( YTPlayer.filtersEnabled )
-					this.YTPEnableFilters();
+					jQuery( YTPlayer ).YTPEnableFilters();
 			} );
 		},
 		/**
@@ -986,14 +983,18 @@ var getYTPVideoID = function( url ) {
 		 */
 		applyFilters: function( filters ) {
 			return this.each( function() {
-				var YTPlayer = this.get( 0 );
-				this.on( "YTPReady", function() {
-					for( var key in filters ) {
-						jQuery.mbYTPlayer.filters[ key ].value = filters[ key ];
-						jQuery( YTPlayer ).YTPApplyFilter( key, filters[ key ] );
-					}
-					jQuery( YTPlayer ).trigger( "YTPFiltersApplied" );
-				} );
+				var YTPlayer = this;
+				if( !YTPlayer.isReady ) {
+					jQuery( YTPlayer ).on( "YTPReady", function() {
+						jQuery( YTPlayer ).YTPApplyFilters( filters );
+					} );
+					return;
+				}
+
+				for( var key in filters )
+					jQuery( YTPlayer ).YTPApplyFilter( key, filters[ key ] );
+
+				jQuery( YTPlayer ).trigger( "YTPFiltersApplied" );
 			} );
 		},
 		/**
@@ -1005,8 +1006,8 @@ var getYTPVideoID = function( url ) {
 		toggleFilter: function( filter, value ) {
 			return this.each( function() {
 				var YTPlayer = this;
-				if( !jQuery.mbYTPlayer.filters[ filter ].value ) jQuery.mbYTPlayer.filters[ filter ].value = value;
-				else jQuery.mbYTPlayer.filters[ filter ].value = 0;
+				if( !YTPlayer.filters[ filter ].value ) YTPlayer.filters[ filter ].value = value;
+				else YTPlayer.filters[ filter ].value = 0;
 				if( YTPlayer.filtersEnabled ) jQuery( this ).YTPEnableFilters();
 			} );
 		},
@@ -1051,9 +1052,9 @@ var getYTPVideoID = function( url ) {
 				var YTPlayer = this;
 				var iframe = jQuery( YTPlayer.playerEl );
 				var filterStyle = "";
-				for( var key in jQuery.mbYTPlayer.filters ) {
-					if( jQuery.mbYTPlayer.filters[ key ].value )
-						filterStyle += key.replace( "_", "-" ) + "(" + jQuery.mbYTPlayer.filters[ key ].value + jQuery.mbYTPlayer.filters[ key ].unit + ") ";
+				for( var key in YTPlayer.filters ) {
+					if( YTPlayer.filters[ key ].value )
+						filterStyle += key.replace( "_", "-" ) + "(" + YTPlayer.filters[ key ].value + YTPlayer.filters[ key ].unit + ") ";
 				}
 				iframe.css( "-webkit-filter", filterStyle );
 				iframe.css( "filter", filterStyle );
@@ -1068,13 +1069,13 @@ var getYTPVideoID = function( url ) {
 		 */
 		removeFilter: function( filter, callback ) {
 			return this.each( function() {
+				var YTPlayer = this;
 				if( typeof filter == "function" ) {
 					callback = filter;
 					filter = null;
 				}
-				var YTPlayer = this;
 				if( !filter )
-					for( var key in jQuery.mbYTPlayer.filters ) {
+					for( var key in YTPlayer.filters ) {
 						jQuery( this ).YTPApplyFilter( key, 0 );
 						if( typeof callback == "function" ) callback( key );
 					} else {
@@ -1083,6 +1084,11 @@ var getYTPVideoID = function( url ) {
 					}
 			} );
 
+		},
+
+		getFilters: function() {
+			var YTPlayer = this.get( 0 );
+			return YTPlayer.filters;
 		},
 		/**
 		 *
@@ -1485,17 +1491,14 @@ var getYTPVideoID = function( url ) {
 				if( YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo ) {
 
 					//YTPlayer.player.playVideo();
-
 					//console.timeEnd( "checkforStart" );
-
-					//	console.debug( "checkForStartAt:: checked ::  ", YTPlayer );
 
 					clearInterval( YTPlayer.checkForStartAt );
 
-					YTPlayer.isReady = true;
 					if( typeof YTPlayer.opt.onReady == "function" )
 						YTPlayer.opt.onReady( YTPlayer );
 
+					YTPlayer.isReady = true;
 					var YTPready = jQuery.Event( "YTPReady" );
 					YTPready.time = YTPlayer.player.time;
 					jQuery( YTPlayer ).trigger( YTPready );
@@ -1507,7 +1510,7 @@ var getYTPVideoID = function( url ) {
 					if( !YTPlayer.opt.mute ) jQuery( YTPlayer ).YTPUnmute();
 					YTPlayer.canTrigger = true;
 					if( YTPlayer.opt.autoPlay ) {
-						$YTPlayer.YTPPlay();
+
 
 						var YTPStart = jQuery.Event( "YTPStart" );
 						YTPStart.time = YTPlayer.player.time;
@@ -1517,17 +1520,17 @@ var getYTPVideoID = function( url ) {
 						jQuery( YTPlayer.playerEl ).CSSAnimate( {
 							opacity: 1
 						}, 1000 );
+
+						$YTPlayer.YTPPlay();
+
 						YTPlayer.wrapper.CSSAnimate( {
 							opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-						}, 1000, function() {
-							/*
-							 Fix for Safari freeze
-							 */
-							if( jQuery.browser.safari )
-								setTimeout( function() {
-									$YTPlayer.YTPPlay();
-								}, 500 );
-						} );
+						}, 1000, function() {} );
+
+						/* Fix for Safari freeze */
+						if( jQuery.browser.safari )
+							$YTPlayer.YTPPlay();
+
 					} else {
 
 						//$YTPlayer.YTPPause();
@@ -1699,6 +1702,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.fn.YTPRemoveFilter = jQuery.mbYTPlayer.removeFilter;
 	jQuery.fn.YTPDisableFilters = jQuery.mbYTPlayer.disableFilters;
 	jQuery.fn.YTPEnableFilters = jQuery.mbYTPlayer.enableFilters;
+	jQuery.fn.YTPGetFilters = jQuery.mbYTPlayer.getFilters;
 
 	jQuery.fn.YTPAddMask = jQuery.mbYTPlayer.addMask;
 	jQuery.fn.YTPRemoveMask = jQuery.mbYTPlayer.removeMask;

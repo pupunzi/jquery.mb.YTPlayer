@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.1",
-		build: "5760",
+		build: "5762",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -1168,7 +1168,8 @@ var getYTPVideoID = function( url ) {
 				else if( typeof YTPlayer.opt.mask == "object" ) {
 
 					for( var time in YTPlayer.opt.mask ) {
-						var img = jQuery( "<img/>" ).attr( "src", YTPlayer.opt.mask[ time ] );
+						if( YTPlayer.opt.mask[ time ] )
+							var img = jQuery( "<img/>" ).attr( "src", YTPlayer.opt.mask[ time ] );
 					}
 
 					if( YTPlayer.opt.mask[ 0 ] )
@@ -1177,7 +1178,10 @@ var getYTPVideoID = function( url ) {
 					$YTPlayer.on( "YTPTime.mask", function( e ) {
 						for( var time in YTPlayer.opt.mask ) {
 							if( e.time == time )
-								$YTPlayer.YTPAddMask( YTPlayer.opt.mask[ time ] );
+								if( !YTPlayer.opt.mask[ time ] )
+									$YTPlayer.YTPRemoveMask();
+								else
+									$YTPlayer.YTPAddMask( YTPlayer.opt.mask[ time ] );
 						}
 					} )
 				}

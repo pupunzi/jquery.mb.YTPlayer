@@ -267,8 +267,8 @@ button:hover, .button:hover {
                 0:'assets/mask-1.png',  // at the beginning
                 5:'assets/mask-4.png',
                 25:'assets/mask-1.png',
-                30:'assets/mask-2.png',
-                30:'assets/mask-4.png'
+                30: false,
+                50:'assets/mask-4.png'
             }
         });
 
@@ -316,26 +316,6 @@ button:hover, .button:hover {
                 YTPConsole.append(myPlayer.attr("id")+ " > " + e.type + " > actual time is: " + currentTime);
                 YTPConsole.append("<br>");
             }
-
-            /**
-             * Change mask
-             */
-/*
-            switch (currentTime) {
-                case 5:
-                    jQuery('#bgndVideo').YTPAddMask('assets/mask-4.png');
-                    break;
-                case 25:
-                    jQuery('#bgndVideo').YTPAddMask('assets/mask-1.png');
-                    break;
-                case 30:
-                    jQuery('#bgndVideo').YTPAddMask('assets/mask-2.png' );
-                    break;
-                case 40:
-                    jQuery('#bgndVideo').YTPAddMask('assets/mask-4.png' );
-                    break;
-            }
-*/
 
         });
 

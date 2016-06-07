@@ -276,9 +276,11 @@ var getYTPVideoID = function( url ) {
 
 				if( !YTPlayer.isBackground ) {
 					overlay.on( "mouseenter", function() {
-						if( YTPlayer.controlBar ) YTPlayer.controlBar.addClass( "visible" );
+						if( YTPlayer.controlBar )
+							YTPlayer.controlBar.addClass( "visible" );
 					} ).on( "mouseleave", function() {
-						if( YTPlayer.controlBar ) YTPlayer.controlBar.removeClass( "visible" );
+						if( YTPlayer.controlBar )
+							YTPlayer.controlBar.removeClass( "visible" );
 					} );
 				}
 				if( !ytp.YTAPIReady ) {
@@ -395,7 +397,8 @@ var getYTPVideoID = function( url ) {
 											break;
 										case 1: //------------------------------------------------ play
 											eventType = "YTPPlay";
-											if( YTPlayer.controlBar ) YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.pause );
+											if( YTPlayer.controlBar )
+												YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.pause );
 											if( typeof _gaq != "undefined" && eval( YTPlayer.opt.gaTrack ) ) _gaq.push( [ '_trackEvent', 'YTPlayer', 'Play', ( YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString() ) ] );
 											if( typeof ga != "undefined" && eval( YTPlayer.opt.gaTrack ) ) ga( 'send', 'event', 'YTPlayer', 'play', ( YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString() ) );
 											break;
@@ -1549,7 +1552,8 @@ var getYTPVideoID = function( url ) {
 							}, 500 );
 						}
 
-						YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
+						if( YTPlayer.controlBar )
+							YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
 
 					}
 
@@ -1559,7 +1563,8 @@ var getYTPVideoID = function( url ) {
 							YTPlayer.loading.fadeOut();
 						}, 100 )
 					}
-					if( YTPlayer.controlBar ) YTPlayer.controlBar.slideDown( 1000 );
+					if( YTPlayer.controlBar )
+						YTPlayer.controlBar.slideDown( 1000 );
 
 				} else if( jQuery.browser.safari ) {
 					YTPlayer.player.playVideo();

@@ -1438,6 +1438,7 @@ var getYTPVideoID = function( url ) {
 		 *
 		 * */
 		checkForStart: function( YTPlayer ) {
+
 			var $YTPlayer = jQuery( YTPlayer );
 
 			//Checking if player has been removed from scene
@@ -1516,6 +1517,7 @@ var getYTPVideoID = function( url ) {
 
 					if( !YTPlayer.opt.mute ) jQuery( YTPlayer ).YTPUnmute();
 					YTPlayer.canTrigger = true;
+
 					if( YTPlayer.opt.autoPlay ) {
 
 
@@ -1532,11 +1534,26 @@ var getYTPVideoID = function( url ) {
 
 						YTPlayer.wrapper.CSSAnimate( {
 							opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-						}, 1000, function() {} );
+						}, 1000 );
 
 						/* Fix for Safari freeze */
-						if( jQuery.browser.safari )
+						if( jQuery.browser.safari ) {
+							var c = 0;
+							YTPlayer.safariPlay = setInterval( function() {
+
+								++c;
+								console.debug( "YTPlayer.safariPlay_" + c, YTPlayer.state )
+
+								if( YTPlayer.state != 1 )
+									$YTPlayer.YTPPlay();
+								else
+									clearInterval( YTPlayer.safariPlay )
+
+							}, 100 )
+						}
+						$YTPlayer.on( "YTPReady", function() {
 							$YTPlayer.YTPPlay();
+						} );
 
 					} else {
 
@@ -1603,34 +1620,71 @@ var getYTPVideoID = function( url ) {
 	};
 	/**
 	 *
+	 * @param pos can be center, top, bottom, right, left, undefined (default is center)
 	 */
-	jQuery.fn.optimizeDisplay = function() {
+	jQuery.fn.optimizeDisplay = function( align ) {
 		var YTPlayer = this.get( 0 );
 		var data = YTPlayer.opt;
 		var playerBox = jQuery( YTPlayer.playerEl );
 		var vid = {};
 
+		align = align || data.align ? data.align : "center";
+		align = align.split( "," );
+
 		if( data.optimizeDisplay ) {
-			var margin = 24;
-			var overprint = 100;
 			var win = {};
 			var el = YTPlayer.wrapper;
+
 			win.width = el.outerWidth();
 			win.height = el.outerHeight();
-			vid.width = win.width + ( ( win.width * margin ) / 100 );
-			vid.height = data.ratio == "16/9" ? Math.ceil( ( 9 * win.width ) / 16 ) : Math.ceil( ( 3 * win.width ) / 4 );
+
+			vid.width = win.width;
+			vid.height = data.ratio == "16/9" ? Math.ceil( win.width * ( 9 / 16 ) ) : Math.ceil( win.width * ( 3 / 4 ) );
+
 			vid.marginTop = -( ( vid.height - win.height ) / 2 );
-			vid.marginLeft = -( ( win.width * ( margin / 2 ) ) / 100 );
-			if( vid.height < win.height ) {
-				vid.height = win.height + ( ( win.height * margin ) / 100 );
-				vid.width = data.ratio == "16/9" ? Math.floor( ( 16 * win.height ) / 9 ) : Math.floor( ( 4 * win.height ) / 3 );
-				vid.marginTop = -( ( win.height * ( margin / 2 ) ) / 100 );
+			vid.marginLeft = 0;
+
+			var lowest = vid.height < win.height;
+
+			if( lowest ) {
+
+				vid.height = win.height;
+				vid.width = data.ratio == "16/9" ? Math.floor( win.height * ( 16 / 9 ) ) : Math.floor( win.height * ( 4 / 3 ) );
+
+				vid.marginTop = 0;
 				vid.marginLeft = -( ( vid.width - win.width ) / 2 );
+
 			}
-			vid.width += overprint;
-			vid.height += overprint;
-			vid.marginTop -= overprint / 2;
-			vid.marginLeft -= overprint / 2;
+
+			for( var a in align ) {
+
+				var al = align[ a ].trim();
+
+				switch( al ) {
+
+					case "top":
+						vid.marginTop = lowest ? -( ( vid.height - win.height ) / 2 ) : 0;
+						break;
+
+					case "bottom":
+						vid.marginTop = lowest ? 0 : -( vid.height - win.height );
+						break;
+
+					case "left":
+						vid.marginLeft = 0;
+						break;
+
+					case "right":
+						vid.marginLeft = lowest ? -( vid.width - win.width ) : 0;
+						break;
+
+					default:
+						break;
+				}
+
+			}
+
+
 		} else {
 			vid.width = "100%";
 			vid.height = "100%";

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<!--–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ jquery.mb.components                                                                                                                              –
+                                                                                                                                                   –
+ file: demo.html                                                                                                                                   –
+ last modified: 09/07/14 23.11                                                                                                                     –
+                                                                                                                                                   –
+ Open Lab s.r.l., Florence - Italy                                                                                                                 –
+                                                                                                                                                   –
+ email: matteo@open-lab.com                                                                                                                        –
+ site: http://pupunzi.com                                                                                                                          –
+       http://open-lab.com                                                                                                                         –
+ blog: http://pupunzi.open-lab.com                                                                                                                 –
+ Q&A:  http://jquery.pupunzi.com                                                                                                                   –
+                                                                                                                                                   –
+ Licences: MIT, GPL                                                                                                                                –
+    http://www.opensource.org/licenses/mit-license.php                                                                                             –
+    http://www.gnu.org/licenses/gpl.html                                                                                                           –
+                                                                                                                                                   –
+ Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                               –
+ –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
+
+<title>youtube Chromeless Player - mb.YTPlayer</title>
+
+<link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+<link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="../dist/jquery.mb.YTPlayer.min.js"></script>
+<script src="assets/apikey.js"></script>
+
+<style>
+*:focus{
+    outline: none;
+}
+
+body {
+    border: none;
+    margin: 0;
+    padding: 30px;
+    background: #222c2f;
+    font: normal 16px/20px Lekton, sans-serif;
+}
+
+input, textarea, select, button {
+    font-family: "helvetica neue", sans-serif !important;
+}
+
+h1{
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Lobster', cursive;
+}
+
+h2{
+    font-family: "Open Sans", sans-serif;
+    font-size: 35px;
+    text-align: left;
+    line-height: 60px;
+}
+
+h1, h2{
+    font-family: 'Lobster', cursive;
+    text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+    color: #000000;
+    font-weight: 200;
+}
+
+#wrapper{
+    position: relative;
+    min-width: 1280px;
+}
+
+.console{
+    margin-top: 70px;
+    text-align: center;
+}
+
+#debug {
+    position: absolute;
+    width: 450px;
+    padding: 5px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .8);
+    overflow: auto;
+    color: #fff;
+    font-size: 13px;
+    z-index: 10000;
+}
+
+.dida{
+    color: #fff;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+button, .button {
+    transition: all .4s;
+    display: inline-block;
+    padding: 0px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-color: rgba(248, 248, 248, 0.4);
+    box-shadow: 0 0 4px rgba(0,0,0,0.4);
+    color:#000;
+
+    border: 1px solid transparent;
+
+    text-decoration: none;
+    line-height: 30px;
+    margin: 3px;
+    border-radius: 10px;
+}
+
+button:hover, .button:hover {
+    background-color: rgb(0, 0, 0);
+    color: #FFF;
+}
+
+#togglePlay{
+    margin-top: 20px;
+    font-size: 20px;
+    width: 100px;
+    height: 100px;
+    line-height: 70px;
+    border-radius: 100%;
+}
+
+#togglePlay.pause{
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+}
+
+#togglePlay.pause:hover{
+    background-color: #fff;
+    color: #333;
+}
+
+#togglePlay.play{
+    background-color: #fff;
+    color: #333;
+}
+
+#togglePlay.play:hover{
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+}
+
+.goto {
+    position: absolute;
+    left:0;
+    top: 360px;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+}
+
+
+.goto .button{
+    font-size: 30px;
+    font-family: 'Lobster', cursive;
+    padding: 10px;
+    text-transform: none;
+}
+
+
+#filtersControl{
+    position: absolute;
+    top:0;
+    left: 10px;
+    width: 350px;
+    margin: 30px auto;
+    z-index: 1000;
+}
+
+#changeVideo {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    width: 350px;
+    margin: 30px auto;
+    z-index: 100;
+    padding: 10px;
+    /*background-color: rgba(25, 34, 37, 0.35);*/
+    border-radius: 10px;
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+
+#changeVideo label {
+    padding: 10px;
+    display: block;
+}
+
+#changeVideo input {
+    padding: 10px;
+    display: block;
+    width: 250px;
+    border-radius: 10px;
+    border: none;
+    font-size: 20px;
+    color: #fff;
+    font-weight: 700;
+    background-color: rgba(168, 168, 168, 0.20);
+}
+
+#changeVideo input[type=number] {
+    display: inline-block;
+    width: 100px;
+}
+#changeVideo input[type=checkbox] {
+    display: inline-block;
+    width: 20px;
+}
+
+#loadBox{
+    background-color: rgba(168, 168, 168, 0.20);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/*Slider START ************************************************/
+
+#filterScript {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(25, 34, 37, 0.35);
+    color: #fff;
+    border-radius: 10px;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+    height: 25px;
+    border: 0 solid transparent;
+    background-color: rgba(255, 255, 255, 0.20);
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.slider:hover {
+    background-color: rgba(255, 255, 255, 0.46);
+}
+
+.slider .level {
+    background-color: rgba(255, 255, 255, 0.80);
+    height: 100%;
+}
+
+.slider .desc {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px;
+    font-size: 12px;
+    line-height: 18px;
+    color: #222222;
+}
+
+.slider span {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    /*text-transform: uppercase;*/
+    position: absolute;
+    top: 0;
+    font-size: 12px;
+    line-height: 18px;
+    color: #222222;
+    padding: 4px;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+/*Slider END ************************************************/
+
+</style>
+
+<script>
+    jQuery(function () {
+
+      var videos = [
+        {
+          videoURL: '5jHFLa0XB3c',
+          containment: 'body',
+          autoPlay: true,
+          startAt: 225,
+          stopAt: 400,
+          opacity: 1,
+          loop: false,
+          ratio: "16/9",
+          addRaster: true,
+          showControls: true,
+          mute: true,
+          vol: 50
+        },
+        {
+          videoURL: 'LhYYd5adVY4',
+          containment: 'body',
+          autoPlay: true,
+          startAt: 120,
+          opacity: 1,
+          loop: false,
+          ratio: "16/9",
+          addRaster: true,
+          showControls: true,
+          mute: true,
+          vol: 50
+        },
+        {
+          videoURL: 'EF_xdvn52As',
+          containment: 'body',
+          autoPlay: true,
+          startAt: 90,
+          opacity: 1,
+          loop: false,
+          ratio: "16/9",
+          addRaster: true,
+          showControls: true,
+          mute: true,
+          vol: 50
+        },
+        {
+          videoURL: 'UWOEFkauoYY',
+          containment: 'body',
+          autoPlay: true,
+          startAt: 11,
+          stopAt: 100,
+          opacity: 1,
+          loop: false,
+          ratio: "16/9",
+          addRaster: true,
+          showControls: true,
+          mute: true,
+          vol: 50
+        },
+        {
+          videoURL: 'VXPoJAyeF8k',
+          containment: 'body',
+          autoPlay: true,
+          startAt: 145,
+          stopAt: 270,
+          opacity: 1,
+          loop: false,
+          ratio: "1.85/1",
+          addRaster: true,
+          showControls: true,
+          mute: true,
+          vol: 50
+        },
+        {
+          videoURL: 'g7d9KM1plyg',
+          containment: 'body',
+          autoPlay: true,
+          startAt: 85,
+          stopAt: 165,
+          opacity: 1,
+          loop: false,
+          ratio: "16/9",
+          addRaster: true,
+          showControls: true,
+          mute: true,
+          vol: 50
+        }
+      ];
+
+      var unmuted = false;
+      var count = 0;
+      var init = false;
+
+      function setPlayerVolume(vol) {
+        console.log('Chaning volume to', vol);
+        $('#player').YTPSetVolume(vol);
+
+        unmuted = (vol > 0);
+      }
+
+      function checkKey(e) {
+        e = e || window.event;
+
+        if (e.keyCode == '38') {
+          count++;
+
+          if (count > 5 && !unmuted) {
+            $("#player").YTPUnmute();
+
+            setPlayerVolume(50);
+
+            unmuted = true;
+          }
+        }
+        else if (e.keyCode == '37') {
+          // left arrow
+          $('#player').YTPPlayPrev();
+        }
+        else if (e.keyCode == '39') {
+          // right arrow
+          $('#player').YTPPlayNext();
+        }
+      }
+
+      $(document).ready(function() {
+        $(function() {
+          $("#player").YTPlaylist(videos, true);
+
+          var player = $("#player").YTPlayer();
+
+          player.on('YTPReady', function(e) {
+
+            $(document).
+            console.error('READY 1');
+            if (!init) {
+              init = true;
+              console.error('READY 2');
+              $('#home').addClass('show');
+              $('body').addClass('video-loaded');
+            }
+
+            if (unmuted) {
+              setPlayerVolume(50);
+            }
+          });
+        });
+      });
+
+    });
+
+</script>
+</head>
+<body>
+<div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
+
+    <br>
+    <br>
+    <h1 style="color:white">jQuery.mb.YTPlayer</h1>
+    <h2 style="color:white; text-align: center">An HTML5 Background player<br>for YouTube videos</h2>
+
+
+
+    <!--7SnmCUwOsts--><!--BsekcY04xvQ--><!--r1xohS2u69E--><!--Fk9EBOOAYiU--><!--sEuXfDtrco8-->
+    <div id="player" class="player" data-property="{videoURL:'9d8wWcJLnFI',containment:'body', showControls:true, autoPlay:true, loop:false, vol:50, mute:false, startAt:0,  stopAt:296, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true}">My video</div>
+
+</div>
+
+<div id="debug" style="display: none">
+    <h2 style="color: #FFFFFF; text-align: left">Events console: </h2>
+    <div id="eventListener"></div>
+</div>
+
+</body>
+</html>

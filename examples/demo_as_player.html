@@ -270,7 +270,7 @@
 
 
     <!-- l_tHTmd5pgk  0YcRwnE6Lzg-->
-    <div id="P1" class="player" style="display:block; margin: 50px; background: rgba(0,0,0,0.5)" data-property="{videoURL:'l_tHTmd5pgk',containment:'self',showControls:true,startAt:6,mute:false,autoPlay:false,loop:false,opacity:1,showYTLogo:true}"></div><!--3ovA7zeviRo-->
+    <div id="P1" class="player" style="display:block; margin: 50px; background: rgba(0,0,0,0.5)" data-property="{videoURL:'l_tHTmd5pgk',containment:'self',showControls:true,startAt:6,mute:false,autoPlay:false,loop:false,opacity:1,showYTLogo:true, optimizeDisplay:false}"></div><!--3ovA7zeviRo-->
 
     <div id="filtersControl">
 
@@ -345,7 +345,7 @@
     <div class="controls">
         <button onclick="jQuery('#P1').YTPPlay()">play</button>
         <button onclick="jQuery('#P1').YTPPause()">pause</button>
-        <button onclick="jQuery('#P1').toggleVolume()">mute/unmute</button>
+        <button onclick="jQuery('#P1').YTPToggleVolume()">mute/unmute</button>
         <button onclick="jQuery('#P1').YTPFullscreen()">go fullscreen</button>
     </div>
 

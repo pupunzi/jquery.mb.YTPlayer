@@ -29,7 +29,7 @@
 <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
 <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
 <script src="../dist/jquery.mb.YTPlayer.min.js"></script>
 <script src="assets/apikey.js"></script>
 
@@ -289,149 +289,125 @@ button:hover, .button:hover {
 <script>
     jQuery(function () {
 
-      var videos = [
-        {
-          videoURL: '5jHFLa0XB3c',
-          containment: 'body',
-          autoPlay: true,
-          startAt: 225,
-          stopAt: 400,
-          opacity: 1,
-          loop: false,
-          ratio: "16/9",
-          addRaster: true,
-          showControls: true,
-          mute: true,
-          vol: 50
-        },
-        {
-          videoURL: 'LhYYd5adVY4',
-          containment: 'body',
-          autoPlay: true,
-          startAt: 120,
-          opacity: 1,
-          loop: false,
-          ratio: "16/9",
-          addRaster: true,
-          showControls: true,
-          mute: true,
-          vol: 50
-        },
-        {
-          videoURL: 'EF_xdvn52As',
-          containment: 'body',
-          autoPlay: true,
-          startAt: 90,
-          opacity: 1,
-          loop: false,
-          ratio: "16/9",
-          addRaster: true,
-          showControls: true,
-          mute: true,
-          vol: 50
-        },
-        {
-          videoURL: 'UWOEFkauoYY',
-          containment: 'body',
-          autoPlay: true,
-          startAt: 11,
-          stopAt: 100,
-          opacity: 1,
-          loop: false,
-          ratio: "16/9",
-          addRaster: true,
-          showControls: true,
-          mute: true,
-          vol: 50
-        },
-        {
-          videoURL: 'VXPoJAyeF8k',
-          containment: 'body',
-          autoPlay: true,
-          startAt: 145,
-          stopAt: 270,
-          opacity: 1,
-          loop: false,
-          ratio: "1.85/1",
-          addRaster: true,
-          showControls: true,
-          mute: true,
-          vol: 50
-        },
-        {
-          videoURL: 'g7d9KM1plyg',
-          containment: 'body',
-          autoPlay: true,
-          startAt: 85,
-          stopAt: 165,
-          opacity: 1,
-          loop: false,
-          ratio: "16/9",
-          addRaster: true,
-          showControls: true,
-          mute: true,
-          vol: 50
+        var videos = [
+            {
+                videoURL: '5jHFLa0XB3c',
+                containment: 'body',
+                autoPlay: true,
+                startAt: 225,
+                stopAt: 400,
+                opacity: 1,
+                loop: false,
+                ratio: "16/9",
+                addRaster: true,
+                showControls: true,
+                mute: true,
+                vol: 50
+            },
+            {
+                videoURL: 'LhYYd5adVY4',
+                containment: 'body',
+                autoPlay: true,
+                startAt: 120,
+                opacity: 1,
+                loop: false,
+                ratio: "16/9",
+                addRaster: true,
+                showControls: true,
+                mute: true,
+                vol: 50
+            },
+            {
+                videoURL: 'EF_xdvn52As',
+                containment: 'body',
+                autoPlay: true,
+                startAt: 90,
+                opacity: 1,
+                loop: false,
+                ratio: "16/9",
+                addRaster: true,
+                showControls: true,
+                mute: true,
+                vol: 50
+            },
+            {
+                videoURL: 'UWOEFkauoYY',
+                containment: 'body',
+                autoPlay: true,
+                startAt: 11,
+                stopAt: 100,
+                opacity: 1,
+                loop: false,
+                ratio: "16/9",
+                addRaster: true,
+                showControls: true,
+                mute: true,
+                vol: 50
+            },
+            {
+                videoURL: 'VXPoJAyeF8k',
+                containment: 'body',
+                autoPlay: true,
+                startAt: 145,
+                stopAt: 270,
+                opacity: 1,
+                loop: false,
+                ratio: "1.85/1",
+                addRaster: true,
+                showControls: true,
+                mute: true,
+                vol: 50
+            },
+            {
+                videoURL: 'g7d9KM1plyg',
+                containment: 'body',
+                autoPlay: true,
+                startAt: 85,
+                stopAt: 165,
+                opacity: 1,
+                loop: false,
+                ratio: "16/9",
+                addRaster: true,
+                showControls: true,
+                mute: true,
+                vol: 50
+            }
+        ];
+
+        var unmuted = false;
+        var count = 0;
+        var init = false;
+
+        function checkKey(e) {
+            e = e || window.event;
+
+            if (e.keyCode == '37') {
+                // left arrow
+                $('#player').YTPPlayPrev();
+            }
+            else if (e.keyCode == '39') {
+                // right arrow
+                $('#player').YTPPlayNext();
+            }
         }
-      ];
 
-      var unmuted = false;
-      var count = 0;
-      var init = false;
 
-      function setPlayerVolume(vol) {
-        console.log('Chaning volume to', vol);
-        $('#player').YTPSetVolume(vol);
-
-        unmuted = (vol > 0);
-      }
-
-      function checkKey(e) {
-        e = e || window.event;
-
-        if (e.keyCode == '38') {
-          count++;
-
-          if (count > 5 && !unmuted) {
-            $("#player").YTPUnmute();
-
-            setPlayerVolume(50);
-
-            unmuted = true;
-          }
-        }
-        else if (e.keyCode == '37') {
-          // left arrow
-          $('#player').YTPPlayPrev();
-        }
-        else if (e.keyCode == '39') {
-          // right arrow
-          $('#player').YTPPlayNext();
-        }
-      }
-
-      $(document).ready(function() {
         $(function() {
-          $("#player").YTPlaylist(videos, true);
 
-          var player = $("#player").YTPlayer();
+            var player = $("#player").YTPlaylist(videos, true);
 
-          player.on('YTPReady', function(e) {
+            player.on('YTPReady', function(e) {
 
-            $(document).
-            console.error('READY 1');
-            if (!init) {
-              init = true;
-              console.error('READY 2');
-              $('#home').addClass('show');
-              $('body').addClass('video-loaded');
-            }
+                $(document).on("keyup",checkKey);
 
-            if (unmuted) {
-              setPlayerVolume(50);
-            }
-          });
+                if (!init) {
+                    init = true;
+                    console.error('READY 2');
+                    $('#home').addClass('show');
+                    $('body').addClass('video-loaded');
+                }
+            });
         });
-      });
 
     });
 
@@ -448,7 +424,7 @@ button:hover, .button:hover {
 
 
     <!--7SnmCUwOsts--><!--BsekcY04xvQ--><!--r1xohS2u69E--><!--Fk9EBOOAYiU--><!--sEuXfDtrco8-->
-    <div id="player" class="player" data-property="{videoURL:'9d8wWcJLnFI',containment:'body', showControls:true, autoPlay:true, loop:false, vol:50, mute:false, startAt:0,  stopAt:296, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true}">My video</div>
+    <div id="player" class="player">My video</div>
 
 </div>
 

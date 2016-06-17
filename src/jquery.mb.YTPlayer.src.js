@@ -74,6 +74,7 @@ var getYTPVideoID = function( url ) {
 			showYTLogo: true,
 			stopMovieOnBlur: true,
 			realfullscreen: true,
+			fallbackImage: null,
 			gaTrack: true,
 			optimizeDisplay: true,
 			align: "center,center", // top,bottom,left,right

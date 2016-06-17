@@ -50,8 +50,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "3.0.3",
-		build: "5842",
+		version: "3.0.4",
+		build: "5843",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -74,6 +74,7 @@ var getYTPVideoID = function( url ) {
 			showYTLogo: true,
 			stopMovieOnBlur: true,
 			realfullscreen: true,
+			fallbackImage: null,
 			gaTrack: true,
 			optimizeDisplay: true,
 			align: "center,center", // top,bottom,left,right

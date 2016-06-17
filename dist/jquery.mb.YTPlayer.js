@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.3",
-		build: "5841",
+		build: "5842",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -317,6 +317,7 @@ var getYTPVideoID = function( url ) {
 
 				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
 					$YTPlayer.remove();
+					jQuery( document ).trigger( "YTPUnavailable" );
 					return;
 				}
 
@@ -335,7 +336,6 @@ var getYTPVideoID = function( url ) {
 							return;
 
 						YTPlayer.isInit = true;
-
 
 						//if is mobile && isPlayer fallback to the default YT player
 						if( jQuery.browser.mobile && YTPlayer.canPlayOnMobile ) {

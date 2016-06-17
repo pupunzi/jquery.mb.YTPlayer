@@ -317,6 +317,7 @@ var getYTPVideoID = function( url ) {
 
 				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
 					$YTPlayer.remove();
+					jQuery( document ).trigger( "YTPUnavailable" );
 					return;
 				}
 

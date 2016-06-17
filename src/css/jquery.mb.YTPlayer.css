@@ -101,6 +101,7 @@
     margin: 0!important;
     border: none !important;
     opacity: 1 !important;
+    background-color: #000;
 }
 
 .mbYTP_wrapper iframe {

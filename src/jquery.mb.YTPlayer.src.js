@@ -219,11 +219,6 @@ var getYTPVideoID = function( url ) {
 					YTPlayer.isPlayer = true;
 				}
 
-				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
-					$YTPlayer.remove();
-					return;
-				}
-
 				var overlay = jQuery( "<div/>" ).css( {
 					position: "absolute",
 					top: 0,
@@ -318,6 +313,11 @@ var getYTPVideoID = function( url ) {
 					setTimeout( function() {
 						jQuery( document ).trigger( "YTAPIReady" );
 					}, 100 )
+				}
+
+				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
+					$YTPlayer.remove();
+					return;
 				}
 
 				jQuery( document ).on( "YTAPIReady", function() {

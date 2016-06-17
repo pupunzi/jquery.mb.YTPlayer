@@ -219,11 +219,6 @@ var getYTPVideoID = function( url ) {
 					YTPlayer.isPlayer = true;
 				}
 
-				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
-					$YTPlayer.remove();
-					return;
-				}
-
 				var overlay = jQuery( "<div/>" ).css( {
 					position: "absolute",
 					top: 0,
@@ -320,6 +315,11 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
+				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
+					$YTPlayer.remove();
+					return;
+				}
+
 				jQuery( document ).on( "YTAPIReady", function() {
 					if( ( YTPlayer.isBackground && ytp.backgroundIsInited ) || YTPlayer.isInit ) return;
 					if( YTPlayer.isBackground ) {
@@ -335,6 +335,7 @@ var getYTPVideoID = function( url ) {
 							return;
 
 						YTPlayer.isInit = true;
+
 
 						//if is mobile && isPlayer fallback to the default YT player
 						if( jQuery.browser.mobile && YTPlayer.canPlayOnMobile ) {

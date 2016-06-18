@@ -74,7 +74,7 @@ var getYTPVideoID = function( url ) {
 			showYTLogo: true,
 			stopMovieOnBlur: true,
 			realfullscreen: true,
-			fallbackImage: null,
+			mobileFallbackImage: null,
 			gaTrack: true,
 			optimizeDisplay: true,
 			align: "center,center", // top,bottom,left,right
@@ -204,7 +204,7 @@ var getYTPVideoID = function( url ) {
 
 				YTPlayer.isSelf = YTPlayer.opt.containment == "self";
 				YTPlayer.defaultOpt.containment = YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery( this ) : jQuery( YTPlayer.opt.containment );
-				YTPlayer.isBackground = YTPlayer.opt.containment.get( 0 ).tagName.toLowerCase() == "body";
+				YTPlayer.isBackground = YTPlayer.opt.containment.is( "body" );
 
 				if( YTPlayer.isBackground && ytp.backgroundIsInited )
 					return;
@@ -317,6 +317,16 @@ var getYTPVideoID = function( url ) {
 				}
 
 				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
+
+					if( YTPlayer.opt.mobileFallbackImage ) {
+						YTPlayer.opt.containment.css( {
+							backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
+							backgroundPosition: "center center",
+							backgroundSize: "cover",
+							backgroundRepeat: "no-repeat"
+						} )
+					};
+
 					$YTPlayer.remove();
 					jQuery( document ).trigger( "YTPUnavailable" );
 					return;
@@ -1535,6 +1545,8 @@ var getYTPVideoID = function( url ) {
 
 			jQuery( YTPlayer ).muteYTPVolume();
 			jQuery( "#controlBar_" + YTPlayer.id ).remove();
+
+			YTPlayer.controlBar = false;
 
 			if( YTPlayer.opt.showControls )
 				jQuery.mbYTPlayer.buildControls( YTPlayer );

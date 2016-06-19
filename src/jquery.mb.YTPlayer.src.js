@@ -1172,6 +1172,9 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 			var overlay = YTPlayer.overlay;
 
+			if( !mask )
+				mask = YTPlayer.actualMask;
+
 			var tempImg = jQuery( "<img/>" ).attr( "src", mask ).on( "load", function() {
 
 				overlay.CSSAnimate( {
@@ -1236,9 +1239,12 @@ var getYTPVideoID = function( url ) {
 
 			if( YTPlayer.opt.mask ) {
 
-				if( typeof YTPlayer.opt.mask == "string" )
+				if( typeof YTPlayer.opt.mask == "string" ) {
 					$YTPlayer.YTPAddMask( YTPlayer.opt.mask );
-				else if( typeof YTPlayer.opt.mask == "object" ) {
+
+					YTPlayer.actualMask = YTPlayer.opt.mask;
+
+				} else if( typeof YTPlayer.opt.mask == "object" ) {
 
 					for( var time in YTPlayer.opt.mask ) {
 						if( YTPlayer.opt.mask[ time ] )
@@ -1255,9 +1261,15 @@ var getYTPVideoID = function( url ) {
 									$YTPlayer.YTPRemoveMask();
 								else
 									$YTPlayer.YTPAddMask( YTPlayer.opt.mask[ time ] );
+
+							YTPlayer.actualMask = YTPlayer.opt.mask[ time ];
+
 						}
-					} )
+					} );
+
 				}
+
+
 			}
 		},
 		/**

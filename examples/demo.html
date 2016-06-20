@@ -29,7 +29,8 @@
 <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
 <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.js"></script>
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js"></script>-->
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 <script src="../dist/jquery.mb.YTPlayer.js"></script>
 <script src="assets/apikey.js"></script>
 
@@ -288,8 +289,32 @@ button:hover, .button:hover {
 </style>
 
 <script>
+
+    // UPDATED -> NOW WORKS WITH jQuery 1.3.1
+    $.fn.listHandlers = function(events, outputFunction) {
+        return this.each(function(i){
+            var elem = this,
+                    dEvents = $(this).data('events');
+            if (!dEvents) {return;}
+            $.each(dEvents, function(name, handler){
+                if((new RegExp('^(' + (events === '*' ? '.+' : events.replace(',','|').replace(/^on/i,'')) + ')$' ,'i')).test(name)) {
+                    $.each(handler, function(i,handler){
+                        outputFunction(elem, 'n' + i + ': [' + name + '] : ' + handler );
+                    });
+                }
+            });
+        });
+    };
+
+
     var myPlayer;
     jQuery(function () {
+
+        setTimeout(function(){
+            $('*').listHandlers('*', console.info);
+
+        },5000);
+
 
         var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 

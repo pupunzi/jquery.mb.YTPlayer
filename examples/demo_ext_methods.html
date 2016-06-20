@@ -88,12 +88,8 @@
         #info {
             position: absolute;
             top: 0;
-            bottom: 0;
-            left: 0;
             right: 0;
-            width: 300px;
-            height: 100px;
-            margin: auto;
+            max-width: 300px;
             color: #212121;
             background-color: rgba(255, 255, 255, 0.60);
 
@@ -154,7 +150,7 @@
         <br><br>
         <button onclick="myPlayer.YTPSetAlign('left,top')">YTPSetAlign (top/left)</button>
         <button onclick="myPlayer.YTPSetAlign('center,center')">YTPSetAlign (center/center)</button>
-        <button onclick="myPlayer.YTPSetAlign('center,bottom')">YTPSetAlign (center/bottom)</button>
+        <button onclick="myPlayer.YTPSetAlign('right,bottom')">YTPSetAlign (center/bottom)</button>
         <br><br>
         <button onclick="myPlayer.YTPFullscreen()">YTPFullscreen</button>
         <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>

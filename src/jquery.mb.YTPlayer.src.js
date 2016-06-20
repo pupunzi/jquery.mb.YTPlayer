@@ -1172,8 +1172,9 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 			var overlay = YTPlayer.overlay;
 
-			if( !mask )
+			if( !mask ) {
 				mask = YTPlayer.actualMask;
+			}
 
 			var tempImg = jQuery( "<img/>" ).attr( "src", mask ).on( "load", function() {
 
@@ -1182,6 +1183,8 @@ var getYTPVideoID = function( url ) {
 				}, 500, function() {
 
 					YTPlayer.hasMask = true;
+
+					tempImg.remove();
 
 					overlay.css( {
 						backgroundImage: "url(" + mask + ")",
@@ -1257,12 +1260,13 @@ var getYTPVideoID = function( url ) {
 					$YTPlayer.on( "YTPTime.mask", function( e ) {
 						for( var time in YTPlayer.opt.mask ) {
 							if( e.time == time )
-								if( !YTPlayer.opt.mask[ time ] )
+								if( !YTPlayer.opt.mask[ time ] ) {
 									$YTPlayer.YTPRemoveMask();
-								else
-									$YTPlayer.YTPAddMask( YTPlayer.opt.mask[ time ] );
+								} else {
 
-							YTPlayer.actualMask = YTPlayer.opt.mask[ time ];
+									$YTPlayer.YTPAddMask( YTPlayer.opt.mask[ time ] );
+									YTPlayer.actualMask = YTPlayer.opt.mask[ time ];
+								}
 
 						}
 					} );
@@ -1271,6 +1275,17 @@ var getYTPVideoID = function( url ) {
 
 
 			}
+		},
+		/**
+		 *
+		 */
+		toggleMask: function(){
+			var YTPlayer = this.get( 0 );
+			var $YTPlayer = $(YTPlayer);
+			if(YTPlayer.hasMask)
+				$YTPlayer.YTPRemoveMask();
+			else
+				$YTPlayer.YTPAddMask();
 		},
 		/**
 		 *
@@ -1878,6 +1893,7 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.fn.YTPAddMask = jQuery.mbYTPlayer.addMask;
 	jQuery.fn.YTPRemoveMask = jQuery.mbYTPlayer.removeMask;
+	jQuery.fn.YTPToggleMask = jQuery.mbYTPlayer.toggleMask;
 
 	jQuery.fn.YTPSetAlign = jQuery.mbYTPlayer.setAlign;
 	jQuery.fn.YTPGetAlign = jQuery.mbYTPlayer.getAlign;

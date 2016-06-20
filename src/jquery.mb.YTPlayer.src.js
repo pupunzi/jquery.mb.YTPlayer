@@ -1184,6 +1184,8 @@ var getYTPVideoID = function( url ) {
 
 					YTPlayer.hasMask = true;
 
+					tempImg.remove();
+
 					overlay.css( {
 						backgroundImage: "url(" + mask + ")",
 						backgroundRepeat: "no-repeat",

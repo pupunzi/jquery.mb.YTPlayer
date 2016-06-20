@@ -1268,8 +1268,6 @@ var getYTPVideoID = function( url ) {
 					} );
 
 				}
-
-
 			}
 		},
 		/**

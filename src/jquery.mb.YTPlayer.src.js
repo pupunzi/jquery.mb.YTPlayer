@@ -1278,6 +1278,17 @@ var getYTPVideoID = function( url ) {
 		},
 		/**
 		 *
+		 */
+		toggleMask: function(){
+			var YTPlayer = this.get( 0 );
+			var $YTPlayer = $(YTPlayer);
+			if(YTPlayer.hasMask)
+				$YTPlayer.YTPRemoveMask();
+			else
+				$YTPlayer.YTPAddMask();
+		},
+		/**
+		 *
 		 * @returns {{totalTime: number, currentTime: number}}
 		 */
 		manageProgress: function() {
@@ -1882,6 +1893,7 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.fn.YTPAddMask = jQuery.mbYTPlayer.addMask;
 	jQuery.fn.YTPRemoveMask = jQuery.mbYTPlayer.removeMask;
+	jQuery.fn.YTPToggleMask = jQuery.mbYTPlayer.toggleMask;
 
 	jQuery.fn.YTPSetAlign = jQuery.mbYTPlayer.setAlign;
 	jQuery.fn.YTPGetAlign = jQuery.mbYTPlayer.getAlign;

@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.5",
-		build: "5848",
+		build: "5851",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -1172,8 +1172,12 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 			var overlay = YTPlayer.overlay;
 
-			if( !mask )
+			if( !mask ) {
+
 				mask = YTPlayer.actualMask;
+				console.debug( YTPlayer.actualMask );
+
+			}
 
 			var tempImg = jQuery( "<img/>" ).attr( "src", mask ).on( "load", function() {
 
@@ -1244,6 +1248,8 @@ var getYTPVideoID = function( url ) {
 
 					YTPlayer.actualMask = YTPlayer.opt.mask;
 
+					console.debug( "1:: ", YTPlayer.actualMask );
+
 				} else if( typeof YTPlayer.opt.mask == "object" ) {
 
 					for( var time in YTPlayer.opt.mask ) {
@@ -1257,12 +1263,18 @@ var getYTPVideoID = function( url ) {
 					$YTPlayer.on( "YTPTime.mask", function( e ) {
 						for( var time in YTPlayer.opt.mask ) {
 							if( e.time == time )
-								if( !YTPlayer.opt.mask[ time ] )
+								if( !YTPlayer.opt.mask[ time ] ) {
 									$YTPlayer.YTPRemoveMask();
-								else
-									$YTPlayer.YTPAddMask( YTPlayer.opt.mask[ time ] );
+									YTPlayer.actualMask = null;
 
-							YTPlayer.actualMask = YTPlayer.opt.mask[ time ];
+								} else {
+
+									$YTPlayer.YTPAddMask( YTPlayer.opt.mask[ time ] );
+									YTPlayer.actualMask = YTPlayer.opt.mask[ time ];
+
+									console.debug( "2:: ", YTPlayer.actualMask );
+
+								}
 
 						}
 					} );

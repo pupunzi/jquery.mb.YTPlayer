@@ -1286,6 +1286,8 @@ var getYTPVideoID = function( url ) {
 				$YTPlayer.YTPRemoveMask();
 			else
 				$YTPlayer.YTPAddMask();
+
+			return this;
 		},
 		/**
 		 *

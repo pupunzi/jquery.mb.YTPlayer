@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.5",
-		build: "5864",
+		build: "5866",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -417,13 +417,17 @@ var getYTPVideoID = function( url ) {
 									if( typeof event.target.getPlayerState != "function" ) return;
 									var state = event.target.getPlayerState();
 
-									if( YTPlayer.state == state )
-										return;
+									console.debug( YTPlayer.state, state )
 
 									if( YTPlayer.preventTrigger ) {
 										YTPlayer.preventTrigger = false;
 										return
 									}
+
+									/*
+																		if( YTPlayer.state == state )
+																			return;
+									*/
 
 									YTPlayer.state = state;
 

@@ -417,13 +417,15 @@ var getYTPVideoID = function( url ) {
 									if( typeof event.target.getPlayerState != "function" ) return;
 									var state = event.target.getPlayerState();
 
-									if( YTPlayer.state == state )
-										return;
-
 									if( YTPlayer.preventTrigger ) {
 										YTPlayer.preventTrigger = false;
 										return
 									}
+
+									/*
+																		if( YTPlayer.state == state )
+																			return;
+									*/
 
 									YTPlayer.state = state;
 
@@ -459,6 +461,7 @@ var getYTPVideoID = function( url ) {
 										default:
 											break;
 									}
+
 									// Trigger state events
 									var YTPEvent = jQuery.Event( eventType );
 									YTPEvent.time = YTPlayer.currentTime;

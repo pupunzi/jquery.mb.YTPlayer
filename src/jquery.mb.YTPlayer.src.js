@@ -618,12 +618,14 @@ var getYTPVideoID = function( url ) {
 			YTPlayer.player.setPlaybackQuality( quality );
 		},
 		/**
+		 *
 		 * @param videos
 		 * @param shuffle
 		 * @param callback
+		 * @param loopList
 		 * @returns {jQuery.mbYTPlayer}
 		 */
-		playlist: function( videos, shuffle, callback ) {
+		playlist: function( videos, shuffle, callback, loopList ) {
 			var $YTPlayer = this;
 			var YTPlayer = $YTPlayer.get( 0 );
 			YTPlayer.isPlayList = true;
@@ -639,7 +641,8 @@ var getYTPVideoID = function( url ) {
 				callback( YTPlayer );
 			} );
 			jQuery( YTPlayer ).on( "YTPEnd", function() {
-				jQuery( YTPlayer ).playNext();
+				loopList = typeof loopList == "undefined" ? true : loopList;
+				jQuery( YTPlayer ).playNext( loopList );
 			} );
 			return $YTPlayer;
 		},
@@ -647,7 +650,7 @@ var getYTPVideoID = function( url ) {
 		 *
 		 * @returns {jQuery.mbYTPlayer}
 		 */
-		playNext: function() {
+		playNext: function( loopList ) {
 			var YTPlayer = this.get( 0 );
 
 			if( YTPlayer.checkForStartAt ) {
@@ -656,8 +659,12 @@ var getYTPVideoID = function( url ) {
 			}
 
 			YTPlayer.videoCounter++;
-			if( YTPlayer.videoCounter >= YTPlayer.videoLength ) YTPlayer.videoCounter = 0;
-			jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
+			if( YTPlayer.videoCounter >= YTPlayer.videoLength && loopList )
+				YTPlayer.videoCounter = 0;
+
+			if( YTPlayer.videoCounter < YTPlayer.videoLength )
+				jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
+
 			return this;
 		},
 		/**
@@ -674,6 +681,24 @@ var getYTPVideoID = function( url ) {
 
 			YTPlayer.videoCounter--;
 			if( YTPlayer.videoCounter < 0 ) YTPlayer.videoCounter = YTPlayer.videoLength - 1;
+			jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
+			return this;
+		},
+		/**
+		 *
+		 * @returns {jQuery.mbYTPlayer}
+		 */
+		playIndex: function( idx ) {
+			var YTPlayer = this.get( 0 );
+
+			if( YTPlayer.checkForStartAt ) {
+				clearInterval( YTPlayer.checkForStartAt );
+				clearInterval( YTPlayer.getState );
+			}
+
+			YTPlayer.videoCounter = idx;
+			if( YTPlayer.videoCounter >= YTPlayer.videoLength - 1 )
+				YTPlayer.videoCounter = YTPlayer.videoLength - 1;
 			jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
 			return this;
 		},
@@ -1878,6 +1903,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.playlist;
 	jQuery.fn.YTPPlayNext = jQuery.mbYTPlayer.playNext;
 	jQuery.fn.YTPPlayPrev = jQuery.mbYTPlayer.playPrev;
+	jQuery.fn.YTPPlayIndex = jQuery.mbYTPlayer.playIndex;
 
 	jQuery.fn.YTPMute = jQuery.mbYTPlayer.mute;
 	jQuery.fn.YTPUnmute = jQuery.mbYTPlayer.unmute;

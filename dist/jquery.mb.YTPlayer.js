@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.6",
-		build: "5870",
+		build: "5873",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -92,6 +92,8 @@ var getYTPVideoID = function( url ) {
 			showSite: "R",
 			ytLogo: "Y"
 		},
+		controlBar: null,
+		loading: null,
 		locationProtocol: "https:",
 		filters: {
 			grayscale: {
@@ -580,7 +582,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.videoData = null;
 				YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 			}
-			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) {
+			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && !jQuery.browser.mobile ) {
 				YTPlayer.loading = jQuery( "<div/>" ).addClass( "loading" ).html( "Loading" ).hide();
 				jQuery( YTPlayer ).append( YTPlayer.loading );
 				YTPlayer.loading.fadeIn();
@@ -1320,6 +1322,8 @@ var getYTPVideoID = function( url ) {
 				$YTPlayer.YTPRemoveMask();
 			else
 				$YTPlayer.YTPAddMask();
+
+			return this;
 		},
 		/**
 		 *
@@ -1358,7 +1362,9 @@ var getYTPVideoID = function( url ) {
 			var data = YTPlayer.opt;
 			// @data.printUrl: is deprecated; use data.showYTLogo
 			data.showYTLogo = data.showYTLogo || data.printUrl;
-			if( jQuery( "#controlBar_" + YTPlayer.id ).length ) return;
+
+			if( jQuery( "#controlBar_" + YTPlayer.id ).length )
+				return;
 			YTPlayer.controlBar = jQuery( "<span/>" ).attr( "id", "controlBar_" + YTPlayer.id ).addClass( "mb_YTPBar" ).css( {
 				whiteSpace: "noWrap",
 				position: YTPlayer.isBackground ? "fixed" : "absolute",
@@ -1723,13 +1729,14 @@ var getYTPVideoID = function( url ) {
 
 					}
 
-					if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) {
+					if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && ( YTPlayer.loading && YTPlayer.loading.length ) ) {
 						YTPlayer.loading.html( "Ready" );
 						setTimeout( function() {
 							YTPlayer.loading.fadeOut();
 						}, 100 )
 					}
-					if( YTPlayer.controlBar.length )
+
+					if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 						YTPlayer.controlBar.slideDown( 1000 );
 
 				} else if( jQuery.browser.safari ) {

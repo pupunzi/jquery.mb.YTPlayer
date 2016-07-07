@@ -9,8 +9,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
     <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
-    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js"></script>-->
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <script src="../dist/jquery.mb.YTPlayer.js"></script>
     <script src="assets/apikey.js"></script>
 
@@ -25,6 +24,11 @@
             padding: 30px;
             background: #222c2f;
             font: normal 16px/20px Lekton, sans-serif;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
         }
 
         h1{
@@ -126,7 +130,7 @@
     <h1 style="color:white">jQuery.mb.YTPlayer</h1>
     <h2 style="color:white; text-align: center">An HTML5 Background player<br>for YouTube videos</h2>
     <div class="console">
-        <h2 style="color:white">Available controll methods</h2>
+        <h2 style="color:white">Available controls methods</h2>
         <button onclick="myPlayer.YTPPause()">YTPPause</button>
         <button onclick="myPlayer.YTPPlay()">YTPPlay</button>
         <button onclick="myPlayer.YTPTogglePlay()">YTPTogglePlay</button>
@@ -144,9 +148,11 @@
         <br><br>
         <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter (grayscale)</button>
         <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter (sepia)</button>
+        <a href="demo.html">(Play with filters)</a>
         <br><br>
         <button onclick="myPlayer.YTPAddMask('assets/mask-4.png')">YTPAddMask</button>
         <button onclick="myPlayer.YTPRemoveMask()">YTPRemoveMask</button>
+        <!--<button onclick="myPlayer.YTPToggleMask()">YTPToggleMask</button>-->
         <br><br>
         <button onclick="myPlayer.YTPSetAlign('left,top')">YTPSetAlign (top/left)</button>
         <button onclick="myPlayer.YTPSetAlign('center,center')">YTPSetAlign (center/center)</button>

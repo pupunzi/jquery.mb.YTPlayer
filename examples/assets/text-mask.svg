@@ -7,6 +7,7 @@
 	.st1{font-family:'Arial-BoldMT';}
 	.st2{font-size:278.2761px;}
 </style>
+      <mask id="maskid" maskUnits="objectBoundingBox">
 <g id="Layer_1">
 	<text id="t1" transform="matrix(1 0 0 1 -10.6992 462.9873)" class="st0 st1 st2">PUPUNZI</text>
 </g>
@@ -85,4 +86,5 @@
 		c3.7-8.5,6.7-17.2,9.1-26c18.1-21,29.8-49.3,29.1-77.2c9.7,21.3,19.3,42.7,27.2,64.9c6.8,19.2,12.4,38.9,15.3,59.1
 		C1102.7,636.9,1104.3,654.1,1097.1,668.5z"/>
 </g>
+  </mask>
 </svg>

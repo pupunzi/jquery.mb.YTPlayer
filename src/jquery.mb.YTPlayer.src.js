@@ -850,6 +850,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.isAlone = true;
 			} else {
 				jQuery( document ).off( "mousemove.YTPlayer" );
+				clearTimeout( YTPlayer.hideCursor );
 				YTPlayer.overlay.css( {
 					cursor: "auto"
 				} );

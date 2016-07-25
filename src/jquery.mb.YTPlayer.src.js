@@ -666,6 +666,8 @@ var getYTPVideoID = function( url ) {
 
 			if( YTPlayer.videoCounter < YTPlayer.videoLength )
 				jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
+			else
+				YTPlayer.videoCounter--;
 
 			return this;
 		},
@@ -692,6 +694,8 @@ var getYTPVideoID = function( url ) {
 		 */
 		playIndex: function( idx ) {
 			var YTPlayer = this.get( 0 );
+
+			idx = idx - 1;
 
 			if( YTPlayer.checkForStartAt ) {
 				clearInterval( YTPlayer.checkForStartAt );

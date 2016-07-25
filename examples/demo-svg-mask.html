@@ -44,7 +44,19 @@ body {
     padding: 30px;
     background: #ffa227;
     font: normal 16px/20px Lekton, sans-serif;
+    -webkit-animation:myfirst 40s infinite alternate; /* Safari and Chrome */
 }
+
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+    0%   {background: #ffa227;}
+    25%   {background: #0b2b27;}
+    50%  {background: #ff4ae1;}
+    80%   {background: #1f61c1;}
+    100%   {background: #000000;}
+}
+
 
 input, textarea, select, button {
     font-family: "helvetica neue", sans-serif !important;
@@ -310,13 +322,21 @@ button:hover, .button:hover {
 
 */
 #wrapper_mbYTP_bgndVideo {
-    mask: url(#mask) no-repeat center center;
+    mask: url(#mask) ;
     mask-size: cover;
-    -webkit-mask: url(assets/mask-4a.png) no-repeat center center;
+    -webkit-mask: url(assets/shadow.png) no-repeat center center;
+    /*-webkit-mask: url(assets/mask-4a.png) no-repeat center center;*/
     -webkit-mask-size: cover;
     -webkit-mask-mode: luminance;
 }
 
+
+@-moz-keyframes myfirst /* Firefox */
+{
+    0%   {background:red;}
+    50%  {background:yellow;}
+    100%   {background:red;}
+}
 </style>
 
 <script>
@@ -327,13 +347,13 @@ button:hover, .button:hover {
 
         myPlayer = jQuery("#bgndVideo").YTPlayer({align:"center,left"});
 
-/*
-        myPlayer.YTPApplyFilters({
-            grayscale: 50,
-            sepia: 83,
-            opacity: 29
-        });
-*/
+        /*
+         myPlayer.YTPApplyFilters({
+         grayscale: 50,
+         sepia: 83,
+         opacity: 29
+         });
+         */
 
         /* DEBUG ******************************************************************************************/
 
@@ -592,18 +612,28 @@ button:hover, .button:hover {
 </div>
 
 
-<svg height="0">
-    <filter id="maskfilter">
-        <feColorMatrix in="SourceAlpha"
-                       type="matrix"
-                       values="0 0 0 1 0
-                           0 0 0 1 0
-                           0 0 0 1 0
-                           0 0 0 1 0" ></feColorMatrix>
-    </filter>
-
+<svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="-108 -34 1200 806" enable-background="new -108 -34 1200 806" xml:space="preserve">
     <mask id="mask">
-        <image width="1024px" height="609px" xlink:href="assets/mask-4a.png" filter="url(#maskfilter)" />
+	<path fill="#FFFFFF" d="M104.3,468.5V265h65.9c25,0,41.3,1,48.9,3.1c11.7,3.1,21.4,9.7,29.3,19.9c7.9,10.2,11.8,23.4,11.8,39.6
+		c0,12.5-2.3,23-6.8,31.5c-4.5,8.5-10.3,15.2-17.3,20.1c-7,4.9-14.1,8.1-21.3,9.6c-9.8,1.9-24,2.9-42.6,2.9h-26.8v76.8H104.3z
+		 M145.4,299.4v57.7h22.5c16.2,0,27-1.1,32.5-3.2c5.5-2.1,9.7-5.5,12.8-10c3.1-4.5,4.7-9.8,4.7-15.8c0-7.4-2.2-13.5-6.5-18.3
+		c-4.4-4.8-9.9-7.8-16.5-9c-4.9-0.9-14.8-1.4-29.6-1.4H145.4z"/>
+	<path fill="#FFFFFF" d="M293.7,265h41.1v110.2c0,17.5,0.5,28.8,1.5,34c1.8,8.3,5.9,15,12.6,20.1c6.6,5,15.7,7.6,27.1,7.6
+		c11.7,0,20.5-2.4,26.4-7.1c5.9-4.8,9.5-10.6,10.7-17.6c1.2-6.9,1.8-18.5,1.8-34.6V265h41.1v106.9c0,24.4-1.1,41.7-3.3,51.8
+		c-2.2,10.1-6.3,18.6-12.3,25.5c-6,6.9-14,12.5-23.9,16.6c-10,4.1-23,6.2-39.1,6.2c-19.4,0-34.2-2.2-44.2-6.7
+		c-10-4.5-18-10.3-23.8-17.5c-5.8-7.2-9.7-14.7-11.5-22.6c-2.7-11.7-4-28.9-4-51.6V265z"/>
+	<path fill="#FFFFFF" d="M499.3,468.5V265h65.9c25,0,41.3,1,48.9,3.1c11.7,3.1,21.4,9.7,29.3,19.9c7.9,10.2,11.8,23.4,11.8,39.6
+		c0,12.5-2.3,23-6.8,31.5c-4.5,8.5-10.3,15.2-17.3,20.1c-7,4.9-14.1,8.1-21.3,9.6c-9.8,1.9-24,2.9-42.6,2.9h-26.8v76.8H499.3z
+		 M540.3,299.4v57.7h22.5c16.2,0,27-1.1,32.5-3.2c5.5-2.1,9.7-5.5,12.8-10c3.1-4.5,4.7-9.8,4.7-15.8c0-7.4-2.2-13.5-6.5-18.3
+		c-4.4-4.8-9.9-7.8-16.5-9c-4.9-0.9-14.8-1.4-29.6-1.4H540.3z"/>
+	<path fill="#FFFFFF" d="M688.6,265h41.1v110.2c0,17.5,0.5,28.8,1.5,34c1.8,8.3,5.9,15,12.6,20.1c6.6,5,15.7,7.6,27.1,7.6
+		c11.7,0,20.5-2.4,26.4-7.1c5.9-4.8,9.5-10.6,10.7-17.6c1.2-6.9,1.8-18.5,1.8-34.6V265h41.1v106.9c0,24.4-1.1,41.7-3.3,51.8
+		c-2.2,10.1-6.3,18.6-12.3,25.5c-6,6.9-14,12.5-23.9,16.6c-10,4.1-23,6.2-39.1,6.2c-19.4,0-34.2-2.2-44.2-6.7
+		c-10-4.5-18-10.3-23.8-17.5c-5.8-7.2-9.7-14.7-11.5-22.6c-2.7-11.7-4-28.9-4-51.6V265z"/>
+	<path fill="#FFFFFF" d="M894.6,468.5V265h40l83.3,135.9V265h38.2v203.5h-41.2l-82-132.7v132.7H894.6z"/>
+	<path fill="#FFFFFF" d="M1081.9,468.5v-37.1l106.9-132h-94.8V265h149v31.9l-111.5,137.3h115.8v34.3H1081.9z"/>
+	<path fill="#FFFFFF" d="M1271.9,468.5V265h41.1v203.5H1271.9z"/>
     </mask>
 </svg>
 

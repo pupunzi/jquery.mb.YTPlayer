@@ -50,8 +50,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "3.0.7",
-		build: "5877",
+		version: "3.0.8",
+		build: "5878",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -850,6 +850,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.isAlone = true;
 			} else {
 				jQuery( document ).off( "mousemove.YTPlayer" );
+				clearTimeout( YTPlayer.hideCursor );
 				YTPlayer.overlay.css( {
 					cursor: "auto"
 				} );

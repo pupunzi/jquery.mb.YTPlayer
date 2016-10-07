@@ -75,8 +75,9 @@
         <p style="color:white"> video ID: <span id="videoID"></span> </p>
         <p style="color:white"> Title: <span id="videoTitle"></span> </p>
     </div>
-    <button style="color:#000000; font-size: 22px; cursor: pointer" onclick="jQuery('#myPlayerID').playPrev()">play previous</button>
-    <button style="color:#000000; font-size: 22px; cursor: pointer" onclick="jQuery('#myPlayerID').playNext()">play next</button>
+    <button style="color:#000000; font-size: 22px; cursor: pointer" onclick="jQuery('#myPlayerID').YTPPlayPrev()">play previous</button>
+    <button style="color:#000000; font-size: 22px; cursor: pointer" onclick="jQuery('#myPlayerID').YTPPlayNext()">play next</button>
+    <button style="color:#000000; font-size: 22px; cursor: pointer" onclick="jQuery('#myPlayerID').YTPPlayIndex(2)">play video n° 2</button>
 </div>
 
 <script>
@@ -85,7 +86,7 @@
         var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 
         var videos = [
-            {videoURL:"VuaJAgx0x_4",containment:'body',autoPlay:true, mute:false, startAt:0, opacity:1, loop:false, ratio:"4/3", addRaster:true, quality:"large"},
+            {videoURL:"VuaJAgx0x_4",containment:'body',autoPlay:false, mute:false, startAt:0, opacity:1, loop:false, ratio:"4/3", addRaster:true, quality:"large"},
             {videoURL: "3ovA7zeviRo",containment:'body',autoPlay:true, mute:true, startAt:10, stopAt:20, opacity:1, loop:2, ratio:"4/3", addRaster:false, quality:"large"},
             {videoURL: "u9k1FaMIYTs",containment:'body',autoPlay:true, mute:false, startAt:0, stopAt:10, opacity:1, loop:2, ratio:"4/3", addRaster:true, quality:"large"}
         ];
@@ -102,14 +103,6 @@
             jQuery("#videoID").html(e.prop.id);
             jQuery("#videoTitle").html(e.prop.title);
 
-/*
-            console.debug(e.prop.title + "<br>@" + e.prop.channelTitle);
-            console.debug("******************************");
-            console.debug(e.type);
-            console.debug(e.prop.title);
-            console.debug(e.prop.description.replace(/\n/g, "<br/>"));
-            console.debug("******************************");
-*/
 
         });
 

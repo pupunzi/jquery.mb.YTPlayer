@@ -178,10 +178,12 @@ var getYTPVideoID = function( url ) {
 				var playerID = "mbYTP_" + YTPlayer.id;
 				YTPlayer.isAlone = false;
 				YTPlayer.hasFocus = true;
-				var videoID = this.opt.videoURL ? getYTPVideoID( this.opt.videoURL ).videoID : $YTPlayer.attr( "href" ) ? getYTPVideoID( $YTPlayer.attr( "href" ) ).videoID : false;
-				var playlistID = this.opt.videoURL ? getYTPVideoID( this.opt.videoURL ).playlistID : $YTPlayer.attr( "href" ) ? getYTPVideoID( $YTPlayer.attr( "href" ) ).playlistID : false;
-				YTPlayer.videoID = videoID;
-				YTPlayer.playlistID = playlistID;
+				YTPlayer.videoID = this.opt.videoURL ? getYTPVideoID( this.opt.videoURL ).videoID : $YTPlayer.attr( "href" ) ? getYTPVideoID( $YTPlayer.attr( "href" ) ).videoID : false;
+				YTPlayer.playlistID = this.opt.videoURL ? getYTPVideoID( this.opt.videoURL ).playlistID : $YTPlayer.attr( "href" ) ? getYTPVideoID( $YTPlayer.attr( "href" ) ).playlistID : false;
+				/*
+				 YTPlayer.videoID = videoID;
+				 YTPlayer.playlistID = playlistID;
+				 */
 				YTPlayer.opt.showAnnotations = YTPlayer.opt.showAnnotations ? '0' : '3';
 
 				var playerVars = {
@@ -395,7 +397,6 @@ var getYTPVideoID = function( url ) {
 									jQuery( YTPlayer.playerEl ).unselectable();
 
 									$YTPlayer.optimizeDisplay();
-									YTPlayer.videoID = videoID;
 									jQuery( window ).off( "resize.YTP_" + YTPlayer.id ).on( "resize.YTP_" + YTPlayer.id, function() {
 										$YTPlayer.optimizeDisplay();
 									} );
@@ -425,9 +426,9 @@ var getYTPVideoID = function( url ) {
 									}
 
 									/*
-																		if( YTPlayer.state == state )
-																			return;
-									*/
+									 if( YTPlayer.state == state )
+									 return;
+									 */
 
 									YTPlayer.state = state;
 
@@ -560,6 +561,7 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.videoData.thumb_medium = data.thumbnails.medium ? data.thumbnails.medium.url : null;
 						jQuery.mbStorage.set( "YTPlayer_data_" + YTPlayer.videoID, YTPlayer.videoData );
 					}
+
 					parseYTPlayer_data( data.items[ 0 ].snippet );
 					YTPlayer.hasData = true;
 					var YTPData = jQuery.Event( "YTPData" );
@@ -819,6 +821,7 @@ var getYTPVideoID = function( url ) {
 						cursor: "none"
 					} );
 				}
+
 				jQuery( document ).on( "mousemove.YTPlayer", function( e ) {
 					YTPlayer.overlay.css( {
 						cursor: "auto"
@@ -896,6 +899,7 @@ var getYTPVideoID = function( url ) {
 					RunPrefixMethod( document, "CancelFullScreen" );
 				}
 			}
+
 			return this;
 		},
 		/**
@@ -1799,17 +1803,15 @@ var getYTPVideoID = function( url ) {
 		//data.optimizeDisplay = YTPlayer.isPlayer ? false : data.optimizeDisplay;
 
 		if( YTPlayer.opt.optimizeDisplay ) {
+			var abundance = 100;
 			var win = {};
 			var el = YTPlayer.wrapper;
 
 			win.width = el.outerWidth();
 			win.height = el.outerHeight();
 
-			vid.width = win.width;
-			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( win.width * ( 9 / 16 ) ) : Math.ceil( win.width * ( 3 / 4 ) );
-
-			vid.width = win.width;
-			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( win.width * ( 9 / 16 ) ) : Math.ceil( win.width * ( 3 / 4 ) );
+			vid.width = win.width + abundance;
+			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( vid.width * ( 9 / 16 ) ) : Math.ceil( vid.width * ( 3 / 4 ) );
 
 			vid.marginTop = -( ( vid.height - win.height ) / 2 );
 			vid.marginLeft = 0;
@@ -1818,8 +1820,8 @@ var getYTPVideoID = function( url ) {
 
 			if( lowest ) {
 
-				vid.height = win.height;
-				vid.width = YTPlayer.opt.ratio == "16/9" ? Math.floor( win.height * ( 16 / 9 ) ) : Math.floor( win.height * ( 4 / 3 ) );
+				vid.height = win.height + abundance;
+				vid.width = YTPlayer.opt.ratio == "16/9" ? Math.floor( vid.height * ( 16 / 9 ) ) : Math.floor( vid.height * ( 4 / 3 ) );
 
 				vid.marginTop = 0;
 				vid.marginLeft = -( ( vid.width - win.width ) / 2 );
@@ -1828,7 +1830,8 @@ var getYTPVideoID = function( url ) {
 
 			for( var a in YTPAlign ) {
 
-				var al = YTPAlign[ a ].trim();
+				//var al = YTPAlign[ a ].trim();
+				var al = YTPAlign[ a ].replace( / /g, "" );
 
 				switch( al ) {
 
@@ -1946,7 +1949,6 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.fn.YTPSetAlign = jQuery.mbYTPlayer.setAlign;
 	jQuery.fn.YTPGetAlign = jQuery.mbYTPlayer.getAlign;
-
 
 	/**
 	 *

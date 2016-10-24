@@ -126,8 +126,6 @@
                 YTPConsole.html("");
             });
 
-            // EVENT: YTPData
-
             function printOutObj(obj){
                 for (var x in obj){
                     if(typeof obj[x] == "object"){
@@ -140,6 +138,7 @@
                 }
             }
 
+            // EVENT: YTPData
             myPlayer.on("YTPData", function (e) {
                 YTPConsole.append("******************************");
                 YTPConsole.append("<br>");
@@ -168,8 +167,6 @@
             });
 
             /* DEBUG END ******************************************************************************************/
-
-
         });
 
     </script>

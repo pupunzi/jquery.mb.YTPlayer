@@ -648,7 +648,7 @@ var getYTPVideoID = function( url ) {
 				loopList = typeof loopList == "undefined" ? true : loopList;
 				jQuery( YTPlayer ).playNext( loopList );
 			} );
-			return $YTPlayer;
+			return this;
 		},
 		/**
 		 *

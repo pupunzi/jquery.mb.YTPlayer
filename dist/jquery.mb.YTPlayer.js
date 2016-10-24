@@ -50,8 +50,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "3.0.9",
-		build: "6056",
+		version: "3.0.10",
+		build: "6057",
 		author: "Matteo Bicocchi",
 		apiKey: "",
 		defaults: {
@@ -648,7 +648,7 @@ var getYTPVideoID = function( url ) {
 				loopList = typeof loopList == "undefined" ? true : loopList;
 				jQuery( YTPlayer ).playNext( loopList );
 			} );
-			return $YTPlayer;
+			return this;
 		},
 		/**
 		 *

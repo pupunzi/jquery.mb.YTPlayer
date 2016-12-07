@@ -1830,7 +1830,6 @@ var getYTPVideoID = function( url ) {
 
 			for( var a in YTPAlign ) {
 
-				//var al = YTPAlign[ a ].trim();
 				var al = YTPAlign[ a ].replace( / /g, "" );
 
 				switch( al ) {

@@ -2,7 +2,7 @@
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.YTPlayer.src.js                                                                                                                  _
- _ last modified: 05/01/16 17.43                                                                                                                    _
+ _ last modified: 24/10/16 22.30                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -299,10 +299,10 @@ var getYTPVideoID = function( url ) {
 
 				if( !YTPlayer.isBackground ) {
 					overlay.on( "mouseenter", function() {
-						if( YTPlayer.controlBar.length )
+						if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 							YTPlayer.controlBar.addClass( "visible" );
 					} ).on( "mouseleave", function() {
-						if( YTPlayer.controlBar.length )
+						if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 							YTPlayer.controlBar.removeClass( "visible" );
 					} );
 				}
@@ -323,11 +323,12 @@ var getYTPVideoID = function( url ) {
 				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
 
 					if( YTPlayer.opt.mobileFallbackImage ) {
-						YTPlayer.opt.containment.css( {
+						wrapper.css( {
 							backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
 							backgroundPosition: "center center",
 							backgroundSize: "cover",
-							backgroundRepeat: "no-repeat"
+							backgroundRepeat: "no-repeat",
+							opacity: 1
 						} )
 					};
 
@@ -1617,7 +1618,7 @@ var getYTPVideoID = function( url ) {
 			 */
 
 			YTPlayer.preventTrigger = true;
-			YTPlayer.state = 2
+			YTPlayer.state = 2;
 			jQuery( YTPlayer ).YTPPause();
 
 			jQuery( YTPlayer ).muteYTPVolume();
@@ -1803,7 +1804,7 @@ var getYTPVideoID = function( url ) {
 		//data.optimizeDisplay = YTPlayer.isPlayer ? false : data.optimizeDisplay;
 
 		if( YTPlayer.opt.optimizeDisplay ) {
-			var abundance = 100;
+			var abundance = YTPlayer.isPlayer ? 0 : 200;
 			var win = {};
 			var el = YTPlayer.wrapper;
 
@@ -1851,6 +1852,8 @@ var getYTPVideoID = function( url ) {
 						break;
 
 					default:
+						if( vid.width > win.width )
+							vid.marginLeft = -( ( vid.width - win.width ) / 2 );
 						break;
 				}
 
@@ -1867,7 +1870,8 @@ var getYTPVideoID = function( url ) {
 			width: vid.width,
 			height: vid.height,
 			marginTop: vid.marginTop,
-			marginLeft: vid.marginLeft
+			marginLeft: vid.marginLeft,
+			maxWidth: "initial"
 		} );
 
 	};

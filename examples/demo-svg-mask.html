@@ -297,35 +297,10 @@ button:hover, .button:hover {
 }
 /*Slider END ************************************************/
 
-
-/* Mask with SVG (works only on Chrome) */
-/*
-#wrapper_mbYTP_bgndVideo {
-  mask: url(assets/text-mask.svg) no-repeat center center;
-  mask-size: cover;
-  -webkit-mask: url(assets/text-mask.svg) no-repeat center center;
-  -webkit-mask-size: cover;
-}
-
-*/
-/* Mask with PNG (works only on Chrome) */
-/*
-#wrapper_mbYTP_bgndVideo {
-  mask: url(assets/mask-4a.png) no-repeat center center;
-  mask-size: cover;
-  -webkit-mask: url(assets/mask-4a.png) no-repeat center center;
-  -webkit-mask-size: cover;
-  -webkit-mask-mode: alpha;
-}
-
-	background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxpdmVsbG9fMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9Ii0xMDggLTM0IDEyMDAgODA2IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IC0xMDggLTM0IDEyMDAgODA2IiB4bWw6c3BhY2U9InByZXNlcnZlIj48Zz48cmVjdCB4PSItMzQuNyIgeT0iMjIwLjkiIGZpbGw9Im5vbmUiIHdpZHRoPSIxMDUzLjQiIGhlaWdodD0iMjk2LjIiLz48dGV4dCBpZD0idDFfMV8iIHRyYW5zZm9ybT0ibWF0cml4KDEgMCAwIDEgLTM0LjY5OTIgNDI2Ljc4MzIpIiBmaWxsPSIjRkZGRkZGIiBmb250LWZhbWlseT0iJ0FyaWFsLUJvbGRNVCciIGZvbnQtc2l6ZT0iMjQwIj5QVVBVTlpJPC90ZXh0PjwvZz48L3N2Zz4=);
-
-*/
 #wrapper_mbYTP_bgndVideo {
     mask: url(#mask) ;
     mask-size: cover;
     -webkit-mask: url(assets/shadow.png) no-repeat center center;
-    /*-webkit-mask: url(assets/mask-4a.png) no-repeat center center;*/
     -webkit-mask-size: cover;
     -webkit-mask-mode: luminance;
 }
@@ -346,14 +321,6 @@ button:hover, .button:hover {
         var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 
         myPlayer = jQuery("#bgndVideo").YTPlayer({align:"center,left"});
-
-        /*
-         myPlayer.YTPApplyFilters({
-         grayscale: 50,
-         sepia: 83,
-         opacity: 29
-         });
-         */
 
         /* DEBUG ******************************************************************************************/
 

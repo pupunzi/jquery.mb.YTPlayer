@@ -52,7 +52,7 @@ var getYTPVideoID = function( url ) {
 		name: "jquery.mb.YTPlayer",
 		version: "{{ version }}",
 		build: "{{ buildnum }}",
-		author: "Matteo Bicocchi",
+		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
 			containment: "body",
@@ -174,7 +174,7 @@ var getYTPVideoID = function( url ) {
 				};
 				YTPlayer.canGoFullScreen = !( jQuery.browser.msie || jQuery.browser.opera || isIframe() );
 				if( !YTPlayer.canGoFullScreen ) YTPlayer.opt.realfullscreen = false;
-				if( !$YTPlayer.attr( "id" ) ) $YTPlayer.attr( "id", "video_" + new Date().getTime() );
+				if( !$YTPlayer.attr( "id" ) ) $YTPlayer.attr( "id", "ytp_" + new Date().getTime() );
 				var playerID = "mbYTP_" + YTPlayer.id;
 				YTPlayer.isAlone = false;
 				YTPlayer.hasFocus = true;
@@ -266,6 +266,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.opt.containment.children().not( "script, style" ).each( function() {
 					if( jQuery( this ).css( "position" ) == "static" ) jQuery( this ).css( "position", "relative" );
 				} );
+
 				if( YTPlayer.isBackground ) {
 					jQuery( "body" ).css( {
 						boxSizing: "border-box"
@@ -767,6 +768,7 @@ var getYTPVideoID = function( url ) {
 			ytp.backgroundIsInited = false;
 			YTPlayer.isInit = false;
 			YTPlayer.videoID = null;
+			YTPlayer.isReady = false;
 			var playerBox = YTPlayer.wrapper;
 			playerBox.remove();
 			jQuery( "#controlBar_" + YTPlayer.id ).remove();
@@ -1804,14 +1806,14 @@ var getYTPVideoID = function( url ) {
 		//data.optimizeDisplay = YTPlayer.isPlayer ? false : data.optimizeDisplay;
 
 		if( YTPlayer.opt.optimizeDisplay ) {
-			var abundance = YTPlayer.isPlayer ? 0 : 200;
+			var abundance = YTPlayer.isPlayer ? 0 : 80;
 			var win = {};
 			var el = YTPlayer.wrapper;
 
 			win.width = el.outerWidth();
-			win.height = el.outerHeight();
+			win.height = el.outerHeight() + abundance;
 
-			vid.width = win.width + abundance;
+			vid.width = win.width;
 			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( vid.width * ( 9 / 16 ) ) : Math.ceil( vid.width * ( 3 / 4 ) );
 
 			vid.marginTop = -( ( vid.height - win.height ) / 2 );
@@ -1821,7 +1823,7 @@ var getYTPVideoID = function( url ) {
 
 			if( lowest ) {
 
-				vid.height = win.height + abundance;
+				vid.height = win.height;
 				vid.width = YTPlayer.opt.ratio == "16/9" ? Math.floor( vid.height * ( 16 / 9 ) ) : Math.floor( vid.height * ( 4 / 3 ) );
 
 				vid.marginTop = 0;
@@ -1831,30 +1833,34 @@ var getYTPVideoID = function( url ) {
 
 			for( var a in YTPAlign ) {
 
-				var al = YTPAlign[ a ].replace( / /g, "" );
+				if( YTPAlign.hasOwnProperty( a ) ) {
 
-				switch( al ) {
+					var al = YTPAlign[ a ].replace( / /g, "" );
 
-					case "top":
-						vid.marginTop = lowest ? -( ( vid.height - win.height ) / 2 ) : 0;
-						break;
+					switch( al ) {
 
-					case "bottom":
-						vid.marginTop = lowest ? 0 : -( vid.height - win.height );
-						break;
+						case "top":
+							vid.marginTop = lowest ? -( ( vid.height - win.height ) / 2 ) : 0;
+							break;
 
-					case "left":
-						vid.marginLeft = 0;
-						break;
+						case "bottom":
+							vid.marginTop = lowest ? 0 : -( vid.height - ( win.height ) );
+							break;
 
-					case "right":
-						vid.marginLeft = lowest ? -( vid.width - win.width ) : 0;
-						break;
+						case "left":
+							vid.marginLeft = 0;
+							break;
 
-					default:
-						if( vid.width > win.width )
-							vid.marginLeft = -( ( vid.width - win.width ) / 2 );
-						break;
+						case "right":
+							vid.marginLeft = lowest ? -( vid.width - win.width ) : 0;
+							break;
+
+						default:
+							if( vid.width > win.width )
+								vid.marginLeft = -( ( vid.width - win.width ) / 2 );
+							break;
+					}
+
 				}
 
 			}

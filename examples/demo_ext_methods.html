@@ -142,7 +142,7 @@
         <button onclick="myPlayer.YTPSetVolume(80)">YTPSetVolume (80)</button>
         <br><br>
         <button onclick="showInfo(myPlayer.YTPGetVideoID())">YTPGetVideoID</button>
-        <button onclick="showInfo(myPlayer.YTPGetAlign())">YTPGetAlign</button>
+        <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAlign</button>
         <button onclick="showInfo(myPlayer.YTPGetTime())">YTPGetTime</button>
         <button onclick="showInfo(myPlayer.YTPGetTotalTime())">YTPGetTotalTime</button>
         <br><br>
@@ -154,9 +154,9 @@
         <button onclick="myPlayer.YTPRemoveMask()">YTPRemoveMask</button>
         <!--<button onclick="myPlayer.YTPToggleMask()">YTPToggleMask</button>-->
         <br><br>
-        <button onclick="myPlayer.YTPSetAlign('left,top')">YTPSetAlign (top/left)</button>
-        <button onclick="myPlayer.YTPSetAlign('center,center')">YTPSetAlign (center/center)</button>
-        <button onclick="myPlayer.YTPSetAlign('right,bottom')">YTPSetAlign (right/bottom)</button>
+        <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor (top/left)</button>
+        <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor (center/center)</button>
+        <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor (right/bottom)</button>
         <br><br>
         <button onclick="myPlayer.YTPFullscreen()">YTPFullscreen</button>
         <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>
@@ -172,7 +172,6 @@
     <a id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:true, startAt:0, stopAt:166, opacity:1, addRaster:true, quality:'hd720', optimizeDisplay:true}">My video</a> <!--BsekcY04xvQ-->
 
 </div>
-
 
 </body>
 </html>

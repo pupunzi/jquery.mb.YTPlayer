@@ -77,8 +77,9 @@ var getYTPVideoID = function( url ) {
 			mobileFallbackImage: null,
 			gaTrack: true,
 			optimizeDisplay: true,
-			align: "center,center", // top,bottom,left,right
-			onReady: function( player ) {}
+			anchor: "center,center", // top,bottom,left,right
+			onReady: function( player ) {},
+			onError: function( player, err ) {}
 		},
 		/**
 		 *  @fontface icons
@@ -490,7 +491,8 @@ var getYTPVideoID = function( url ) {
 
 									if( err.data == 150 ) {
 										console.log( "Embedding this video is restricted by Youtube." );
-										if( YTPlayer.isPlayList ) jQuery( YTPlayer ).playNext();
+										if( YTPlayer.isPlayList )
+											jQuery( YTPlayer ).playNext();
 									}
 
 									if( err.data == 2 && YTPlayer.isPlayList )
@@ -669,7 +671,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.videoCounter = 0;
 
 			if( YTPlayer.videoCounter < YTPlayer.videoLength )
-				jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
+				jQuery( YTPlayer ).YTPChangeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
 			else
 				YTPlayer.videoCounter--;
 
@@ -689,7 +691,7 @@ var getYTPVideoID = function( url ) {
 
 			YTPlayer.videoCounter--;
 			if( YTPlayer.videoCounter < 0 ) YTPlayer.videoCounter = YTPlayer.videoLength - 1;
-			jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
+			jQuery( YTPlayer ).YTPChangeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
 			return this;
 		},
 		/**
@@ -709,7 +711,7 @@ var getYTPVideoID = function( url ) {
 			YTPlayer.videoCounter = idx;
 			if( YTPlayer.videoCounter >= YTPlayer.videoLength - 1 )
 				YTPlayer.videoCounter = YTPlayer.videoLength - 1;
-			jQuery( YTPlayer ).changeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
+			jQuery( YTPlayer ).YTPChangeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
 			return this;
 		},
 		/**
@@ -1761,20 +1763,20 @@ var getYTPVideoID = function( url ) {
 		},
 		/**
 		 *
-		 * @param align
+		 * @param anchor
 		 */
-		setAlign: function( align ) {
+		setAnchor: function( anchor ) {
 			var $YTplayer = this;
 
-			$YTplayer.optimizeDisplay( align );
+			$YTplayer.optimizeDisplay( anchor );
 		},
 		/**
 		 *
-		 * @param align
+		 * @param anchor
 		 */
-		getAlign: function() {
+		getAnchor: function() {
 			var YTPlayer = this.get( 0 );
-			return YTPlayer.opt.align;
+			return YTPlayer.opt.anchor;
 		},
 		/**
 		 *
@@ -1790,18 +1792,18 @@ var getYTPVideoID = function( url ) {
 
 	/**
 	 *
-	 * @param align
+	 * @param anchor
 	 * can be center, top, bottom, right, left; (default is center,center)
 	 */
-	jQuery.fn.optimizeDisplay = function( align ) {
+	jQuery.fn.optimizeDisplay = function( anchor ) {
 		var YTPlayer = this.get( 0 );
 		var playerBox = jQuery( YTPlayer.playerEl );
 		var vid = {};
 
-		YTPlayer.opt.align = align || YTPlayer.opt.align;
+		YTPlayer.opt.anchor = anchor || YTPlayer.opt.anchor;
 
-		YTPlayer.opt.align = typeof YTPlayer.opt.align != "undefined " ? YTPlayer.opt.align : "center,center";
-		var YTPAlign = YTPlayer.opt.align.split( "," );
+		YTPlayer.opt.anchor = typeof YTPlayer.opt.anchor != "undefined " ? YTPlayer.opt.anchor : "center,center";
+		var YTPAlign = YTPlayer.opt.anchor.split( "," );
 
 		//data.optimizeDisplay = YTPlayer.isPlayer ? false : data.optimizeDisplay;
 
@@ -1956,8 +1958,8 @@ var getYTPVideoID = function( url ) {
 	jQuery.fn.YTPRemoveMask = jQuery.mbYTPlayer.removeMask;
 	jQuery.fn.YTPToggleMask = jQuery.mbYTPlayer.toggleMask;
 
-	jQuery.fn.YTPSetAlign = jQuery.mbYTPlayer.setAlign;
-	jQuery.fn.YTPGetAlign = jQuery.mbYTPlayer.getAlign;
+	jQuery.fn.YTPSetAnchor = jQuery.mbYTPlayer.setAnchor;
+	jQuery.fn.YTPGetAnchor = jQuery.mbYTPlayer.getAnchor;
 
 	/**
 	 *

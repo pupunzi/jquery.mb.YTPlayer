@@ -1,29 +1,3 @@
-/*___________________________________________________________________________________________________________________________________________________
- _ jquery.mb.components                                                                                                                             _
- _                                                                                                                                                  _
- _ file: jquery.mb.YTPlayer.css                                                                                                                     _
- _ last modified: 05/01/16 17.43                                                                                                                    _
- _                                                                                                                                                  _
- _ Open Lab s.r.l., Florence - Italy                                                                                                                _
- _                                                                                                                                                  _
- _ email: matteo@open-lab.com                                                                                                                       _
- _ site: http://pupunzi.com                                                                                                                         _
- _       http://open-lab.com                                                                                                                        _
- _ blog: http://pupunzi.open-lab.com                                                                                                                _
- _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
- _                                                                                                                                                  _
- _ Licences: MIT, GPL                                                                                                                               _
- _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
- _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
- _                                                                                                                                                  _
- _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
- ___________________________________________________________________________________________________________________________________________________*/
-
-
-/**
-* version: {{ version }}
-*/
-
 @charset"UTF-8";
 @font-face {
     font-family: 'ytpregular';
@@ -265,19 +239,19 @@
 /*RASTER OVERLAY*/
 
 .YTPOverlay.raster {
-    background: url("images/raster.png");
+    background: url(images/raster.png);
 }
 
 .YTPOverlay.raster.retina {
-    background: url("images/raster@2x.png");
+    background: url(images/raster@2x.png);
 }
 
 .YTPOverlay.raster-dot {
-    background: url("images/raster_dot.png");
+    background: url(images/raster_dot.png);
 }
 
 .YTPOverlay.raster-dot.retina {
-    background: url("images/raster_dot@2x.png");
+    background: url(images/raster_dot@2x.png);
 }
 
 

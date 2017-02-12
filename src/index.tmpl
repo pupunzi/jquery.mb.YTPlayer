@@ -26,10 +26,10 @@
 	<meta charset="UTF-8">
 	<title>youtube Chromeless Player - mb.YTPlayer</title>
 	<link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-	<link href="css/jquery.mb.YTPlayer.min.css?_bn={{ buildnum }}" media="all" rel="stylesheet" type="text/css">
-	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js"></script>-->
+	<link href="css/jquery.mb.ytplayer.min.css?_bn={{ buildnum }}" media="all" rel="stylesheet" type="text/css">
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>-->
 	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-	<script src="jquery.mb.YTPlayer.min.js?_bn={{ buildnum }}"></script>
+	<script src="jquery.mb.YTPlayer.js?_bn={{ buildnum }}"></script>
 	<script src="../examples/assets/apikey.js"></script>
 	<style>
 	*:focus {
@@ -378,11 +378,10 @@
 	} );
 	/* END FILTER SLIDERS ******************************************************************************************/
 
-
 	function changeLabel( state ) {
-		$( "#togglePlay" ).html( state != 1 ? "pause" : "play" );
-		$( "#togglePlay" ).removeClass( state != 1 ? "play" : "pause" );
-		$( "#togglePlay" ).addClass( state != 1 ? "pause" : "play" );
+		$( "#togglePlay" ).html( state == 1 ? "pause" : "play" );
+		$( "#togglePlay" ).removeClass( state == 1 ? "play" : "pause" );
+		$( "#togglePlay" ).addClass( state == 1 ? "pause" : "play" );
 	}
 
 	function checkForVal( val ) {
@@ -401,8 +400,8 @@
 		<br>
 		<br>
 		<h1 style="color:white">jQuery.mb.YTPlayer</h1>
-		<h2 style="color:white; text-align: center">An HTML5 Background player</h2>
-		<br>for YouTube videos</h2>
+		<h2 style="color:white; text-align: center">An HTML5 Background player
+			<br>for YouTube videos</h2>
 		<div id="filtersControl">
 			<h2 style="color:white">Apply filters</h2>
 			<h3 style="color: white">* Does not work in IE.</h3>

@@ -97,6 +97,7 @@ var getYTPVideoID = function( url ) {
 		controlBar: null,
 		loading: null,
 		locationProtocol: "https:",
+
 		filters: {
 			grayscale: {
 				value: 0,
@@ -229,7 +230,7 @@ var getYTPVideoID = function( url ) {
 					left: 0,
 					width: "100%",
 					height: "100%"
-				} ).addClass( "YTPOverlay" );
+				} ).addClass( "mbYTP_overlay" );
 
 				if( YTPlayer.isPlayer ) {
 					overlay.on( "click", function() {
@@ -249,7 +250,7 @@ var getYTPVideoID = function( url ) {
 					opacity: 0
 				} );
 
-				var playerBox = jQuery( "<div/>" ).attr( "id", playerID ).addClass( "playerBox" );
+				var playerBox = jQuery( "<div/>" ).addClass( "mbYTP_playerBox" ).attr( "id", playerID );
 				playerBox.css( {
 					position: "absolute",
 					zIndex: 0,
@@ -521,6 +522,7 @@ var getYTPVideoID = function( url ) {
 
 					if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) {
 						var bgndURL = YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium;
+
 						YTPlayer.opt.containment.css( {
 							background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
 							backgroundSize: "cover"
@@ -1561,6 +1563,7 @@ var getYTPVideoID = function( url ) {
 
 							YTPlayer.player.seekTo( startAt, true );
 							if( !YTPlayer.isBackground ) {
+
 								YTPlayer.opt.containment.css( {
 									background: "rgba(0,0,0,0.5) url(" + YTPlayer.opt.backgroundUrl + ") center center",
 									backgroundSize: "cover"

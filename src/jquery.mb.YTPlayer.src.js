@@ -579,11 +579,14 @@ var getYTPVideoID = function( url ) {
 				}, 50 );
 				if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) {
 					var bgndURL = jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/hqdefault.jpg";
-					YTPlayer.opt.containment.css( {
-						background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
-						backgroundSize: "cover"
-					} );
+
+					if( bgndURL )
+						YTPlayer.opt.containment.css( {
+							background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
+							backgroundSize: "cover"
+						} );
 					YTPlayer.opt.backgroundUrl = bgndURL;
+
 				}
 				YTPlayer.videoData = null;
 				YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
@@ -948,8 +951,9 @@ var getYTPVideoID = function( url ) {
 			var playBtn = controls.find( ".mb_YTPPlaypause" );
 			playBtn.html( jQuery.mbYTPlayer.controls.pause );
 			YTPlayer.state = 1;
+			YTPlayer.orig_background = jQuery( YTPlayer ).css( "background-image" );
+			//jQuery( YTPlayer ).css( "background-image", "none" );
 
-			jQuery( YTPlayer ).css( "background-image", "none" );
 			return this;
 		},
 		/**
@@ -1563,11 +1567,16 @@ var getYTPVideoID = function( url ) {
 
 							YTPlayer.player.seekTo( startAt, true );
 							if( !YTPlayer.isBackground ) {
-
-								YTPlayer.opt.containment.css( {
-									background: "rgba(0,0,0,0.5) url(" + YTPlayer.opt.backgroundUrl + ") center center",
-									backgroundSize: "cover"
-								} );
+								if( YTPlayer.opt.backgroundUrl && YTPlayer.isPlayer ) {
+									YTPlayer.opt.backgroundUrl = YTPlayer.opt.backgroundUrl || YTPlayer.orig_background;
+									YTPlayer.opt.containment.css( {
+										background: "url(" + YTPlayer.opt.backgroundUrl + ") center center",
+										backgroundSize: "cover"
+									} );
+								}
+							} else {
+								if( YTPlayer.orig_background )
+									jQuery( YTPlayer ).css( "background-image", YTPlayer.orig_background );
 							}
 						} );
 
@@ -1699,7 +1708,6 @@ var getYTPVideoID = function( url ) {
 						YTPStart.time = YTPlayer.currentTime;
 						jQuery( YTPlayer ).trigger( YTPStart );
 
-						$YTPlayer.css( "background-image", "none" );
 						jQuery( YTPlayer.playerEl ).CSSAnimate( {
 							opacity: 1
 						}, 1000 );

@@ -29,7 +29,7 @@
     <link href="../dist/css/jquery.mb.ytplayer.min.css" media="all" rel="stylesheet" type="text/css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script src="../dist/jquery.mb.YTPlayer.min.js"></script>
+    <script src="../dist/jquery.mb.YTPlayer.js"></script>
     <script src="assets/apikey.js"></script>
     <style>
         body {
@@ -86,13 +86,15 @@
         var myPlayer;
         jQuery(function () {
             var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
-            myPlayer = jQuery("#video").YTPlayer();
+            myPlayer = jQuery(".player").YTPlayer();
         });
     </script>
 </head>
 <body>
 <div id="wrapper">
-    <div id="customElement">
+    <div id="customElement" style="background: #ddd url('assets/mask-1.png') no-repeat center center; background-size: cover"
+         class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'#customElement', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}"
+            >
         <div id="testText">
             <h1>jQuery.mb.YTPlayer</h1>
             <h2>An HTML5 Background player <br>for YouTube videos</h2>
@@ -108,7 +110,7 @@
 
 </div>
 <!--qvuILbcXlg8 , https://www.youtube.com/watch?v=FYXMghecCNg-->
-<div id="video" class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'#customElement', showControls:false, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}">My video</div> <!--BsekcY04xvQ-->
+<!--<div id="video" class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'#customElement', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}">My video</div> &lt;!&ndash;BsekcY04xvQ&ndash;&gt;-->
 
 
 <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">

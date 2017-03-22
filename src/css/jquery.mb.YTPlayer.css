@@ -15,7 +15,7 @@
     outline: 0;
 }
 
-.mbYTP_wrapper {
+.YTPWrapper {
     display: block;
     transform: translateZ(0) translate3d(0, 0, 0);
     transform-style: preserve-3d;

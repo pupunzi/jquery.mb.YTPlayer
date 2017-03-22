@@ -51,12 +51,12 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.12",
-		build: "6132",
+		build: "6157",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
 			containment: "body",
-			ratio: "auto", // "auto", "16/9", "4/3"
+			ratio: "auto", // "auto", "16/9", "4/3" or number: 4/3, 16/9
 			videoURL: null,
 			playlistURL: null,
 			startAt: 0,
@@ -69,7 +69,7 @@ var getYTPVideoID = function( url ) {
 			quality: "default", //or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres”
 			mute: false,
 			loop: true,
-			fadeOnStartTime: 1000, //fade in timing at video start
+			fadeOnStartTime: 500, //fade in timing at video start
 			showControls: true,
 			showAnnotations: false,
 			showYTLogo: true,
@@ -175,6 +175,7 @@ var getYTPVideoID = function( url ) {
 					}
 					return isIfr;
 				};
+
 				YTPlayer.canGoFullScreen = !( jQuery.browser.msie || jQuery.browser.opera || isIframe() );
 				if( !YTPlayer.canGoFullScreen ) YTPlayer.opt.realfullscreen = false;
 				if( !$YTPlayer.attr( "id" ) ) $YTPlayer.attr( "id", "ytp_" + new Date().getTime() );
@@ -230,7 +231,7 @@ var getYTPVideoID = function( url ) {
 					left: 0,
 					width: "100%",
 					height: "100%"
-				} ).addClass( "mbYTP_overlay" );
+				} ).addClass( "YTPOverlay" );
 
 				if( YTPlayer.isPlayer ) {
 					overlay.on( "click", function() {
@@ -250,7 +251,7 @@ var getYTPVideoID = function( url ) {
 					opacity: 0
 				} );
 
-				var playerBox = jQuery( "<div/>" ).addClass( "mbYTP_playerBox" ).attr( "id", playerID );
+				var playerBox = jQuery( "<div/>" ).attr( "id", playerID ).addClass( "playerBox" );
 				playerBox.css( {
 					position: "absolute",
 					zIndex: 0,
@@ -542,7 +543,7 @@ var getYTPVideoID = function( url ) {
 					YTPData.prop = {};
 					for( var x in YTPlayer.videoData ) YTPData.prop[ x ] = YTPlayer.videoData[ x ];
 					jQuery( YTPlayer ).trigger( YTPData );
-				}, 500 );
+				}, YTPlayer.opt.fadeOnStartTime );
 
 				YTPlayer.hasData = true;
 			} else if( jQuery.mbYTPlayer.apiKey ) {
@@ -847,16 +848,16 @@ var getYTPVideoID = function( url ) {
 					setTimeout( function() {
 						videoWrapper.CSSAnimate( {
 							opacity: 1
-						}, YTPlayer.opt.fadeOnStartTime );
+						}, YTPlayer.opt.fadeOnStartTime * 2 );
 						YTPlayer.wrapper.append( controls );
 						jQuery( YTPlayer ).optimizeDisplay();
 						YTPlayer.player.seekTo( YTPlayer.player.getCurrentTime() + .1, true );
-					}, 500 )
+					}, YTPlayer.opt.fadeOnStartTime )
 				} else videoWrapper.css( {
 					zIndex: 10000
 				} ).CSSAnimate( {
 					opacity: 1
-				}, YTPlayer.opt.fadeOnStartTime );
+				}, YTPlayer.opt.fadeOnStartTime * 2 );
 				fullScreenBtn.html( jQuery.mbYTPlayer.controls.showSite );
 				YTPlayer.isAlone = true;
 			} else {
@@ -941,18 +942,17 @@ var getYTPVideoID = function( url ) {
 			YTPlayer.player.playVideo();
 			YTPlayer.wrapper.CSSAnimate( {
 				opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-			}, YTPlayer.opt.fadeOnStartTime * 2 );
+			}, YTPlayer.opt.fadeOnStartTime * 4 );
 
 			jQuery( YTPlayer.playerEl ).CSSAnimate( {
 				opacity: 1
-			}, YTPlayer.opt.fadeOnStartTime );
+			}, YTPlayer.opt.fadeOnStartTime * 2 );
 
 			var controls = jQuery( "#controlBar_" + YTPlayer.id );
 			var playBtn = controls.find( ".mb_YTPPlaypause" );
 			playBtn.html( jQuery.mbYTPlayer.controls.pause );
 			YTPlayer.state = 1;
 			YTPlayer.orig_background = jQuery( YTPlayer ).css( "background-image" );
-			//jQuery( YTPlayer ).css( "background-image", "none" );
 
 			return this;
 		},
@@ -1716,7 +1716,7 @@ var getYTPVideoID = function( url ) {
 
 						YTPlayer.wrapper.CSSAnimate( {
 							opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-						}, YTPlayer.opt.fadeOnStartTime );
+						}, YTPlayer.opt.fadeOnStartTime * 2 );
 
 						/* Fix for Safari freeze */
 						if( jQuery.browser.safari ) {
@@ -1824,10 +1824,16 @@ var getYTPVideoID = function( url ) {
 			win.width = el.outerWidth();
 			win.height = el.outerHeight() + abundance;
 
-			vid.width = win.width;
-			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( vid.width * ( 9 / 16 ) ) : Math.ceil( vid.width * ( 3 / 4 ) );
 
-			vid.marginTop = -( ( vid.height - win.height ) / 2 );
+			YTPlayer.opt.ratio = eval( YTPlayer.opt.ratio );
+
+			console.debug( YTPlayer.opt.ratio );
+
+			vid.width = win.width;
+			//			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( vid.width * ( 9 / 16 ) ) : Math.ceil( vid.width * ( 3 / 4 ) );
+			vid.height = Math.ceil( vid.width / YTPlayer.opt.ratio );
+
+			vid.marginTop = Math.ceil( -( ( vid.height - win.height ) / 2 ) );
 			vid.marginLeft = 0;
 
 			var lowest = vid.height < win.height;
@@ -1835,12 +1841,20 @@ var getYTPVideoID = function( url ) {
 			if( lowest ) {
 
 				vid.height = win.height;
-				vid.width = YTPlayer.opt.ratio == "16/9" ? Math.floor( vid.height * ( 16 / 9 ) ) : Math.floor( vid.height * ( 4 / 3 ) );
+				//				vid.width = YTPlayer.opt.ratio == "16/9" ? Math.floor( vid.height * ( 16 / 9 ) ) : Math.floor( vid.height * ( 4 / 3 ) );
+				vid.width = Math.ceil( vid.height * YTPlayer.opt.ratio );
 
 				vid.marginTop = 0;
-				vid.marginLeft = -( ( vid.width - win.width ) / 2 );
+				vid.marginLeft = Math.ceil( -( ( vid.width - win.width ) / 2 ) );
 
 			}
+
+
+			console.debug( "vid.marginTop    ", vid.marginTop );
+			console.debug( "vid.marginLeft    ", vid.marginLeft );
+			console.debug( "vid.width    ", vid.width );
+			console.debug( "vid.height  ", vid.height );
+
 
 			for( var a in YTPAlign ) {
 
@@ -2042,7 +2056,16 @@ function uncamel(e){return e.replace(/([A-Z])/g,function(e){return"-"+e.toLowerC
  _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 
-var nAgt=navigator.userAgent;if(!jQuery.browser){jQuery.browser={},jQuery.browser.mozilla=!1,jQuery.browser.webkit=!1,jQuery.browser.opera=!1,jQuery.browser.safari=!1,jQuery.browser.chrome=!1,jQuery.browser.androidStock=!1,jQuery.browser.msie=!1,jQuery.browser.ua=nAgt,jQuery.browser.name=navigator.appName,jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=nAgt.substring(verOffset+5);else if(-1!=nAgt.indexOf("Trident")||-1!=nAgt.indexOf("Edge")){jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.browser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.browser.webkit=!0,jQuery.browser.chrome=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):nAgt.indexOf("mozilla/5.0")>-1&&nAgt.indexOf("android ")>-1&&nAgt.indexOf("applewebkit")>-1&&!(nAgt.indexOf("chrome")>-1)?(verOffset=nAgt.indexOf("Chrome"),jQuery.browser.webkit=!0,jQuery.browser.androidStock=!0,jQuery.browser.name="androidStock",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=nAgt.substring(verOffset+8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));-1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix)),-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix)),jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10),isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10)),jQuery.browser.version=jQuery.browser.majorVersion}jQuery.browser.android=/Android/i.test(nAgt),jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt),jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt),jQuery.browser.operaMobile=/Opera Mini/i.test(nAgt),jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt),jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt),jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle,jQuery.isMobile=jQuery.browser.mobile,jQuery.isTablet=jQuery.browser.mobile&&jQuery(window).width()>765,jQuery.isAndroidDefault=jQuery.browser.android&&!/chrome/i.test(nAgt);
+var nAgt=navigator.userAgent;
+if(!jQuery.browser){var isTouchSupported=function(){var a=nAgt.msMaxTouchPoints,b="ontouchstart"in document.createElement("div");return a||b?!0:!1};jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.androidStock=!1;jQuery.browser.msie=!1;jQuery.browser.edge=!1;jQuery.browser.hasTouch=isTouchSupported();jQuery.browser.ua=nAgt;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+
+		parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+
+		4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=nAgt.substring(verOffset+5);else if(-1!=nAgt.indexOf("Trident")){jQuery.browser.msie=!0;jQuery.browser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.browser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Edge"))?(jQuery.browser.edge=!0,jQuery.browser.name="Microsoft Edge",jQuery.browser.fullVersion=
+		nAgt.substring(verOffset+5)):-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.browser.webkit=!0,jQuery.browser.chrome=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1<nAgt.indexOf("mozilla/5.0")&&-1<nAgt.indexOf("android ")&&-1<nAgt.indexOf("applewebkit")&&!(-1<nAgt.indexOf("chrome"))?(verOffset=nAgt.indexOf("Chrome"),jQuery.browser.webkit=!0,jQuery.browser.androidStock=!0,jQuery.browser.name="androidStock",jQuery.browser.fullVersion=nAgt.substring(verOffset+
+		7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=
+		nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=nAgt.substring(verOffset+8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));-1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&
+(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}
+jQuery.browser.android=/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.browser.operaMobile=/Opera Mini/i.test(nAgt);jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;
+jQuery.isMobile=jQuery.browser.mobile;jQuery.isTablet=jQuery.browser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.browser.android&&!/chrome/i.test(nAgt);
 ;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _

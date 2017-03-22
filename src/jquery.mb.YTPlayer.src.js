@@ -56,7 +56,7 @@ var getYTPVideoID = function( url ) {
 		apiKey: "",
 		defaults: {
 			containment: "body",
-			ratio: "auto", // "auto", "16/9", "4/3"
+			ratio: "auto", // "auto", "16/9", "4/3" or number: 4/3, 16/9
 			videoURL: null,
 			playlistURL: null,
 			startAt: 0,
@@ -69,7 +69,7 @@ var getYTPVideoID = function( url ) {
 			quality: "default", //or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres”
 			mute: false,
 			loop: true,
-			fadeOnStartTime: 1000, //fade in timing at video start
+			fadeOnStartTime: 500, //fade in timing at video start
 			showControls: true,
 			showAnnotations: false,
 			showYTLogo: true,
@@ -175,6 +175,7 @@ var getYTPVideoID = function( url ) {
 					}
 					return isIfr;
 				};
+
 				YTPlayer.canGoFullScreen = !( jQuery.browser.msie || jQuery.browser.opera || isIframe() );
 				if( !YTPlayer.canGoFullScreen ) YTPlayer.opt.realfullscreen = false;
 				if( !$YTPlayer.attr( "id" ) ) $YTPlayer.attr( "id", "ytp_" + new Date().getTime() );
@@ -230,7 +231,7 @@ var getYTPVideoID = function( url ) {
 					left: 0,
 					width: "100%",
 					height: "100%"
-				} ).addClass( "mbYTP_overlay" );
+				} ).addClass( "YTPOverlay" );
 
 				if( YTPlayer.isPlayer ) {
 					overlay.on( "click", function() {
@@ -250,7 +251,7 @@ var getYTPVideoID = function( url ) {
 					opacity: 0
 				} );
 
-				var playerBox = jQuery( "<div/>" ).addClass( "mbYTP_playerBox" ).attr( "id", playerID );
+				var playerBox = jQuery( "<div/>" ).attr( "id", playerID ).addClass( "playerBox" );
 				playerBox.css( {
 					position: "absolute",
 					zIndex: 0,
@@ -542,7 +543,7 @@ var getYTPVideoID = function( url ) {
 					YTPData.prop = {};
 					for( var x in YTPlayer.videoData ) YTPData.prop[ x ] = YTPlayer.videoData[ x ];
 					jQuery( YTPlayer ).trigger( YTPData );
-				}, 500 );
+				}, YTPlayer.opt.fadeOnStartTime );
 
 				YTPlayer.hasData = true;
 			} else if( jQuery.mbYTPlayer.apiKey ) {
@@ -847,16 +848,16 @@ var getYTPVideoID = function( url ) {
 					setTimeout( function() {
 						videoWrapper.CSSAnimate( {
 							opacity: 1
-						}, YTPlayer.opt.fadeOnStartTime );
+						}, YTPlayer.opt.fadeOnStartTime * 2 );
 						YTPlayer.wrapper.append( controls );
 						jQuery( YTPlayer ).optimizeDisplay();
 						YTPlayer.player.seekTo( YTPlayer.player.getCurrentTime() + .1, true );
-					}, 500 )
+					}, YTPlayer.opt.fadeOnStartTime )
 				} else videoWrapper.css( {
 					zIndex: 10000
 				} ).CSSAnimate( {
 					opacity: 1
-				}, YTPlayer.opt.fadeOnStartTime );
+				}, YTPlayer.opt.fadeOnStartTime * 2 );
 				fullScreenBtn.html( jQuery.mbYTPlayer.controls.showSite );
 				YTPlayer.isAlone = true;
 			} else {
@@ -941,18 +942,17 @@ var getYTPVideoID = function( url ) {
 			YTPlayer.player.playVideo();
 			YTPlayer.wrapper.CSSAnimate( {
 				opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-			}, YTPlayer.opt.fadeOnStartTime * 2 );
+			}, YTPlayer.opt.fadeOnStartTime * 4 );
 
 			jQuery( YTPlayer.playerEl ).CSSAnimate( {
 				opacity: 1
-			}, YTPlayer.opt.fadeOnStartTime );
+			}, YTPlayer.opt.fadeOnStartTime * 2 );
 
 			var controls = jQuery( "#controlBar_" + YTPlayer.id );
 			var playBtn = controls.find( ".mb_YTPPlaypause" );
 			playBtn.html( jQuery.mbYTPlayer.controls.pause );
 			YTPlayer.state = 1;
 			YTPlayer.orig_background = jQuery( YTPlayer ).css( "background-image" );
-			//jQuery( YTPlayer ).css( "background-image", "none" );
 
 			return this;
 		},
@@ -1716,7 +1716,7 @@ var getYTPVideoID = function( url ) {
 
 						YTPlayer.wrapper.CSSAnimate( {
 							opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-						}, YTPlayer.opt.fadeOnStartTime );
+						}, YTPlayer.opt.fadeOnStartTime * 2 );
 
 						/* Fix for Safari freeze */
 						if( jQuery.browser.safari ) {
@@ -1824,10 +1824,16 @@ var getYTPVideoID = function( url ) {
 			win.width = el.outerWidth();
 			win.height = el.outerHeight() + abundance;
 
-			vid.width = win.width;
-			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( vid.width * ( 9 / 16 ) ) : Math.ceil( vid.width * ( 3 / 4 ) );
 
-			vid.marginTop = -( ( vid.height - win.height ) / 2 );
+			YTPlayer.opt.ratio = eval( YTPlayer.opt.ratio );
+
+			console.debug( YTPlayer.opt.ratio );
+
+			vid.width = win.width;
+			//			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( vid.width * ( 9 / 16 ) ) : Math.ceil( vid.width * ( 3 / 4 ) );
+			vid.height = Math.ceil( vid.width / YTPlayer.opt.ratio );
+
+			vid.marginTop = Math.ceil( -( ( vid.height - win.height ) / 2 ) );
 			vid.marginLeft = 0;
 
 			var lowest = vid.height < win.height;
@@ -1835,12 +1841,20 @@ var getYTPVideoID = function( url ) {
 			if( lowest ) {
 
 				vid.height = win.height;
-				vid.width = YTPlayer.opt.ratio == "16/9" ? Math.floor( vid.height * ( 16 / 9 ) ) : Math.floor( vid.height * ( 4 / 3 ) );
+				//				vid.width = YTPlayer.opt.ratio == "16/9" ? Math.floor( vid.height * ( 16 / 9 ) ) : Math.floor( vid.height * ( 4 / 3 ) );
+				vid.width = Math.ceil( vid.height * YTPlayer.opt.ratio );
 
 				vid.marginTop = 0;
-				vid.marginLeft = -( ( vid.width - win.width ) / 2 );
+				vid.marginLeft = Math.ceil( -( ( vid.width - win.width ) / 2 ) );
 
 			}
+
+
+			console.debug( "vid.marginTop    ", vid.marginTop );
+			console.debug( "vid.marginLeft    ", vid.marginLeft );
+			console.debug( "vid.width    ", vid.width );
+			console.debug( "vid.height  ", vid.height );
+
 
 			for( var a in YTPAlign ) {
 

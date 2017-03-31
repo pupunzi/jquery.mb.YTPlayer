@@ -219,6 +219,9 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.canPlayOnMobile = isPlayer && jQuery( this ).children().length === 0;
 				YTPlayer.isPlayer = false;
 
+				/**
+				 * Hide the placeholder if it's not the target of the player
+				 */
 				if( !isPlayer ) {
 					$YTPlayer.hide();
 				} else {
@@ -1849,12 +1852,12 @@ var getYTPVideoID = function( url ) {
 
 			}
 
-
+/*
 			console.debug( "vid.marginTop    ", vid.marginTop );
 			console.debug( "vid.marginLeft    ", vid.marginLeft );
 			console.debug( "vid.width    ", vid.width );
 			console.debug( "vid.height  ", vid.height );
-
+*/
 
 			for( var a in YTPAlign ) {
 

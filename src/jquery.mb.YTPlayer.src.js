@@ -26,6 +26,8 @@ function onYouTubeIframeAPIReady() {
 	jQuery( document ).trigger( "YTAPIReady" );
 }
 
+//window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
 var getYTPVideoID = function( url ) {
 	var videoID, playlistID;
 	if( url.indexOf( "youtu.be" ) > 0 ) {

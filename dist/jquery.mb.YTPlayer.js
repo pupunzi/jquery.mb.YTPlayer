@@ -26,6 +26,8 @@ function onYouTubeIframeAPIReady() {
 	jQuery( document ).trigger( "YTAPIReady" );
 }
 
+//window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
 var getYTPVideoID = function( url ) {
 	var videoID, playlistID;
 	if( url.indexOf( "youtu.be" ) > 0 ) {
@@ -51,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.12",
-		build: "6157",
+		build: "6159",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -179,7 +181,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.canGoFullScreen = !( jQuery.browser.msie || jQuery.browser.opera || isIframe() );
 				if( !YTPlayer.canGoFullScreen ) YTPlayer.opt.realfullscreen = false;
 				if( !$YTPlayer.attr( "id" ) ) $YTPlayer.attr( "id", "ytp_" + new Date().getTime() );
-				var playerID = "mbYTP_" + YTPlayer.id;
+				var playerID = "iframe_" + YTPlayer.id;
 				YTPlayer.isAlone = false;
 				YTPlayer.hasFocus = true;
 				YTPlayer.videoID = this.opt.videoURL ? getYTPVideoID( this.opt.videoURL ).videoID : $YTPlayer.attr( "href" ) ? getYTPVideoID( $YTPlayer.attr( "href" ) ).videoID : false;
@@ -219,6 +221,9 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.canPlayOnMobile = isPlayer && jQuery( this ).children().length === 0;
 				YTPlayer.isPlayer = false;
 
+				/**
+				 * Hide the placeholder if it's not the target of the player
+				 */
 				if( !isPlayer ) {
 					$YTPlayer.hide();
 				} else {
@@ -239,7 +244,7 @@ var getYTPVideoID = function( url ) {
 					} )
 				}
 
-				var wrapper = jQuery( "<div/>" ).addClass( "mbYTP_wrapper" ).attr( "id", "wrapper_" + playerID );
+				var wrapper = jQuery( "<div/>" ).addClass( "mbYTP_wrapper" ).attr( "id", "wrapper_" + YTPlayer.id );
 				wrapper.css( {
 					position: "absolute",
 					zIndex: 0,
@@ -1526,7 +1531,7 @@ var getYTPVideoID = function( url ) {
 					YTPlayer.isCompact = false;
 					if( !YTPlayer.isMute && YTPlayer.volumeBar ) YTPlayer.volumeBar.updateSliderVal( YTPlayer.opt.vol );
 				}
-				if( YTPlayer.player.getPlayerState() == 1 && ( parseFloat( YTPlayer.player.getDuration() - 1.5 ) < YTPlayer.player.getCurrentTime() || ( stopAt > 0 && parseFloat( YTPlayer.player.getCurrentTime() ) > stopAt ) ) ) {
+				if( YTPlayer.player.getPlayerState() == 1 && ( parseFloat( YTPlayer.player.getDuration() - .5 ) < YTPlayer.player.getCurrentTime() || ( stopAt > 0 && parseFloat( YTPlayer.player.getCurrentTime() ) > stopAt ) ) ) {
 					if( YTPlayer.isEnded ) return;
 					YTPlayer.isEnded = true;
 					setTimeout( function() {
@@ -1849,12 +1854,12 @@ var getYTPVideoID = function( url ) {
 
 			}
 
-
-			console.debug( "vid.marginTop    ", vid.marginTop );
-			console.debug( "vid.marginLeft    ", vid.marginLeft );
-			console.debug( "vid.width    ", vid.width );
-			console.debug( "vid.height  ", vid.height );
-
+			/*
+						console.debug( "vid.marginTop    ", vid.marginTop );
+						console.debug( "vid.marginLeft    ", vid.marginLeft );
+						console.debug( "vid.width    ", vid.width );
+						console.debug( "vid.height  ", vid.height );
+			*/
 
 			for( var a in YTPAlign ) {
 

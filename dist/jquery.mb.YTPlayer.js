@@ -52,8 +52,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "3.0.12",
-		build: "6166",
+		version: "3.0.13",
+		build: "6169",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -80,7 +80,7 @@ var getYTPVideoID = function( url ) {
 			mobileFallbackImage: null,
 			gaTrack: true,
 			optimizeDisplay: true,
-			remember_last_time: false,
+			remember_last_time: true,
 			anchor: "center,center", // top,bottom,left,right combined in pair
 			onReady: function( player ) {},
 			onError: function( player, err ) {}
@@ -192,13 +192,7 @@ var getYTPVideoID = function( url ) {
 
 				var start_from_last = parseFloat( jQuery.mbCookie.get( "YTPlayer_" + YTPlayer.videoID ) );
 
-				/*
-								console.debug( "LOAD" );
-								console.debug( "YTPlayer.videoID:: ", YTPlayer.videoID );
-								console.debug( "coockie:: ", jQuery.mbCookie.get( "YTPlayer_" + YTPlayer.videoID ) );
-				*/
-
-				if( start_from_last )
+				if( YTPlayer.opt.remember_last_time && start_from_last )
 					YTPlayer.opt.startAt = start_from_last;
 
 				var playerVars = {

@@ -80,7 +80,7 @@ var getYTPVideoID = function( url ) {
 			mobileFallbackImage: null,
 			gaTrack: true,
 			optimizeDisplay: true,
-			remember_time: true,
+			remember_last_time: true,
 			anchor: "center,center", // top,bottom,left,right combined in pair
 			onReady: function( player ) {},
 			onError: function( player, err ) {}
@@ -421,7 +421,7 @@ var getYTPVideoID = function( url ) {
 										$YTPlayer.optimizeDisplay();
 									} );
 
-									if( YTPlayer.opt.remember_time ) {
+									if( YTPlayer.opt.remember_last_time ) {
 
 										jQuery( window ).on( "unload.YTP_" + YTPlayer.id, function() {
 											var current_time = YTPlayer.player.getCurrentTime();

@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.12",
-		build: "6165",
+		build: "6166",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -80,7 +80,7 @@ var getYTPVideoID = function( url ) {
 			mobileFallbackImage: null,
 			gaTrack: true,
 			optimizeDisplay: true,
-			remember_time: true,
+			remember_last_time: false,
 			anchor: "center,center", // top,bottom,left,right combined in pair
 			onReady: function( player ) {},
 			onError: function( player, err ) {}
@@ -192,9 +192,11 @@ var getYTPVideoID = function( url ) {
 
 				var start_from_last = parseFloat( jQuery.mbCookie.get( "YTPlayer_" + YTPlayer.videoID ) );
 
-				console.debug( "LOAD" );
-				console.debug( "YTPlayer.videoID:: ", YTPlayer.videoID );
-				console.debug( "coockie:: ", jQuery.mbCookie.get( "YTPlayer_" + YTPlayer.videoID ) );
+				/*
+								console.debug( "LOAD" );
+								console.debug( "YTPlayer.videoID:: ", YTPlayer.videoID );
+								console.debug( "coockie:: ", jQuery.mbCookie.get( "YTPlayer_" + YTPlayer.videoID ) );
+				*/
 
 				if( start_from_last )
 					YTPlayer.opt.startAt = start_from_last;
@@ -419,14 +421,16 @@ var getYTPVideoID = function( url ) {
 										$YTPlayer.optimizeDisplay();
 									} );
 
-									if( YTPlayer.opt.remember_time ) {
+									if( YTPlayer.opt.remember_last_time ) {
 
 										jQuery( window ).on( "unload.YTP_" + YTPlayer.id, function() {
 											var current_time = YTPlayer.player.getCurrentTime();
 
-											console.debug( "UNLOAD" );
-											console.debug( "YTPlayer.videoID:: ", YTPlayer.videoID );
-											console.debug( "YTPlayer_" + YTPlayer.videoID + ":: ", current_time );
+											/*
+																						console.debug( "UNLOAD" );
+																						console.debug( "YTPlayer.videoID:: ", YTPlayer.videoID );
+																						console.debug( "YTPlayer_" + YTPlayer.videoID + ":: ", current_time );
+											*/
 
 											jQuery.mbCookie.set( "YTPlayer_" + YTPlayer.videoID, current_time, 1 );
 										} );

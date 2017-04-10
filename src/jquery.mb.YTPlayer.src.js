@@ -1832,7 +1832,7 @@ var getYTPVideoID = function( url ) {
 
 			YTPlayer.opt.ratio = eval( YTPlayer.opt.ratio );
 
-			console.debug( YTPlayer.opt.ratio );
+			//console.debug( YTPlayer.opt.ratio );
 
 			vid.width = win.width;
 			//			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( vid.width * ( 9 / 16 ) ) : Math.ceil( vid.width * ( 3 / 4 ) );

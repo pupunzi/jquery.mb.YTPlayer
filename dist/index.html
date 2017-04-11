@@ -26,9 +26,9 @@
 	<meta charset="UTF-8">
 	<title>youtube Chromeless Player - mb.YTPlayer</title>
 	<link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-	<link href="css/jquery.mb.YTPlayer.min.css?_bn=6172" media="all" rel="stylesheet" type="text/css">
+	<link href="css/jquery.mb.YTPlayer.min.css?_bn=6177" media="all" rel="stylesheet" type="text/css">
 	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-	<script src="jquery.mb.YTPlayer.js?_bn=6172"></script>
+	<script src="jquery.mb.YTPlayer.js?_bn=6177"></script>
 	<script src="../examples/assets/apikey.js"></script>
 	<style>
 	*:focus {
@@ -49,19 +49,19 @@
 		font-family: 'Lobster', cursive;
 	}
 	
-	h2 {
-		font-family: "Open Sans", sans-serif;
-		font-size: 35px;
-		text-align: left;
-		line-height: 60px;
-	}
-	
 	h1,
 	h2 {
 		font-family: 'Lobster', cursive;
 		text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
 		color: #000000;
 		font-weight: 200;
+	}
+	
+	h2 {
+		font-family: "Open Sans", sans-serif;
+		font-size: 35px;
+		text-align: left;
+		line-height: 1.4;
 	}
 	
 	#wrapper {
@@ -289,7 +289,20 @@
 			$( "#wrapper" ).prepend( logo ), $( "#logo" ).fadeIn()
 		}
 
+		var should_remember = $.mbCookie.get( "YTP_should_remember" );
+		if ( should_remember )
+			$( "#should_remember" ).attr( "checked", "checked" );
+
+		$( "#should_remember" ).on( "change", function() {
+			if ( $( this ).is( ":checked" ) ) {
+				$.mbCookie.set( "YTP_should_remember", "true", 1 );
+			} else {
+				$.mbCookie.remove( "YTP_should_remember" );
+			}
+		} );
+
 		var myPlayer = jQuery( "#bgndVideo" ).YTPlayer( {
+			remember_last_time: should_remember,
 			onReady: function( player ) {
 				YTPConsole.append( player.id + " player is ready" );
 				YTPConsole.append( "<br>" );
@@ -443,6 +456,10 @@
 			<h2 style="color:white">Apply mask</h2>
 			<button class="command" onclick="jQuery('#bgndVideo').YTPAddMask('../examples/assets/mask-1.png')">Add mask</button>
 			<button class="command" onclick="jQuery('#bgndVideo').YTPRemoveMask()">Remove mask</button>
+
+			<h2 style="color:white">Remember the time</h2>
+			<input type="checkbox" name="should_remember" id="should_remember">
+			<span style="color: #fff">Check this if you want the video to start from where you left it next time you load this page.</span>
 
 		</div>
 		<div id="changeVideo">

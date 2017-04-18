@@ -188,7 +188,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.videoID = this.opt.videoURL ? getYTPVideoID( this.opt.videoURL ).videoID : $YTPlayer.attr( "href" ) ? getYTPVideoID( $YTPlayer.attr( "href" ) ).videoID : false;
 				YTPlayer.playlistID = this.opt.videoURL ? getYTPVideoID( this.opt.videoURL ).playlistID : $YTPlayer.attr( "href" ) ? getYTPVideoID( $YTPlayer.attr( "href" ) ).playlistID : false;
 
-				YTPlayer.opt.showAnnotations = YTPlayer.opt.showAnnotations ? '0' : '3';
+				YTPlayer.opt.showAnnotations = YTPlayer.opt.showAnnotations ? '1' : '3';
 
 				var start_from_last = parseFloat( jQuery.mbCookie.get( "YTPlayer_" + YTPlayer.videoID ) );
 
@@ -1751,16 +1751,18 @@ var getYTPVideoID = function( url ) {
 						}, YTPlayer.opt.fadeOnStartTime * 2 );
 
 						/* Fix for Safari freeze */
-						if( jQuery.browser.safari ) {
+						/*
+												if( jQuery.browser.safari ) {
 
-							YTPlayer.safariPlay = setInterval( function() {
+													YTPlayer.safariPlay = setInterval( function() {
 
-								if( YTPlayer.state != 1 )
-									$YTPlayer.YTPPlay();
-								else
-									clearInterval( YTPlayer.safariPlay )
-							}, 10 )
-						}
+														if( YTPlayer.state != 1 )
+															$YTPlayer.YTPPlay();
+														else
+															clearInterval( YTPlayer.safariPlay )
+													}, 10 )
+												}
+						*/
 						$YTPlayer.on( "YTPReady", function() {
 							$YTPlayer.YTPPlay();
 						} );
@@ -1794,10 +1796,15 @@ var getYTPVideoID = function( url ) {
 					if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 						YTPlayer.controlBar.slideDown( 1000 );
 
-				} else if( jQuery.browser.safari ) {
-					YTPlayer.player.playVideo();
-					if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
 				}
+/*
+				else if( jQuery.browser.safari ) {
+
+										YTPlayer.player.playVideo();
+										if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
+
+				}
+*/
 
 			}, 1 );
 

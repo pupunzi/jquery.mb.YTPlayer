@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.14",
-		build: "6178",
+		build: "6180",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -423,10 +423,10 @@ var getYTPVideoID = function( url ) {
 											var current_time = YTPlayer.player.getCurrentTime();
 
 											/*
-																						console.debug( "UNLOAD" );
-																						console.debug( "YTPlayer.videoID:: ", YTPlayer.videoID );
-																						console.debug( "YTPlayer_" + YTPlayer.videoID + ":: ", current_time );
-											*/
+											 console.debug( "UNLOAD" );
+											 console.debug( "YTPlayer.videoID:: ", YTPlayer.videoID );
+											 console.debug( "YTPlayer_" + YTPlayer.videoID + ":: ", current_time );
+											 */
 
 											jQuery.mbCookie.set( "YTPlayer_" + YTPlayer.videoID, current_time, 1 );
 										} );
@@ -1752,17 +1752,15 @@ var getYTPVideoID = function( url ) {
 
 						/* Fix for Safari freeze */
 						/*
-												if( jQuery.browser.safari ) {
-
-													YTPlayer.safariPlay = setInterval( function() {
-
-														if( YTPlayer.state != 1 )
-															$YTPlayer.YTPPlay();
-														else
-															clearInterval( YTPlayer.safariPlay )
-													}, 10 )
-												}
-						*/
+						 if( jQuery.browser.safari ) {
+						 YTPlayer.safariPlay = setInterval( function() {
+						 if( YTPlayer.state != 1 )
+						 $YTPlayer.YTPPlay();
+						 else
+						 clearInterval( YTPlayer.safariPlay )
+						 }, 10 )
+						 }
+						 */
 						$YTPlayer.on( "YTPReady", function() {
 							$YTPlayer.YTPPlay();
 						} );
@@ -1796,14 +1794,14 @@ var getYTPVideoID = function( url ) {
 					if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 						YTPlayer.controlBar.slideDown( 1000 );
 
-				} else if( jQuery.browser.safari ) {
-					/*
-										YTPlayer.player.playVideo();
-										if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
-					*/
 				}
-
-			}, 1 );
+				/*
+				 else if( jQuery.browser.safari ) {
+				 YTPlayer.player.playVideo();
+				 if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
+				 }
+				 */
+			}, 10 );
 
 		},
 		/**

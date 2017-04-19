@@ -912,7 +912,7 @@ var getYTPVideoID = function( url ) {
 			function RunPrefixMethod( obj, method ) {
 				var pfx = [ "webkit", "moz", "ms", "o", "" ];
 				var p = 0,
-						m, t;
+					m, t;
 				while( p < pfx.length && !obj[ m ] ) {
 					m = method;
 					if( pfx[ p ] == "" ) {
@@ -1230,9 +1230,9 @@ var getYTPVideoID = function( url ) {
 						jQuery( this ).YTPApplyFilter( key, 0 );
 						if( typeof callback == "function" ) callback( key );
 					} else {
-					jQuery( this ).YTPApplyFilter( filter, 0 );
-					if( typeof callback == "function" ) callback( filter );
-				}
+						jQuery( this ).YTPApplyFilter( filter, 0 );
+						if( typeof callback == "function" ) callback( filter );
+					}
 			} );
 
 		},
@@ -1683,8 +1683,8 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.overlay.removeClass( function( index, classNames ) {
 					// change the list into an array
 					var current_classes = classNames.split( " " ),
-					// array of classes which are to be removed
-							classes_to_remove = [];
+						// array of classes which are to be removed
+						classes_to_remove = [];
 					jQuery.each( current_classes, function( index, class_name ) {
 						// if the classname begins with bg add it to the classes_to_remove array
 						if( /raster.*/.test( class_name ) ) {
@@ -1781,6 +1781,7 @@ var getYTPVideoID = function( url ) {
 
 						if( YTPlayer.controlBar.length )
 							YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
+
 					}
 
 					if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && ( YTPlayer.loading && YTPlayer.loading.length ) ) {
@@ -1792,6 +1793,7 @@ var getYTPVideoID = function( url ) {
 
 					if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 						YTPlayer.controlBar.slideDown( 1000 );
+
 				}
 				/*
 				 else if( jQuery.browser.safari ) {
@@ -1799,7 +1801,7 @@ var getYTPVideoID = function( url ) {
 				 if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
 				 }
 				 */
-			}, 1 );
+			}, 10 );
 
 		},
 		/**
@@ -1965,7 +1967,7 @@ var getYTPVideoID = function( url ) {
 			if( !days ) days = 7;
 			domain = domain ? "; domain=" + domain : "";
 			var date = new Date(),
-					expires;
+				expires;
 			date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
 			expires = "; expires=" + date.toGMTString();
 			document.cookie = name + "=" + value + expires + "; path=/" + domain;

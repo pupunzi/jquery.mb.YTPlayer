@@ -1791,7 +1791,8 @@ var getYTPVideoID = function( url ) {
 
 				} else if( jQuery.browser.safari && jQuery.browser.os.minor_version < 11 ) {
 					YTPlayer.player.playVideo();
-					if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
+					if( startAt >= 0 )
+						YTPlayer.player.seekTo( startAt, true );
 				}
 
 			}, 10 );

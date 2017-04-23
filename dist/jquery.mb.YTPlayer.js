@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.15",
-		build: "6200",
+		build: "6201",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -1791,7 +1791,8 @@ var getYTPVideoID = function( url ) {
 
 				} else if( jQuery.browser.safari && jQuery.browser.os.minor_version < 11 ) {
 					YTPlayer.player.playVideo();
-					if( startAt >= 0 ) YTPlayer.player.seekTo( startAt, true );
+					if( startAt >= 0 )
+						YTPlayer.player.seekTo( startAt, true );
 				}
 
 			}, 10 );

@@ -52,8 +52,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "3.0.15",
-		build: "6201",
+		version: "3.0.16",
+		build: "6209",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -80,7 +80,7 @@ var getYTPVideoID = function( url ) {
 			mobileFallbackImage: null,
 			gaTrack: true,
 			optimizeDisplay: true,
-			remember_last_time: true,
+			remember_last_time: false,
 			anchor: "center,center", // top,bottom,left,right combined in pair
 			onReady: function( player ) {},
 			onError: function( player, err ) {}
@@ -1747,7 +1747,7 @@ var getYTPVideoID = function( url ) {
 
 						/* Fix for Safari freeze */
 
-						if( jQuery.browser.safari && jQuery.browser.os.minor_version < 11 ) {
+						if( jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
 
 							YTPlayer.safariPlay = setInterval( function() {
 								if( YTPlayer.state != 1 )
@@ -1789,7 +1789,7 @@ var getYTPVideoID = function( url ) {
 					if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 						YTPlayer.controlBar.slideDown( 1000 );
 
-				} else if( jQuery.browser.safari && jQuery.browser.os.minor_version < 11 ) {
+				} else if( jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
 					YTPlayer.player.playVideo();
 					if( startAt >= 0 )
 						YTPlayer.player.seekTo( startAt, true );
@@ -1804,7 +1804,6 @@ var getYTPVideoID = function( url ) {
 		 */
 		setAnchor: function( anchor ) {
 			var $YTplayer = this;
-
 			$YTplayer.optimizeDisplay( anchor );
 		},
 		/**
@@ -1851,7 +1850,6 @@ var getYTPVideoID = function( url ) {
 
 			win.width = el.outerWidth();
 			win.height = el.outerHeight() + abundance;
-
 
 			YTPlayer.opt.ratio = eval( YTPlayer.opt.ratio );
 
@@ -1952,33 +1950,6 @@ var getYTPVideoID = function( url ) {
 				"user-select": "none"
 			} ).attr( "unselectable", "on" );
 		} );
-	};
-
-	/*COOKIES
-	 * -----------------------------------------------------------------*/
-	jQuery.mbCookie = {
-		set: function( name, value, days, domain ) {
-			if( !days ) days = 7;
-			domain = domain ? "; domain=" + domain : "";
-			var date = new Date(),
-				expires;
-			date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
-			expires = "; expires=" + date.toGMTString();
-			document.cookie = name + "=" + value + expires + "; path=/" + domain;
-		},
-		get: function( name ) {
-			var nameEQ = name + "=";
-			var ca = document.cookie.split( ';' );
-			for( var i = 0; i < ca.length; i++ ) {
-				var c = ca[ i ];
-				while( c.charAt( 0 ) == ' ' ) c = c.substring( 1, c.length );
-				if( c.indexOf( nameEQ ) == 0 ) return c.substring( nameEQ.length, c.length );
-			}
-			return null;
-		},
-		remove: function( name ) {
-			jQuery.mbCookie.set( name, "", -1 );
-		}
 	};
 
 	/* Exposed public method */
@@ -2102,7 +2073,7 @@ function uncamel(e){return e.replace(/([A-Z])/g,function(e){return"-"+e.toLowerC
  ___________________________________________________________________________________________________________________________________________________*/
 
 var nAgt=navigator.userAgent;
-if(!jQuery.browser){var isTouchSupported=function(){var a=nAgt.msMaxTouchPoints,b="ontouchstart"in document.createElement("div");return a||b?!0:!1};jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.androidStock=!1;jQuery.browser.msie=!1;jQuery.browser.edge=!1;var getOS=function(){var a={name:"Unknown OS"};-1!=navigator.appVersion.indexOf("Win")&&(a.name="Windows");-1!=navigator.appVersion.indexOf("Mac")&&
+if(!jQuery.browser){var isTouchSupported=function(){var a=nAgt.msMaxTouchPoints,e="ontouchstart"in document.createElement("div");return a||e?!0:!1};jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.androidStock=!1;jQuery.browser.msie=!1;jQuery.browser.edge=!1;var getOS=function(){var a={name:"Unknown OS"};-1!=navigator.appVersion.indexOf("Win")&&(a.name="Windows");-1!=navigator.appVersion.indexOf("Mac")&&
 (a.name="Mac");-1!=navigator.appVersion.indexOf("Linux")&&(a.name="Linux");a.version="Unknown version";/Mac OS X/.test(nAgt)&&(a.version=/Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1],a.version=a.version.replace(/_/g,".").substring(0,5));/Windows NT 5.1/.test(nAgt)&&(a.version="5.1");/Windows NT 6.0/.test(nAgt)&&(a.version="6.0");/Windows NT 6.1/.test(nAgt)&&(a.version="6.1");/Windows NT 6.2/.test(nAgt)&&(a.version="6.2");/Windows NT 10.0/.test(nAgt)&&(a.version="10.0");/Linux/.test(nAgt)&&/Linux/.test(nAgt)&&
 (a.version=/Android ([\.\_\d]+)/.exec(nAgt)[1]);a.name=a.name.toLowerCase();a.major_version=parseFloat(a.version.split(".")[0]);a.minor_version=parseFloat(a.version.split(".")[1]);return a};jQuery.browser.os=getOS();jQuery.browser.hasTouch=isTouchSupported();jQuery.browser.ua=nAgt;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=
 		!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=nAgt.substring(verOffset+
@@ -2110,8 +2081,9 @@ if(!jQuery.browser){var isTouchSupported=function(){var a=nAgt.msMaxTouchPoints,
 		nAgt.substring(verOffset+7)):-1<nAgt.indexOf("mozilla/5.0")&&-1<nAgt.indexOf("android ")&&-1<nAgt.indexOf("applewebkit")&&!(-1<nAgt.indexOf("chrome"))?(verOffset=nAgt.indexOf("Chrome"),jQuery.browser.webkit=!0,jQuery.browser.androidStock=!0,jQuery.browser.name="androidStock",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+
 		7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=
 		nAgt.substring(verOffset+8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));-1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=
-		jQuery.browser.fullVersion.substring(0,ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}jQuery.browser.android=/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);
-jQuery.browser.operaMobile=/Opera Mini/i.test(nAgt);jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;jQuery.isMobile=jQuery.browser.mobile;jQuery.isTablet=jQuery.browser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.browser.android&&!/chrome/i.test(nAgt);
+		jQuery.browser.fullVersion.substring(0,ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion;jQuery.browser.android=/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.browser.operaMobile=
+		/Opera Mini/i.test(nAgt);jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;jQuery.isMobile=jQuery.browser.mobile;jQuery.isTablet=jQuery.browser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.browser.android&&!/chrome/i.test(nAgt)}
+jQuery.browser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e)return!1;for(var c=a.split("."),d=e.split("."),b=0,f=Math.max(c.length,d.length);b<f;b++){if(c[b]&&!d[b]&&0<parseInt(c[b])||parseInt(c[b])>parseInt(d[b]))return 1;if(d[b]&&!c[b]&&0<parseInt(d[b])||parseInt(c[b])<parseInt(d[b]))return-1}return 0};
 ;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
@@ -2161,4 +2133,5 @@ var nAgt=navigator.userAgent;if(!jQuery.browser){jQuery.browser={},jQuery.browse
  _ Copyright (c) 2001-2015. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 
-!function(a){a.mbCookie={set:function(a,b,c,d){b=JSON.stringify(b),c||(c=7),d=d?"; domain="+d:"";var f,e=new Date;e.setTime(e.getTime()+1e3*60*60*24*c),f="; expires="+e.toGMTString(),document.cookie=a+"="+b+f+"; path=/"+d},get:function(a){for(var b=a+"=",c=document.cookie.split(";"),d=0;d<c.length;d++){for(var e=c[d];" "==e.charAt(0);)e=e.substring(1,e.length);if(0==e.indexOf(b))return JSON.parse(e.substring(b.length,e.length))}return null},remove:function(b){a.mbCookie.set(b,"",-1)}},a.mbStorage={set:function(a,b){b=JSON.stringify(b),localStorage.setItem(a,b)},get:function(a){return localStorage[a]?JSON.parse(localStorage[a]):null},remove:function(a){a?localStorage.removeItem(a):localStorage.clear()}}}(jQuery);
+(function(f){f.mbCookie={set:function(a,c,d,b){"object"==typeof c&&(c=JSON.stringify(c));d||(d=7);b=b?"; domain="+b:"";var e=new Date;e.setTime(e.getTime()+864E5*d);d="; expires="+e.toGMTString();document.cookie=a+"="+c+d+"; path=/"+b},get:function(a){a+="=";for(var c=document.cookie.split(";"),d=0;d<c.length;d++){for(var b=c[d];" "==b.charAt(0);)b=b.substring(1,b.length);if(0==b.indexOf(a))try{return JSON.parse(b.substring(a.length,b.length))}catch(e){return b.substring(a.length,b.length)}}return null},
+	remove:function(a){f.mbCookie.set(a,"",-1)}};f.mbStorage={set:function(a,c){"object"==typeof c&&(c=JSON.stringify(c));localStorage.setItem(a,c)},get:function(a){if(localStorage[a])try{return JSON.parse(localStorage[a])}catch(c){return localStorage[a]}else return null},remove:function(a){a?localStorage.removeItem(a):localStorage.clear()}}})(jQuery);

@@ -80,7 +80,7 @@ var getYTPVideoID = function( url ) {
 			mobileFallbackImage: null,
 			gaTrack: true,
 			optimizeDisplay: true,
-			remember_last_time: true,
+			remember_last_time: false,
 			anchor: "center,center", // top,bottom,left,right combined in pair
 			onReady: function( player ) {},
 			onError: function( player, err ) {}
@@ -1747,7 +1747,7 @@ var getYTPVideoID = function( url ) {
 
 						/* Fix for Safari freeze */
 
-						if( jQuery.browser.safari && jQuery.browser.os.minor_version < 11 ) {
+						if( jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
 
 							YTPlayer.safariPlay = setInterval( function() {
 								if( YTPlayer.state != 1 )
@@ -1789,7 +1789,7 @@ var getYTPVideoID = function( url ) {
 					if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 						YTPlayer.controlBar.slideDown( 1000 );
 
-				} else if( jQuery.browser.safari && jQuery.browser.os.minor_version < 11 ) {
+				} else if( jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
 					YTPlayer.player.playVideo();
 					if( startAt >= 0 )
 						YTPlayer.player.seekTo( startAt, true );
@@ -1804,7 +1804,6 @@ var getYTPVideoID = function( url ) {
 		 */
 		setAnchor: function( anchor ) {
 			var $YTplayer = this;
-
 			$YTplayer.optimizeDisplay( anchor );
 		},
 		/**
@@ -1851,7 +1850,6 @@ var getYTPVideoID = function( url ) {
 
 			win.width = el.outerWidth();
 			win.height = el.outerHeight() + abundance;
-
 
 			YTPlayer.opt.ratio = eval( YTPlayer.opt.ratio );
 
@@ -1952,33 +1950,6 @@ var getYTPVideoID = function( url ) {
 				"user-select": "none"
 			} ).attr( "unselectable", "on" );
 		} );
-	};
-
-	/*COOKIES
-	 * -----------------------------------------------------------------*/
-	jQuery.mbCookie = {
-		set: function( name, value, days, domain ) {
-			if( !days ) days = 7;
-			domain = domain ? "; domain=" + domain : "";
-			var date = new Date(),
-				expires;
-			date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
-			expires = "; expires=" + date.toGMTString();
-			document.cookie = name + "=" + value + expires + "; path=/" + domain;
-		},
-		get: function( name ) {
-			var nameEQ = name + "=";
-			var ca = document.cookie.split( ';' );
-			for( var i = 0; i < ca.length; i++ ) {
-				var c = ca[ i ];
-				while( c.charAt( 0 ) == ' ' ) c = c.substring( 1, c.length );
-				if( c.indexOf( nameEQ ) == 0 ) return c.substring( nameEQ.length, c.length );
-			}
-			return null;
-		},
-		remove: function( name ) {
-			jQuery.mbCookie.set( name, "", -1 );
-		}
 	};
 
 	/* Exposed public method */

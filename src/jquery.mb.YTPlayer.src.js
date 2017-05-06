@@ -1747,7 +1747,7 @@ var getYTPVideoID = function( url ) {
 
 						/* Fix for Safari freeze */
 
-						if( jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
+						if( jQuery.browser.os.name == "mac" && jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
 
 							YTPlayer.safariPlay = setInterval( function() {
 								if( YTPlayer.state != 1 )
@@ -1776,7 +1776,6 @@ var getYTPVideoID = function( url ) {
 
 						if( YTPlayer.controlBar.length )
 							YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
-
 					}
 
 					if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && ( YTPlayer.loading && YTPlayer.loading.length ) ) {
@@ -1789,7 +1788,7 @@ var getYTPVideoID = function( url ) {
 					if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 						YTPlayer.controlBar.slideDown( 1000 );
 
-				} else if( jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
+				} else if( jQuery.browser.os.name == "mac" && jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
 					YTPlayer.player.playVideo();
 					if( startAt >= 0 )
 						YTPlayer.player.seekTo( startAt, true );

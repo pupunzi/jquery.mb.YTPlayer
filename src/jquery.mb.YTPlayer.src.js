@@ -1716,16 +1716,17 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.opt.onReady( YTPlayer );
 
 					YTPlayer.isReady = true;
+
 					var YTPready = jQuery.Event( "YTPReady" );
 					YTPready.time = YTPlayer.currentTime;
 					jQuery( YTPlayer ).trigger( YTPready );
-
 
 					YTPlayer.preventTrigger = true;
 					YTPlayer.state = 2;
 					jQuery( YTPlayer ).YTPPause();
 
-					if( !YTPlayer.opt.mute ) jQuery( YTPlayer ).YTPUnmute();
+					if( !YTPlayer.opt.mute )
+						jQuery( YTPlayer ).YTPUnmute();
 					YTPlayer.canTrigger = true;
 
 					if( YTPlayer.opt.autoPlay ) {
@@ -1756,7 +1757,7 @@ var getYTPVideoID = function( url ) {
 									clearInterval( YTPlayer.safariPlay )
 							}, 10 )
 						}
-						$YTPlayer.on( "YTPReady", function() {
+						$YTPlayer.one( "YTPReady", function() {
 							$YTPlayer.YTPPlay();
 						} );
 

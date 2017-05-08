@@ -1789,7 +1789,7 @@ var getYTPVideoID = function( url ) {
 					if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 						YTPlayer.controlBar.slideDown( 1000 );
 
-				} else if( jQuery.browser.os.name == "mac" && jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
+				} else if( jQuery.browser.os.name == "mac" && jQuery.browser.safari && jQuery.browser.fullVersion && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
 					YTPlayer.player.playVideo();
 					if( startAt >= 0 )
 						YTPlayer.player.seekTo( startAt, true );

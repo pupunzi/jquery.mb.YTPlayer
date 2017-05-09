@@ -190,7 +190,10 @@ var getYTPVideoID = function( url ) {
 
 				YTPlayer.opt.showAnnotations = YTPlayer.opt.showAnnotations ? '1' : '3';
 
-				var start_from_last = parseFloat( jQuery.mbCookie.get( "YTPlayer_" + YTPlayer.videoID ) );
+				var start_from_last = 0;
+
+				if( jQuery.mbCookie.get( "YTPlayer_" + YTPlayer.videoID ) )
+					start_from_last = parseFloat( jQuery.mbCookie.get( "YTPlayer_" + YTPlayer.videoID ) );
 
 				if( YTPlayer.opt.remember_last_time && start_from_last ) {
 					YTPlayer.start_from_last = start_from_last;

@@ -179,7 +179,7 @@ var getYTPVideoID = function( url ) {
 					return isIfr;
 				};
 
-				YTPlayer.canGoFullScreen = !( jQuery.browser.msie || jQuery.browser.opera || isIframe() );
+				YTPlayer.canGoFullScreen = !( jQuery.mbBrowser.msie || jQuery.mbBrowser.opera || isIframe() );
 				if( !YTPlayer.canGoFullScreen ) YTPlayer.opt.realfullscreen = false;
 				if( !$YTPlayer.attr( "id" ) ) $YTPlayer.attr( "id", "ytp_" + new Date().getTime() );
 				var playerID = "iframe_" + YTPlayer.id;
@@ -218,7 +218,7 @@ var getYTPVideoID = function( url ) {
 				if( document.createElement( 'video' ).canPlayType ) jQuery.extend( playerVars, {
 					'html5': 1
 				} );
-				if( jQuery.browser.msie && jQuery.browser.version < 9 ) this.opt.opacity = 1;
+				if( jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9 ) this.opt.opacity = 1;
 
 				YTPlayer.isSelf = YTPlayer.opt.containment == "self";
 				YTPlayer.defaultOpt.containment = YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery( this ) : jQuery( YTPlayer.opt.containment );
@@ -310,7 +310,7 @@ var getYTPVideoID = function( url ) {
 					opacity: 1
 				} );
 
-				if( !jQuery.browser.mobile ) {
+				if( !jQuery.mbBrowser.mobile ) {
 					playerBox.after( overlay );
 					YTPlayer.overlay = overlay;
 				}
@@ -338,7 +338,7 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
-				if( jQuery.browser.mobile && !YTPlayer.canPlayOnMobile ) {
+				if( jQuery.mbBrowser.mobile && !YTPlayer.canPlayOnMobile ) {
 
 					if( YTPlayer.opt.mobileFallbackImage ) {
 						wrapper.css( {
@@ -372,7 +372,7 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.isInit = true;
 
 						//if is mobile && isPlayer fallback to the default YT player
-						if( jQuery.browser.mobile && YTPlayer.canPlayOnMobile ) {
+						if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile ) {
 							// Try to adjust the player dimention
 							if( YTPlayer.opt.containment.outerWidth() > jQuery( window ).width() ) {
 								YTPlayer.opt.containment.css( {
@@ -624,7 +624,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.videoData = null;
 				YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 			}
-			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && !jQuery.browser.mobile ) {
+			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && !jQuery.mbBrowser.mobile ) {
 				YTPlayer.loading = jQuery( "<div/>" ).addClass( "loading" ).html( "Loading" ).hide();
 				jQuery( YTPlayer ).append( YTPlayer.loading );
 				YTPlayer.loading.fadeIn();
@@ -658,7 +658,7 @@ var getYTPVideoID = function( url ) {
 		 */
 		setVideoQuality: function( quality ) {
 			var YTPlayer = this.get( 0 );
-			//if( !jQuery.browser.chrome )
+			//if( !jQuery.mbBrowser.chrome )
 			YTPlayer.player.setPlaybackQuality( quality );
 		},
 		/**
@@ -829,7 +829,7 @@ var getYTPVideoID = function( url ) {
 			var videoWrapper = YTPlayer.isSelf ? YTPlayer.opt.containment : YTPlayer.wrapper;
 			//var videoWrapper = YTPlayer.wrapper;
 			if( real ) {
-				var fullscreenchange = jQuery.browser.mozilla ? "mozfullscreenchange" : jQuery.browser.webkit ? "webkitfullscreenchange" : "fullscreenchange";
+				var fullscreenchange = jQuery.mbBrowser.mozilla ? "mozfullscreenchange" : jQuery.mbBrowser.webkit ? "webkitfullscreenchange" : "fullscreenchange";
 				jQuery( document ).off( fullscreenchange ).on( fullscreenchange, function() {
 					var isFullScreen = RunPrefixMethod( document, "IsFullScreen" ) || RunPrefixMethod( document, "FullScreen" );
 					if( !isFullScreen ) {
@@ -1751,7 +1751,7 @@ var getYTPVideoID = function( url ) {
 
 						/* Fix for Safari freeze */
 
-						if( jQuery.browser.os.name == "mac" && jQuery.browser.safari && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
+						if( jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.versionCompare( jQuery.mbBrowser.fullVersion, "10.1" ) < 0 ) { //jQuery.mbBrowser.os.minor_version < 11
 
 							YTPlayer.safariPlay = setInterval( function() {
 								if( YTPlayer.state != 1 )
@@ -1792,7 +1792,7 @@ var getYTPVideoID = function( url ) {
 					if( YTPlayer.controlBar && YTPlayer.controlBar.length )
 						YTPlayer.controlBar.slideDown( 1000 );
 
-				} else if( jQuery.browser.os.name == "mac" && jQuery.browser.safari && jQuery.browser.fullVersion && jQuery.browser.versionCompare( jQuery.browser.fullVersion, "10.1" ) < 0 ) { //jQuery.browser.os.minor_version < 11
+				} else if( jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.fullVersion && jQuery.mbBrowser.versionCompare( jQuery.mbBrowser.fullVersion, "10.1" ) < 0 ) { //jQuery.mbBrowser.os.minor_version < 11
 					YTPlayer.player.playVideo();
 					if( startAt >= 0 )
 						YTPlayer.player.seekTo( startAt, true );

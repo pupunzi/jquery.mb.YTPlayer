@@ -97,16 +97,11 @@
                 jQuery("#videoID").html(video.videoData.id);
                 jQuery("#videoTitle").html(video.videoData.title);
             }
-        }, true);
+        });
 
         myPlayListPlayer.on("YTPData", function (e) {
-
             jQuery("#videoID").html(e.prop.id);
             jQuery("#videoTitle").html(e.prop.title);
-
-
-        }).on("YTPStart", function(){
-            console.debug("YTPStart")
         });
 
     });

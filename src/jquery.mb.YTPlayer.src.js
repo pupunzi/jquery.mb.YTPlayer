@@ -658,7 +658,6 @@ var getYTPVideoID = function( url ) {
 		 */
 		setVideoQuality: function( quality ) {
 			var YTPlayer = this.get( 0 );
-			//if( !jQuery.mbBrowser.chrome )
 			YTPlayer.player.setPlaybackQuality( quality );
 		},
 		/**
@@ -698,15 +697,20 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 
 			if( YTPlayer.checkForStartAt ) {
-				clearTimeout( YTPlayer.checkForStartAt );
+				clearInterval( YTPlayer.checkForStartAt );
 				clearInterval( YTPlayer.getState );
 			}
 
 			YTPlayer.videoCounter++;
-			if( YTPlayer.videoCounter >= YTPlayer.videoLength && loopList )
-				YTPlayer.videoCounter = 0;
 
-			if( YTPlayer.videoCounter < YTPlayer.videoLength )
+
+			if( YTPlayer.videoCounter >= YTPlayer.videoLength - 1 && loopList ) {
+				YTPlayer.videoCounter = 0;
+			}
+
+//			console.debug( YTPlayer.videoCounter, YTPlayer.videoLength, loopList, YTPlayer.videoCounter >= YTPlayer.videoLength - 1 && loopList )
+
+			if( YTPlayer.videoCounter < YTPlayer.videoLength-1 )
 				jQuery( YTPlayer ).YTPChangeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
 			else
 				YTPlayer.videoCounter--;
@@ -915,7 +919,7 @@ var getYTPVideoID = function( url ) {
 			function RunPrefixMethod( obj, method ) {
 				var pfx = [ "webkit", "moz", "ms", "o", "" ];
 				var p = 0,
-					m, t;
+						m, t;
 				while( p < pfx.length && !obj[ m ] ) {
 					m = method;
 					if( pfx[ p ] == "" ) {
@@ -1233,9 +1237,9 @@ var getYTPVideoID = function( url ) {
 						jQuery( this ).YTPApplyFilter( key, 0 );
 						if( typeof callback == "function" ) callback( key );
 					} else {
-						jQuery( this ).YTPApplyFilter( filter, 0 );
-						if( typeof callback == "function" ) callback( filter );
-					}
+					jQuery( this ).YTPApplyFilter( filter, 0 );
+					if( typeof callback == "function" ) callback( filter );
+				}
 			} );
 
 		},
@@ -1681,8 +1685,8 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.overlay.removeClass( function( index, classNames ) {
 					// change the list into an array
 					var current_classes = classNames.split( " " ),
-						// array of classes which are to be removed
-						classes_to_remove = [];
+					// array of classes which are to be removed
+							classes_to_remove = [];
 					jQuery.each( current_classes, function( index, class_name ) {
 						// if the classname begins with bg add it to the classes_to_remove array
 						if( /raster.*/.test( class_name ) ) {
@@ -1733,7 +1737,6 @@ var getYTPVideoID = function( url ) {
 					YTPlayer.canTrigger = true;
 
 					if( YTPlayer.opt.autoPlay ) {
-
 
 						var YTPStart = jQuery.Event( "YTPStart" );
 						YTPStart.time = YTPlayer.currentTime;

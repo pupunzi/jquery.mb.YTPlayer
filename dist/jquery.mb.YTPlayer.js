@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.18",
-		build: "6225",
+		build: "6234",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -658,7 +658,6 @@ var getYTPVideoID = function( url ) {
 		 */
 		setVideoQuality: function( quality ) {
 			var YTPlayer = this.get( 0 );
-			//if( !jQuery.mbBrowser.chrome )
 			YTPlayer.player.setPlaybackQuality( quality );
 		},
 		/**
@@ -670,6 +669,8 @@ var getYTPVideoID = function( url ) {
 		 * @returns {jQuery.mbYTPlayer}
 		 */
 		playlist: function( videos, shuffle, callback, loopList ) {
+
+			console.debug(videos, shuffle, callback, loopList)
 			var $YTPlayer = this;
 			var YTPlayer = $YTPlayer.get( 0 );
 			YTPlayer.isPlayList = true;
@@ -698,18 +699,23 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 
 			if( YTPlayer.checkForStartAt ) {
-				clearTimeout( YTPlayer.checkForStartAt );
+				clearInterval( YTPlayer.checkForStartAt );
 				clearInterval( YTPlayer.getState );
 			}
 
 			YTPlayer.videoCounter++;
-			if( YTPlayer.videoCounter >= YTPlayer.videoLength && loopList )
-				YTPlayer.videoCounter = 0;
 
-			if( YTPlayer.videoCounter < YTPlayer.videoLength )
-				jQuery( YTPlayer ).YTPChangeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
-			else
-				YTPlayer.videoCounter--;
+
+			if( YTPlayer.videoCounter >= YTPlayer.videoLength - 1 && loopList ) {
+				YTPlayer.videoCounter = 0;
+			}
+
+			console.debug( YTPlayer.videoCounter, YTPlayer.videoLength, loopList, YTPlayer.videoCounter >= YTPlayer.videoLength - 1 && loopList )
+
+			//if( YTPlayer.videoCounter < YTPlayer.videoLength-1 )
+			jQuery( YTPlayer ).YTPChangeMovie( YTPlayer.videos[ YTPlayer.videoCounter ] );
+			//else
+			//YTPlayer.videoCounter--;
 
 			return this;
 		},
@@ -1733,7 +1739,6 @@ var getYTPVideoID = function( url ) {
 					YTPlayer.canTrigger = true;
 
 					if( YTPlayer.opt.autoPlay ) {
-
 
 						var YTPStart = jQuery.Event( "YTPStart" );
 						YTPStart.time = YTPlayer.currentTime;

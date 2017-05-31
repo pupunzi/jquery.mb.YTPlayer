@@ -2,7 +2,7 @@
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.YTPlayer.src.js                                                                                                                  _
- _ last modified: 24/10/16 22.30                                                                                                                    _
+ _ last modified: 11/05/17 19.54                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -16,7 +16,7 @@
  _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
  _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
  _                                                                                                                                                  _
- _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
+ _ Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 var ytp = ytp || {};
 

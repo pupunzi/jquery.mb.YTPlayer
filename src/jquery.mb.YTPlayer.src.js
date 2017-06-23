@@ -350,7 +350,7 @@ var getYTPVideoID = function( url ) {
 						} )
 					};
 
-					if(!YTPlayer.isPlayer)
+					if( !YTPlayer.isPlayer )
 						$YTPlayer.remove();
 					jQuery( document ).trigger( "YTPUnavailable" );
 					return;

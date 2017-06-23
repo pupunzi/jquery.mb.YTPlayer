@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.20",
-		build: "6252",
+		build: "6253",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -350,7 +350,8 @@ var getYTPVideoID = function( url ) {
 						} )
 					};
 
-					$YTPlayer.remove();
+					if( !YTPlayer.isPlayer )
+						$YTPlayer.remove();
 					jQuery( document ).trigger( "YTPUnavailable" );
 					return;
 				}

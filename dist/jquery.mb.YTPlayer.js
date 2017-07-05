@@ -409,6 +409,7 @@ var getYTPVideoID = function( url ) {
 							playerVars: playerVars,
 							events: {
 								'onReady': function( event ) {
+									event.target.setPlaybackQuality(YTPlayer.opt.quality);
 									YTPlayer.player = event.target;
 									if( YTPlayer.isReady ) return;
 									YTPlayer.isReady = YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ? false : true;

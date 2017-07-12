@@ -2,207 +2,215 @@
 
 <html>
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-    <title>Youtube Chromeless Player - mb.YTPlayer</title>
+  <title>Youtube Chromeless Player - mb.YTPlayer</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-    <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+  <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script src="../dist/jquery.mb.YTPlayer.js"></script>
-    <script src="assets/apikey.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  <script src="../dist/jquery.mb.YTPlayer.min.js"></script>
+  <script src="assets/apikey.js"></script>
 
-    <style>
-        *:focus{
-            outline: none;
-        }
+  <style>
+    *:focus{
+      outline: none;
+    }
 
-        body {
-            border: none;
-            margin: 0;
-            padding: 30px;
-            background: #222c2f;
-            font: normal 16px/20px Lekton, sans-serif;
-        }
+    body {
+      border: none;
+      margin: 0;
+      padding: 30px;
+      background: #222c2f;
+      font: normal 16px/20px Lekton, sans-serif;
+    }
 
-        a {
-            color: white;
-            text-decoration: none;
-        }
+    a {
+      color: white;
+      text-decoration: none;
+    }
 
-        h1{
-            text-align: center;
-            font-size: 50px;
-            font-family: 'Lobster', cursive;
-        }
+    h1{
+      text-align: center;
+      font-size: 50px;
+      font-family: 'Lobster', cursive;
+    }
 
-        h2{
-            font-family: "Open Sans", sans-serif;
-            font-size: 35px;
-            text-align: left;
-            line-height: 60px;
-        }
+    h2{
+      font-family: "Open Sans", sans-serif;
+      font-size: 35px;
+      text-align: left;
+      line-height: 60px;
+    }
 
-        h1, h2{
-            font-family: 'Lobster', cursive;
-            text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
-            color: #000000;
-            font-weight: 200;
-        }
+    h1, h2{
+      font-family: 'Lobster', cursive;
+      text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+      color: #000000;
+      font-weight: 200;
+    }
 
-        #wrapper{
-            position: relative;
-            min-width: 700px;
-        }
+    #wrapper{
+      position: relative;
+      min-width: 700px;
+    }
 
-        .console{
-            margin-top: 20px;
-            text-align: left;
-        }
+    .console{
+      margin-top: 20px;
+      text-align: left;
+    }
 
 
-        button, .button {
-            transition: all .4s;
-            display: inline-block;
-            padding: 0px 10px;
-            font-size: 14px;
-            /*text-transform: uppercase;*/
+    button, .button {
+      transition: all .4s;
+      display: inline-block;
+      padding: 0px 10px;
+      font-size: 14px;
+      /*text-transform: uppercase;*/
 
-            cursor: pointer;
+      cursor: pointer;
 
-            background-color: rgba(0, 0, 0, 0.40);
-            box-shadow: 0 0 4px rgba(0,0,0,0.4);
-            color:#fff;
+      background-color: rgba(0, 0, 0, 0.40);
+      box-shadow: 0 0 4px rgba(0,0,0,0.4);
+      color:#fff;
 
-            border: 1px solid transparent;
+      border: 1px solid transparent;
 
-            text-decoration: none;
-            line-height: 30px;
-            margin: 3px;
-            border-radius: 10px;
-        }
+      text-decoration: none;
+      line-height: 30px;
+      margin: 3px;
+      border-radius: 10px;
+    }
 
-        button:hover, .button:hover {
-            background-color: rgb(0, 0, 0);
-            color: #FFF;
-            border: 1px solid #fff;
-        }
+    button:hover, .button:hover {
+      background-color: rgb(0, 0, 0);
+      color: #FFF;
+      border: 1px solid #fff;
+    }
 
-        #info {
-            position: absolute;
-            top: 0;
-            right: 0;
-            max-width: 300px;
-            color: #212121;
-            background-color: rgba(255, 255, 255, 0.60);
+    #info {
+      position: absolute;
+      top: 0;
+      right: 0;
+      max-width: 300px;
+      color: #212121;
+      background-color: rgba(255, 255, 255, 0.60);
 
-            font-size: 150%;
-            padding: 10px;
+      font-size: 150%;
+      padding: 10px;
 
-            display: none;
-        }
+      display: none;
+    }
 
-    </style>
+  </style>
 
-    <script>
-        var myPlayer;
+  <script>
+    var myPlayer;
 
-        function showInfo(info){
-            $("#info").stop().delay(500).html(info).stop().fadeIn().delay(5000).fadeOut();
-        }
+    function showInfo(info){
+      $("#info").stop().delay(500).html(info).stop().fadeIn().delay(5000).fadeOut();
+    }
 
-        jQuery(function () {
+    jQuery(function () {
 
-            var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
-            myPlayer = jQuery("#bgndVideo").YTPlayer();
+/*
+      var tag = jQuery( "<script/>" ).attr( {
+        "async": "async",
+        "src": "../dist/jquery.mb.YTPlayer.js"
+      } );
+      jQuery( "head" ).prepend( tag );
+*/
 
-            myPlayer.on("YTPData", function (e) {
-                showInfo(e.prop.title + "<br><br>@" + e.prop.channelTitle);
-            });
 
-        });
+      var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
+      myPlayer = jQuery("#bgndVideo").YTPlayer();
+      myPlayer.on("YTPData", function (e) {
+        showInfo(e.prop.title + "<br><br>@" + e.prop.channelTitle);
+      });
 
-    </script>
+    });
+
+  </script>
 </head>
 <body>
 <div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
-    <h1 style="color:white">jQuery.mb.YTPlayer</h1>
-    <h2 style="color:white; text-align: center">An HTML5 Background player<br>for YouTube videos</h2>
-    <div class="console">
-        <h2 style="color:white">Available controls methods</h2>
-        <button onclick="myPlayer.YTPPause()">YTPPause</button>
-        <button onclick="myPlayer.YTPPlay()">YTPPlay</button>
-        <button onclick="myPlayer.YTPTogglePlay()">YTPTogglePlay</button>
-        <button onclick="myPlayer.YTPSeekTo(50)">YTPSeekTo (50 sec)</button>
-        <br><br>
-        <button onclick="myPlayer.YTPMute()">YTPMute</button>
-        <button onclick="myPlayer.YTPUnmute()">YTPUnmute</button>
-        <button onclick="myPlayer.YTPToggleVolume()">YTPToggleVolume</button>
-        <button onclick="myPlayer.YTPSetVolume(80)">YTPSetVolume (80)</button>
-        <br><br>
-        <button onclick="showInfo(myPlayer.YTPGetVideoID())">YTPGetVideoID</button>
-        <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAlign</button>
-        <button onclick="showInfo(myPlayer.YTPGetTime())">YTPGetTime</button>
-        <button onclick="showInfo(myPlayer.YTPGetTotalTime())">YTPGetTotalTime</button>
-        <br><br>
-        <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter (grayscale)</button>
-        <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter (sepia)</button>
-        <a href="demo.html">(Play with filters)</a>
-        <br><br>
-        <button onclick="myPlayer.YTPAddMask('assets/mask-4.png')">YTPAddMask</button>
-        <button onclick="myPlayer.YTPRemoveMask()">YTPRemoveMask</button>
-        <!--<button onclick="myPlayer.YTPToggleMask()">YTPToggleMask</button>-->
-        <br><br>
-        <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor (top/left)</button>
-        <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor (center/center)</button>
-        <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor (right/bottom)</button>
-        <br><br>
-        <button onclick="myPlayer.YTPFullscreen()">YTPFullscreen</button>
-        <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>
-    </div>
+  <h1 style="color:white">jQuery.mb.YTPlayer</h1>
+  <h2 style="color:white; text-align: center">An HTML5 Background player<br>for YouTube videos</h2>
+  <div class="console">
+    <h2 style="color:white">Available controls methods</h2>
+    <button onclick="myPlayer.YTPPause()">YTPPause</button>
+    <button onclick="myPlayer.YTPPlay()">YTPPlay</button>
+    <button onclick="myPlayer.YTPTogglePlay()">YTPTogglePlay</button>
+    <button onclick="myPlayer.YTPSeekTo(50)">YTPSeekTo (50 sec)</button>
+    <br><br>
+    <button onclick="myPlayer.YTPMute()">YTPMute</button>
+    <button onclick="myPlayer.YTPUnmute()">YTPUnmute</button>
+    <button onclick="myPlayer.YTPToggleVolume()">YTPToggleVolume</button>
+    <button onclick="myPlayer.YTPSetVolume(80)">YTPSetVolume (80)</button>
+    <br><br>
+    <button onclick="showInfo(myPlayer.YTPGetVideoID())">YTPGetVideoID</button>
+    <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAlign</button>
+    <button onclick="showInfo(myPlayer.YTPGetTime())">YTPGetTime</button>
+    <button onclick="showInfo(myPlayer.YTPGetTotalTime())">YTPGetTotalTime</button>
+    <br><br>
+    <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter (grayscale)</button>
+    <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter (sepia)</button>
+    <a href="demo.html">(Play with filters)</a>
+    <br><br>
+    <button onclick="myPlayer.YTPAddMask('assets/mask-4.png')">YTPAddMask</button>
+    <button onclick="myPlayer.YTPRemoveMask()">YTPRemoveMask</button>
+    <!--<button onclick="myPlayer.YTPToggleMask()">YTPToggleMask</button>-->
+    <br><br>
+    <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor (top/left)</button>
+    <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor (center/center)</button>
+    <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor (right/bottom)</button>
+    <br><br>
+    <button onclick="myPlayer.YTPFullscreen()">YTPFullscreen</button>
+    <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>
+  </div>
 
-    <div id="info"></div>
+  <div id="info"></div>
 
   <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
     <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
   </a>
 
-    <!--7SnmCUwOsts-->
-    <a id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:true, startAt:0, stopAt:166, opacity:1, addRaster:true, quality:'hd720', optimizeDisplay:true}">My video</a> <!--BsekcY04xvQ-->
+  <!--7SnmCUwOsts-->
+  <a id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:true, startAt:0, stopAt:166, opacity:1, addRaster:true, quality:'hd720', optimizeDisplay:true}">My video</a> <!--BsekcY04xvQ-->
 
 </div>
 
 <style>
-    #wp {
-        position: absolute;
-        z-index: 10;
-        min-width: 300px;
-        background: rgba(0, 0, 0, 0.55);
-        /*background: #ffb200;*/
-        color: #fff;
-        font-size: 24px;
-        line-height: 24px;
-        padding: 20px;
-        bottom:60px;
-        cursor: pointer;
-        text-align: left;
-        border-radius: 10px;
-        font-family: 'Lobster', cursive;
-    }
+  #wp {
+    position: absolute;
+    z-index: 10;
+    min-width: 300px;
+    background: rgba(0, 0, 0, 0.55);
+    /*background: #ffb200;*/
+    color: #fff;
+    font-size: 24px;
+    line-height: 24px;
+    padding: 20px;
+    bottom:60px;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 10px;
+    font-family: 'Lobster', cursive;
+  }
 
-    #wp:hover {
-        background: #000000;
-    }
+  #wp:hover {
+    background: #000000;
+  }
 
-    #wp img {
-        width: 60px;
-        margin-right: 20px;
-    }
+  #wp img {
+    width: 60px;
+    margin-right: 20px;
+  }
 </style>
 <div id="wp" onclick="self.location.href='https://pupunzi.com/wpPlus/go-plus.php?plugin_prefix=YTPL'">
-    <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
-    <span>Get the <br><b>Wordpress</b> Plug-in!</span>
+  <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
+  <span>Get the <br><b>Wordpress</b> Plug-in!</span>
 </div>
 
 

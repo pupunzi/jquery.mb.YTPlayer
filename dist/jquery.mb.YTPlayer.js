@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.20",
-		build: "6252",
+		build: "6253",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -327,7 +327,8 @@ var getYTPVideoID = function( url ) {
 
 				if( !ytp.YTAPIReady ) {
 					jQuery( "#YTAPI" ).remove();
-					var tag = jQuery( "<script></script>" ).attr( {
+					var tag = jQuery( "<script/>" ).attr( {
+						"async": "async",
 						"src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
 						"id": "YTAPI"
 					} );
@@ -350,7 +351,8 @@ var getYTPVideoID = function( url ) {
 						} )
 					};
 
-					$YTPlayer.remove();
+					if( !YTPlayer.isPlayer )
+						$YTPlayer.remove();
 					jQuery( document ).trigger( "YTPUnavailable" );
 					return;
 				}
@@ -2022,7 +2024,6 @@ var getYTPVideoID = function( url ) {
 	jQuery.fn.manageYTPProgress = jQuery.mbYTPlayer.manageProgress;
 	jQuery.fn.YTPGetDataFromFeed = jQuery.mbYTPlayer.getVideoData;
 
-
 } )( jQuery, ytp );
 ;
 /*
@@ -2129,3 +2130,5 @@ jQuery.browser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e
 
 (function(f){f.mbCookie={set:function(a,c,d,b){"object"==typeof c&&(c=JSON.stringify(c));d||(d=7);b=b?"; domain="+b:"";var e=new Date;e.setTime(e.getTime()+864E5*d);d="; expires="+e.toGMTString();document.cookie=a+"="+c+d+"; path=/"+b},get:function(a){a+="=";for(var c=document.cookie.split(";"),d=0;d<c.length;d++){for(var b=c[d];" "==b.charAt(0);)b=b.substring(1,b.length);if(0==b.indexOf(a))try{return JSON.parse(b.substring(a.length,b.length))}catch(e){return b.substring(a.length,b.length)}}return null},
 	remove:function(a){f.mbCookie.set(a,"",-1)}};f.mbStorage={set:function(a,c){"object"==typeof c&&(c=JSON.stringify(c));localStorage.setItem(a,c)},get:function(a){if(localStorage[a])try{return JSON.parse(localStorage[a])}catch(c){return localStorage[a]}else return null},remove:function(a){a?localStorage.removeItem(a):localStorage.clear()}}})(jQuery);
+
+

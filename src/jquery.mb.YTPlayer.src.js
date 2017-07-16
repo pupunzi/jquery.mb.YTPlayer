@@ -328,7 +328,8 @@ var getYTPVideoID = function( url ) {
 
 				if( !ytp.YTAPIReady ) {
 					jQuery( "#YTAPI" ).remove();
-					var tag = jQuery( "<script></script>" ).attr( {
+					var tag = jQuery( "<script/>" ).attr( {
+						"async": "async",
 						"src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
 						"id": "YTAPI"
 					} );

@@ -26,9 +26,9 @@
 	<meta charset="UTF-8">
 	<title>youtube Chromeless Player - mb.YTPlayer</title>
 	<link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-	<link href="css/jquery.mb.YTPlayer.min.css?_bn=6258" media="all" rel="stylesheet" type="text/css">
+	<link href="css/jquery.mb.YTPlayer.min.css?_bn=6273" media="all" rel="stylesheet" type="text/css">
 	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-	<script src="jquery.mb.YTPlayer.js?_bn=6258"></script>
+	<script src="jquery.mb.YTPlayer.js?_bn=6273"></script>
 	<script src="../examples/assets/apikey.js"></script>
 	<style>
 	*:focus {
@@ -302,13 +302,12 @@
 		} );
 
 		var myPlayer = jQuery( "#bgndVideo" ).YTPlayer( {
-			remember_last_time: should_remember,
-			onReady: function( player ) {
+			remember_last_time: should_remember
+			, onReady: function( player ) {
 				YTPConsole.append( player.id + " player is ready" );
 				YTPConsole.append( "<br>" );
 			}
 		} );
-
 
 		myPlayer.on( "YTPData", function( e ) {
 			$( ".dida" ).html( e.prop.title + "<br>@" + e.prop.channelTitle );
@@ -350,13 +349,12 @@
 		} );
 		/* END DEBUG ******************************************************************************************/
 
-
 		/* FILTER SLIDERS ******************************************************************************************/
 		// create sliders for filters adjustment
 		var $slider = $( ".slider" ).simpleSlider( {
 			initialval: 0, //function (el) {return Math.random() * el.opt.scale},
-			scale: 100,
-			callback: function( el ) {
+			scale: 100
+			, callback: function( el ) {
 				var filter = $( el ).data( "filter" );
 
 				var filterVal = +( el.value ).toFixed( 0 );
@@ -378,7 +376,6 @@
 				$( "#filterScript" ).html( desc );
 			}
 		} );
-
 
 		//update applied filters
 		myPlayer.on( "YTPFiltersApplied", function() {

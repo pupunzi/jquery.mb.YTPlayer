@@ -77,7 +77,9 @@
             cursor: pointer;
         }
 
-        button:focus {outline:none;}
+        button:focus {
+            outline: none;
+        }
 
 
     </style>
@@ -85,22 +87,41 @@
     <script>
         var myPlayer;
         jQuery(function () {
-            var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
-            myPlayer = jQuery(".player").YTPlayer();
+            var isIframe = function () {
+                var a = !1;
+                try {
+                    self.location.href != top.location.href && (a = !0)
+                } catch (b) {
+                    a = !0
+                }
+                return a
+            };
+            if (!isIframe()) {
+                var logo = $("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+                $("#wrapper").prepend(logo), $("#logo").fadeIn()
+            }
+
+            var options = {
+                mobileFallbackImage: "http://www.hdwallpapers.in/walls/pink_cosmos_flowers-wide.jpg",
+                playOnlyIfVisible: true
+            };
+
+            myPlayer = jQuery(".player").YTPlayer(options);
         });
     </script>
 </head>
 <body>
 <div id="wrapper">
-    <div id="customElement" style="background: #ddd url('assets/mask-1.png') no-repeat center center; background-size: cover"
-         class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'#customElement', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}"
-            >
+    <div id="customElement" style="background: #ddd url('assets/mask-1.png') no-repeat center center; background-size: cover" class="player"
+         data-property="{videoURL:'qvuILbcXlg8',containment:'self', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}">
         <div id="testText">
             <h1>jQuery.mb.YTPlayer</h1>
+
             <h2>An HTML5 Background player <br>for YouTube videos</h2>
         </div>
     </div>
 
+    <div id="customElement1" style="background: #000; height: 400px" class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'self', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}"></div>
 
 
     <div style="padding: 20px; text-align: center">
@@ -114,7 +135,7 @@
 
 
 <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
-  <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
+    <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
 </a>
 
 <style>
@@ -128,7 +149,7 @@
         font-size: 24px;
         line-height: 24px;
         padding: 20px;
-        bottom:60px;
+        bottom: 60px;
         cursor: pointer;
         text-align: left;
         border-radius: 10px;

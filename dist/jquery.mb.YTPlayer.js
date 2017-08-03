@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.20",
-		build: "6273",
+		build: "6308",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -156,8 +156,15 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.filtersEnabled = true;
 				YTPlayer.id = YTPlayer.id || "YTP_" + new Date().getTime();
 				$YTPlayer.addClass( "mb_YTPlayer" );
+
 				var property = $YTPlayer.data( "property" ) && typeof $YTPlayer.data( "property" ) == "string" ? eval( '(' + $YTPlayer.data( "property" ) + ')' ) : $YTPlayer.data( "property" );
-				if( typeof property != "undefined" && typeof property.vol != "undefined" ) property.vol = property.vol === 0 ? property.vol = 1 : property.vol;
+
+				if( typeof property != "undefined" && typeof property.vol != "undefined" ) {
+					if( property.vol === 0 ) {
+						property.vol = 1;
+						property.mute = true;
+					}
+				}
 
 				jQuery.extend( YTPlayer.opt, jQuery.mbYTPlayer.defaults, options, property );
 
@@ -201,9 +208,12 @@ var getYTPVideoID = function( url ) {
 					jQuery.mbCookie.remove( "YTPlayer_start_from" + YTPlayer.videoID );
 				}
 
+				if( jQuery.isTablet )
+					YTPlayer.opt.autoPlay = false;
+
 				var playerVars = {
 					'modestbranding': 1,
-					'autoplay': 0,
+					'autoplay': jQuery.isTablet ? 0 : 0,
 					'controls': 0,
 					'showinfo': 0,
 					'rel': 0,
@@ -213,8 +223,10 @@ var getYTPVideoID = function( url ) {
 					'origin': '*',
 					'allowfullscreen': true,
 					'wmode': 'transparent',
-					'iv_load_policy': YTPlayer.opt.showAnnotations
+					'iv_load_policy': YTPlayer.opt.showAnnotations,
+					'playsinline': 1
 				};
+
 
 				if( document.createElement( 'video' ).canPlayType ) jQuery.extend( playerVars, {
 					'html5': 1
@@ -311,10 +323,15 @@ var getYTPVideoID = function( url ) {
 					opacity: 1
 				} );
 
-				if( !jQuery.mbBrowser.mobile ) {
-					playerBox.after( overlay );
-					YTPlayer.overlay = overlay;
-				}
+				//if( !jQuery.mbBrowser.mobile ) {
+				playerBox.after( overlay );
+				YTPlayer.overlay = overlay;
+				//	}
+
+				if( jQuery.isTablet )
+					jQuery( "body" ).one( "touchstart", function() {
+						YTPlayer.player.playVideo();
+					} );
 
 				if( !YTPlayer.isBackground ) {
 					overlay.on( "mouseenter", function() {
@@ -328,7 +345,8 @@ var getYTPVideoID = function( url ) {
 
 				if( !ytp.YTAPIReady ) {
 					jQuery( "#YTAPI" ).remove();
-					var tag = jQuery( "<script></script>" ).attr( {
+					var tag = jQuery( "<script/>" ).attr( {
+						"async": "async",
 						"src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
 						"id": "YTAPI"
 					} );
@@ -339,7 +357,8 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
-				if( jQuery.mbBrowser.mobile && !YTPlayer.canPlayOnMobile ) {
+				console.debug( jQuery.mbBrowser.mobile, jQuery.isTablet, YTPlayer.canPlayOnMobile );
+				if( jQuery.mbBrowser.mobile && !jQuery.isTablet && !YTPlayer.canPlayOnMobile ) {
 
 					if( YTPlayer.opt.mobileFallbackImage ) {
 						wrapper.css( {
@@ -353,7 +372,6 @@ var getYTPVideoID = function( url ) {
 
 					if( !YTPlayer.isPlayer )
 						$YTPlayer.remove();
-
 					jQuery( document ).trigger( "YTPUnavailable" );
 					return;
 				}
@@ -375,7 +393,7 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.isInit = true;
 
 						//if is mobile && isPlayer fallback to the default YT player
-						if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile ) {
+						if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile && !jQuery.isTablet ) {
 							// Try to adjust the player dimention
 							if( YTPlayer.opt.containment.outerWidth() > jQuery( window ).width() ) {
 								YTPlayer.opt.containment.css( {
@@ -634,7 +652,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.videoData = null;
 				YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 			}
-			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && !jQuery.mbBrowser.mobile ) {
+			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && ( !jQuery.mbBrowser.mobile && !jQuery.isTablet ) ) {
 				YTPlayer.loading = jQuery( "<div/>" ).addClass( "loading" ).html( "Loading" ).hide();
 				jQuery( YTPlayer ).append( YTPlayer.loading );
 				YTPlayer.loading.fadeIn();
@@ -1707,30 +1725,31 @@ var getYTPVideoID = function( url ) {
 			if( YTPlayer.opt.showControls )
 				jQuery.mbYTPlayer.buildControls( YTPlayer );
 
-			if( YTPlayer.opt.addRaster ) {
+			if( YTPlayer.overlay )
+				if( YTPlayer.opt.addRaster ) {
 
-				var classN = YTPlayer.opt.addRaster == "dot" ? "raster-dot" : "raster";
-				YTPlayer.overlay.addClass( YTPlayer.isRetina ? classN + " retina" : classN );
+					var classN = YTPlayer.opt.addRaster == "dot" ? "raster-dot" : "raster";
+					YTPlayer.overlay.addClass( YTPlayer.isRetina ? classN + " retina" : classN );
 
-			} else {
+				} else {
 
-				YTPlayer.overlay.removeClass( function( index, classNames ) {
-					// change the list into an array
-					var current_classes = classNames.split( " " ),
-						// array of classes which are to be removed
-						classes_to_remove = [];
-					jQuery.each( current_classes, function( index, class_name ) {
-						// if the classname begins with bg add it to the classes_to_remove array
-						if( /raster.*/.test( class_name ) ) {
-							classes_to_remove.push( class_name );
-						}
-					} );
-					classes_to_remove.push( "retina" );
-					// turn the array back into a string
-					return classes_to_remove.join( " " );
-				} )
+					YTPlayer.overlay.removeClass( function( index, classNames ) {
+						// change the list into an array
+						var current_classes = classNames.split( " " ),
+							// array of classes which are to be removed
+							classes_to_remove = [];
+						jQuery.each( current_classes, function( index, class_name ) {
+							// if the classname begins with bg add it to the classes_to_remove array
+							if( /raster.*/.test( class_name ) ) {
+								classes_to_remove.push( class_name );
+							}
+						} );
+						classes_to_remove.push( "retina" );
+						// turn the array back into a string
+						return classes_to_remove.join( " " );
+					} )
 
-			}
+				}
 
 			var startAt = YTPlayer.start_from_last ? YTPlayer.start_from_last : YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
 
@@ -1881,7 +1900,7 @@ var getYTPVideoID = function( url ) {
 		//data.optimizeDisplay = YTPlayer.isPlayer ? false : data.optimizeDisplay;
 
 		if( YTPlayer.opt.optimizeDisplay ) {
-			var abundance = YTPlayer.isPlayer ? 0 : 80;
+			var abundance = YTPlayer.isPlayer ? 0 : 180;
 			var win = {};
 			var el = YTPlayer.wrapper;
 

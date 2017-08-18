@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.0.20",
-		build: "6308",
+		build: "6314",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -208,12 +208,14 @@ var getYTPVideoID = function( url ) {
 					jQuery.mbCookie.remove( "YTPlayer_start_from" + YTPlayer.videoID );
 				}
 
-				if( jQuery.isTablet )
-					YTPlayer.opt.autoPlay = false;
+				/*
+								if( jQuery.browser.mobile )
+									YTPlayer.opt.autoPlay = false;
 
+				*/
 				var playerVars = {
 					'modestbranding': 1,
-					'autoplay': jQuery.isTablet ? 0 : 0,
+					'autoplay': jQuery.browser.mobile ? 1 : 0,
 					'controls': 0,
 					'showinfo': 0,
 					'rel': 0,
@@ -224,7 +226,8 @@ var getYTPVideoID = function( url ) {
 					'allowfullscreen': true,
 					'wmode': 'transparent',
 					'iv_load_policy': YTPlayer.opt.showAnnotations,
-					'playsinline': 1
+					'playsinline': 1,
+					'mute': jQuery.browser.mobile ? 1 : 0
 				};
 
 
@@ -328,7 +331,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.overlay = overlay;
 				//	}
 
-				if( jQuery.isTablet )
+				if( jQuery.browser.mobile )
 					jQuery( "body" ).one( "touchstart", function() {
 						YTPlayer.player.playVideo();
 					} );
@@ -357,24 +360,26 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
-				console.debug( jQuery.mbBrowser.mobile, jQuery.isTablet, YTPlayer.canPlayOnMobile );
-				if( jQuery.mbBrowser.mobile && !jQuery.isTablet && !YTPlayer.canPlayOnMobile ) {
+				//console.debug( jQuery.mbBrowser.mobile, jQuery.isTablet, YTPlayer.canPlayOnMobile );
+				/*
+								if( jQuery.mbBrowser.mobile && !jQuery.isTablet && !YTPlayer.canPlayOnMobile ) {
 
-					if( YTPlayer.opt.mobileFallbackImage ) {
-						wrapper.css( {
-							backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
-							backgroundPosition: "center center",
-							backgroundSize: "cover",
-							backgroundRepeat: "no-repeat",
-							opacity: 1
-						} )
-					};
+									if( YTPlayer.opt.mobileFallbackImage ) {
+										wrapper.css( {
+											backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
+											backgroundPosition: "center center",
+											backgroundSize: "cover",
+											backgroundRepeat: "no-repeat",
+											opacity: 1
+										} )
+									};
 
-					if( !YTPlayer.isPlayer )
-						$YTPlayer.remove();
-					jQuery( document ).trigger( "YTPUnavailable" );
-					return;
-				}
+									if( !YTPlayer.isPlayer )
+										$YTPlayer.remove();
+									jQuery( document ).trigger( "YTPUnavailable" );
+									return;
+								}
+				*/
 
 				jQuery( document ).on( "YTAPIReady", function() {
 					if( ( YTPlayer.isBackground && ytp.backgroundIsInited ) || YTPlayer.isInit ) return;
@@ -393,36 +398,38 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.isInit = true;
 
 						//if is mobile && isPlayer fallback to the default YT player
-						if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile && !jQuery.isTablet ) {
-							// Try to adjust the player dimention
-							if( YTPlayer.opt.containment.outerWidth() > jQuery( window ).width() ) {
-								YTPlayer.opt.containment.css( {
-									maxWidth: "100%"
-								} );
-								var h = YTPlayer.opt.containment.outerWidth() * .563;
-								YTPlayer.opt.containment.css( {
-									maxHeight: h
-								} );
-							}
-							new YT.Player( playerID, {
-								videoId: YTPlayer.videoID.toString(),
-								width: '100%',
-								height: h,
-								playerVars: playerVars,
-								events: {
-									'onReady': function( event ) {
-										YTPlayer.player = event.target;
-										playerBox.css( {
-											opacity: 1
-										} );
-										YTPlayer.wrapper.css( {
-											opacity: 1
-										} );
-									}
-								}
-							} );
-							return;
-						}
+						/*
+												if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile && !jQuery.isTablet ) {
+													// Try to adjust the player dimention
+													if( YTPlayer.opt.containment.outerWidth() > jQuery( window ).width() ) {
+														YTPlayer.opt.containment.css( {
+															maxWidth: "100%"
+														} );
+														var h = YTPlayer.opt.containment.outerWidth() * .563;
+														YTPlayer.opt.containment.css( {
+															maxHeight: h
+														} );
+													}
+													new YT.Player( playerID, {
+														videoId: YTPlayer.videoID.toString(),
+														width: '100%',
+														height: h,
+														playerVars: playerVars,
+														events: {
+															'onReady': function( event ) {
+																YTPlayer.player = event.target;
+																playerBox.css( {
+																	opacity: 1
+																} );
+																YTPlayer.wrapper.css( {
+																	opacity: 1
+																} );
+															}
+														}
+													} );
+													return;
+												}
+						*/
 
 						new YT.Player( playerID, {
 							videoId: YTPlayer.videoID.toString(),
@@ -652,7 +659,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.videoData = null;
 				YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 			}
-			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && ( !jQuery.mbBrowser.mobile && !jQuery.isTablet ) ) {
+			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) { //&& ( !jQuery.mbBrowser.mobile && !jQuery.isTablet )
 				YTPlayer.loading = jQuery( "<div/>" ).addClass( "loading" ).html( "Loading" ).hide();
 				jQuery( YTPlayer ).append( YTPlayer.loading );
 				YTPlayer.loading.fadeIn();
@@ -2162,11 +2169,11 @@ jQuery.browser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e
  _ Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 
-(function(b){b.simpleSlider={defaults:{initialval:0,scale:100,orientation:"h",readonly:!1,callback:!1},events:{start:b.browser.mobile?"touchstart":"mousedown",end:b.browser.mobile?"touchend":"mouseup",move:b.browser.mobile?"touchmove":"mousemove"},init:function(c){return this.each(function(){var a=this,d=b(a);d.addClass("simpleSlider");a.opt={};b.extend(a.opt,b.simpleSlider.defaults,c);b.extend(a.opt,d.data());var e="h"==a.opt.orientation?"horizontal":"vertical",e=b("<div/>").addClass("level").addClass(e);
-	d.prepend(e);a.level=e;d.css({cursor:"default"});"auto"==a.opt.scale&&(a.opt.scale=b(a).outerWidth());d.updateSliderVal();a.opt.readonly||(d.on(b.simpleSlider.events.start,function(c){b.browser.mobile&&(c=c.changedTouches[0]);a.canSlide=!0;d.updateSliderVal(c);"h"==a.opt.orientation?d.css({cursor:"col-resize"}):d.css({cursor:"row-resize"});c.preventDefault();c.stopPropagation()}),b(document).on(b.simpleSlider.events.move,function(c){b.browser.mobile&&(c=c.changedTouches[0]);a.canSlide&&(b(document).css({cursor:"default"}),
-			d.updateSliderVal(c),c.preventDefault(),c.stopPropagation())}).on(b.simpleSlider.events.end,function(){b(document).css({cursor:"auto"});a.canSlide=!1;d.css({cursor:"auto"})}))})},updateSliderVal:function(c){var a=this.get(0);if(a.opt){a.opt.initialval="number"==typeof a.opt.initialval?a.opt.initialval:a.opt.initialval(a);var d=b(a).outerWidth(),e=b(a).outerHeight();a.x="object"==typeof c?c.clientX+document.body.scrollLeft-this.offset().left:"number"==typeof c?c*d/a.opt.scale:a.opt.initialval*d/a.opt.scale;
-	a.y="object"==typeof c?c.clientY+document.body.scrollTop-this.offset().top:"number"==typeof c?(a.opt.scale-a.opt.initialval-c)*e/a.opt.scale:a.opt.initialval*e/a.opt.scale;a.y=this.outerHeight()-a.y;a.scaleX=a.x*a.opt.scale/d;a.scaleY=a.y*a.opt.scale/e;a.outOfRangeX=a.scaleX>a.opt.scale?a.scaleX-a.opt.scale:0>a.scaleX?a.scaleX:0;a.outOfRangeY=a.scaleY>a.opt.scale?a.scaleY-a.opt.scale:0>a.scaleY?a.scaleY:0;a.outOfRange="h"==a.opt.orientation?a.outOfRangeX:a.outOfRangeY;a.value="undefined"!=typeof c?
-					"h"==a.opt.orientation?a.x>=this.outerWidth()?a.opt.scale:0>=a.x?0:a.scaleX:a.y>=this.outerHeight()?a.opt.scale:0>=a.y?0:a.scaleY:"h"==a.opt.orientation?a.scaleX:a.scaleY;"h"==a.opt.orientation?a.level.width(Math.floor(100*a.x/d)+"%"):a.level.height(Math.floor(100*a.y/e));"function"==typeof a.opt.callback&&a.opt.callback(a)}}};b.fn.simpleSlider=b.simpleSlider.init;b.fn.updateSliderVal=b.simpleSlider.updateSliderVal})(jQuery);
+(function(b){b.simpleSlider={defaults:{initialval:0,scale:100,orientation:"h",readonly:!1,callback:!1},events:{start:b.browser.mobile?"touchstart":"mousedown",end:b.browser.mobile?"touchend":"mouseup",move:b.browser.mobile?"touchmove":"mousemove"},init:function(c){return this.each(function(){var a=this,d=b(a);d.addClass("simpleSlider");a.opt={};b.extend(a.opt,b.simpleSlider.defaults,c);b.extend(a.opt,d.data());var e="h"==a.opt.orientation?"horizontal":"vertical";e=b("<div/>").addClass("level").addClass(e);
+	d.prepend(e);a.level=e;d.css({cursor:"default"});"auto"==a.opt.scale&&(a.opt.scale=b(a).outerWidth());d.updateSliderVal();a.opt.readonly||(d.on(b.simpleSlider.events.start,function(c){b.browser.mobile&&(c=c.changedTouches[0]);a.canSlide=!0;d.updateSliderVal(c);"h"==a.opt.orientation?d.css({cursor:"col-resize"}):d.css({cursor:"row-resize"});b.browser.mobile||(c.preventDefault(),c.stopPropagation())}),b(document).on(b.simpleSlider.events.move,function(c){b.browser.mobile&&(c=c.changedTouches[0]);a.canSlide&&
+	(b(document).css({cursor:"default"}),d.updateSliderVal(c),b.browser.mobile||(c.preventDefault(),c.stopPropagation()))}).on(b.simpleSlider.events.end,function(){b(document).css({cursor:"auto"});a.canSlide=!1;d.css({cursor:"auto"})}))})},updateSliderVal:function(c){var a=this.get(0);if(a.opt){a.opt.initialval="number"==typeof a.opt.initialval?a.opt.initialval:a.opt.initialval(a);var d=b(a).outerWidth(),e=b(a).outerHeight();a.x="object"==typeof c?c.clientX+document.body.scrollLeft-this.offset().left:
+				"number"==typeof c?c*d/a.opt.scale:a.opt.initialval*d/a.opt.scale;a.y="object"==typeof c?c.clientY+document.body.scrollTop-this.offset().top:"number"==typeof c?(a.opt.scale-a.opt.initialval-c)*e/a.opt.scale:a.opt.initialval*e/a.opt.scale;a.y=this.outerHeight()-a.y;a.scaleX=a.x*a.opt.scale/d;a.scaleY=a.y*a.opt.scale/e;a.outOfRangeX=a.scaleX>a.opt.scale?a.scaleX-a.opt.scale:0>a.scaleX?a.scaleX:0;a.outOfRangeY=a.scaleY>a.opt.scale?a.scaleY-a.opt.scale:0>a.scaleY?a.scaleY:0;a.outOfRange="h"==a.opt.orientation?
+		a.outOfRangeX:a.outOfRangeY;a.value="undefined"!=typeof c?"h"==a.opt.orientation?a.x>=this.outerWidth()?a.opt.scale:0>=a.x?0:a.scaleX:a.y>=this.outerHeight()?a.opt.scale:0>=a.y?0:a.scaleY:"h"==a.opt.orientation?a.scaleX:a.scaleY;"h"==a.opt.orientation?a.level.width(Math.floor(100*a.x/d)+"%"):a.level.height(Math.floor(100*a.y/e));"function"==typeof a.opt.callback&&a.opt.callback(a)}}};b.fn.simpleSlider=b.simpleSlider.init;b.fn.updateSliderVal=b.simpleSlider.updateSliderVal})(jQuery);
 ;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _

@@ -208,12 +208,14 @@ var getYTPVideoID = function( url ) {
 					jQuery.mbCookie.remove( "YTPlayer_start_from" + YTPlayer.videoID );
 				}
 
-				if( jQuery.isTablet )
-					YTPlayer.opt.autoPlay = false;
+				/*
+								if( jQuery.browser.mobile )
+									YTPlayer.opt.autoPlay = false;
 
+				*/
 				var playerVars = {
 					'modestbranding': 1,
-					'autoplay': jQuery.isTablet ? 0 : 0,
+					'autoplay': jQuery.browser.mobile ? 1 : 0,
 					'controls': 0,
 					'showinfo': 0,
 					'rel': 0,
@@ -224,7 +226,8 @@ var getYTPVideoID = function( url ) {
 					'allowfullscreen': true,
 					'wmode': 'transparent',
 					'iv_load_policy': YTPlayer.opt.showAnnotations,
-					'playsinline': 1
+					'playsinline': 1,
+					'mute': jQuery.browser.mobile ? 1 : 0
 				};
 
 
@@ -328,7 +331,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.overlay = overlay;
 				//	}
 
-				if( jQuery.isTablet )
+				if( jQuery.browser.mobile )
 					jQuery( "body" ).one( "touchstart", function() {
 						YTPlayer.player.playVideo();
 					} );
@@ -357,24 +360,26 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
-				console.debug( jQuery.mbBrowser.mobile, jQuery.isTablet, YTPlayer.canPlayOnMobile );
-				if( jQuery.mbBrowser.mobile && !jQuery.isTablet && !YTPlayer.canPlayOnMobile ) {
+				//console.debug( jQuery.mbBrowser.mobile, jQuery.isTablet, YTPlayer.canPlayOnMobile );
+				/*
+								if( jQuery.mbBrowser.mobile && !jQuery.isTablet && !YTPlayer.canPlayOnMobile ) {
 
-					if( YTPlayer.opt.mobileFallbackImage ) {
-						wrapper.css( {
-							backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
-							backgroundPosition: "center center",
-							backgroundSize: "cover",
-							backgroundRepeat: "no-repeat",
-							opacity: 1
-						} )
-					};
+									if( YTPlayer.opt.mobileFallbackImage ) {
+										wrapper.css( {
+											backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
+											backgroundPosition: "center center",
+											backgroundSize: "cover",
+											backgroundRepeat: "no-repeat",
+											opacity: 1
+										} )
+									};
 
-					if( !YTPlayer.isPlayer )
-						$YTPlayer.remove();
-					jQuery( document ).trigger( "YTPUnavailable" );
-					return;
-				}
+									if( !YTPlayer.isPlayer )
+										$YTPlayer.remove();
+									jQuery( document ).trigger( "YTPUnavailable" );
+									return;
+								}
+				*/
 
 				jQuery( document ).on( "YTAPIReady", function() {
 					if( ( YTPlayer.isBackground && ytp.backgroundIsInited ) || YTPlayer.isInit ) return;
@@ -393,36 +398,38 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.isInit = true;
 
 						//if is mobile && isPlayer fallback to the default YT player
-						if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile && !jQuery.isTablet ) {
-							// Try to adjust the player dimention
-							if( YTPlayer.opt.containment.outerWidth() > jQuery( window ).width() ) {
-								YTPlayer.opt.containment.css( {
-									maxWidth: "100%"
-								} );
-								var h = YTPlayer.opt.containment.outerWidth() * .563;
-								YTPlayer.opt.containment.css( {
-									maxHeight: h
-								} );
-							}
-							new YT.Player( playerID, {
-								videoId: YTPlayer.videoID.toString(),
-								width: '100%',
-								height: h,
-								playerVars: playerVars,
-								events: {
-									'onReady': function( event ) {
-										YTPlayer.player = event.target;
-										playerBox.css( {
-											opacity: 1
-										} );
-										YTPlayer.wrapper.css( {
-											opacity: 1
-										} );
-									}
-								}
-							} );
-							return;
-						}
+						/*
+												if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile && !jQuery.isTablet ) {
+													// Try to adjust the player dimention
+													if( YTPlayer.opt.containment.outerWidth() > jQuery( window ).width() ) {
+														YTPlayer.opt.containment.css( {
+															maxWidth: "100%"
+														} );
+														var h = YTPlayer.opt.containment.outerWidth() * .563;
+														YTPlayer.opt.containment.css( {
+															maxHeight: h
+														} );
+													}
+													new YT.Player( playerID, {
+														videoId: YTPlayer.videoID.toString(),
+														width: '100%',
+														height: h,
+														playerVars: playerVars,
+														events: {
+															'onReady': function( event ) {
+																YTPlayer.player = event.target;
+																playerBox.css( {
+																	opacity: 1
+																} );
+																YTPlayer.wrapper.css( {
+																	opacity: 1
+																} );
+															}
+														}
+													} );
+													return;
+												}
+						*/
 
 						new YT.Player( playerID, {
 							videoId: YTPlayer.videoID.toString(),
@@ -652,7 +659,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.videoData = null;
 				YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 			}
-			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && ( !jQuery.mbBrowser.mobile && !jQuery.isTablet ) ) {
+			if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) { //&& ( !jQuery.mbBrowser.mobile && !jQuery.isTablet )
 				YTPlayer.loading = jQuery( "<div/>" ).addClass( "loading" ).html( "Loading" ).hide();
 				jQuery( YTPlayer ).append( YTPlayer.loading );
 				YTPlayer.loading.fadeIn();

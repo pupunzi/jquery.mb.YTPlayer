@@ -129,8 +129,10 @@
 </head>
 <body>
 <div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
+
     <h1 style="color:white">jQuery.mb.YTPlayer</h1>
     <h2 style="color:white; text-align: center">An HTML5 Background player<br>for YouTube videos</h2>
+
     <div class="console">
         <h2 style="color:white">Available controls methods</h2>
         <button onclick="myPlayer.YTPPause()">YTPPause</button>
@@ -144,9 +146,13 @@
         <button onclick="myPlayer.YTPSetVolume(80)">YTPSetVolume (80)</button>
         <br><br>
         <button onclick="showInfo(myPlayer.YTPGetVideoID())">YTPGetVideoID</button>
-        <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAlign</button>
         <button onclick="showInfo(myPlayer.YTPGetTime())">YTPGetTime</button>
         <button onclick="showInfo(myPlayer.YTPGetTotalTime())">YTPGetTotalTime</button>
+        <br><br>
+        <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAnchor</button>
+        <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor (top/left)</button>
+        <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor (center/center)</button>
+        <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor (right/bottom)</button>
         <br><br>
         <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter (grayscale)</button>
         <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter (sepia)</button>
@@ -155,10 +161,6 @@
         <button onclick="myPlayer.YTPAddMask('assets/mask-4.png')">YTPAddMask</button>
         <button onclick="myPlayer.YTPRemoveMask()">YTPRemoveMask</button>
         <!--<button onclick="myPlayer.YTPToggleMask()">YTPToggleMask</button>-->
-        <br><br>
-        <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor (top/left)</button>
-        <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor (center/center)</button>
-        <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor (right/bottom)</button>
         <br><br>
         <button onclick="myPlayer.YTPFullscreen()">YTPFullscreen</button>
         <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>

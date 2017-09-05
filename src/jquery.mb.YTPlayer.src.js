@@ -373,26 +373,24 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
-				//console.debug( jQuery.mbBrowser.mobile, jQuery.isTablet, YTPlayer.canPlayOnMobile );
-				/*
-				 if( jQuery.mbBrowser.mobile && !jQuery.isTablet && !YTPlayer.canPlayOnMobile ) {
+				if( jQuery.mbBrowser.mobile && !( 'playsInline' in document.createElement( 'video' ) ) ) {
 
-				 if( YTPlayer.opt.mobileFallbackImage ) {
-				 wrapper.css( {
-				 backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
-				 backgroundPosition: "center center",
-				 backgroundSize: "cover",
-				 backgroundRepeat: "no-repeat",
-				 opacity: 1
-				 } )
-				 };
+					if( YTPlayer.opt.mobileFallbackImage ) {
+						wrapper.css( {
+							backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
+							backgroundPosition: "center center",
+							backgroundSize: "cover",
+							backgroundRepeat: "no-repeat",
+							opacity: 1
+						} )
+					};
 
-				 if( !YTPlayer.isPlayer )
-				 $YTPlayer.remove();
-				 jQuery( document ).trigger( "YTPUnavailable" );
-				 return;
-				 }
-				 */
+					if( !YTPlayer.isPlayer )
+						$YTPlayer.remove();
+
+					jQuery( document ).trigger( "YTPUnavailable" );
+					return;
+				}
 
 				jQuery( document ).on( "YTAPIReady", function() {
 					if( ( YTPlayer.isBackground && ytp.backgroundIsInited ) || YTPlayer.isInit ) return;

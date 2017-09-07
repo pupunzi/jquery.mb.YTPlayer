@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.0",
-		build: "6365",
+		build: "6367",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -257,7 +257,12 @@ var getYTPVideoID = function( url ) {
 
 				var isPlayer = YTPlayer.opt.containment.is( jQuery( this ) );
 
-				YTPlayer.canPlayOnMobile = isPlayer && jQuery( this ).children().length === 0;
+				//				YTPlayer.canPlayOnMobile = isPlayer && jQuery( this ).children().length === 0;
+
+				YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile && ( 'playsInline' in document.createElement( 'video' ) );
+
+				YTPlayer.canPlayOnMobile = true;
+
 				YTPlayer.isPlayer = false;
 
 				/**
@@ -373,26 +378,24 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
-				//console.debug( jQuery.mbBrowser.mobile, jQuery.isTablet, YTPlayer.canPlayOnMobile );
-				/*
-				 if( jQuery.mbBrowser.mobile && !jQuery.isTablet && !YTPlayer.canPlayOnMobile ) {
+				if( jQuery.mbBrowser.mobile && !YTPlayer.canPlayOnMobile ) {
 
-				 if( YTPlayer.opt.mobileFallbackImage ) {
-				 wrapper.css( {
-				 backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
-				 backgroundPosition: "center center",
-				 backgroundSize: "cover",
-				 backgroundRepeat: "no-repeat",
-				 opacity: 1
-				 } )
-				 };
+					if( YTPlayer.opt.mobileFallbackImage ) {
+						wrapper.css( {
+							backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
+							backgroundPosition: "center center",
+							backgroundSize: "cover",
+							backgroundRepeat: "no-repeat",
+							opacity: 1
+						} )
+					};
 
-				 if( !YTPlayer.isPlayer )
-				 $YTPlayer.remove();
-				 jQuery( document ).trigger( "YTPUnavailable" );
-				 return;
-				 }
-				 */
+					if( !YTPlayer.isPlayer )
+						$YTPlayer.remove();
+
+					jQuery( document ).trigger( "YTPUnavailable" );
+					return;
+				}
 
 				jQuery( document ).on( "YTAPIReady", function() {
 					if( ( YTPlayer.isBackground && ytp.backgroundIsInited ) || YTPlayer.isInit ) return;

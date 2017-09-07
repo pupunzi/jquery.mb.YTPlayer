@@ -216,7 +216,13 @@ var getYTPVideoID = function( url ) {
 					jQuery.mbCookie.remove( "YTPlayer_start_from" + YTPlayer.videoID );
 				}
 
-				if( jQuery.browser.mobile ) {
+				//				YTPlayer.canPlayOnMobile = isPlayer && jQuery( this ).children().length === 0;
+
+				YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile && ( 'playsInline' in document.createElement( 'video' ) );
+
+				YTPlayer.canPlayOnMobile = true;
+
+				if( YTPlayer.canPlayOnMobile ) {
 					YTPlayer.opt.showControls = false;
 				}
 
@@ -257,7 +263,7 @@ var getYTPVideoID = function( url ) {
 
 				var isPlayer = YTPlayer.opt.containment.is( jQuery( this ) );
 
-				YTPlayer.canPlayOnMobile = isPlayer && jQuery( this ).children().length === 0;
+
 				YTPlayer.isPlayer = false;
 
 				/**
@@ -373,7 +379,7 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
-				if( jQuery.mbBrowser.mobile && !( 'playsInline' in document.createElement( 'video' ) ) ) {
+				if( jQuery.mbBrowser.mobile && !YTPlayer.canPlayOnMobile ) {
 
 					if( YTPlayer.opt.mobileFallbackImage ) {
 						wrapper.css( {
@@ -449,7 +455,10 @@ var getYTPVideoID = function( url ) {
 							events: {
 								'onReady': function( event ) {
 									YTPlayer.player = event.target;
-									if( YTPlayer.isReady ) return;
+
+									if( YTPlayer.isReady )
+										return;
+
 									YTPlayer.isReady = YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ? false : true;
 									YTPlayer.playerEl = YTPlayer.player.getIframe();
 

@@ -252,7 +252,9 @@ var getYTPVideoID = function( url ) {
 				if( document.createElement( 'video' ).canPlayType ) jQuery.extend( playerVars, {
 					'html5': 1
 				} );
-				if( jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9 ) this.opt.opacity = 1;
+
+				if( jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9 )
+					this.opt.opacity = 1;
 
 				YTPlayer.isSelf = YTPlayer.opt.containment == "self";
 				YTPlayer.defaultOpt.containment = YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery( this ) : jQuery( YTPlayer.opt.containment );
@@ -1708,8 +1710,10 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.hasFocus = false;
 						$YTPlayer.YTPPause();
 
-						console.debug( YTPlayer.id, isOnScreen )
-						console.debug( YTPlayer.state )
+						/*
+												console.debug( YTPlayer.id, isOnScreen )
+												console.debug( YTPlayer.state )
+						*/
 
 					} else if( !YTPlayer.hasFocus && !( YTPlayer.state == -1 || YTPlayer.state == 0 ) ) {
 
@@ -1838,8 +1842,10 @@ var getYTPVideoID = function( url ) {
 			YTPlayer.preventTrigger = true;
 			YTPlayer.state = 2;
 
-			//jQuery( YTPlayer ).YTPPlay();
-			jQuery( YTPlayer ).YTPPause();
+			/*
+						jQuery( YTPlayer ).YTPPlay();
+						jQuery( YTPlayer ).YTPPause();
+			*/
 
 			jQuery( YTPlayer ).muteYTPVolume();
 			jQuery( "#controlBar_" + YTPlayer.id ).remove();
@@ -1876,7 +1882,6 @@ var getYTPVideoID = function( url ) {
 				}
 
 			var startAt = YTPlayer.start_from_last ? YTPlayer.start_from_last : YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
-
 
 			YTPlayer.start_from_last = null;
 
@@ -1926,7 +1931,8 @@ var getYTPVideoID = function( url ) {
 							opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
 						}, YTPlayer.opt.fadeOnStartTime * 2 );
 
-						$YTPlayer.YTPPlay();
+						//$YTPlayer.YTPPlay();
+						YTPlayer.player.playVideo();
 
 						// Fix for Safari freeze
 
@@ -2043,8 +2049,6 @@ var getYTPVideoID = function( url ) {
 		YTPlayer.opt.anchor = typeof YTPlayer.opt.anchor != "undefined " ? YTPlayer.opt.anchor : "center,center";
 		var YTPAlign = YTPlayer.opt.anchor.split( "," );
 
-		//data.optimizeDisplay = YTPlayer.isPlayer ? false : data.optimizeDisplay;
-
 		if( YTPlayer.opt.optimizeDisplay ) {
 			var abundance = YTPlayer.isPlayer ? 0 : 180;
 			var win = {};
@@ -2056,7 +2060,6 @@ var getYTPVideoID = function( url ) {
 			YTPlayer.opt.ratio = eval( YTPlayer.opt.ratio );
 
 			vid.width = win.width;
-			//			vid.height = YTPlayer.opt.ratio == "16/9" ? Math.ceil( vid.width * ( 9 / 16 ) ) : Math.ceil( vid.width * ( 3 / 4 ) );
 			vid.height = Math.ceil( vid.width / YTPlayer.opt.ratio );
 
 			vid.marginTop = Math.ceil( -( ( vid.height - win.height ) / 2 ) );
@@ -2067,7 +2070,6 @@ var getYTPVideoID = function( url ) {
 			if( lowest ) {
 
 				vid.height = win.height;
-				//				vid.width = YTPlayer.opt.ratio == "16/9" ? Math.floor( vid.height * ( 16 / 9 ) ) : Math.floor( vid.height * ( 4 / 3 ) );
 				vid.width = Math.ceil( vid.height * YTPlayer.opt.ratio );
 
 				vid.marginTop = 0;

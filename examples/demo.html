@@ -296,7 +296,7 @@ button:hover, .button:hover {
 
         jQuery.mbYTPlayer.controls.mute="A";
         jQuery.mbYTPlayer.controls.unmute="M";
-        myPlayer = jQuery("#bgndVideo").YTPlayer({align:"center,left"});
+        myPlayer = jQuery("#bgndVideo").YTPlayer();
 //        myPlayer = jQuery("#bgndVideo").YTPlayer();
 
         myPlayer.YTPApplyFilters({
@@ -411,7 +411,6 @@ button:hover, .button:hover {
      */
     function changeLabel(state){
         $("#togglePlay").html(state != 1 ? "pause" : "play");
-
         $("#togglePlay").removeClass(state != 1 ? "play" : "pause");
         $("#togglePlay").addClass(state != 1 ? "pause" : "play");
     }
@@ -510,7 +509,7 @@ button:hover, .button:hover {
         <!--<button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'Fk9EBOOAYiU', mute:false, addRaster:false})">video 1</button>-->
         <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: '7SnmCUwOsts', mute:false, addRaster:false})">video 1</button>
         <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 2</button>
-        <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'kcihcYEOeic', mute:false, startAt:10, addRaster:false})">video 3</button>
+        <button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'kcihcYEOeic', mute:true, startAt:10, addRaster:false, ratio:'16/6', showControls:true})">video 3</button>
         <br>
         <br>
         <div id="loadBox">
@@ -552,7 +551,7 @@ button:hover, .button:hover {
     </a>
 
     <!--7SnmCUwOsts--><!--BsekcY04xvQ--><!--r1xohS2u69E--><!--Fk9EBOOAYiU--><!--sEuXfDtrco8--><!--9d8wWcJLnFI-->
-    <div id="bgndVideo" class="player" data-property="{videoURL:'2yacT1XMjsg',containment:'body', showControls:true, autoPlay:true, loop:false, vol:50, mute:false, startAt:0,  stopAt:296, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true}">My video</div>
+    <div id="bgndVideo" class="player" data-property="{videoURL:'Fk9EBOOAYiU',containment:'body', showControls:true, autoPlay:true, loop:false, vol:50, mute:false, startAt:0,  stopAt:0, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true}">My video</div>
 
 </div>
 

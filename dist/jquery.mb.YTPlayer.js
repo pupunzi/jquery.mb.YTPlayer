@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.0",
-		build: "6368",
+		build: "6369",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -219,8 +219,6 @@ var getYTPVideoID = function( url ) {
 				//				YTPlayer.canPlayOnMobile = isPlayer && jQuery( this ).children().length === 0;
 
 				YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile && ( 'playsInline' in document.createElement( 'video' ) );
-
-				YTPlayer.canPlayOnMobile = true;
 
 				if( YTPlayer.canPlayOnMobile ) {
 					YTPlayer.opt.showControls = false;

@@ -673,7 +673,7 @@ var getYTPVideoID = function( url ) {
 					jQuery( YTPlayer ).trigger( "YTPChanged" );
 				}, 50 );
 				if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) {
-					var bgndURL = jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/hqdefault.jpg";
+					var bgndURL = jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
 
 					if( bgndURL )
 						YTPlayer.opt.containment.css( {

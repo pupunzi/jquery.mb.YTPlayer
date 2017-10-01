@@ -911,6 +911,10 @@ var getYTPVideoID = function( url ) {
 		 */
 		fullscreen: function( real ) {
 			var YTPlayer = this.get( 0 );
+
+			if( !YTPlayer.player.length )
+				return this;
+
 			if( typeof real == "undefined" ) real = YTPlayer.opt.realfullscreen;
 			real = eval( real );
 			var controls = jQuery( "#controlBar_" + YTPlayer.id );
@@ -1100,6 +1104,10 @@ var getYTPVideoID = function( url ) {
 		 */
 		togglePlay: function( callback ) {
 			var YTPlayer = this.get( 0 );
+
+			if( !YTPlayer.player.length )
+				return this;
+
 			if( YTPlayer.state == 1 )
 				this.YTPPause();
 			else
@@ -1132,6 +1140,10 @@ var getYTPVideoID = function( url ) {
 		 */
 		pause: function() {
 			var YTPlayer = this.get( 0 );
+
+			if( !YTPlayer.player.length )
+				return this;
+
 			YTPlayer.player.pauseVideo();
 			YTPlayer.state = 2;
 			return this;
@@ -1145,6 +1157,10 @@ var getYTPVideoID = function( url ) {
 		 */
 		seekTo: function( val ) {
 			var YTPlayer = this.get( 0 );
+
+			if( !YTPlayer.player.length )
+				return this;
+
 			YTPlayer.player.seekTo( val, true );
 			return this;
 		},
@@ -1157,6 +1173,10 @@ var getYTPVideoID = function( url ) {
 		 */
 		setVolume: function( val ) {
 			var YTPlayer = this.get( 0 );
+
+			if( !YTPlayer.player.length )
+				return;
+
 			if( !val && !YTPlayer.opt.vol && YTPlayer.player.getVolume() == 0 )
 				jQuery( YTPlayer ).YTPUnmute();
 			else if( ( !val && YTPlayer.player.getVolume() > 0 ) || ( val && YTPlayer.opt.vol == val ) ) {
@@ -1179,7 +1199,10 @@ var getYTPVideoID = function( url ) {
 		 */
 		toggleVolume: function() {
 			var YTPlayer = this.get( 0 );
-			if( !YTPlayer ) return;
+
+			if( !YTPlayer.player.length )
+				return this;
+
 			if( YTPlayer.player.isMuted() ) {
 				jQuery( YTPlayer ).YTPUnmute();
 				return true;
@@ -1196,6 +1219,10 @@ var getYTPVideoID = function( url ) {
 		 */
 		mute: function() {
 			var YTPlayer = this.get( 0 );
+
+			if( !YTPlayer.player.length )
+				return;
+
 			if( YTPlayer.isMute ) return;
 			YTPlayer.player.mute();
 			YTPlayer.isMute = true;
@@ -1221,7 +1248,13 @@ var getYTPVideoID = function( url ) {
 		 */
 		unmute: function() {
 			var YTPlayer = this.get( 0 );
-			if( !YTPlayer.isMute ) return;
+
+			if( !YTPlayer.player.length )
+				return this;
+
+			if( !YTPlayer.isMute )
+				return this;
+
 			YTPlayer.player.unMute();
 			YTPlayer.isMute = false;
 			YTPlayer.player.setVolume( YTPlayer.opt.vol );

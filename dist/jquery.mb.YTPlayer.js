@@ -52,8 +52,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "3.1.0",
-		build: "6406",
+		version: "3.1.1",
+		build: "6408",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -913,7 +913,7 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 
 			if( !YTPlayer.player.length )
-				return
+				return this;
 
 			if( typeof real == "undefined" ) real = YTPlayer.opt.realfullscreen;
 			real = eval( real );
@@ -938,6 +938,7 @@ var getYTPVideoID = function( url ) {
 						videoWrapper.css( {
 							zIndex: 0
 						} );
+
 						if( YTPlayer.isBackground ) {
 							jQuery( "body" ).after( controls );
 						} else {
@@ -1106,7 +1107,7 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 
 			if( !YTPlayer.player.length )
-				return;
+				return this;
 
 			if( YTPlayer.state == 1 )
 				this.YTPPause();
@@ -1142,7 +1143,7 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 
 			if( !YTPlayer.player.length )
-				return;
+				return this;
 
 			YTPlayer.player.pauseVideo();
 			YTPlayer.state = 2;
@@ -1159,7 +1160,7 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 
 			if( !YTPlayer.player.length )
-				return;
+				return this;
 
 			YTPlayer.player.seekTo( val, true );
 			return this;
@@ -1201,7 +1202,7 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 
 			if( !YTPlayer.player.length )
-				return;
+				return this;
 
 			if( YTPlayer.player.isMuted() ) {
 				jQuery( YTPlayer ).YTPUnmute();
@@ -1250,10 +1251,10 @@ var getYTPVideoID = function( url ) {
 			var YTPlayer = this.get( 0 );
 
 			if( !YTPlayer.player.length )
-				return;
+				return this;
 
 			if( !YTPlayer.isMute )
-				return;
+				return this;
 
 			YTPlayer.player.unMute();
 			YTPlayer.isMute = false;

@@ -938,6 +938,7 @@ var getYTPVideoID = function( url ) {
 						videoWrapper.css( {
 							zIndex: 0
 						} );
+
 						if( YTPlayer.isBackground ) {
 							jQuery( "body" ).after( controls );
 						} else {

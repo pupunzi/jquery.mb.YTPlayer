@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.1",
-		build: "6420",
+		build: "6423",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -220,6 +220,8 @@ var getYTPVideoID = function( url ) {
 
 				YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile && ( 'playsInline' in document.createElement( 'video' ) );
 
+				YTPlayer.canPlayOnMobile = true;
+
 				if( YTPlayer.canPlayOnMobile ) {
 					YTPlayer.opt.showControls = false;
 				}
@@ -376,6 +378,8 @@ var getYTPVideoID = function( url ) {
 						jQuery( document ).trigger( "YTAPIReady" );
 					}, 100 )
 				}
+
+				console.debug( "canPlayOnMobile:: ", YTPlayer.canPlayOnMobile )
 
 				if( jQuery.mbBrowser.mobile && !YTPlayer.canPlayOnMobile ) {
 
@@ -1943,7 +1947,10 @@ var getYTPVideoID = function( url ) {
 						 }, YTPlayer.opt.fadeOnStartTime * 2 );
 						 */
 
-						//YTPlayer.player.playVideo();
+
+						/*
+						 YTPlayer.player.playVideo();
+						 */
 
 						// Fix for Safari freeze
 
@@ -1957,11 +1964,9 @@ var getYTPVideoID = function( url ) {
 							}, 10 )
 						}
 
-						/*
-						 $YTPlayer.one( "YTPReady", function() {
-						 $YTPlayer.YTPPlay();
-						 } );
-						 */
+						$YTPlayer.one( "YTPReady", function() {
+							$YTPlayer.YTPPlay();
+						} );
 
 					} else {
 

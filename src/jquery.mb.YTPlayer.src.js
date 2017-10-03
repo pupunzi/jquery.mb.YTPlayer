@@ -193,7 +193,7 @@ var getYTPVideoID = function( url ) {
 				 * Enable fullscreen also for IE and Edge
 				 * @type {boolean}
 				 */
-				//YTPlayer.canGoFullScreen = !( jQuery.mbBrowser.msie || jQuery.mbBrowser.opera || isIframe() );
+					//YTPlayer.canGoFullScreen = !( jQuery.mbBrowser.msie || jQuery.mbBrowser.opera || isIframe() );
 				YTPlayer.canGoFullScreen = !( isIframe() );
 
 				if( !YTPlayer.canGoFullScreen ) YTPlayer.opt.realfullscreen = false;
@@ -216,9 +216,9 @@ var getYTPVideoID = function( url ) {
 					jQuery.mbCookie.remove( "YTPlayer_start_from" + YTPlayer.videoID );
 				}
 
-				// YTPlayer.canPlayOnMobile = isPlayer && jQuery( this ).children().length === 0;
-
 				YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile && ( 'playsInline' in document.createElement( 'video' ) );
+
+				YTPlayer.canPlayOnMobile = true;
 
 				if( YTPlayer.canPlayOnMobile ) {
 					YTPlayer.opt.showControls = false;
@@ -349,7 +349,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.overlay = overlay;
 				//	}
 
-				if( jQuery.browser.mobile )
+				if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile )
 					jQuery( "body" ).one( "touchstart", function() {
 						YTPlayer.player.playVideo();
 					} );
@@ -377,6 +377,7 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
+
 				if( jQuery.mbBrowser.mobile && !YTPlayer.canPlayOnMobile ) {
 
 					if( YTPlayer.opt.mobileFallbackImage ) {
@@ -393,6 +394,7 @@ var getYTPVideoID = function( url ) {
 						$YTPlayer.remove();
 
 					jQuery( document ).trigger( "YTPUnavailable" );
+
 					return;
 				}
 
@@ -1017,7 +1019,7 @@ var getYTPVideoID = function( url ) {
 			function RunPrefixMethod( obj, method ) {
 				var pfx = [ "webkit", "moz", "ms", "o", "" ];
 				var p = 0,
-					m, t;
+						m, t;
 				while( p < pfx.length && !obj[ m ] ) {
 					m = method;
 					if( pfx[ p ] == "" ) {
@@ -1382,9 +1384,9 @@ var getYTPVideoID = function( url ) {
 						jQuery( this ).YTPApplyFilter( key, 0 );
 						if( typeof callback == "function" ) callback( key );
 					} else {
-						jQuery( this ).YTPApplyFilter( filter, 0 );
-						if( typeof callback == "function" ) callback( filter );
-					}
+					jQuery( this ).YTPApplyFilter( filter, 0 );
+					if( typeof callback == "function" ) callback( filter );
+				}
 			} );
 
 		},
@@ -1874,8 +1876,8 @@ var getYTPVideoID = function( url ) {
 					YTPlayer.overlay.removeClass( function( index, classNames ) {
 						// change the list into an array
 						var current_classes = classNames.split( " " ),
-							// array of classes which are to be removed
-							classes_to_remove = [];
+						// array of classes which are to be removed
+								classes_to_remove = [];
 						jQuery.each( current_classes, function( index, class_name ) {
 							// if the classname begins with bg add it to the classes_to_remove array
 							if( /raster.*/.test( class_name ) ) {

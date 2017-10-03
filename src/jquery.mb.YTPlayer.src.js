@@ -501,8 +501,10 @@ var getYTPVideoID = function( url ) {
 										return
 									}
 
-									if( YTPlayer.state == state )
-										return;
+									/*
+									 if( YTPlayer.state == state )
+									 return;
+									 */
 
 									YTPlayer.state = state;
 
@@ -1087,7 +1089,9 @@ var getYTPVideoID = function( url ) {
 			}, YTPlayer.opt.fadeOnStartTime * 2 );
 
 			var controls = jQuery( "#controlBar_" + YTPlayer.id );
+
 			var playBtn = controls.find( ".mb_YTPPlaypause" );
+
 			playBtn.html( jQuery.mbYTPlayer.controls.pause );
 			YTPlayer.state = 1;
 			YTPlayer.orig_background = jQuery( YTPlayer ).css( "background-image" );

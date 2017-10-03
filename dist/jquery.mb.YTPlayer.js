@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.1",
-		build: "6423",
+		build: "6427",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -216,11 +216,9 @@ var getYTPVideoID = function( url ) {
 					jQuery.mbCookie.remove( "YTPlayer_start_from" + YTPlayer.videoID );
 				}
 
-				// YTPlayer.canPlayOnMobile = isPlayer && jQuery( this ).children().length === 0;
-
 				YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile && ( 'playsInline' in document.createElement( 'video' ) );
 
-				YTPlayer.canPlayOnMobile = true;
+				//YTPlayer.canPlayOnMobile = true;
 
 				if( YTPlayer.canPlayOnMobile ) {
 					YTPlayer.opt.showControls = false;
@@ -351,7 +349,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.overlay = overlay;
 				//	}
 
-				if( jQuery.browser.mobile )
+				if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile )
 					jQuery( "body" ).one( "touchstart", function() {
 						YTPlayer.player.playVideo();
 					} );
@@ -379,7 +377,6 @@ var getYTPVideoID = function( url ) {
 					}, 100 )
 				}
 
-				console.debug( "canPlayOnMobile:: ", YTPlayer.canPlayOnMobile )
 
 				if( jQuery.mbBrowser.mobile && !YTPlayer.canPlayOnMobile ) {
 
@@ -397,6 +394,7 @@ var getYTPVideoID = function( url ) {
 						$YTPlayer.remove();
 
 					jQuery( document ).trigger( "YTPUnavailable" );
+
 					return;
 				}
 
@@ -1087,10 +1085,11 @@ var getYTPVideoID = function( url ) {
 				opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
 			}, YTPlayer.opt.fadeOnStartTime );
 
-
 			jQuery( YTPlayer.playerEl ).CSSAnimate( {
 				opacity: 1
 			}, YTPlayer.opt.fadeOnStartTime * 2 );
+
+			//			console.debug( YTPlayer.opt.loop )
 
 			var controls = jQuery( "#controlBar_" + YTPlayer.id );
 

@@ -1939,7 +1939,10 @@ var getYTPVideoID = function( url ) {
 						 }, YTPlayer.opt.fadeOnStartTime * 2 );
 						 */
 
-						//YTPlayer.player.playVideo();
+
+						/*
+						 YTPlayer.player.playVideo();
+						 */
 
 						// Fix for Safari freeze
 
@@ -1953,11 +1956,9 @@ var getYTPVideoID = function( url ) {
 							}, 10 )
 						}
 
-						/*
-						 $YTPlayer.one( "YTPReady", function() {
-						 $YTPlayer.YTPPlay();
-						 } );
-						 */
+						$YTPlayer.one( "YTPReady", function() {
+							$YTPlayer.YTPPlay();
+						} );
 
 					} else {
 

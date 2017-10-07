@@ -53,7 +53,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.1",
-		build: "6427",
+		build: "6429",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {

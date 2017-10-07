@@ -28,38 +28,38 @@
     <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
     <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../dist/jquery.mb.YTPlayer.js"></script>
     <script src="assets/apikey.js"></script>
 
     <style>
-        body{
-            border:none;
-            margin:0;
-            padding:30px;
+        body {
+            border: none;
+            margin: 0;
+            padding: 30px;
             background: #e4a51b;
-            font:normal 16px/20px Lekton, sans-serif;
+            font: normal 16px/20px Lekton, sans-serif;
         }
 
-        h1, h2{
+        h1, h2 {
             font-family: 'Lobster', cursive;
             font-size: 40px;
             text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
             font-weight: 200;
         }
 
-        .player{
-            display:inline-block;
-            vertical-align:top;
-            position:relative;
-            width:500px;
-            height:350px;
-            margin-top:100px!important;
-            left:0;
+        .player {
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            width: 500px;
+            height: 350px;
+            margin-top: 100px !important;
+            left: 0;
             overflow: hidden;
             border-radius: 4px;
-            -moz-box-shadow: 0 0 10px rgba(0,0,0,.5);
-            box-shadow: 0 0 10px rgba(0,0,0,.5);
+            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, .5);
         }
 
     </style>
@@ -67,13 +67,17 @@
 <body>
 <div id="wrapper" style="position:relative; padding-top: 100px; color:white">
     <h1> jQuery.mb.YTPlayer </h1>
-    <h2>  This page shows a playlist of 3 videos continuously.</h2>
-    <p >You can also set to shuffle the list before playing them.</p>
-    <p >See the source to understand how to define the playlist and how to invoke the player.</p>
+
+    <h2> This page shows a playlist of 3 videos continuously.</h2>
+    <p>You can also set to shuffle the list before playing them.</p>
+    <p>See the source to understand how to define the playlist and how to invoke the player.</p>
+
     <div style="background: rgba(0,0,0,0.2); padding: 10px; margin: 10px;max-width: 300px;">
         <h2 style="color:white">Video info:</h2>
-        <p style="color:white"> video ID: <span id="videoID"></span> </p>
-        <p style="color:white"> Title: <span id="videoTitle"></span> </p>
+
+        <p style="color:white"> video ID: <span id="videoID"></span></p>
+
+        <p style="color:white"> Title: <span id="videoTitle"></span></p>
     </div>
     <button style="color:#000000; font-size: 22px; cursor: pointer" onclick="jQuery('#myPlayerID').YTPPlayPrev()">play previous</button>
     <button style="color:#000000; font-size: 22px; cursor: pointer" onclick="jQuery('#myPlayerID').YTPPlayNext()">play next</button>
@@ -83,17 +87,29 @@
 <script>
 
     var myPlayListPlayer;
-    jQuery(function(){
-        var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
+    jQuery(function () {
+        var isIframe = function () {
+            var a = !1;
+            try {
+                self.location.href != top.location.href && (a = !0)
+            } catch (b) {
+                a = !0
+            }
+            return a
+        };
+        if (!isIframe()) {
+            var logo = $("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+            $("#wrapper").prepend(logo), $("#logo").fadeIn()
+        }
 
         var videos = [
-            {videoURL:"VuaJAgx0x_4",containment:'body',autoPlay:true, mute:false, startAt:0, opacity:1, loop:false, ratio:"4/3", addRaster:true, quality:"large"},
-            {videoURL: "3ovA7zeviRo",containment:'body',autoPlay:true, mute:true, startAt:10, stopAt:20, opacity:1, loop:2, ratio:"4/3", addRaster:false, quality:"large"},
-            {videoURL: "u9k1FaMIYTs",containment:'body',autoPlay:true, mute:false, startAt:0, stopAt:10, opacity:1, loop:2, ratio:"4/3", addRaster:true, quality:"large"}
+            {videoURL: "VuaJAgx0x_4", containment: 'body', autoPlay: true, mute: false, startAt: 0, opacity: 1, loop: false, ratio: "4/3", addRaster: true, quality: "large"},
+            {videoURL: "3ovA7zeviRo", containment: 'body', autoPlay: true, mute: true, startAt: 10, stopAt: 20, opacity: 1, loop: 2, ratio: "4/3", addRaster: false, quality: "large"},
+            {videoURL: "u9k1FaMIYTs", containment: 'body', autoPlay: true, mute: false, startAt: 0, stopAt: 10, opacity: 1, loop: 2, ratio: "4/3", addRaster: true, quality: "large"}
         ];
 
-        myPlayListPlayer =jQuery("#myPlayerID").YTPlaylist(videos, false, function(video){
-            if(video.videoData){
+        myPlayListPlayer = jQuery("#myPlayerID").YTPlaylist(videos, false, function (video) {
+            if (video.videoData) {
                 jQuery("#videoID").html(video.videoData.id);
                 jQuery("#videoTitle").html(video.videoData.title);
             }
@@ -107,10 +123,10 @@
     });
 
 </script>
-<a class="player" id="myPlayerID" >My video</a>
+<div class="player" id="myPlayerID">My video</div>
 
 <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
-  <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
+    <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
 </a>
 
 <style>
@@ -124,7 +140,7 @@
         font-size: 24px;
         line-height: 24px;
         padding: 20px;
-        bottom:60px;
+        bottom: 60px;
         cursor: pointer;
         text-align: left;
         border-radius: 10px;

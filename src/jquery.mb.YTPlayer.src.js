@@ -602,7 +602,7 @@ var getYTPVideoID = function( url ) {
 			var winTop = $( window ).scrollTop();
 			var winBottom = winTop + $( window ).height();
 			var elTop = playerBox.offset().top;
-			var elBottom = elTop + playerBox.height();
+			var elBottom = elTop + playerBox.height() / 2;
 			return( ( elBottom <= winBottom ) && ( elTop >= winTop ) );
 
 		},
@@ -1737,19 +1737,13 @@ var getYTPVideoID = function( url ) {
 
 					var isOnScreen = jQuery.mbYTPlayer.isOnScreen( YTPlayer );
 
-					if( !isOnScreen && YTPlayer.state == 1 ) {
 
-						YTPlayer.hasFocus = false;
+					if( !isOnScreen ) {
+
 						$YTPlayer.YTPPause();
 
-						/*
-						 console.debug( YTPlayer.id, isOnScreen )
-						 console.debug( YTPlayer.state )
-						 */
+					} else {
 
-					} else if( !YTPlayer.hasFocus && !( YTPlayer.state == -1 || YTPlayer.state == 0 ) ) {
-
-						YTPlayer.hasFocus = true;
 						$YTPlayer.YTPPlay();
 
 					}

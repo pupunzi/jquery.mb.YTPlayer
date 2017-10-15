@@ -240,10 +240,9 @@ var getYTPVideoID = function( url ) {
 					'playerapiid': playerID,
 					'origin': '*',
 					'allowfullscreen': true,
-					'wmode': 'transparent',
+					//					'wmode': 'transparent',
 					'iv_load_policy': YTPlayer.opt.showAnnotations,
-					'playsinline': 1,
-					'mute': jQuery.browser.mobile ? 1 : 0
+					'playsinline': jQuery.browser.mobile ? 1 : 0
 				};
 
 				if( document.createElement( 'video' ).canPlayType ) jQuery.extend( playerVars, {
@@ -413,41 +412,6 @@ var getYTPVideoID = function( url ) {
 							return;
 
 						YTPlayer.isInit = true;
-
-						/*
-						 //if is mobile && isPlayer fallback to the default YT player
-
-						 if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile && !jQuery.isTablet ) {
-						 // Try to adjust the player dimention
-						 if( YTPlayer.opt.containment.outerWidth() > jQuery( window ).width() ) {
-						 YTPlayer.opt.containment.css( {
-						 maxWidth: "100%"
-						 } );
-						 var h = YTPlayer.opt.containment.outerWidth() * .563;
-						 YTPlayer.opt.containment.css( {
-						 maxHeight: h
-						 } );
-						 }
-						 new YT.Player( playerID, {
-						 videoId: YTPlayer.videoID.toString(),
-						 width: '100%',
-						 height: h,
-						 playerVars: playerVars,
-						 events: {
-						 'onReady': function( event ) {
-						 YTPlayer.player = event.target;
-						 playerBox.css( {
-						 opacity: 1
-						 } );
-						 YTPlayer.wrapper.css( {
-						 opacity: 1
-						 } );
-						 }
-						 }
-						 } );
-						 return;
-						 }
-						 */
 
 						new YT.Player( playerID, {
 							videoId: YTPlayer.videoID.toString(),
@@ -1081,20 +1045,18 @@ var getYTPVideoID = function( url ) {
 
 			YTPlayer.player.playVideo();
 
-			YTPlayer.wrapper.CSSAnimate( {
-				opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-			}, YTPlayer.opt.fadeOnStartTime );
+			if( !YTPlayer.wrapper.is( ":visible" ) )
+				YTPlayer.wrapper.CSSAnimate( {
+					opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
+				}, YTPlayer.opt.fadeOnStartTime );
 
-			jQuery( YTPlayer.playerEl ).CSSAnimate( {
-				opacity: 1
-			}, YTPlayer.opt.fadeOnStartTime * 2 );
-
-			//			console.debug( YTPlayer.opt.loop )
+			if( !jQuery( YTPlayer.playerEl ).is( ":visible" ) )
+				jQuery( YTPlayer.playerEl ).CSSAnimate( {
+					opacity: 1
+				}, YTPlayer.opt.fadeOnStartTime * 2 );
 
 			var controls = jQuery( "#controlBar_" + YTPlayer.id );
-
 			var playBtn = controls.find( ".mb_YTPPlaypause" );
-
 			playBtn.html( jQuery.mbYTPlayer.controls.pause );
 			YTPlayer.state = 1;
 			YTPlayer.orig_background = jQuery( YTPlayer ).css( "background-image" );
@@ -1847,10 +1809,8 @@ var getYTPVideoID = function( url ) {
 			YTPlayer.preventTrigger = true;
 			YTPlayer.state = 2;
 
-			/*
-			 jQuery( YTPlayer ).YTPPlay();
-			 jQuery( YTPlayer ).YTPPause();
-			 */
+			jQuery( YTPlayer ).YTPPlay();
+			jQuery( YTPlayer ).YTPPause();
 
 			jQuery( YTPlayer ).muteYTPVolume();
 			jQuery( "#controlBar_" + YTPlayer.id ).remove();
@@ -1894,9 +1854,10 @@ var getYTPVideoID = function( url ) {
 			YTPlayer.player.seekTo( startAt, true );
 
 			clearInterval( YTPlayer.checkForStartAt );
-			YTPlayer.checkForStartAt = setInterval( function() {
 
-				jQuery( YTPlayer ).YTPMute();
+			jQuery( YTPlayer ).YTPMute();
+
+			YTPlayer.checkForStartAt = setInterval( function() {
 
 				var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
 
@@ -1930,23 +1891,22 @@ var getYTPVideoID = function( url ) {
 						YTPStart.time = YTPlayer.currentTime;
 						jQuery( YTPlayer ).trigger( YTPStart );
 
-						/*
-						 jQuery( YTPlayer.playerEl ).css( {
-						 opacity: 1
-						 } );
 
-						 YTPlayer.wrapper.CSSAnimate( {
-						 opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-						 }, YTPlayer.opt.fadeOnStartTime * 2 );
-						 */
+						//todo see if I can remove
 
+						jQuery( YTPlayer.playerEl ).css( {
+							opacity: 1
+						} );
 
-						/*
-						 YTPlayer.player.playVideo();
-						 */
+						YTPlayer.wrapper.CSSAnimate( {
+							opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
+						}, YTPlayer.opt.fadeOnStartTime * 2 );
+
+						// end todo
+
+						//YTPlayer.YTPPlay();
 
 						// Fix for Safari freeze
-
 						if( jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.versionCompare( jQuery.mbBrowser.fullVersion, "10.1" ) < 0 ) { //jQuery.mbBrowser.os.minor_version < 11
 
 							YTPlayer.safariPlay = setInterval( function() {

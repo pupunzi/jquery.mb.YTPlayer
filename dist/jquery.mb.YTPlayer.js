@@ -52,8 +52,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "3.1.1",
-		build: "6457",
+		version: "3.1.2",
+		build: "6458",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 		defaults: {
@@ -1050,16 +1050,13 @@ var getYTPVideoID = function( url ) {
 					opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
 				}, YTPlayer.opt.fadeOnStartTime );
 
-
 			if( !jQuery( YTPlayer.playerEl ).is( ":visible" ) )
 				jQuery( YTPlayer.playerEl ).CSSAnimate( {
 					opacity: 1
 				}, YTPlayer.opt.fadeOnStartTime * 2 );
 
 			var controls = jQuery( "#controlBar_" + YTPlayer.id );
-
 			var playBtn = controls.find( ".mb_YTPPlaypause" );
-
 			playBtn.html( jQuery.mbYTPlayer.controls.pause );
 			YTPlayer.state = 1;
 			YTPlayer.orig_background = jQuery( YTPlayer ).css( "background-image" );

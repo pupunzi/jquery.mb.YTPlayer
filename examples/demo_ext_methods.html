@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
     <meta charset="UTF-8">
 
@@ -15,7 +16,7 @@
     <script src="assets/apikey.js"></script>
 
     <style>
-        *:focus{
+        *:focus {
             outline: none;
         }
 
@@ -32,49 +33,50 @@
             text-decoration: none;
         }
 
-        h1{
+        h1 {
             text-align: center;
             font-size: 50px;
             font-family: 'Lobster', cursive;
         }
 
-        h2{
+        h2 {
             font-family: "Open Sans", sans-serif;
             font-size: 35px;
             text-align: left;
             line-height: 60px;
         }
 
-        h1, h2{
+        h1,
+        h2 {
             font-family: 'Lobster', cursive;
             text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
             color: #000000;
             font-weight: 200;
         }
 
-        #wrapper{
+        #wrapper {
             position: relative;
             min-width: 700px;
         }
 
-        .console{
+        .console {
             margin-top: 20px;
             text-align: left;
         }
 
 
-        button, .button {
+        button,
+        .button {
             transition: all .4s;
             display: inline-block;
             padding: 0px 10px;
             font-size: 14px;
             /*text-transform: uppercase;*/
-
             cursor: pointer;
 
             background-color: rgba(0, 0, 0, 0.40);
-            box-shadow: 0 0 4px rgba(0,0,0,0.4);
-            color:#fff;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+            color: #fff;
 
             border: 1px solid transparent;
 
@@ -84,7 +86,8 @@
             border-radius: 10px;
         }
 
-        button:hover, .button:hover {
+        button:hover,
+        .button:hover {
             background-color: rgb(0, 0, 0);
             color: #FFF;
             border: 1px solid #fff;
@@ -103,19 +106,32 @@
 
             display: none;
         }
-
     </style>
 
     <script>
         var myPlayer;
 
-        function showInfo(info){
+        function showInfo(info) {
             $("#info").stop().delay(500).html(info).stop().fadeIn().delay(5000).fadeOut();
         }
 
         jQuery(function () {
 
-            var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
+            var isIframe = function () {
+                var a = !1;
+                try {
+                    self.location.href != top.location.href && (a = !0)
+                } catch (b) {
+                    a = !0
+                }
+                return a
+            };
+            if (!isIframe()) {
+                var logo = $(
+                    "<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>"
+                );
+                $("#wrapper").prepend(logo), $("#logo").fadeIn()
+            }
 
             myPlayer = jQuery("#bgndVideo").YTPlayer();
 
@@ -124,93 +140,104 @@
             });
 
         });
-
     </script>
 </head>
+
 <body>
-<div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
+    <div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
 
-    <h1 style="color:white">jQuery.mb.YTPlayer</h1>
-    <h2 style="color:white; text-align: center">An HTML5 Background player<br>for YouTube videos</h2>
+        <h1 style="color:white">jQuery.mb.YTPlayer</h1>
+        <h2 style="color:white; text-align: center">An HTML5 Background player
+            <br>for YouTube videos</h2>
 
-    <div class="console">
-        <h2 style="color:white">Available controls methods</h2>
-        <button onclick="myPlayer.YTPPause()">YTPPause</button>
-        <button onclick="myPlayer.YTPPlay()">YTPPlay</button>
-        <button onclick="myPlayer.YTPTogglePlay()">YTPTogglePlay</button>
-        <button onclick="myPlayer.YTPSeekTo(50)">YTPSeekTo (50 sec)</button>
-        <br><br>
-        <button onclick="myPlayer.YTPMute()">YTPMute</button>
-        <button onclick="myPlayer.YTPUnmute()">YTPUnmute</button>
-        <button onclick="myPlayer.YTPToggleVolume()">YTPToggleVolume</button>
-        <button onclick="myPlayer.YTPSetVolume(80)">YTPSetVolume (80)</button>
-        <br><br>
-        <button onclick="showInfo(myPlayer.YTPGetVideoID())">YTPGetVideoID</button>
-        <button onclick="showInfo(myPlayer.YTPGetTime())">YTPGetTime</button>
-        <button onclick="showInfo(myPlayer.YTPGetTotalTime())">YTPGetTotalTime</button>
-        <br><br>
-        <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAnchor</button>
-        <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor (top/left)</button>
-        <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor (center/center)</button>
-        <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor (right/bottom)</button>
-        <br><br>
-        <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter (grayscale)</button>
-        <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter (sepia)</button>
-        <a href="demo.html">(Play with filters)</a>
-        <br><br>
-        <button onclick="myPlayer.YTPAddMask('assets/mask-4.png')">YTPAddMask</button>
-        <button onclick="myPlayer.YTPRemoveMask()">YTPRemoveMask</button>
-        <!--<button onclick="myPlayer.YTPToggleMask()">YTPToggleMask</button>-->
-        <br><br>
-        <button onclick="myPlayer.YTPFullscreen()">YTPFullscreen</button>
-        <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>
+        <div class="console">
+            <h2 style="color:white">Available controls methods</h2>
+            <button onclick="myPlayer.YTPPause()">YTPPause</button>
+            <button onclick="myPlayer.YTPPlay()">YTPPlay</button>
+            <button onclick="myPlayer.YTPTogglePlay()">YTPTogglePlay</button>
+            <button onclick="myPlayer.YTPSeekTo(50)">YTPSeekTo (50 sec)</button>
+            <br>
+            <br>
+            <button onclick="myPlayer.YTPMute()">YTPMute</button>
+            <button onclick="myPlayer.YTPUnmute()">YTPUnmute</button>
+            <button onclick="myPlayer.YTPToggleVolume()">YTPToggleVolume</button>
+            <button onclick="myPlayer.YTPSetVolume(80)">YTPSetVolume (80)</button>
+            <br>
+            <br>
+            <button onclick="showInfo(myPlayer.YTPGetVideoID())">YTPGetVideoID</button>
+            <button onclick="showInfo(myPlayer.YTPGetTime())">YTPGetTime</button>
+            <button onclick="showInfo(myPlayer.YTPGetTotalTime())">YTPGetTotalTime</button>
+            <br>
+            <br>
+            <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAnchor</button>
+            <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor (top/left)</button>
+            <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor (center/center)</button>
+            <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor (right/bottom)</button>
+            <br>
+            <br>
+            <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter (grayscale)</button>
+            <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter (sepia)</button>
+            <a href="demo.html">(Play with filters)</a>
+            <br>
+            <br>
+            <button onclick="myPlayer.YTPAddMask('assets/mask-4.png')">YTPAddMask</button>
+            <button onclick="myPlayer.YTPRemoveMask()">YTPRemoveMask</button>
+            <!--<button onclick="myPlayer.YTPToggleMask()">YTPToggleMask</button>-->
+            <br>
+            <br>
+            <button onclick="myPlayer.YTPFullscreen()">YTPFullscreen</button>
+            <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>
+        </div>
+
+        <div id="info"></div>
+
+        <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
+            <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
+        </a>
+
+        <!--7SnmCUwOsts-->
+        <a id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:true, startAt:0, stopAt:150, opacity:1, addRaster:true, quality:'hd720', optimizeDisplay:true}">My video</a>
+        <!--BsekcY04xvQ-->
+
     </div>
 
-    <div id="info"></div>
+    <style>
+        #wp {
+            position: absolute;
+            z-index: 10;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.55);
+            /*background: #ffb200;*/
+            color: #fff;
+            font-size: 24px;
+            line-height: 24px;
+            padding: 20px;
+            top: 130px;
+            left: 30px;
+            cursor: pointer;
+            text-align: left;
+            border-radius: 10px;
+            font-family: 'Lobster', cursive;
+        }
 
-  <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
-    <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
-  </a>
+        #wp:hover {
+            background: #000000;
+        }
 
-    <!--7SnmCUwOsts-->
-    <a id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:true, startAt:0, stopAt:150, opacity:1, addRaster:true, quality:'hd720', optimizeDisplay:true}">My video</a> <!--BsekcY04xvQ-->
+        #wp img {
+            width: 60px;
+            margin-right: 20px;
+        }
+    </style>
 
-</div>
-
-<style>
-    #wp {
-        position: absolute;
-        z-index: 10;
-        min-width: 300px;
-        background: rgba(0, 0, 0, 0.55);
-        /*background: #ffb200;*/
-        color: #fff;
-        font-size: 24px;
-        line-height: 24px;
-        padding: 20px;
-        top:130px;
-        left: 30px;
-        cursor: pointer;
-        text-align: left;
-        border-radius: 10px;
-        font-family: 'Lobster', cursive;
-    }
-
-    #wp:hover {
-        background: #000000;
-    }
-
-    #wp img {
-        width: 60px;
-        margin-right: 20px;
-    }
-</style>
-
-<div id="wp" onclick="self.location.href='https://pupunzi.com/wpPlus/go-plus.php?plugin_prefix=YTPL'">
-    <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
-    <span>Get the <br><b>Wordpress</b> Plug-in!</span>
-</div>
+    <div id="wp" onclick="self.location.href='https://pupunzi.com/wpPlus/go-plus.php?plugin_prefix=YTPL'">
+        <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
+        <span>Get the
+            <br>
+            <b>Wordpress</b> Plug-in!</span>
+    </div>
 
 
 </body>
+
 </html>

@@ -410,9 +410,13 @@ button:hover, .button:hover {
      * @param state
      */
     function changeLabel(state){
-        $("#togglePlay").html(state != 1 ? "pause" : "play");
-        $("#togglePlay").removeClass(state != 1 ? "play" : "pause");
-        $("#togglePlay").addClass(state != 1 ? "pause" : "play");
+
+        console.debug(state);
+
+        $("#togglePlay").html(state != 2 ? "pause" : "play");
+        $("#togglePlay").removeClass("play pause");
+
+        $("#togglePlay").addClass(state != 2 ? "pause" : "play");
     }
 
     /**

@@ -168,7 +168,9 @@
                 YTPConsole.append("******************************");
                 YTPConsole.append("<br>");
 
-                $(".dida").html(e.prop.title + "<br>via " + e.prop.uploader);
+                console.debug(e.prop);
+
+                $(".dida").html(e.prop.title + "<br>via " + e.prop.channelTitle);
 
             });
 
@@ -207,13 +209,13 @@
             <button class="sel" onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=mAf6zKRb1wI'})">
                 vito acconci theme song 1973 </button>
             <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'dZaD9CHZecE',ratio:'4/3'})"> Vito Acconci - Undertone 1972 (extract) </button>
-            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://youtu.be/3ovA7zeviRo',ratio:'4/3'})"> Dan Graham - Body Press, 1972 </button>
-            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=z5krhw54oqs',ratio:'4/3'})">
+            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'https://youtu.be/3ovA7zeviRo',ratio:'4/3'})"> Dan Graham - Body Press, 1972 </button>
+            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'https://www.youtube.com/watch?v=z5krhw54oqs',ratio:'4/3'})">
                 Fluxus - Wolf Vostell - Sun in your head </button>
-            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=u9k1FaMIYTs', addRaster:false})">
+            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'https://www.youtube.com/watch?v=u9k1FaMIYTs', addRaster:false})">
                 nam june paik - 03 </button>
-            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=VuaJAgx0x_4'})"> nam june paik </button>
-            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=rkfOgavdhak',ratio:'4/3'})">
+            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'https://www.youtube.com/watch?v=VuaJAgx0x_4'})"> nam june paik </button>
+            <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'https://www.youtube.com/watch?v=rkfOgavdhak',ratio:'4/3'})">
                 Bruce Nauman - Pinch Neck 1968 </button>
             <button onclick="jQuery('#bgndVideo').changeMovie({videoURL:'http://www.youtube.com/watch?v=UJQmV8aPNao'})"> Bill Viola - Acceptance, 2008 </button>
         </div>

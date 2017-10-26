@@ -8,7 +8,7 @@
   Open Lab s.r.l., Florence - Italy                                                                                                                 –
                                                                                                                                                     –
   email: matteo@open-lab.com                                                                                                                        –
-  site: http://pupunzi.com                                                                                                                          –
+  site: https://pupunzi.com                                                                                                                          –
         http://open-lab.com                                                                                                                         –
   blog: http://pupunzi.open-lab.com                                                                                                                 –
   Q&A:  http://jquery.pupunzi.com                                                                                                                   –
@@ -86,19 +86,6 @@
     <script>
         var myPlayer;
         jQuery(function () {
-            var isIframe = function () {
-                var a = !1;
-                try {
-                    self.location.href != top.location.href && (a = !0)
-                } catch (b) {
-                    a = !0
-                }
-                return a
-            };
-            if (!isIframe()) {
-                var logo = $("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
-                $("#wrapper").prepend(logo), $("#logo").fadeIn()
-            }
 
             var options = {
                 mobileFallbackImage: "http://www.hdwallpapers.in/walls/pink_cosmos_flowers-wide.jpg",
@@ -111,6 +98,7 @@
 </head>
 <body>
 <div id="wrapper">
+    <a href='https://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
     <div id="customElement" style="background: #ddd url('assets/mask-1.png') no-repeat center center; background-size: cover" class="player"
          data-property="{videoURL:'qvuILbcXlg8',containment:'self', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}">
         <div id="testText">

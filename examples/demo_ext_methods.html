@@ -12,7 +12,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../dist/jquery.mb.YTPlayer.js"></script>
-    <!--<script data-relocate="true" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.0.19/jquery.mb.YTPlayer.min.js"></script>-->
     <script src="assets/apikey.js"></script>
 
     <style>
@@ -106,46 +105,53 @@
 
             display: none;
         }
+
+        #wp {
+            position: fixed;
+            z-index: 10;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.55);
+            /*background: #ffb200;*/
+            color: #fff;
+            font-size: 24px;
+            line-height: 24px;
+            padding: 20px;
+            top: 130px;
+            left: 30px;
+            cursor: pointer;
+            text-align: left;
+            border-radius: 10px;
+            font-family: 'Lobster', cursive;
+        }
+
+        #wp:hover {
+            background: #000000;
+        }
+
+        #wp img {
+            width: 60px;
+            margin-right: 20px;
+        }
     </style>
 
     <script>
         var myPlayer;
-
         function showInfo(info) {
             $("#info").stop().delay(500).html(info).stop().fadeIn().delay(5000).fadeOut();
         }
 
         jQuery(function () {
-
-            var isIframe = function () {
-                var a = !1;
-                try {
-                    self.location.href != top.location.href && (a = !0)
-                } catch (b) {
-                    a = !0
-                }
-                return a
-            };
-            if (!isIframe()) {
-                var logo = $(
-                    "<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>"
-                );
-                $("#wrapper").prepend(logo), $("#logo").fadeIn()
-            }
-
             myPlayer = jQuery("#bgndVideo").YTPlayer();
-
             myPlayer.on("YTPData", function (e) {
                 showInfo(e.prop.title + "<br><br>@" + e.prop.channelTitle);
             });
-
         });
     </script>
 </head>
 
 <body>
     <div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
-
+        <a href='https://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
         <h1 style="color:white">jQuery.mb.YTPlayer</h1>
         <h2 style="color:white; text-align: center">An HTML5 Background player
             <br>for YouTube videos</h2>
@@ -200,35 +206,6 @@
         <!--BsekcY04xvQ-->
 
     </div>
-
-    <style>
-        #wp {
-            position: absolute;
-            z-index: 10;
-            min-width: 300px;
-            background: rgba(0, 0, 0, 0.55);
-            /*background: #ffb200;*/
-            color: #fff;
-            font-size: 24px;
-            line-height: 24px;
-            padding: 20px;
-            top: 130px;
-            left: 30px;
-            cursor: pointer;
-            text-align: left;
-            border-radius: 10px;
-            font-family: 'Lobster', cursive;
-        }
-
-        #wp:hover {
-            background: #000000;
-        }
-
-        #wp img {
-            width: 60px;
-            margin-right: 20px;
-        }
-    </style>
 
     <div id="wp" onclick="self.location.href='https://pupunzi.com/wpPlus/go-plus.php?plugin_prefix=YTPL'">
         <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">

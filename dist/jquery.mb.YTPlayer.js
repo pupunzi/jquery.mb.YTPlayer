@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.2",
-		build: "6476",
+		build: "6478",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 
@@ -1348,9 +1348,8 @@ var getYTPVideoID = function( url ) {
 		addMask: function( mask ) {
 			var YTPlayer = this.get( 0 );
 
-			if( !mask ) {
+			if( !mask )
 				mask = YTPlayer.actualMask;
-			}
 
 			var tempImg = jQuery( "<img/>" ).attr( "src", mask ).on( "load", function() {
 

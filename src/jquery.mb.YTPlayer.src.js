@@ -1348,9 +1348,8 @@ var getYTPVideoID = function( url ) {
 		addMask: function( mask ) {
 			var YTPlayer = this.get( 0 );
 
-			if( !mask ) {
+			if( !mask )
 				mask = YTPlayer.actualMask;
-			}
 
 			var tempImg = jQuery( "<img/>" ).attr( "src", mask ).on( "load", function() {
 

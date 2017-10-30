@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.2",
-		build: "6478",
+		build: "6480",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 
@@ -512,7 +512,7 @@ var getYTPVideoID = function( url ) {
 									// Trigger state events
 									var YTPEvent = jQuery.Event( eventType );
 									YTPEvent.time = YTPlayer.currentTime;
-									if( YTPlayer.canTrigger )
+									if( !YTPlayer.preventTrigger )
 										jQuery( YTPlayer ).trigger( YTPEvent );
 								},
 								/**
@@ -1167,7 +1167,9 @@ var getYTPVideoID = function( url ) {
 			if( YTPlayer.volumeBar && YTPlayer.volumeBar.length ) YTPlayer.volumeBar.addClass( "muted" );
 			var YTPEvent = jQuery.Event( "YTPMuted" );
 			YTPEvent.time = YTPlayer.currentTime;
-			if( YTPlayer.canTrigger ) jQuery( YTPlayer ).trigger( YTPEvent );
+
+			if( !YTPlayer.preventTrigger )
+				jQuery( YTPlayer ).trigger( YTPEvent );
 			return this;
 		},
 
@@ -1189,7 +1191,10 @@ var getYTPVideoID = function( url ) {
 			if( YTPlayer.volumeBar && YTPlayer.volumeBar.length ) YTPlayer.volumeBar.removeClass( "muted" );
 			var YTPEvent = jQuery.Event( "YTPUnmuted" );
 			YTPEvent.time = YTPlayer.currentTime;
-			if( YTPlayer.canTrigger ) jQuery( YTPlayer ).trigger( YTPEvent );
+
+			if( !YTPlayer.preventTrigger )
+				jQuery( YTPlayer ).trigger( YTPEvent );
+
 			return this;
 		},
 
@@ -1448,6 +1453,8 @@ var getYTPVideoID = function( url ) {
 					} );
 				}
 			}
+
+			return this;
 		},
 
 		/**
@@ -1804,6 +1811,7 @@ var getYTPVideoID = function( url ) {
 			YTPlayer.checkForStartAt = setInterval( function() {
 
 				var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
+
 				if( YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo ) {
 					clearInterval( YTPlayer.checkForStartAt );
 					if( typeof YTPlayer.opt.onReady == "function" )
@@ -1822,7 +1830,8 @@ var getYTPVideoID = function( url ) {
 
 					if( !YTPlayer.opt.mute )
 						jQuery( YTPlayer ).YTPUnmute();
-					YTPlayer.canTrigger = true;
+
+					YTPlayer.preventTrigger = false;
 
 					if( YTPlayer.opt.autoPlay ) {
 

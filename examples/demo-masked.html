@@ -269,7 +269,9 @@ button:hover, .button:hover {
         // EVENT: YTPData
         myPlayer.on("YTPData", function (e) {
 
-            $(".dida").html(e.prop.title + "<br>@" + e.prop.channelTitle);
+            console.debug("YTPData :: ", e);
+
+            $(".dida").html(e.prop.id + "<br>" + e.prop.title + "<br>@" + e.prop.channelTitle);
             $("#videoData").show();
 
             YTPConsole.append("******************************");

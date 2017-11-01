@@ -51,7 +51,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.2",
-		build: "6480",
+		build: "6486",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 
@@ -414,7 +414,9 @@ var getYTPVideoID = function( url ) {
 
 					YTPlayer.opt.autoPlay = typeof YTPlayer.opt.autoPlay == "undefined" ? ( YTPlayer.isBackground ? true : false ) : YTPlayer.opt.autoPlay;
 					YTPlayer.opt.vol = YTPlayer.opt.vol ? YTPlayer.opt.vol : 100;
+
 					jQuery.mbYTPlayer.getDataFromAPI( YTPlayer );
+
 					jQuery( YTPlayer ).on( "YTPChanged", function() {
 
 						if( YTPlayer.isInit )
@@ -598,13 +600,22 @@ var getYTPVideoID = function( url ) {
 			if( YTPlayer.videoData ) {
 
 				setTimeout( function() {
-					YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
+					YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? 16 / 9 : YTPlayer.opt.ratio;
 					YTPlayer.dataReceived = true;
-					jQuery( YTPlayer ).trigger( "YTPChanged" );
+
+					var YTPChanged = jQuery.Event( "YTPChanged" );
+					YTPChanged.time = YTPlayer.currentTime;
+					YTPChanged.videoId = YTPlayer.videoID;
+					jQuery( YTPlayer ).trigger( YTPChanged );
+
 					var YTPData = jQuery.Event( "YTPData" );
 					YTPData.prop = {};
-					for( var x in YTPlayer.videoData ) YTPData.prop[ x ] = YTPlayer.videoData[ x ];
+					for( var x in YTPlayer.videoData )
+						YTPData.prop[ x ] = YTPlayer.videoData[ x ];
 					jQuery( YTPlayer ).trigger( YTPData );
+
+					console.debug( YTPlayer.videoData );
+
 				}, YTPlayer.opt.fadeOnStartTime );
 
 				YTPlayer.hasData = true;
@@ -615,7 +626,11 @@ var getYTPVideoID = function( url ) {
 
 				jQuery.getJSON( jQuery.mbYTPlayer.locationProtocol + "//www.googleapis.com/youtube/v3/videos?id=" + YTPlayer.videoID + "&key=" + jQuery.mbYTPlayer.apiKey + "&part=snippet", function( data ) {
 					YTPlayer.dataReceived = true;
-					jQuery( YTPlayer ).trigger( "YTPChanged" );
+
+					var YTPChanged = jQuery.Event( "YTPChanged" );
+					YTPChanged.time = YTPlayer.currentTime;
+					YTPChanged.videoId = YTPlayer.videoID;
+					jQuery( YTPlayer ).trigger( YTPChanged );
 
 					function parseYTPlayer_data( data ) {
 						YTPlayer.videoData = {};
@@ -623,7 +638,7 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.videoData.channelTitle = data.channelTitle;
 						YTPlayer.videoData.title = data.title;
 						YTPlayer.videoData.description = data.description.length < 400 ? data.description : data.description.substring( 0, 400 ) + " ...";
-						YTPlayer.videoData.aspectratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
+						YTPlayer.videoData.aspectratio = YTPlayer.opt.ratio == "auto" ? 16 / 9 : YTPlayer.opt.ratio;
 						YTPlayer.opt.ratio = YTPlayer.videoData.aspectratio;
 						YTPlayer.videoData.thumb_max = data.thumbnails.maxres ? data.thumbnails.maxres.url : null;
 						YTPlayer.videoData.thumb_high = data.thumbnails.high ? data.thumbnails.high.url : null;
@@ -642,7 +657,11 @@ var getYTPVideoID = function( url ) {
 			} else {
 
 				setTimeout( function() {
-					jQuery( YTPlayer ).trigger( "YTPChanged" );
+					var YTPChanged = jQuery.Event( "YTPChanged" );
+					YTPChanged.time = YTPlayer.currentTime;
+					YTPChanged.videoId = YTPlayer.videoID;
+					jQuery( YTPlayer ).trigger( YTPChanged );
+
 				}, 50 );
 				if( YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ) {
 					var bgndURL = jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
@@ -720,9 +739,12 @@ var getYTPVideoID = function( url ) {
 				jQuery( YTPlayer ).data( "property", videos[ 0 ] );
 				jQuery( YTPlayer ).mb_YTPlayer();
 			}
-			if( typeof callback == "function" ) jQuery( YTPlayer ).one( "YTPChanged", function() {
-				callback( YTPlayer );
-			} );
+
+			if( typeof callback == "function" )
+				jQuery( YTPlayer ).one( "YTPChanged", function() {
+					callback( YTPlayer );
+				} );
+
 			jQuery( YTPlayer ).on( "YTPEnd", function() {
 				jQuery( YTPlayer ).playNext();
 			} );

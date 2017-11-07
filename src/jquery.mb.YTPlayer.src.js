@@ -227,14 +227,9 @@ var getYTPVideoID = function( url ) {
 					jQuery.mbCookie.remove( "YTPlayer_start_from" + YTPlayer.videoID );
 				}
 
-				//check if the player can run on mobile device
-				YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile && ( 'playsInline' in document.createElement( 'video' ) );
-
-				// If on mobile and can play on mobile remove controls
-				// todo: adapt controls to mobile
-				if( YTPlayer.canPlayOnMobile ) {
-					YTPlayer.opt.showControls = false;
-				}
+				//todo: check if the player can run on mobile device testing 'playsInline' property
+				//YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile && ( 'playsInline' in document.createElement( 'video' ) );
+				YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile;
 
 				/**
 				 * Youtube player variables
@@ -263,17 +258,44 @@ var getYTPVideoID = function( url ) {
 				if( jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9 )
 					this.opt.opacity = 1;
 
-				YTPlayer.isSelf = YTPlayer.opt.containment == "self";
+				YTPlayer.isPlayer = YTPlayer.opt.containment == "self";
 				YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery( this ) : jQuery( YTPlayer.opt.containment );
 				YTPlayer.isBackground = YTPlayer.opt.containment.is( "body" );
+
+				if( YTPlayer.isPlayer ) {
+
+					YTPlayer.inlineWrapper = jQuery( "<div/>" ).addClass( "inline-YTPlayer" );
+
+					YTPlayer.inlineWrapper.css( {
+						position: "relative",
+						maxWidth: YTPlayer.opt.containment.css( "width" )
+					} );
+
+					YTPlayer.opt.containment.width( "100%" );
+
+					YTPlayer.opt.containment.wrap( YTPlayer.inlineWrapper );
+
+					YTPlayer.opt.containment.css( {
+						position: "relative",
+						paddingBottom: "56.25%",
+						overflow: "hidden",
+						height: 0
+					} );
+				}
 
 				if( YTPlayer.isBackground && ytp.backgroundIsInited )
 					return;
 
+				// If on mobile and can play on mobile remove controls
+				// todo: adapt controls to mobile
+				if( YTPlayer.canPlayOnMobile && YTPlayer.isBackground ) {
+					YTPlayer.opt.showControls = false;
+				}
+
 				/**
 				 * Hide the placeholder if it's not the target of the player
 				 */
-				YTPlayer.isPlayer = YTPlayer.opt.containment.is( jQuery( this ) );
+
 				if( !YTPlayer.isPlayer ) {
 					$YTPlayer.hide();
 				}
@@ -356,12 +378,6 @@ var getYTPVideoID = function( url ) {
 
 				YTPlayer.opt.containment.prepend( YTPlayer.wrapper );
 
-
-				if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile )
-					jQuery( "body" ).one( "touchstart", function() {
-						YTPlayer.player.playVideo();
-					} );
-
 				if( !YTPlayer.isBackground ) {
 					YTPlayer.overlay.on( "mouseenter", function() {
 						if( YTPlayer.controlBar && YTPlayer.controlBar.length )
@@ -373,21 +389,28 @@ var getYTPVideoID = function( url ) {
 				}
 
 				if( !ytp.YTAPIReady ) {
+
 					jQuery( "#YTAPI" ).remove();
 					var tag = jQuery( "<script></script>" ).attr( {
 						"src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
 						"id": "YTAPI"
 					} );
 					jQuery( "head" ).prepend( tag );
+
 				} else {
+
 					setTimeout( function() {
 						jQuery( document ).trigger( "YTAPIReady" );
-					}, 100 )
+					}, 100 );
+
+					if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile )
+						jQuery( "body" ).one( "touchstart", function() {
+							YTPlayer.player.playVideo();
+						} );
+
 				}
 
-
 				if( jQuery.mbBrowser.mobile && !YTPlayer.canPlayOnMobile ) {
-
 					if( YTPlayer.opt.mobileFallbackImage ) {
 						YTPlayer.wrapper.css( {
 							backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
@@ -670,7 +693,6 @@ var getYTPVideoID = function( url ) {
 							backgroundSize: "cover"
 						} );
 					YTPlayer.opt.backgroundUrl = bgndURL;
-
 				}
 
 				YTPlayer.videoData = null;
@@ -895,7 +917,7 @@ var getYTPVideoID = function( url ) {
 			real = eval( real );
 			var controls = jQuery( "#controlBar_" + YTPlayer.id );
 			var fullScreenBtn = controls.find( ".mb_OnlyYT" );
-			var videoWrapper = YTPlayer.isSelf ? YTPlayer.opt.containment : YTPlayer.wrapper;
+			var videoWrapper = YTPlayer.isPlayer ? YTPlayer.opt.containment : YTPlayer.wrapper;
 
 			if( real ) {
 				var fullscreenchange = jQuery.mbBrowser.mozilla ? "mozfullscreenchange" : jQuery.mbBrowser.webkit ? "webkitfullscreenchange" : "fullscreenchange";
@@ -1861,7 +1883,6 @@ var getYTPVideoID = function( url ) {
 						jQuery( YTPlayer ).trigger( YTPStart );
 
 						//todo see if it can be removed
-
 						jQuery( YTPlayer.playerEl ).css( {
 							opacity: 1
 						} );
@@ -1869,10 +1890,7 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.wrapper.CSSAnimate( {
 							opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
 						}, YTPlayer.opt.fadeOnStartTime * 2 );
-
 						// end todo
-
-						//YTPlayer.YTPPlay();
 
 						/* Fix for Safari freeze */
 						if( jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.versionCompare( jQuery.mbBrowser.fullVersion, "10.1" ) < 0 ) { //jQuery.mbBrowser.os.minor_version < 11

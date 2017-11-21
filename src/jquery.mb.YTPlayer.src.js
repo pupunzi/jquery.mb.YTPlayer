@@ -7,9 +7,9 @@
  *
  * Open Lab s.r.l., Florence - Italy
  * email: matteo@open-lab.com
- * site: 	http://pupunzi.com
- * 	http://open-lab.com
- * blog: 	http://pupunzi.open-lab.com
+ * site:  http://pupunzi.com
+ *  http://open-lab.com
+ * blog:  http://pupunzi.open-lab.com
  *
  * Licences: MIT, GPL
  * http://www.opensource.org/licenses/mit-license.php
@@ -229,7 +229,6 @@ var getYTPVideoID = function( url ) {
 
 				//todo: check if the player can run on mobile device testing 'playsInline' property
 				//YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile && ( 'playsInline' in document.createElement( 'video' ) );
-				YTPlayer.canPlayOnMobile = jQuery.mbBrowser.mobile;
 
 				/**
 				 * Youtube player variables
@@ -288,9 +287,11 @@ var getYTPVideoID = function( url ) {
 
 				// If on mobile and can play on mobile remove controls
 				// todo: adapt controls to mobile
-				if( YTPlayer.canPlayOnMobile && YTPlayer.isBackground ) {
-					YTPlayer.opt.showControls = false;
-				}
+				/*
+								if (jQuery.mbBrowser.mobile && YTPlayer.isBackground) {
+									YTPlayer.opt.showControls = false;
+								}
+				*/
 
 				/**
 				 * Hide the placeholder if it's not the target of the player
@@ -403,14 +404,9 @@ var getYTPVideoID = function( url ) {
 						jQuery( document ).trigger( "YTAPIReady" );
 					}, 100 );
 
-					if( jQuery.mbBrowser.mobile && YTPlayer.canPlayOnMobile )
-						jQuery( "body" ).one( "touchstart", function() {
-							YTPlayer.player.playVideo();
-						} );
-
 				}
 
-				if( jQuery.mbBrowser.mobile && !YTPlayer.canPlayOnMobile ) {
+				if( jQuery.mbBrowser.mobile && YTPlayer.opt.mobileFallbackImage ) {
 					if( YTPlayer.opt.mobileFallbackImage ) {
 						YTPlayer.wrapper.css( {
 							backgroundImage: "url(" + YTPlayer.opt.mobileFallbackImage + ")",
@@ -419,13 +415,20 @@ var getYTPVideoID = function( url ) {
 							backgroundRepeat: "no-repeat",
 							opacity: 1
 						} )
-					};
+					}
+
+					/**
+					 * If is on device start playing on first touch
+					 */
+					if( jQuery.mbBrowser.mobile && YTPlayer.opt.autoPlay )
+						jQuery( "body" ).one( "touchstart", function() {
+							YTPlayer.player.playVideo();
+						} );
 
 					if( !YTPlayer.isPlayer )
 						$YTPlayer.remove();
 
 					jQuery( document ).trigger( "YTPUnavailable" );
-
 					return;
 				}
 

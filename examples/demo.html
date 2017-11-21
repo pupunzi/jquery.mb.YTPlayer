@@ -1,29 +1,27 @@
 <!DOCTYPE html>
+<!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  jquery.mb.components
+  file: demo.html
+  last modified: 21/11/17 19.39
+  Version:  {{ version }}
+  Build:  {{ buildnum }}
+
+  Open Lab s.r.l., Florence - Italy
+  email: matteo@open-lab.com
+  site: 	http://pupunzi.com
+  	http://open-lab.com
+  blog: 	http://pupunzi.open-lab.com
+
+  Licences: MIT, GPL
+  http://www.opensource.org/licenses/mit-license.php
+  http://www.gnu.org/licenses/gpl.html
+
+  Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi)
+  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
 <html>
 <head>
 <meta charset="UTF-8">
-
-<!--–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
- jquery.mb.components                                                                                                                              –
-                                                                                                                                                   –
- file: demo.html                                                                                                                                   –
- last modified: 09/07/14 23.11                                                                                                                     –
-                                                                                                                                                   –
- Open Lab s.r.l., Florence - Italy                                                                                                                 –
-                                                                                                                                                   –
- email: matteo@open-lab.com                                                                                                                        –
- site: https://pupunzi.com                                                                                                                          –
-       http://open-lab.com                                                                                                                         –
- blog: http://pupunzi.open-lab.com                                                                                                                 –
- Q&A:  http://jquery.pupunzi.com                                                                                                                   –
-                                                                                                                                                   –
- Licences: MIT, GPL                                                                                                                                –
-    http://www.opensource.org/licenses/mit-license.php                                                                                             –
-    http://www.gnu.org/licenses/gpl.html                                                                                                           –
-                                                                                                                                                   –
- Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);                                                                                               –
- –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-->
-
 <title>youtube Chromeless Player - mb.YTPlayer</title>
 
 <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
@@ -34,6 +32,7 @@
 <script src="assets/apikey.js"></script>
 
 <style>
+
 *:focus{
     outline: none;
 }
@@ -165,14 +164,12 @@ button:hover, .button:hover {
     height: 50px;
 }
 
-
 .goto .button{
     font-size: 30px;
     font-family: 'Lobster', cursive;
     padding: 10px;
     text-transform: none;
 }
-
 
 #filtersControl{
     position: absolute;
@@ -191,7 +188,6 @@ button:hover, .button:hover {
     margin: 30px auto;
     z-index: 100;
     padding: 10px;
-    /*background-color: rgba(25, 34, 37, 0.35);*/
     border-radius: 10px;
     color: #FFFFFF;
     box-sizing: border-box;
@@ -414,15 +410,15 @@ button:hover, .button:hover {
     function checkForVal(val){
         return val || 0;
     }
-
 </script>
+
 </head>
 <body>
 <div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
     <a href='https://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
     <div class="console">
-        <button onclick="jQuery('#bgndVideo').YTPToggleVolume()">mute/unmute</button>
-        <button onclick="jQuery('#bgndVideo').YTPFullscreen()">go fullscreen</button>
+        <button onclick="jQuery('#bgndVideo').YTPToggleVolume()">Mute/Unmute</button>
+        <button onclick="jQuery('#bgndVideo').YTPFullscreen()">Fullscreen</button>
         <button id="debugBtn" class="command" onclick="jQuery('#debug').toggle()"> show/hide the console</button>
     </div>
     <br>

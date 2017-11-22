@@ -1,22 +1,23 @@
-/*******************************************************************************
- * jquery.mb.components
- * file: jquery.mb.YTPlayer.src.js
- * last modified: 14/11/17 21.32
- * Version:  3.1.3
- * Build:  6513
- *
- * Open Lab s.r.l., Florence - Italy
- * email: matteo@open-lab.com
- * site:  http://pupunzi.com
- *  http://open-lab.com
- * blog:  http://pupunzi.open-lab.com
- *
- * Licences: MIT, GPL
- * http://www.opensource.org/licenses/mit-license.php
- * http://www.gnu.org/licenses/gpl.html
- *
- * Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi)
- ******************************************************************************/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ jquery.mb.components
+
+ file: jquery.mb.YTPlayer.src.js
+ last modified: 21/11/17 19.55
+ Version:  3.1.3
+ Build:  6514
+
+ Open Lab s.r.l., Florence - Italy
+ email:  matteo@open-lab.com
+ blog: 	http://pupunzi.open-lab.com
+ site: 	http://pupunzi.com
+ 	http://open-lab.com
+
+ Licences: MIT, GPL
+ http://www.opensource.org/licenses/mit-license.php
+ http://www.gnu.org/licenses/gpl.html
+
+ Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi)
+ :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
 var ytp = ytp || {};
 
@@ -51,7 +52,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.3",
-		build: "6513",
+		build: "6514",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 

@@ -3,8 +3,8 @@
 
  file: jquery.mb.YTPlayer.src.js
  last modified: 21/11/17 19.55
- Version:  3.1.3
- Build:  6514
+ Version:  3.1.4
+ Build:  6517
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -51,8 +51,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-		version: "3.1.3",
-		build: "6514",
+		version: "3.1.4",
+		build: "6517",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 
@@ -984,16 +984,17 @@ var getYTPVideoID = function( url ) {
 							opacity: 1
 						}, YTPlayer.opt.fadeOnStartTime * 2 );
 
-						YTPlayer.wrapper.append( controls );
+						videoWrapper.append( controls );
 						jQuery( YTPlayer ).optimizeDisplay();
 						YTPlayer.player.seekTo( YTPlayer.player.getCurrentTime() + .1, true );
 
 					}, YTPlayer.opt.fadeOnStartTime )
-				} else videoWrapper.css( {
-					zIndex: 10000
-				} ).CSSAnimate( {
-					opacity: 1
-				}, YTPlayer.opt.fadeOnStartTime * 2 );
+				} else
+					videoWrapper.css( {
+						zIndex: 10000
+					} ).CSSAnimate( {
+						opacity: 1
+					}, YTPlayer.opt.fadeOnStartTime * 2 );
 				fullScreenBtn.html( jQuery.mbYTPlayer.controls.showSite );
 				YTPlayer.isAlone = true;
 			} else {
@@ -1079,10 +1080,10 @@ var getYTPVideoID = function( url ) {
 
 			YTPlayer.player.playVideo();
 
-			if( !YTPlayer.wrapper.is( ":visible" ) )
-				YTPlayer.wrapper.CSSAnimate( {
-					opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-				}, YTPlayer.opt.fadeOnStartTime );
+			//if( !YTPlayer.wrapper.is( ":visible" ) )
+			YTPlayer.wrapper.CSSAnimate( {
+				opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
+			}, YTPlayer.opt.fadeOnStartTime );
 
 			if( !jQuery( YTPlayer.playerEl ).is( ":visible" ) )
 				jQuery( YTPlayer.playerEl ).CSSAnimate( {

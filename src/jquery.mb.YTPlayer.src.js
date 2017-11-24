@@ -79,7 +79,6 @@ var getYTPVideoID = function( url ) {
                 30: false,
                 50:'assets/mask-3.png'
             }
-
 			 */
 			mask: false,
 			opacity: 1,
@@ -117,7 +116,7 @@ var getYTPVideoID = function( url ) {
 		locationProtocol: "https:",
 
 		/**
-		 * Appliable filters
+		 * Applicable filters
 		 */
 		filters: {
 			grayscale: {
@@ -159,7 +158,7 @@ var getYTPVideoID = function( url ) {
 		},
 
 		/**
-		 * buildPlayer
+		 * build the player
 		 *
 		 * @param options
 		 * @returns [players]
@@ -176,7 +175,9 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.id = YTPlayer.id || "YTP_" + new Date().getTime();
 				$YTPlayer.addClass( "mb_YTPlayer" );
 
-				var property = $YTPlayer.data( "property" ) && typeof $YTPlayer.data( "property" ) == "string" ? eval( '(' + $YTPlayer.data( "property" ) + ')' ) : $YTPlayer.data( "property" );
+				var property = $YTPlayer.data( "property" ) && typeof $YTPlayer.data( "property" ) == "string" ?
+						eval( '(' + $YTPlayer.data( "property" ) + ')' ) :
+						$YTPlayer.data( "property" );
 
 				if( typeof property != "undefined" && typeof property.vol != "undefined" ) {
 					if( property.vol === 0 ) {
@@ -185,6 +186,9 @@ var getYTPVideoID = function( url ) {
 					}
 				}
 
+				/**
+				 * Extend options
+				 */
 				jQuery.extend( YTPlayer.opt, jQuery.mbYTPlayer.defaults, options, property );
 
 				if( YTPlayer.opt.loop == "true" )
@@ -213,8 +217,18 @@ var getYTPVideoID = function( url ) {
 				var playerID = "iframe_" + YTPlayer.id;
 				YTPlayer.isAlone = false;
 				YTPlayer.hasFocus = true;
-				YTPlayer.videoID = this.opt.videoURL ? getYTPVideoID( this.opt.videoURL ).videoID : $YTPlayer.attr( "href" ) ? getYTPVideoID( $YTPlayer.attr( "href" ) ).videoID : false;
-				YTPlayer.playlistID = this.opt.videoURL ? getYTPVideoID( this.opt.videoURL ).playlistID : $YTPlayer.attr( "href" ) ? getYTPVideoID( $YTPlayer.attr( "href" ) ).playlistID : false;
+				YTPlayer.videoID = this.opt.videoURL ?
+						getYTPVideoID( this.opt.videoURL ).videoID : $YTPlayer.attr( "href" ) ?
+						getYTPVideoID( $YTPlayer.attr( "href" ) ).videoID :
+						false;
+				/**
+				 *
+				 * @type {*|getYTAPVideoID.playlistID|getYTPVideoID.playlistID|jQuery.mbYTPlayer.playlistID}
+				 */
+				YTPlayer.playlistID = this.opt.videoURL ?
+						getYTPVideoID( this.opt.videoURL ).playlistID : $YTPlayer.attr( "href" ) ?
+						getYTPVideoID( $YTPlayer.attr( "href" ) ).playlistID :
+						false;
 
 				YTPlayer.opt.showAnnotations = YTPlayer.opt.showAnnotations ? '1' : '3';
 
@@ -1678,11 +1692,9 @@ var getYTPVideoID = function( url ) {
 				var stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
 				stopAt = stopAt < YTPlayer.player.getDuration() ? stopAt : 0;
 				if( YTPlayer.currentTime != prog.currentTime ) {
-
 					var YTPEvent = jQuery.Event( "YTPTime" );
 					YTPEvent.time = YTPlayer.currentTime;
 					jQuery( YTPlayer ).trigger( YTPEvent );
-
 				}
 				YTPlayer.currentTime = prog.currentTime;
 				YTPlayer.totalTime = YTPlayer.player.getDuration();
@@ -1975,7 +1987,7 @@ var getYTPVideoID = function( url ) {
 		 * getTotalTime
 		 * @returns {string} total time
 		 */
-		getTotalTime: function() {
+		getTotalTime: function(format) {
 			var YTPlayer = this.get( 0 );
 			return jQuery.mbYTPlayer.formatTime( YTPlayer.totalTime );
 		},

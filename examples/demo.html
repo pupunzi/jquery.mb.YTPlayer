@@ -27,7 +27,7 @@
 <link href='http://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
 <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="../dist/jquery.mb.YTPlayer.js"></script>
 <script src="assets/apikey.js"></script>
 
@@ -136,6 +136,14 @@ button:hover, .button:hover {
 #togglePlay.pause{
     background-color: rgb(0, 0, 0);
     color: #fff;
+}
+
+#togglePlay.pause:after{
+    content:"pause"
+}
+
+#togglePlay.play:after{
+    content:"play"
 }
 
 #togglePlay.pause:hover{
@@ -288,8 +296,6 @@ button:hover, .button:hover {
     var myPlayer;
     jQuery(function () {
         myPlayer = jQuery("#bgndVideo").YTPlayer();
-//        myPlayer = jQuery("#bgndVideo").YTPlayer();
-
         myPlayer.YTPApplyFilters({
             grayscale: 50,
             sepia: 83,
@@ -298,7 +304,7 @@ button:hover, .button:hover {
 
         /* DEBUG ******************************************************************************************/
         var YTPConsole = jQuery("#eventListener");
-        // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
+        // EVENTS: YTPReady YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted YTPChangeMovie
         myPlayer.on("YTPReady YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted YTPChangeMovie", function (e) {
             YTPConsole.append("event: " + e.type + " (" + jQuery("#bgndVideo").YTPGetPlayer().getPlayerState() + ") > time: " + e.time);
             YTPConsole.append("<br>");
@@ -388,19 +394,17 @@ button:hover, .button:hover {
             }
         });
 
+        myPlayer.on("YTPPlay", function(){
+            $("#togglePlay").removeClass("play pause");
+            $("#togglePlay").addClass("pause");
+        });
+
+        myPlayer.on("YTPPause", function(){
+            $("#togglePlay").removeClass("play pause");
+            $("#togglePlay").addClass("play");
+        });
         /* END FILTER SLIDERS ******************************************************************************************/
-
     });
-
-    /**
-     *
-     * @param state
-     */
-    function changeLabel(state){
-        $("#togglePlay").html(state != 2 ? "pause" : "play" );
-        $("#togglePlay").removeClass("play pause");
-        $("#togglePlay").addClass(state != 2 ? "pause" : "play");
-    }
 
     /**
      *
@@ -526,7 +530,7 @@ button:hover, .button:hover {
     </div>
 
     <div class="goto">
-        <button id="togglePlay" class="command pause" onclick="jQuery('#bgndVideo').YTPTogglePlay(changeLabel)">pause</button>
+        <button id="togglePlay" class="command" onclick="jQuery('#bgndVideo').YTPTogglePlay()"></button>
         <br>
         <br>
         <br>
@@ -539,7 +543,7 @@ button:hover, .button:hover {
     </a>
 
     <!--7SnmCUwOsts--><!--BsekcY04xvQ--><!--r1xohS2u69E--><!--Fk9EBOOAYiU--><!--sEuXfDtrco8--><!--9d8wWcJLnFI-->
-    <div id="bgndVideo" class="player" data-property="{videoURL:'Fk9EBOOAYiU',containment:'body', showControls:true, autoPlay:true, loop:false, vol:50, mute:false, startAt:0,  stopAt:0, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true}">My video</div>
+    <div id="bgndVideo" class="player" data-property="{videoURL:'Fk9EBOOAYiU',containment:'body', showControls:true, autoPlay:false, loop:false, vol:50, mute:true, startAt:0,  stopAt:300, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true}">My video</div>
 
 </div>
 

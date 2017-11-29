@@ -88,7 +88,7 @@
 
             var options = {
                 mobileFallbackImage: "http://www.hdwallpapers.in/walls/pink_cosmos_flowers-wide.jpg",
-                playOnlyIfVisible  : true
+                playOnlyIfVisible  : false
             };
 
             myPlayer = jQuery(".player").YTPlayer(options);
@@ -98,18 +98,15 @@
 <body>
 <div id="wrapper">
     <a href='https://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
-    <div id="customElement" style="background: #ddd url('assets/mask-1.png') no-repeat center center; background-size: cover" class="player"
-         data-property="{videoURL:'qvuILbcXlg8',containment:'self', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}">
+    <div id="myPlayer" style="background: #000; height: 600px; width: 100%; position: relative; " ></div>
+    <div id="customElement" class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'#myPlayer', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}">
         <div id="testText">
             <h1>jQuery.mb.YTPlayer</h1>
-
             <h2>An HTML5 Background player <br>for YouTube videos</h2>
         </div>
     </div>
-
-    <div id="customElement1" style="background: #000; height: 400px" class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'self', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}"></div>
-
-
+    <div id="myPlayer-1" style="background: #000; height: 600px; width: 100%; position: relative; " ></div>
+    <!--<div id="customElement1" class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'#myPlayer-1', showControls:true, autoPlay:true, loop:false, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default', anchor:'bottom, center'}"></div>-->
     <div style="padding: 20px; text-align: center">
         <button onclick="jQuery('.player').YTPFullscreen()">go fullscreen</button>
     </div>

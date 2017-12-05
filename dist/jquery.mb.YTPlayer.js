@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 21/11/17 19.55
  Version:  3.1.5
- Build:  6569
+ Build:  6570
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -52,7 +52,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.5",
-		build: "6569",
+		build: "6570",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 
@@ -1079,14 +1079,14 @@ var getYTPVideoID = function( url ) {
 
 			YTPlayer.player.playVideo();
 
-			if( YTPlayer.wrapper.css( "opacity" ) == 0 ) {
-				jQuery( YTPlayer.playerEl ).css( {
-					opacity: 1
-				} );
-				YTPlayer.wrapper.CSSAnimate( {
-					opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
-				}, YTPlayer.opt.fadeOnStartTime );
-			}
+			//if( YTPlayer.wrapper.css( "opacity" ) == 0  ) {
+			jQuery( YTPlayer.playerEl ).css( {
+				opacity: 1
+			} );
+			YTPlayer.wrapper.CSSAnimate( {
+				opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity
+			}, YTPlayer.opt.fadeOnStartTime );
+			//}
 
 			var controls = jQuery( "#controlBar_" + YTPlayer.id );
 			var playBtn = controls.find( ".mb_YTPPlaypause" );
@@ -1728,9 +1728,7 @@ var getYTPVideoID = function( url ) {
 					}, 1000 );
 
 					if( YTPlayer.isPlayList ) {
-
 						if( !data.loop || ( data.loop > 0 && YTPlayer.player.loopTime === data.loop - 1 ) ) {
-
 							YTPlayer.player.loopTime = undefined;
 							clearInterval( YTPlayer.getState );
 							var YTPEnd = jQuery.Event( "YTPEnd" );
@@ -1739,9 +1737,7 @@ var getYTPVideoID = function( url ) {
 							//YTPlayer.state = 0;
 							return;
 						}
-
 					} else if( !data.loop || ( data.loop > 0 && YTPlayer.player.loopTime === data.loop - 1 ) ) {
-
 						YTPlayer.player.loopTime = undefined;
 						YTPlayer.preventTrigger = true;
 						YTPlayer.state = 2;
@@ -1750,15 +1746,13 @@ var getYTPVideoID = function( url ) {
 						YTPlayer.wrapper.CSSAnimate( {
 							opacity: 0
 						}, YTPlayer.opt.fadeOnStartTime, function() {
-
 							if( YTPlayer.controlBar.length )
 								YTPlayer.controlBar.find( ".mb_YTPPlaypause" ).html( jQuery.mbYTPlayer.controls.play );
-
 							var YTPEnd = jQuery.Event( "YTPEnd" );
 							YTPEnd.time = YTPlayer.currentTime;
 							jQuery( YTPlayer ).trigger( YTPEnd );
-
 							YTPlayer.player.seekTo( startAt, true );
+
 							if( !YTPlayer.isBackground ) {
 								if( YTPlayer.opt.backgroundUrl && YTPlayer.isPlayer ) {
 									YTPlayer.opt.backgroundUrl = YTPlayer.opt.backgroundUrl || YTPlayer.orig_background;
@@ -1771,8 +1765,8 @@ var getYTPVideoID = function( url ) {
 								if( YTPlayer.orig_background )
 									jQuery( YTPlayer ).css( "background-image", YTPlayer.orig_background );
 							}
-						} );
 
+						} );
 						return;
 					}
 

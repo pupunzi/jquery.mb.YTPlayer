@@ -461,10 +461,10 @@
 		</div>
 		<div id="changeVideo">
 			<h2 style="color:white">Change video</h2>
-			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: '7SnmCUwOsts', mute:false, addRaster:false})">video 1</button>
-			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 2</button>
-			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'kcihcYEOeic', mute:false, startAt:10, stopAt: 363, addRaster:false})">video 3</button>
-			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeMovie({videoURL: 'w0653vsLSqE', mute:false, startAt:25, stopAt: 0, addRaster:false})">video 4</button>
+			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: '7SnmCUwOsts', mute:false, addRaster:false})">video 1</button>
+			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 2</button>
+			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: 'kcihcYEOeic', mute:false, startAt:10, stopAt: 363, addRaster:false})">video 3</button>
+			<button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: 'w0653vsLSqE', mute:false, startAt:25, stopAt: 0, addRaster:false})">video 4</button>
 			<br>
 			<br>
 			<div id="loadBox">
@@ -479,7 +479,7 @@
 					<input id="audioOff" type="checkbox" checked> Audio is OFF
 				</div>
 				<br>
-				<button onclick="$('#loadOptions').slideUp(); jQuery('#bgndVideo').YTPChangeMovie({videoURL: $('#videoID').val(), startAt: checkForVal($('#startAt').val()), stopAt: checkForVal($('#stopAt').val()), mute: $('#audioOff').is(':checked') })">change video</button>
+				<button onclick="$('#loadOptions').slideUp(); jQuery('#bgndVideo').YTPChangeVideo({videoURL: $('#videoID').val(), startAt: checkForVal($('#startAt').val()), stopAt: checkForVal($('#stopAt').val()), mute: $('#audioOff').is(':checked') })">change video</button>
 				<div id="videoData" style="display: none">
 					<h2 style="color: #FFFFFF; text-align: left">Current video:</h2>
 					<div class="dida"></div>

@@ -2,6 +2,7 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+
 		copy: {
 			dist: {
 				files: [
@@ -167,6 +168,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-build-number');
 	grunt.loadNpmTasks('grunt-bump');
 
-	grunt.registerTask('default', ['buildnumber', 'jsbeautifier', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace']);
+	grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace']); //'jsbeautifier',
 
 };

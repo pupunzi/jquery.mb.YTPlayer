@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   jquery.mb.components
-  file: demo.html
-  last modified: 21/11/17 19.39
+
+  file: demo-playlist.html
+  last modified: 18/12/17 18.45
   Version:  {{ version }}
   Build:  {{ buildnum }}
 
   Open Lab s.r.l., Florence - Italy
-  email: matteo@open-lab.com
+  email:  matteo@open-lab.com
+  blog: 	http://pupunzi.open-lab.com
   site: 	http://pupunzi.com
   	http://open-lab.com
-  blog: 	http://pupunzi.open-lab.com
 
   Licences: MIT, GPL
   http://www.opensource.org/licenses/mit-license.php
@@ -297,15 +298,6 @@
         var myPlayer;
         jQuery(function () {
             myPlayer = jQuery("#bgndVideo").YTPlayer({});
-
-            /*
-                    myPlayer.YTPApplyFilters({
-                        grayscale: 50,
-                        sepia: 80,
-                        opacity: 30
-                    });
-            */
-
             /* DEBUG ******************************************************************************************/
             var YTPConsole = jQuery("#eventListener");
             // EVENTS: YTPReady YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted YTPChangeVideo
@@ -435,8 +427,7 @@
         <h2 style="color:white">Apply filters</h2>
         <h3 style="color: white">* Filters don't work in IE.</h3>
 
-        <button id="toggleFilters"
-                onclick="jQuery('#bgndVideo').YTPToggleFilters(function(a){if(!a) {$('#toggleFilters').html('enable filters')} else {$('#toggleFilters').html('disable filters')}})">
+        <button id="toggleFilters" onclick="jQuery('#bgndVideo').YTPToggleFilters(function(a){if(!a) {$('#toggleFilters').html('enable filters')} else {$('#toggleFilters').html('disable filters')}})">
             disable all filters
         </button>
         <script>
@@ -494,40 +485,6 @@
 
     </div>
 
-    <div id="changeVideo">
-        <h2 style="color:white">Change video</h2>
-
-        <button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: '7SnmCUwOsts', mute:false, autoPlay:false, addRaster:false, addFilters:{sepia:40, grayscale:80, opacity:20}})"> Change video 1</button><br>No auto play, audio on<br>Filters -> sepia:40, grayscale:80, opacity:20<br>
-        <hr>
-        <button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: 'BsekcY04xvQ', mute:true, addRaster:false, showControls:false})"> Change video 2</button><br>No controls bar, audio off<br>No Filters<br>
-        <hr>
-        <button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: 'qRSPVj1ldVQ', mute:true, startAt:40, addRaster:true, ratio:16/9, showControls:true, addFilters:{opacity:40}})"> Change video 3</button><br>Start at 40sec., audio off<br>Filters -> opacity:40<br>
-        <br>
-        <br>
-        <div id="loadBox">
-            <label for="videoID">Or insert here the ID or the complete URL of the Youtube video:</label>
-            <input id="videoID" type="text" value="r1xohS2u69E" onfocus="$('#loadOptions').slideDown()">
-
-            <div id="loadOptions" style="display: none">
-                <br>
-                <input id="startAt" type="number" placeholder="starts at">
-                <input id="stopAt" type="number" placeholder="stops at">
-                <br>
-                <br>
-                <input id="audioOff" type="checkbox" checked> Audio is OFF
-                <br>
-            </div>
-            <br>
-            <button onclick="$('#loadOptions').slideUp(); jQuery('#bgndVideo').YTPChangeVideo({videoURL: $('#videoID').val(), startAt: checkForVal($('#startAt').val()), stopAt: checkForVal($('#stopAt').val()), mute: $('#audioOff').is(':checked') })">change video</button>
-
-            <div id="videoData" style="display: none">
-                <h2 style="color: #FFFFFF; text-align: left">Current video:</h2>
-                <div class="dida"></div>
-            </div>
-            <br>
-            <button onclick="jQuery.mbYTPlayer.removeStoredData()"> Remove stored data </button>
-        </div>
-    </div>
 
     <div class="goto">
         <button id="togglePlay" class="command" onclick="jQuery('#bgndVideo').YTPTogglePlay()"></button>
@@ -537,14 +494,10 @@
         <a class="button" href="https://github.com/pupunzi/jquery.mb.YTPlayer/wiki" target="_blank">See the doc</a>
         <a class="button" href="http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer" target="_blank">Download it</a>
     </div>
-
     <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
         <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
     </a>
-
-    <!--7SnmCUwOsts--><!--BsekcY04xvQ--><!--r1xohS2u69E--><!--Fk9EBOOAYiU--><!--sEuXfDtrco8--><!--9d8wWcJLnFI--><!--Fk9EBOOAYiU--><!-- https://www.youtube.com/watch?v=VHcAusNO3L4&list=RDEMtvEj6XzR7gbh_QCXSzFudw -->
-    <div id="bgndVideo" class="player" data-property="{videoURL:'Fk9EBOOAYiU',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:true, startAt:0,  stopAt:300, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true, addFilters: {grayscale: 50,sepia: 80,opacity: 30}}">My video</div>
-
+    <div id="bgndVideo" class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=IvUU8joBb1Q&list=RDIvUU8joBb1Q',containment:'body', showControls:true, autoPlay:true, loop:false, vol:50, mute:true, startAt:0,  stopAt:300, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true, addFilters: {grayscale: 50,sepia: 80,opacity: 30}}">My video</div>
 </div>
 
 <div id="debug" style="display: none">

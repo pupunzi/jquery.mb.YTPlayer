@@ -14,3 +14,5 @@ __An open source jQuery component to easily build your custom Youtube® player o
 
 ## Now available also for **Vimeo**: 
 https://github.com/pupunzi/jQuery.mb.vimeo_player
+
+[![](https://data.jsdelivr.com/v1/package/npm/jquery.mb.ytplayer/badge)](https://www.jsdelivr.com/package/npm/jquery.mb.ytplayer)

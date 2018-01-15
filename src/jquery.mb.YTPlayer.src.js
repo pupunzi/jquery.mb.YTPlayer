@@ -19,6 +19,11 @@
  Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi)
  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
+/* src-block */
+alert( "This is the 'jquery.mb.vimeo_player.src.js' javascript file and can't be included. Use the one you find in the 'dist' folder!" )
+/* end-src-block */
+
+
 var ytp = ytp || {};
 
 function onYouTubeIframeAPIReady() {

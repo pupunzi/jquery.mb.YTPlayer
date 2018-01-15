@@ -80,6 +80,24 @@ module.exports = function (grunt) {
 			}
 		},
 
+        strip_code: {
+            options: {
+                blocks: [
+                    {
+                        start_block: "/* src-block */",
+                        end_block: "/* end-src-block */"
+                    },
+                    {
+                        start_block: "<!-- start-html-src-code -->",
+                        end_block: "<!-- end-html-src-code -->"
+                    }
+                ]
+            },
+            your_target: {
+                src: 'dist/*.js'
+            }
+        },
+
 		jsbeautifier: {
 			files  : ['src/*.js', '!dist/*.min.js', 'src/*.html', 'src/*.tmpl', 'src/css/*.css'],
 			options: {
@@ -164,10 +182,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks("grunt-jsbeautifier");
+    grunt.loadNpmTasks('grunt-strip-code');
 
 	grunt.loadNpmTasks('grunt-build-number');
 	grunt.loadNpmTasks('grunt-bump');
 
-	grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace']); //'jsbeautifier',
+	grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace', 'strip_code']); //'jsbeautifier',
 
 };

@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 21/11/17 19.55
  Version:  3.1.5
- Build:  6799
+ Build:  6801
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -52,7 +52,7 @@ var getYTPVideoID = function( url ) {
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
 		version: "3.1.5",
-		build: "6799",
+		build: "6801",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 
@@ -432,24 +432,24 @@ var getYTPVideoID = function( url ) {
 									 * todo: get the list of videos in playlist
 									 */
 									/* If is a playlist */
-/*
-									if( YTPlayer.playlistID ) {
-										YTPlayer.isList = true;
-										YTPlayer.videos = [];
-										YTPlayer.player.cuePlaylist( {
-											listType: 'playlist',
-											list: YTPlayer.playlistID.toString(),
-											startSeconds: YTPlayer.opt.startAt,
-											endSeconds: YTPlayer.opt.stopAt,
-											suggestedQuality: YTPlayer.opt.quality
-										} );
+									/*
+																		if( YTPlayer.playlistID ) {
+																			YTPlayer.isList = true;
+																			YTPlayer.videos = [];
+																			YTPlayer.player.cuePlaylist( {
+																				listType: 'playlist',
+																				list: YTPlayer.playlistID.toString(),
+																				startSeconds: YTPlayer.opt.startAt,
+																				endSeconds: YTPlayer.opt.stopAt,
+																				suggestedQuality: YTPlayer.opt.quality
+																			} );
 
-										console.debug("playlistID  ",YTPlayer.playlistID.toString())
+																			console.debug("playlistID  ",YTPlayer.playlistID.toString())
 
-										/!* If is a single video *!/
-									} else
-*/
-										{
+																			/!* If is a single video *!/
+																		} else
+									*/
+									{
 										YTPlayer.player.loadVideoById( {
 											videoId: YTPlayer.videoID.toString(),
 											startSeconds: YTPlayer.opt.startAt,
@@ -1792,8 +1792,7 @@ var getYTPVideoID = function( url ) {
 										backgroundSize: "cover"
 									} );
 								}
-							} else {
-								if( YTPlayer.orig_background )
+							} else if( YTPlayer.orig_background ) {
 									jQuery( YTPlayer ).css( "background-image", YTPlayer.orig_background );
 							}
 						} );
@@ -1805,8 +1804,8 @@ var getYTPVideoID = function( url ) {
 
 					YTPlayer.preventTrigger = true;
 					YTPlayer.state = 2;
-
-					jQuery( YTPlayer ).YTPPause();
+					//jQuery( YTPlayer ).YTPPause();
+					YTPlayer.player.pauseVideo()
 					YTPlayer.player.seekTo( startAt, true );
 					YTPlayer.player.playVideo();
 				}
@@ -1824,9 +1823,10 @@ var getYTPVideoID = function( url ) {
 			/* If the player has been removed from scene destroy it */
 			if( !jQuery.contains( document, YTPlayer ) ) {
 				jQuery( YTPlayer ).YTPPlayerDestroy();
-				return
+				return;
 			}
 
+			/* CREATE CONTROL BAR */
 			jQuery.mbYTPlayer.buildControls( YTPlayer );
 
 			if( YTPlayer.overlay )
@@ -1869,7 +1869,6 @@ var getYTPVideoID = function( url ) {
 			jQuery( YTPlayer ).YTPMute();
 
 			YTPlayer.checkForStartAt = setInterval( function() {
-
 				var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
 
 				if( YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo ) {
@@ -1926,7 +1925,6 @@ var getYTPVideoID = function( url ) {
 									clearInterval( YTPlayer.safariPlay )
 							}, 10 )
 						}
-
 					} else {
 						setTimeout( function() {
 							YTPlayer.player.pauseVideo();
@@ -1994,7 +1992,7 @@ var getYTPVideoID = function( url ) {
 			return( min <= 9 ? "0" + min : min ) + " : " + ( sec <= 9 ? "0" + sec : sec );
 		},
 
-		/* PLAYER POSITION -------------------------------------------------------------------------------------------*/
+		/* PLAYER POSITION AND SIZE OPTIMIZATION-------------------------------------------------------------------------------------------*/
 
 		/**
 		 * setAnchor

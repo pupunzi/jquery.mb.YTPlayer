@@ -796,7 +796,7 @@ var getYTPVideoID = function( url ) {
 				YTPlayer.videoCounter = 1;
 				YTPlayer.videoLength = videos.length;
 				jQuery( YTPlayer ).data( "property", videos[ 0 ] );
-				jQuery( YTPlayer ).mb_YTPlayer();
+				jQuery( YTPlayer ).YTPlayer();
 			}
 
 			if( typeof callback == "function" )

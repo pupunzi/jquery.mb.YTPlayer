@@ -45,7 +45,8 @@
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-include-replace": "^3.0.0",
-    "grunt-jsbeautifier": "^0.2.10"
+    "grunt-jsbeautifier": "^0.2.10",
+    "grunt-strip-code": "^1.0.6"
   },
   "directories": {
     "example": "examples"

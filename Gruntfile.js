@@ -187,6 +187,5 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-build-number');
 	grunt.loadNpmTasks('grunt-bump');
 
-	grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace', 'strip_code']); //'jsbeautifier',
-
+	grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'strip_code', 'uglify', 'cssmin', 'includereplace']); //'jsbeautifier',
 };

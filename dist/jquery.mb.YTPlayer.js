@@ -3,12 +3,8 @@
 
  file: jquery.mb.YTPlayer.src.js
  last modified: 21/11/17 19.55
-<<<<<<< HEAD
- Version:  3.1.6
-=======
- Version:  3.1.5
->>>>>>> f0c8d406e09cadac291e7d33ab20fb343d88efd4
- Build:  6801
+ Version:  3.1.7
+ Build:  6804
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -22,6 +18,8 @@
 
  Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi)
  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+
 
 var ytp = ytp || {};
 
@@ -55,12 +53,8 @@ var getYTPVideoID = function( url ) {
 
 	jQuery.mbYTPlayer = {
 		name: "jquery.mb.YTPlayer",
-<<<<<<< HEAD
-		version: "3.1.6",
-=======
-		version: "3.1.5",
->>>>>>> f0c8d406e09cadac291e7d33ab20fb343d88efd4
-		build: "6801",
+		version: "3.1.7",
+		build: "6804",
 		author: "Matteo Bicocchi (pupunzi)",
 		apiKey: "",
 
@@ -583,21 +577,33 @@ var getYTPVideoID = function( url ) {
 								/**
 								 * onError
 								 * @param err
+								 *
+                 2 – The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks.
+                 5 – The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.
+                 100 – The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.
+                 101 – The owner of the requested video does not allow it to be played in embedded players.
+                 150 – This error is the same as 101. It's just a 101 error in disguise!
 								 */
 								'onError': function( err ) {
-									if( err.data == 150 ) {
-										console.log( "Embedding this video is restricted by Youtube." );
-										alert( "mb.YTPlayer: Embedding this video (" + YTPlayer.videoID + ") is restricted by Youtube" );
-										if( YTPlayer.isList )
-											jQuery( YTPlayer ).YTPPlayNext();
-									}
 
-									if( err.data == 2 && YTPlayer.isList ) {
-										jQuery( YTPlayer ).YTPPlayNext();
-									}
+                  if( typeof YTPlayer.opt.onError == "function" )
+                    YTPlayer.opt.onError( $YTPlayer, err );
 
-									if( typeof YTPlayer.opt.onError == "function" )
-										YTPlayer.opt.onError( $YTPlayer, err );
+                  switch (err.data) {
+										case 2:
+                      console.error( "video ID:: " + YTPlayer.videoID + ": The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks." );
+                    case 5:
+                      console.error( "video ID:: " + YTPlayer.videoID + ": The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred." );
+                    case 100:
+                      console.error( "video ID:: " + YTPlayer.videoID + ": The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private." );
+                    case 101:
+										case 150:
+                      console.error( "video ID:: " + YTPlayer.videoID + ": The owner of the requested video does not allow it to be played in embedded players." );
+                  }
+
+                  if( YTPlayer.isList )
+                    jQuery( YTPlayer ).YTPPlayNext();
+
 								}
 							}
 						} );

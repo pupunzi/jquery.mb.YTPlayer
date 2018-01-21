@@ -2190,6 +2190,7 @@ var getYTPVideoID = function (url) {
 
   jQuery.fn.YTPlayer = jQuery.mbYTPlayer.buildPlayer;
   jQuery.fn.mb_YTPlayer = jQuery.mbYTPlayer.buildPlayer;
+  
   jQuery.fn.YTPGetPlayer = jQuery.mbYTPlayer.getPlayer;
   jQuery.fn.YTPGetVideoID = jQuery.mbYTPlayer.getVideoID;
   jQuery.fn.YTPGetPlaylistID = jQuery.mbYTPlayer.getPlaylistID;

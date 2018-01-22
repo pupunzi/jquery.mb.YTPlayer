@@ -240,8 +240,8 @@ var getYTPVideoID = function (url) {
         if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
           this.opt.opacity = 1;
 
-        YTPlayer.isPlayer = YTPlayer.opt.containment == "self";
         YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery(this) : jQuery(YTPlayer.opt.containment);
+        YTPlayer.isPlayer = YTPlayer.opt.containment == "self" || ($YTPlayer.is (YTPlayer.opt.containment));
         YTPlayer.isBackground = YTPlayer.opt.containment.is("body");
 
         if (YTPlayer.isBackground && ytp.backgroundIsInited)

@@ -1927,7 +1927,7 @@ var getYTPVideoID = function (url) {
 
       var startAt = YTPlayer.start_from_last ? YTPlayer.start_from_last : YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
       YTPlayer.start_from_last = null;
-      
+
       YTPlayer.player.playVideo();
       jQuery(YTPlayer).YTPMute();
 

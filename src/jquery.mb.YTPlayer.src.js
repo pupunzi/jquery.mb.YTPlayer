@@ -447,8 +447,10 @@ var getYTPVideoID = function (url) {
                   {
                     YTPlayer.player.loadVideoById({
                       videoId: YTPlayer.videoID.toString(),
-                      startSeconds: YTPlayer.opt.startAt,
-                      endSeconds: YTPlayer.opt.stopAt,
+/*
+                       startSeconds: YTPlayer.start_from_last || YTPlayer.opt.startAt,
+                       endSeconds: YTPlayer.opt.stopAt,
+*/
                       suggestedQuality: YTPlayer.opt.quality
                     });
                   }
@@ -456,7 +458,7 @@ var getYTPVideoID = function (url) {
                   if (YTPlayer.isReady)
                     return;
 
-                  YTPlayer.isReady = YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ? false : true;
+                  //YTPlayer.isReady = YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ? false : true;
 
                   YTPlayer.playerEl = YTPlayer.player.getIframe();
                   jQuery(YTPlayer.playerEl).unselectable();
@@ -1756,11 +1758,13 @@ var getYTPVideoID = function (url) {
       jQuery.mbYTPlayer.checkForStart(YTPlayer);
 
       YTPlayer.getState = setInterval(function () {
+	    //  console.debug("YTPlayer.isReady", YTPlayer.isReady)
+      	if (!YTPlayer.isReady)
+      		return;
+
         var prog = jQuery(YTPlayer).YTPManageProgress();
         var $YTPlayer = jQuery(YTPlayer);
         var data = YTPlayer.opt;
-        var startAt = YTPlayer.start_from_last ? YTPlayer.start_from_last : YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
-        YTPlayer.start_from_last = null;
 
         var stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
         stopAt = stopAt < YTPlayer.player.getDuration() ? stopAt : 0;
@@ -1814,10 +1818,9 @@ var getYTPVideoID = function (url) {
             YTPlayer.volumeBar.updateSliderVal(YTPlayer.opt.vol);
         }
 
-        //YTPlayer.player.getPlayerState() == 1 &&
-        if ( ( (parseFloat(YTPlayer.player.getDuration() - .5) < YTPlayer.player.getCurrentTime()) || ( stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) > stopAt ) )) {
+        if ( YTPlayer.player.getPlayerState() > 0 && ( (parseFloat(YTPlayer.player.getDuration() - .5) < YTPlayer.player.getCurrentTime()) || ( stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) > stopAt ) )) {
 
-          console.debug("loop:: ", data.loop, YTPlayer.player.loopTime);
+          //console.debug("loop:: ", data.loop, YTPlayer.player.loopTime, YTPlayer.player.getPlayerState());
 
           if (YTPlayer.isEnded)
             return;
@@ -1842,7 +1845,6 @@ var getYTPVideoID = function (url) {
             YTPlayer.preventTrigger = true;
             YTPlayer.state = 2;
             jQuery(YTPlayer).YTPPause();
-
             YTPlayer.wrapper.CSSAnimate({
               opacity: 0
             }, YTPlayer.opt.fadeOnStartTime, function () {
@@ -1851,7 +1853,7 @@ var getYTPVideoID = function (url) {
               var YTPEnd = jQuery.Event("YTPEnd");
               YTPEnd.time = YTPlayer.currentTime;
               jQuery(YTPlayer).trigger(YTPEnd);
-              YTPlayer.player.seekTo(startAt, true);
+              YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
 
               if (!YTPlayer.isBackground) {
                 if (YTPlayer.opt.backgroundUrl && YTPlayer.isPlayer) {
@@ -1869,13 +1871,13 @@ var getYTPVideoID = function (url) {
           }
 
           YTPlayer.player.loopTime = YTPlayer.player.loopTime ? ++YTPlayer.player.loopTime : 1;
-          startAt = startAt || 1;
+	        YTPlayer.opt.startAt = YTPlayer.opt.startAt || 1;
 
           YTPlayer.preventTrigger = true;
           YTPlayer.state = 2;
           //jQuery( YTPlayer ).YTPPause();
           YTPlayer.player.pauseVideo()
-          YTPlayer.player.seekTo(startAt, true);
+          YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
           YTPlayer.player.playVideo();
         }
       }, interval);
@@ -1885,8 +1887,7 @@ var getYTPVideoID = function (url) {
      * checkForStart
      * @param YTPlayer
      */
-    checkForStart: function (YTPlayer) {
-
+    checkForStart: function (YTPlayer, callback) {
       var $YTPlayer = jQuery(YTPlayer);
 
       /* If the player has been removed from scene destroy it */
@@ -1926,24 +1927,19 @@ var getYTPVideoID = function (url) {
       jQuery(YTPlayer).YTPMute();
 
       var startAt = YTPlayer.start_from_last ? YTPlayer.start_from_last : YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
-      YTPlayer.start_from_last = null;
-
       YTPlayer.player.playVideo();
       jQuery(YTPlayer).YTPMute();
-
-      clearInterval(YTPlayer.checkForStartAt);
 
       //if (YTPlayer.start_from_last)
       YTPlayer.player.seekTo(startAt, true);
 
       YTPlayer.checkForStartAt = setInterval(function () {
-        var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
-
-        //console.debug("canPlayVideo:: ", canPlayVideo, YTPlayer.player.getVideoLoadedFraction(), startAt / YTPlayer.player.getDuration(), YTPlayer.player.getCurrentTime(), startAt);
+	       var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
 
         if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {
+	        YTPlayer.start_from_last = null;
 
-          clearInterval(YTPlayer.checkForStartAt);
+	        clearInterval(YTPlayer.checkForStartAt);
           if (typeof YTPlayer.opt.onReady == "function")
             YTPlayer.opt.onReady(YTPlayer);
 

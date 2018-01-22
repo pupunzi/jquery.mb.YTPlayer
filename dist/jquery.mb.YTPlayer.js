@@ -3,8 +3,8 @@
 
  file: jquery.mb.YTPlayer.src.js
  last modified: 21/11/17 19.55
- Version:  3.1.8
- Build:  6808
+ Version:  3.1.9
+ Build:  6812
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -53,8 +53,8 @@ var getYTPVideoID = function (url) {
 
   jQuery.mbYTPlayer = {
     name: "jquery.mb.YTPlayer",
-    version: "3.1.8",
-    build: "6808",
+    version: "3.1.9",
+    build: "6812",
     author: "Matteo Bicocchi (pupunzi)",
     apiKey: "",
 
@@ -169,7 +169,7 @@ var getYTPVideoID = function (url) {
         YTPlayer.loop = 0;
         YTPlayer.opt = {};
         YTPlayer.state = 0;
-        YTPlayer.filters = $.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
+        YTPlayer.filters = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
         YTPlayer.filtersEnabled = true;
         YTPlayer.id = YTPlayer.id || "YTP_" + new Date().getTime();
         $YTPlayer.addClass("mb_YTPlayer");
@@ -187,9 +187,6 @@ var getYTPVideoID = function (url) {
 
         /* Extend options */
         YTPlayer.opt = jQuery.extend(jQuery.mbYTPlayer.defaults, options, property);
-
-        console.debug("1:: ", property);
-        console.debug("1:: ", YTPlayer.opt);
 
         if (YTPlayer.opt.loop == "true")
           YTPlayer.opt.loop = 9999;
@@ -237,8 +234,8 @@ var getYTPVideoID = function (url) {
         if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
           this.opt.opacity = 1;
 
+        YTPlayer.isPlayer = YTPlayer.opt.containment == "self";
         YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery(this) : jQuery(YTPlayer.opt.containment);
-        YTPlayer.isPlayer = YTPlayer.opt.containment == "self" || ($YTPlayer.is (YTPlayer.opt.containment));
         YTPlayer.isBackground = YTPlayer.opt.containment.is("body");
 
         if (YTPlayer.isBackground && ytp.backgroundIsInited)
@@ -443,8 +440,6 @@ var getYTPVideoID = function (url) {
                       suggestedQuality: YTPlayer.opt.quality
                     });
 
-                    console.debug("playlistID  ", YTPlayer.playlistID.toString())
-
                   }
                   else {
                     YTPlayer.player.loadVideoById({
@@ -453,7 +448,6 @@ var getYTPVideoID = function (url) {
                       endSeconds: YTPlayer.opt.stopAt,
                       suggestedQuality: YTPlayer.opt.quality
                     });
-                    //console.debug("videoID  ", YTPlayer.videoID.toString())
                   }
 
                   if (YTPlayer.isReady)
@@ -627,8 +621,8 @@ var getYTPVideoID = function (url) {
     isOnScreen: function (YTPlayer) {
 
       var playerBox = YTPlayer.wrapper;
-      var winTop = $(window).scrollTop();
-      var winBottom = winTop + $(window).height();
+      var winTop = jQuery(window).scrollTop();
+      var winBottom = winTop + jQuery(window).height();
       var elTop = playerBox.offset().top;
       var elBottom = elTop + playerBox.height() / 2;
       return ( ( elBottom <= winBottom ) && ( elTop >= winTop ) );
@@ -821,7 +815,7 @@ var getYTPVideoID = function (url) {
         function getVideoListFromYoutube(playListID, page) {
           page = page || '';
           var youtubeAPI = "https://www.googleapis.com/youtube/v3/playlistItems";
-          $.getJSON(youtubeAPI, {
+	        jQuery.getJSON(youtubeAPI, {
             part: "snippet,contentDetails",
             playlistId: playListID, //You have to enter the PlaylistID
             maxResults: 50,
@@ -923,7 +917,6 @@ var getYTPVideoID = function (url) {
         YTPlayer.videoCounter = YTPlayer.videoLength;
 
       var video = YTPlayer.videos[YTPlayer.videoCounter - 1];
-      //console.debug( YTPlayer.videoCounter, video )
       jQuery(YTPlayer).YTPChangeVideo(video);
       return this;
     },
@@ -934,7 +927,6 @@ var getYTPVideoID = function (url) {
      * @returns {jQuery.mbYTPlayer}
      */
     changeVideo: function (opt) {
-      console.debug("changeVideo", opt);
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
 
@@ -1484,7 +1476,7 @@ var getYTPVideoID = function (url) {
         if (typeof callback == "function")
           callback(key);
 
-        YTPlayer.filters = $.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
+        YTPlayer.filters = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
 
       } else {
         $YTPlayer.YTPApplyFilter(filter, 0);
@@ -1604,7 +1596,7 @@ var getYTPVideoID = function (url) {
      */
     toggleMask: function () {
       var YTPlayer = this.get(0);
-      var $YTPlayer = $(YTPlayer);
+      var $YTPlayer = jQuery(YTPlayer);
       if (YTPlayer.hasMask)
         $YTPlayer.YTPRemoveMask();
       else
@@ -1654,6 +1646,7 @@ var getYTPVideoID = function (url) {
       jQuery("#controlBar_" + YTPlayer.id).remove();
       if (!YTPlayer.opt.showControls) {
         YTPlayer.controlBar = false;
+        return;
       }
 
       // @data.printUrl: is deprecated; use data.showYTLogo
@@ -1943,8 +1936,6 @@ var getYTPVideoID = function (url) {
 
         if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {
 
-          //console.timeEnd( "YTPlayer init" );
-
           clearInterval(YTPlayer.checkForStartAt);
           if (typeof YTPlayer.opt.onReady == "function")
             YTPlayer.opt.onReady(YTPlayer);
@@ -2195,6 +2186,7 @@ var getYTPVideoID = function (url) {
   /* EXTERNAL METHODS -----------------------------------------------------------------------------------------------------------------------*/
 
   jQuery.fn.YTPlayer = jQuery.mbYTPlayer.buildPlayer;
+  jQuery.fn.mb_YTPlayer = jQuery.mbYTPlayer.buildPlayer;
   jQuery.fn.YTPGetPlayer = jQuery.mbYTPlayer.getPlayer;
   jQuery.fn.YTPGetVideoID = jQuery.mbYTPlayer.getVideoID;
   jQuery.fn.YTPGetPlaylistID = jQuery.mbYTPlayer.getPlaylistID;

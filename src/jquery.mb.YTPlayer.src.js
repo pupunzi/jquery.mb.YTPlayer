@@ -191,7 +191,7 @@ var getYTPVideoID = function (url) {
         /* Extend options */
         YTPlayer.opt = jQuery.extend(jQuery.mbYTPlayer.defaults, options, property);
 
-        if (YTPlayer.opt.loop == "true")
+        if (YTPlayer.opt.loop )
           YTPlayer.opt.loop = 9999;
 
         YTPlayer.isRetina = ( window.retina || window.devicePixelRatio > 1 );
@@ -432,7 +432,7 @@ var getYTPVideoID = function (url) {
                 'onReady': function (event) {
                   YTPlayer.player = event.target;
 
-                  if (YTPlayer.playlistID && YTPlayer.apiKey) {
+                  /* if (YTPlayer.playlistID && YTPlayer.apiKey) {
                     YTPlayer.isList = true;
                     YTPlayer.videos = [];
                     YTPlayer.player.cuePlaylist({
@@ -442,9 +442,9 @@ var getYTPVideoID = function (url) {
                       endSeconds: YTPlayer.opt.stopAt,
                       suggestedQuality: YTPlayer.opt.quality
                     });
-
                   }
-                  else {
+                   else */
+                  {
                     YTPlayer.player.loadVideoById({
                       videoId: YTPlayer.videoID.toString(),
                       startSeconds: YTPlayer.opt.startAt,
@@ -818,7 +818,7 @@ var getYTPVideoID = function (url) {
         function getVideoListFromYoutube(playListID, page) {
           page = page || '';
           var youtubeAPI = "https://www.googleapis.com/youtube/v3/playlistItems";
-	        jQuery.getJSON(youtubeAPI, {
+          jQuery.getJSON(youtubeAPI, {
             part: "snippet,contentDetails",
             playlistId: playListID, //You have to enter the PlaylistID
             maxResults: 50,
@@ -950,7 +950,7 @@ var getYTPVideoID = function (url) {
 
       YTPlayer.videoID = getYTPVideoID(YTPlayer.opt.videoURL).videoID;
 
-      if (YTPlayer.opt.loop == "true")
+      if (YTPlayer.opt.loop)
         YTPlayer.opt.loop = 9999;
 
       jQuery(YTPlayer.playerEl).CSSAnimate({
@@ -1814,7 +1814,10 @@ var getYTPVideoID = function (url) {
             YTPlayer.volumeBar.updateSliderVal(YTPlayer.opt.vol);
         }
 
-        if (YTPlayer.player.getPlayerState() == 1 && ( parseFloat(YTPlayer.player.getDuration() - .5) < YTPlayer.player.getCurrentTime() || ( stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) > stopAt ) )) {
+        //YTPlayer.player.getPlayerState() == 1 &&
+        if ( ( (parseFloat(YTPlayer.player.getDuration() - .5) < YTPlayer.player.getCurrentTime()) || ( stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) > stopAt ) )) {
+
+          console.debug("loop:: ", data.loop, YTPlayer.player.loopTime);
 
           if (YTPlayer.isEnded)
             return;
@@ -1919,23 +1922,24 @@ var getYTPVideoID = function (url) {
 
       YTPlayer.preventTrigger = true;
       YTPlayer.state = 2;
-      YTPlayer.player.playVideo();
       jQuery(YTPlayer).YTPPause();
       jQuery(YTPlayer).YTPMute();
 
       var startAt = YTPlayer.start_from_last ? YTPlayer.start_from_last : YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
-
       YTPlayer.start_from_last = null;
+      
       YTPlayer.player.playVideo();
-
-      if (YTPlayer.start_from_last)
-        YTPlayer.player.seekTo(startAt, true);
+      jQuery(YTPlayer).YTPMute();
 
       clearInterval(YTPlayer.checkForStartAt);
-      jQuery(YTPlayer).YTPMute();
+
+      //if (YTPlayer.start_from_last)
+      YTPlayer.player.seekTo(startAt, true);
 
       YTPlayer.checkForStartAt = setInterval(function () {
         var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
+
+        //console.debug("canPlayVideo:: ", canPlayVideo, YTPlayer.player.getVideoLoadedFraction(), startAt / YTPlayer.player.getDuration(), YTPlayer.player.getCurrentTime(), startAt);
 
         if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {
 
@@ -2190,7 +2194,7 @@ var getYTPVideoID = function (url) {
 
   jQuery.fn.YTPlayer = jQuery.mbYTPlayer.buildPlayer;
   jQuery.fn.mb_YTPlayer = jQuery.mbYTPlayer.buildPlayer;
-  
+
   jQuery.fn.YTPGetPlayer = jQuery.mbYTPlayer.getPlayer;
   jQuery.fn.YTPGetVideoID = jQuery.mbYTPlayer.getVideoID;
   jQuery.fn.YTPGetPlaylistID = jQuery.mbYTPlayer.getPlaylistID;

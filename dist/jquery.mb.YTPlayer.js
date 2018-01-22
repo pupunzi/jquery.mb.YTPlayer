@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 21/11/17 19.55
  Version:  3.1.9
- Build:  6812
+ Build:  6813
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name: "jquery.mb.YTPlayer",
     version: "3.1.9",
-    build: "6812",
+    build: "6813",
     author: "Matteo Bicocchi (pupunzi)",
     apiKey: "",
 
@@ -234,8 +234,8 @@ var getYTPVideoID = function (url) {
         if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
           this.opt.opacity = 1;
 
-        YTPlayer.isPlayer = YTPlayer.opt.containment == "self";
         YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery(this) : jQuery(YTPlayer.opt.containment);
+        YTPlayer.isPlayer = YTPlayer.opt.containment == "self" || ($YTPlayer.is (YTPlayer.opt.containment));
         YTPlayer.isBackground = YTPlayer.opt.containment.is("body");
 
         if (YTPlayer.isBackground && ytp.backgroundIsInited)
@@ -2187,6 +2187,7 @@ var getYTPVideoID = function (url) {
 
   jQuery.fn.YTPlayer = jQuery.mbYTPlayer.buildPlayer;
   jQuery.fn.mb_YTPlayer = jQuery.mbYTPlayer.buildPlayer;
+  
   jQuery.fn.YTPGetPlayer = jQuery.mbYTPlayer.getPlayer;
   jQuery.fn.YTPGetVideoID = jQuery.mbYTPlayer.getVideoID;
   jQuery.fn.YTPGetPlaylistID = jQuery.mbYTPlayer.getPlaylistID;

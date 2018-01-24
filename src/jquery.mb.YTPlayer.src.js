@@ -399,7 +399,7 @@ var getYTPVideoID = function (url) {
           var YTPlayer = this;
           var $YTPlayer = jQuery(YTPlayer);
 
-          console.debug("1------::: ", YTPlayer.id, YTPlayer.opt);
+          //console.debug("1------::: ", YTPlayer.id, YTPlayer.opt);
 
           if (( YTPlayer.isBackground && ytp.backgroundIsInited ) || YTPlayer.isInit)
             return;
@@ -1780,7 +1780,7 @@ var getYTPVideoID = function (url) {
       var YTPlayer = this.get(0);
       var $YTPlayer = jQuery(YTPlayer);
 
-      console.debug("checkForState", YTPlayer.id, YTPlayer.opt)
+      //console.debug("checkForState", YTPlayer.id, YTPlayer.opt)
 
       clearInterval(YTPlayer.getState);
       var interval = 10;
@@ -1913,7 +1913,7 @@ var getYTPVideoID = function (url) {
           YTPlayer.player.pauseVideo()
           YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
 
-          console.debug("loop::", YTPlayer.id, YTPlayer.player.loopTime)
+          // console.debug("loop::", YTPlayer.id, YTPlayer.player.loopTime)
 
           YTPlayer.player.playVideo();
         }

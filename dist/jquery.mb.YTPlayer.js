@@ -3,8 +3,8 @@
 
  file: jquery.mb.YTPlayer.src.js
  last modified: 21/11/17 19.55
- Version:  3.1.10
- Build:  6982
+ Version:  3.1.11
+ Build:  6984
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -53,8 +53,8 @@ var getYTPVideoID = function (url) {
 
   jQuery.mbYTPlayer = {
     name: "jquery.mb.YTPlayer",
-    version: "3.1.10",
-    build: "6982",
+    version: "3.1.11",
+    build: "6984",
     author: "Matteo Bicocchi (pupunzi)",
     apiKey: "",
 
@@ -396,7 +396,7 @@ var getYTPVideoID = function (url) {
           var YTPlayer = this;
           var $YTPlayer = jQuery(YTPlayer);
 
-          console.debug("1------::: ", YTPlayer.id, YTPlayer.opt);
+          //console.debug("1------::: ", YTPlayer.id, YTPlayer.opt);
 
           if (( YTPlayer.isBackground && ytp.backgroundIsInited ) || YTPlayer.isInit)
             return;
@@ -1777,7 +1777,7 @@ var getYTPVideoID = function (url) {
       var YTPlayer = this.get(0);
       var $YTPlayer = jQuery(YTPlayer);
 
-      console.debug("checkForState", YTPlayer.id, YTPlayer.opt)
+      //console.debug("checkForState", YTPlayer.id, YTPlayer.opt)
 
       clearInterval(YTPlayer.getState);
       var interval = 10;
@@ -1910,7 +1910,7 @@ var getYTPVideoID = function (url) {
           YTPlayer.player.pauseVideo()
           YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
 
-          console.debug("loop::", YTPlayer.id, YTPlayer.player.loopTime)
+          // console.debug("loop::", YTPlayer.id, YTPlayer.player.loopTime)
 
           YTPlayer.player.playVideo();
         }

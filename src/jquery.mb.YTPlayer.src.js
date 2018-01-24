@@ -470,7 +470,7 @@ var getYTPVideoID = function (url) {
                     suggestedQuality: YTPlayer.opt.quality
                   });
 
-                  //}
+                  /*}*/
 
                   $YTPlayer.trigger("YTPlayerIsReady_" + YTPlayer.id);
                 },

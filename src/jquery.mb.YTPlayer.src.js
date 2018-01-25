@@ -193,6 +193,7 @@ var getYTPVideoID = function (url) {
       return this.each(function () {
         var YTPlayer = this;
         var $YTPlayer = jQuery(YTPlayer);
+        $YTPlayer.hide();
         YTPlayer.loop = 0;
         YTPlayer.state = 0;
         YTPlayer.filters = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
@@ -266,8 +267,8 @@ var getYTPVideoID = function (url) {
           return;
 
         /* Hide the placeholder if it's not the target of the player */
-        if (!YTPlayer.isPlayer)
-          $YTPlayer.hide();
+        if (YTPlayer.isPlayer)
+          $YTPlayer.show();
 
         /* create the overlay */
         YTPlayer.overlay = jQuery("<div/>").css({
@@ -339,6 +340,7 @@ var getYTPVideoID = function (url) {
         });
 
         if (YTPlayer.isBackground) {
+
           jQuery("body").css({
             boxSizing: "border-box"
           });
@@ -350,13 +352,14 @@ var getYTPVideoID = function (url) {
             zIndex: 0
           });
 
-          $YTPlayer.hide();
+        } else if (YTPlayer.opt.containment.css("position") == "static") {
 
-        } else if (YTPlayer.opt.containment.css("position") == "static")
           YTPlayer.opt.containment.css({
             position: "relative"
           });
+          $YTPlayer.show();
 
+        }
         YTPlayer.opt.containment.prepend(YTPlayer.wrapper);
 
         if (!YTPlayer.isBackground) {

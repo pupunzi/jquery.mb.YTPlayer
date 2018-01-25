@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 21/11/17 19.55
  Version:  3.1.11
- Build:  6984
+ Build:  6985
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name: "jquery.mb.YTPlayer",
     version: "3.1.11",
-    build: "6984",
+    build: "6985",
     author: "Matteo Bicocchi (pupunzi)",
     apiKey: "",
 
@@ -190,6 +190,7 @@ var getYTPVideoID = function (url) {
       return this.each(function () {
         var YTPlayer = this;
         var $YTPlayer = jQuery(YTPlayer);
+        $YTPlayer.hide();
         YTPlayer.loop = 0;
         YTPlayer.state = 0;
         YTPlayer.filters = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
@@ -263,8 +264,8 @@ var getYTPVideoID = function (url) {
           return;
 
         /* Hide the placeholder if it's not the target of the player */
-        if (!YTPlayer.isPlayer)
-          $YTPlayer.hide();
+        if (YTPlayer.isPlayer)
+          $YTPlayer.show();
 
         /* create the overlay */
         YTPlayer.overlay = jQuery("<div/>").css({
@@ -336,6 +337,7 @@ var getYTPVideoID = function (url) {
         });
 
         if (YTPlayer.isBackground) {
+
           jQuery("body").css({
             boxSizing: "border-box"
           });
@@ -347,13 +349,14 @@ var getYTPVideoID = function (url) {
             zIndex: 0
           });
 
-          $YTPlayer.hide();
+        } else if (YTPlayer.opt.containment.css("position") == "static") {
 
-        } else if (YTPlayer.opt.containment.css("position") == "static")
           YTPlayer.opt.containment.css({
             position: "relative"
           });
+          $YTPlayer.show();
 
+        }
         YTPlayer.opt.containment.prepend(YTPlayer.wrapper);
 
         if (!YTPlayer.isBackground) {
@@ -467,7 +470,7 @@ var getYTPVideoID = function (url) {
                     suggestedQuality: YTPlayer.opt.quality
                   });
 
-                  //}
+                  /*}*/
 
                   $YTPlayer.trigger("YTPlayerIsReady_" + YTPlayer.id);
                 },

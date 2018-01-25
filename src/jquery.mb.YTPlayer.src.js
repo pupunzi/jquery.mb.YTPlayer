@@ -55,107 +55,78 @@ var getYTPVideoID = function (url) {
 (function (jQuery, ytp) {
 
   jQuery.mbYTPlayer = {
-    name: "jquery.mb.YTPlayer",
-    version: "{{ version }}",
-    build: "{{ buildnum }}",
-    author: "Matteo Bicocchi (pupunzi)",
-    apiKey: "",
+	  name   : "jquery.mb.YTPlayer",
+	  version: "{{ version }}",
+	  build  : "{{ buildnum }}",
+	  author : "Matteo Bicocchi (pupunzi)",
+	  apiKey : "",
 
     /**
      * Default options for the player
      */
     defaults: {
-      containment: "body", /* default containment for the player */
-      ratio: "auto", /* "auto", "16/9", "4/3" or number: 4/3, 16/9 */
-      videoURL: null,
-      startAt: 0,
-      stopAt: 0,
-      autoPlay: true,
-      vol: 50, /* 1 to 100 */
-      addRaster: false,
-      mask: false, /* Ex: mask:{ 0:'assets/mask-1.png', 5:'assets/mask-2.png', 30: false, 50:'assets/mask-3.png'}*/
-      opacity: 1,
-      quality: "default", /* or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres” */
-      mute: false,
-      loop: true,
-      fadeOnStartTime: 1500, /* fade in timing at video start */
-      showControls: true,
-      showAnnotations: false,
-      showYTLogo: true,
-      stopMovieOnBlur: true,
-      realfullscreen: true,
-      abundance: 0.2,
+	    containment        : "body", /* default containment for the player */
+	    ratio              : "auto", /* "auto", "16/9", "4/3" or number: 4/3, 16/9 */
+	    videoURL           : null,
+	    startAt            : 0,
+	    stopAt             : 0,
+	    autoPlay           : true,
+	    vol                : 50, /* 1 to 100 */
+	    addRaster          : false,
+	    mask               : false, /* Ex: mask:{ 0:'assets/mask-1.png', 5:'assets/mask-2.png', 30: false, 50:'assets/mask-3.png'}*/
+	    opacity            : 1,
+	    quality            : "default", /* or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres” */
+	    mute               : false,
+	    loop               : true,
+	    fadeOnStartTime    : 1500, /* fade in timing at video start */
+	    showControls       : true,
+	    showAnnotations    : false,
+	    showYTLogo         : true,
+	    stopMovieOnBlur    : true,
+	    realfullscreen     : true,
+	    abundance          : 0.2,
 
-      useOnMobile: true,
-      mobileFallbackImage: null,
+      useOnMobile        : true,
+	    mobileFallbackImage: null, /* if useOnMobile is set to false you can use a fallback image (absolute URL)*/
 
-      gaTrack: true,
-      optimizeDisplay: true,
-      remember_last_time: false,
-      playOnlyIfVisible: false,
-      anchor: "center,center", /* top,bottom,left,right combined in pair */
-      addFilters: null,
+	     gaTrack            : true,
+	    optimizeDisplay    : true,
+	    remember_last_time : false,
+	    playOnlyIfVisible  : false,
+	    anchor             : "center,center", /* top,bottom,left,right combined in pair */
+	    addFilters         : null,
 
-      onReady: function (player) {
-      },
-      onError: function (player, err) {
-      }
+      onReady            : function (player) {},
+	    onError            : function (player, err) {}
     },
     /**
      *  @fontface icons
      *  */
     controls: {
-      play: "P",
-      pause: "p",
-      mute: "M",
-      unmute: "A",
-      onlyYT: "O",
-      showSite: "R",
-      ytLogo: "Y"
+	    play    : "P",
+	    pause   : "p",
+	    mute    : "M",
+	    unmute  : "A",
+	    onlyYT  : "O",
+	    showSite: "R",
+	    ytLogo  : "Y"
     },
-    controlBar: null,
-    locationProtocol: "https:",
+	  controlBar      : null,
+	  locationProtocol: "https:",
 
     /**
      * Applicable filters
      */
     defaultFilters: {
-      grayscale: {
-        value: 0,
-        unit: "%"
-      },
-      hue_rotate: {
-        value: 0,
-        unit: "deg"
-      },
-      invert: {
-        value: 0,
-        unit: "%"
-      },
-      opacity: {
-        value: 0,
-        unit: "%"
-      },
-      saturate: {
-        value: 0,
-        unit: "%"
-      },
-      sepia: {
-        value: 0,
-        unit: "%"
-      },
-      brightness: {
-        value: 0,
-        unit: "%"
-      },
-      contrast: {
-        value: 0,
-        unit: "%"
-      },
-      blur: {
-        value: 0,
-        unit: "px"
-      }
+	    grayscale : {value: 0, unit: "%"},
+	    hue_rotate: {value: 0, unit: "deg"},
+	    invert    : {value: 0, unit: "%"},
+	    opacity   : {value: 0, unit: "%"},
+	    saturate  : {value: 0, unit: "%"},
+	    sepia     : {value: 0, unit: "%"},
+	    brightness: {value: 0, unit: "%"},
+	    contrast  : {value: 0, unit: "%"},
+	    blur      : {value: 0, unit: "px"}
     },
 
     /**
@@ -191,14 +162,17 @@ var getYTPVideoID = function (url) {
 
       //console.time( "YTPlayer init" );
       return this.each(function () {
+
         var YTPlayer = this;
         var $YTPlayer = jQuery(YTPlayer);
-        YTPlayer.loop = 0;
-        YTPlayer.state = 0;
-        YTPlayer.filters = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
-        YTPlayer.filtersEnabled = true;
-        YTPlayer.id = YTPlayer.id || "YTP_" + new Date().getTime();
-        $YTPlayer.addClass("mb_YTPlayer");
+
+	      YTPlayer.loop = 0;
+	      YTPlayer.state = 0;
+	      YTPlayer.filters = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
+	      //jQuery.extend(YTPlayer.filters, jQuery.mbYTPlayer.defaultFilters);
+	      YTPlayer.filtersEnabled = true;
+	      YTPlayer.id = YTPlayer.id || "YTP_" + new Date().getTime();
+	      $YTPlayer.addClass("mb_YTPlayer");
 
         YTPlayer.opt = jQuery.extend({}, options);
         YTPlayer.property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ?

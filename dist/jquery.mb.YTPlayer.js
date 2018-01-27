@@ -2,21 +2,21 @@
  jquery.mb.components
 
  file: jquery.mb.YTPlayer.src.js
- last modified: 21/11/17 19.55
+ last modified: 25/01/18 18.53
  Version:  3.1.11
- Build:  6985
+ Build:  7004
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
  blog: 	http://pupunzi.open-lab.com
  site: 	http://pupunzi.com
- http://open-lab.com
+ 	      http://open-lab.com
 
  Licences: MIT, GPL
  http://www.opensource.org/licenses/mit-license.php
  http://www.gnu.org/licenses/gpl.html
 
- Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi)
+ Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
 
@@ -52,107 +52,78 @@ var getYTPVideoID = function (url) {
 (function (jQuery, ytp) {
 
   jQuery.mbYTPlayer = {
-    name: "jquery.mb.YTPlayer",
-    version: "3.1.11",
-    build: "6985",
-    author: "Matteo Bicocchi (pupunzi)",
-    apiKey: "",
+	  name   : "jquery.mb.YTPlayer",
+	  version: "3.1.11",
+	  build  : "7004",
+	  author : "Matteo Bicocchi (pupunzi)",
+	  apiKey : "",
 
     /**
      * Default options for the player
      */
     defaults: {
-      containment: "body", /* default containment for the player */
-      ratio: "auto", /* "auto", "16/9", "4/3" or number: 4/3, 16/9 */
-      videoURL: null,
-      startAt: 0,
-      stopAt: 0,
-      autoPlay: true,
-      vol: 50, /* 1 to 100 */
-      addRaster: false,
-      mask: false, /* Ex: mask:{ 0:'assets/mask-1.png', 5:'assets/mask-2.png', 30: false, 50:'assets/mask-3.png'}*/
-      opacity: 1,
-      quality: "default", /* or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres” */
-      mute: false,
-      loop: true,
-      fadeOnStartTime: 1500, /* fade in timing at video start */
-      showControls: true,
-      showAnnotations: false,
-      showYTLogo: true,
-      stopMovieOnBlur: true,
-      realfullscreen: true,
-      abundance: 0.2,
+	    containment        : "body", /* default containment for the player */
+	    ratio              : "auto", /* "auto", "16/9", "4/3" or number: 4/3, 16/9 */
+	    videoURL           : null,
+	    startAt            : 0,
+	    stopAt             : 0,
+	    autoPlay           : true,
+	    vol                : 50, /* 1 to 100 */
+	    addRaster          : false,
+	    mask               : false, /* Ex: mask:{ 0:'assets/mask-1.png', 5:'assets/mask-2.png', 30: false, 50:'assets/mask-3.png'}*/
+	    opacity            : 1,
+	    quality            : "default", /* or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres” */
+	    mute               : false,
+	    loop               : true,
+	    fadeOnStartTime    : 1500, /* fade in timing at video start */
+	    showControls       : true,
+	    showAnnotations    : false,
+	    showYTLogo         : true,
+	    stopMovieOnBlur    : true,
+	    realfullscreen     : true,
+	    abundance          : 0.2,
 
-      useOnMobile: true,
-      mobileFallbackImage: null,
+	    useOnMobile        : true,
+	    mobileFallbackImage: null,
 
-      gaTrack: true,
-      optimizeDisplay: true,
-      remember_last_time: false,
-      playOnlyIfVisible: false,
-      anchor: "center,center", /* top,bottom,left,right combined in pair */
-      addFilters: null,
+	    gaTrack            : true,
+	    optimizeDisplay    : true,
+	    remember_last_time : false,
+	    playOnlyIfVisible  : false,
+	    anchor             : "center,center", /* top,bottom,left,right combined in pair */
+	    addFilters         : null,
 
-      onReady: function (player) {
-      },
-      onError: function (player, err) {
-      }
+	    onReady            : function (player) {},
+	    onError            : function (player, err) {}
     },
     /**
      *  @fontface icons
      *  */
     controls: {
-      play: "P",
-      pause: "p",
-      mute: "M",
-      unmute: "A",
-      onlyYT: "O",
-      showSite: "R",
-      ytLogo: "Y"
+	    play    : "P",
+	    pause   : "p",
+	    mute    : "M",
+	    unmute  : "A",
+	    onlyYT  : "O",
+	    showSite: "R",
+	    ytLogo  : "Y"
     },
-    controlBar: null,
-    locationProtocol: "https:",
+	  controlBar      : null,
+	  locationProtocol: "https:",
 
     /**
      * Applicable filters
      */
     defaultFilters: {
-      grayscale: {
-        value: 0,
-        unit: "%"
-      },
-      hue_rotate: {
-        value: 0,
-        unit: "deg"
-      },
-      invert: {
-        value: 0,
-        unit: "%"
-      },
-      opacity: {
-        value: 0,
-        unit: "%"
-      },
-      saturate: {
-        value: 0,
-        unit: "%"
-      },
-      sepia: {
-        value: 0,
-        unit: "%"
-      },
-      brightness: {
-        value: 0,
-        unit: "%"
-      },
-      contrast: {
-        value: 0,
-        unit: "%"
-      },
-      blur: {
-        value: 0,
-        unit: "px"
-      }
+	    grayscale : {value: 0, unit: "%"},
+	    hue_rotate: {value: 0, unit: "deg"},
+	    invert    : {value: 0, unit: "%"},
+	    opacity   : {value: 0, unit: "%"},
+	    saturate  : {value: 0, unit: "%"},
+	    sepia     : {value: 0, unit: "%"},
+	    brightness: {value: 0, unit: "%"},
+	    contrast  : {value: 0, unit: "%"},
+	    blur      : {value: 0, unit: "px"}
     },
 
     /**
@@ -186,7 +157,8 @@ var getYTPVideoID = function (url) {
         return isIfr;
       };
 
-      //console.time( "YTPlayer init" );
+      //console.time( "YTPlayerInit" );
+
       return this.each(function () {
         var YTPlayer = this;
         var $YTPlayer = jQuery(YTPlayer);
@@ -210,18 +182,24 @@ var getYTPVideoID = function (url) {
             YTPlayer.property.vol = 1;
             YTPlayer.property.mute = true;
           }
+
           /* Manage loop */
           if (YTPlayer.property.loop )
             YTPlayer.property.loop = 9999;
+
           /* Disable fullScreen if is in an iframe */
           YTPlayer.property.realfullscreen = isIframe() ? false : YTPlayer.property.realfullscreen;
+
           /* Manage annotations */
           YTPlayer.property.showAnnotations = YTPlayer.property.showAnnotations ? '1' : '3';
+
           /* Manage Opacity */
           if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
             YTPlayer.property.opacity = 1;
+          
           /* Manage containment */
           YTPlayer.property.containment = YTPlayer.property.containment == "self" ? $YTPlayer : jQuery(YTPlayer.property.containment);
+
         }
 
         YTPlayer.isRetina = ( window.retina || window.devicePixelRatio > 1 );
@@ -631,9 +609,6 @@ var getYTPVideoID = function (url) {
                 });
               }
 
-              /**
-               * todo: hack to keep options on the correct player. Discover why the last initialized element's options overwrite other options
-               */
               $YTPlayer.YTPCheckForState();
 
             });
@@ -643,6 +618,7 @@ var getYTPVideoID = function (url) {
         $YTPlayer.off("YTPTime.mask");
         jQuery.mbYTPlayer.applyMask(YTPlayer);
 
+	     // console.timeEnd( "YTPlayerInit" );
       });
     },
 

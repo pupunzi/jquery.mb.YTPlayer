@@ -3,8 +3,8 @@
 
  file: jquery.mb.YTPlayer.src.js
  last modified: 25/01/18 18.53
- Version:  3.1.11
- Build:  7004
+ Version:  3.1.12
+ Build:  7011
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -53,8 +53,8 @@ var getYTPVideoID = function (url) {
 
   jQuery.mbYTPlayer = {
 	  name   : "jquery.mb.YTPlayer",
-	  version: "3.1.11",
-	  build  : "7004",
+	  version: "3.1.12",
+	  build  : "7011",
 	  author : "Matteo Bicocchi (pupunzi)",
 	  apiKey : "",
 
@@ -171,7 +171,8 @@ var getYTPVideoID = function (url) {
         $YTPlayer.addClass("mb_YTPlayer");
 
         YTPlayer.opt = jQuery.extend({}, options);
-        YTPlayer.property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ?
+	      /* Set properties */
+	      YTPlayer.property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ?
             eval('(' + $YTPlayer.data("property") + ')') :
             $YTPlayer.data("property");
 
@@ -196,7 +197,7 @@ var getYTPVideoID = function (url) {
           /* Manage Opacity */
           if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
             YTPlayer.property.opacity = 1;
-          
+
           /* Manage containment */
           YTPlayer.property.containment = YTPlayer.property.containment == "self" ? $YTPlayer : jQuery(YTPlayer.property.containment);
 
@@ -207,7 +208,8 @@ var getYTPVideoID = function (url) {
         if (!$YTPlayer.attr("id"))
           $YTPlayer.attr("id", "ytp_" + new Date().getTime());
 
-        var playerID = "iframe_" + YTPlayer.id;
+	      YTPlayer.playerID = "iframe_" + YTPlayer.id;
+
         YTPlayer.isAlone = false;
         YTPlayer.hasFocus = true;
         YTPlayer.videoID = YTPlayer.property.videoURL ?
@@ -276,7 +278,7 @@ var getYTPVideoID = function (url) {
         });
 
         /* create the playerBox where the YT iframe will be placed */
-        var playerBox = jQuery("<div/>").attr("id", playerID).addClass("playerBox");
+        var playerBox = jQuery("<div/>").attr("id", YTPlayer.playerID).addClass("playerBox");
         playerBox.css({
           position: "absolute",
           zIndex: 0,
@@ -409,7 +411,7 @@ var getYTPVideoID = function (url) {
               'rel': 0,
               'enablejsapi': 1,
               'version': 3,
-              'playerapiid': playerID,
+              'playerapiid': YTPlayer.playerID,
               'origin': '*',
               'allowfullscreen': true,
               'wmode': 'transparent',
@@ -420,14 +422,14 @@ var getYTPVideoID = function (url) {
               'html5': document.createElement('video').canPlayType ? 1 : 0
             };
 
-            new YT.Player(playerID, {
+            new YT.Player(YTPlayer.playerID, {
               //videoId: YTPlayer.videoID.toString(),
               playerVars: playerVars,
               events: {
                 'onReady': function (event) {
 
                   YTPlayer.player = event.target;
-
+									//todo: make playlist works
                   /* if (YTPlayer.playlistID && YTPlayer.apiKey) {
                       YTPlayer.isList = true;
                       YTPlayer.videos = [];
@@ -503,6 +505,7 @@ var getYTPVideoID = function (url) {
                       break;
                     case 5: //------------------------------------------------ cued
                       eventType = "YTPCued";
+
                       /* If it is a playlist */
                       /* todo: make the playlist works
                       if(YTPlayer.playlistID){
@@ -529,6 +532,7 @@ var getYTPVideoID = function (url) {
                   /* Trigger state events */
                   var YTPEvent = jQuery.Event(eventType);
                   YTPEvent.time = YTPlayer.currentTime;
+
                   if (!YTPlayer.preventTrigger)
                     jQuery(YTPlayer).trigger(YTPEvent);
                 },
@@ -561,15 +565,12 @@ var getYTPVideoID = function (url) {
                     case 2:
                       console.error("video ID:: " + YTPlayer.videoID + ": The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks.");
                       break;
-
                     case 5:
                       console.error("video ID:: " + YTPlayer.videoID + ": The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.");
                       break;
-
                     case 100:
                       console.error("video ID:: " + YTPlayer.videoID + ": The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.");
                       break;
-
                     case 101:
                     case 150:
                       console.error("video ID:: " + YTPlayer.videoID + ": The owner of the requested video does not allow it to be played in embedded players.");
@@ -686,7 +687,8 @@ var getYTPVideoID = function (url) {
         YTPlayer.hasData = true;
       } else if (jQuery.mbYTPlayer.apiKey) {
 
-        /** Get video info from API3 (needs api key)
+        /**
+         * Get video info from API3 (needs api key)
          * snippet,player,contentDetails,statistics,status
          */
         jQuery.getJSON(jQuery.mbYTPlayer.locationProtocol + "//www.googleapis.com/youtube/v3/videos?id=" + YTPlayer.videoID + "&key=" + jQuery.mbYTPlayer.apiKey + "&part=snippet", function (data) {
@@ -968,25 +970,25 @@ var getYTPVideoID = function (url) {
         opacity: 0
       }, YTPlayer.opt.fadeOnStartTime, function () {
 
-        var YTPChangeVideo = jQuery.Event("YTPChangeVideo");
-        YTPChangeVideo.time = YTPlayer.currentTime;
-        jQuery(YTPlayer).trigger(YTPChangeVideo);
+	      jQuery.mbYTPlayer.getDataFromAPI(YTPlayer);
 
-        jQuery(YTPlayer).YTPGetPlayer().loadVideoById({
+	      $YTPlayer.YTPGetPlayer().loadVideoById({
           videoId: YTPlayer.videoID,
-          startSeconds: YTPlayer.opt.startAt,
-          endSeconds: YTPlayer.opt.stopAt,
+          // startSeconds: YTPlayer.opt.startAt,
+          // endSeconds: YTPlayer.opt.stopAt,
           suggestedQuality: YTPlayer.opt.quality
         });
+	      $YTPlayer.YTPPause();
+	      $YTPlayer.optimizeDisplay();
 
-        jQuery(YTPlayer).optimizeDisplay();
-
-        $YTPlayer.YTPCheckForState();
-        jQuery.mbYTPlayer.getDataFromAPI(YTPlayer);
-
+         $YTPlayer.YTPCheckForState();
       });
 
-      jQuery.mbYTPlayer.applyMask(YTPlayer);
+	    var YTPChangeVideo = jQuery.Event("YTPChangeVideo");
+	    YTPChangeVideo.time = YTPlayer.currentTime;
+	    jQuery(YTPlayer).trigger(YTPChangeVideo);
+
+	    jQuery.mbYTPlayer.applyMask(YTPlayer);
 
       return this;
     },
@@ -1752,14 +1754,11 @@ var getYTPVideoID = function (url) {
      * checkForState
      */
     checkForState: function () {
-
       var YTPlayer = this.get(0);
       var $YTPlayer = jQuery(YTPlayer);
 
-      //console.debug("checkForState", YTPlayer.id, YTPlayer.opt)
-
       clearInterval(YTPlayer.getState);
-      var interval = 10;
+      var interval = 100;
       //Checking if player has been removed from scene
       if (!jQuery.contains(document, YTPlayer)) {
         $YTPlayer.YTPPlayerDestroy();
@@ -1888,8 +1887,6 @@ var getYTPVideoID = function (url) {
           //jQuery( YTPlayer ).YTPPause();
           YTPlayer.player.pauseVideo()
           YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
-
-          // console.debug("loop::", YTPlayer.id, YTPlayer.player.loopTime)
 
           YTPlayer.player.playVideo();
         }

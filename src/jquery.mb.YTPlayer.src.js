@@ -973,25 +973,25 @@ var getYTPVideoID = function (url) {
         opacity: 0
       }, YTPlayer.opt.fadeOnStartTime, function () {
 
-        var YTPChangeVideo = jQuery.Event("YTPChangeVideo");
-        YTPChangeVideo.time = YTPlayer.currentTime;
-        jQuery(YTPlayer).trigger(YTPChangeVideo);
+	      jQuery.mbYTPlayer.getDataFromAPI(YTPlayer);
 
-        jQuery(YTPlayer).YTPGetPlayer().loadVideoById({
+	      $YTPlayer.YTPGetPlayer().loadVideoById({
           videoId: YTPlayer.videoID,
-          startSeconds: YTPlayer.opt.startAt,
-          endSeconds: YTPlayer.opt.stopAt,
+          // startSeconds: YTPlayer.opt.startAt,
+          // endSeconds: YTPlayer.opt.stopAt,
           suggestedQuality: YTPlayer.opt.quality
         });
+	      $YTPlayer.YTPPause();
+	      $YTPlayer.optimizeDisplay();
 
-        jQuery(YTPlayer).optimizeDisplay();
-
-        $YTPlayer.YTPCheckForState();
-        jQuery.mbYTPlayer.getDataFromAPI(YTPlayer);
-
+         $YTPlayer.YTPCheckForState();
       });
 
-      jQuery.mbYTPlayer.applyMask(YTPlayer);
+	    var YTPChangeVideo = jQuery.Event("YTPChangeVideo");
+	    YTPChangeVideo.time = YTPlayer.currentTime;
+	    jQuery(YTPlayer).trigger(YTPChangeVideo);
+
+	    jQuery.mbYTPlayer.applyMask(YTPlayer);
 
       return this;
     },
@@ -1757,14 +1757,11 @@ var getYTPVideoID = function (url) {
      * checkForState
      */
     checkForState: function () {
-
       var YTPlayer = this.get(0);
       var $YTPlayer = jQuery(YTPlayer);
 
-      //console.debug("checkForState", YTPlayer.id, YTPlayer.opt)
-
       clearInterval(YTPlayer.getState);
-      var interval = 10;
+      var interval = 100;
       //Checking if player has been removed from scene
       if (!jQuery.contains(document, YTPlayer)) {
         $YTPlayer.YTPPlayerDestroy();
@@ -1893,8 +1890,6 @@ var getYTPVideoID = function (url) {
           //jQuery( YTPlayer ).YTPPause();
           YTPlayer.player.pauseVideo()
           YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
-
-          // console.debug("loop::", YTPlayer.id, YTPlayer.player.loopTime)
 
           YTPlayer.player.playVideo();
         }

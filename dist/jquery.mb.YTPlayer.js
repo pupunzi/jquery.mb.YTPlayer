@@ -3,8 +3,8 @@
 
  file: jquery.mb.YTPlayer.src.js
  last modified: 25/01/18 18.53
- Version:  3.1.12
- Build:  7011
+ Version:  3.1.13
+ Build:  7017
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -53,8 +53,8 @@ var getYTPVideoID = function (url) {
 
   jQuery.mbYTPlayer = {
 	  name   : "jquery.mb.YTPlayer",
-	  version: "3.1.12",
-	  build  : "7011",
+	  version: "3.1.13",
+	  build  : "7017",
 	  author : "Matteo Bicocchi (pupunzi)",
 	  apiKey : "",
 
@@ -185,7 +185,7 @@ var getYTPVideoID = function (url) {
           }
 
           /* Manage loop */
-          if (YTPlayer.property.loop )
+          if (YTPlayer.property.loop && typeof YTPlayer.property.loop == "boolean")
             YTPlayer.property.loop = 9999;
 
           /* Disable fullScreen if is in an iframe */
@@ -963,7 +963,7 @@ var getYTPVideoID = function (url) {
 
       YTPlayer.videoID = getYTPVideoID(YTPlayer.opt.videoURL).videoID;
 
-      if (YTPlayer.opt.loop)
+      if (YTPlayer.opt.loop && typeof YTPlayer.opt.loop == "boolean")
         YTPlayer.opt.loop = 9999;
 
       jQuery(YTPlayer.playerEl).CSSAnimate({
@@ -1880,6 +1880,9 @@ var getYTPVideoID = function (url) {
           }
 
           YTPlayer.player.loopTime = YTPlayer.player.loopTime ? ++YTPlayer.player.loopTime : 1;
+
+          console.debug("loop", YTPlayer.opt.loop, YTPlayer.player.loopTime);
+
           YTPlayer.opt.startAt = YTPlayer.opt.startAt || 1;
 
           YTPlayer.preventTrigger = true;

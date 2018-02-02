@@ -188,7 +188,7 @@ var getYTPVideoID = function (url) {
           }
 
           /* Manage loop */
-          if (YTPlayer.property.loop )
+          if (YTPlayer.property.loop && typeof YTPlayer.property.loop == "boolean")
             YTPlayer.property.loop = 9999;
 
           /* Disable fullScreen if is in an iframe */
@@ -966,7 +966,7 @@ var getYTPVideoID = function (url) {
 
       YTPlayer.videoID = getYTPVideoID(YTPlayer.opt.videoURL).videoID;
 
-      if (YTPlayer.opt.loop)
+      if (YTPlayer.opt.loop && typeof YTPlayer.opt.loop == "boolean")
         YTPlayer.opt.loop = 9999;
 
       jQuery(YTPlayer.playerEl).CSSAnimate({
@@ -1883,6 +1883,9 @@ var getYTPVideoID = function (url) {
           }
 
           YTPlayer.player.loopTime = YTPlayer.player.loopTime ? ++YTPlayer.player.loopTime : 1;
+
+          console.debug("loop", YTPlayer.opt.loop, YTPlayer.player.loopTime);
+
           YTPlayer.opt.startAt = YTPlayer.opt.startAt || 1;
 
           YTPlayer.preventTrigger = true;

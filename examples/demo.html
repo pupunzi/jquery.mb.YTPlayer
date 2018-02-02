@@ -296,15 +296,7 @@
 
         var myPlayer;
         jQuery(function () {
-            myPlayer = jQuery("#bgndVideo").YTPlayer({});
-
-            /*
-                    myPlayer.YTPApplyFilters({
-                        grayscale: 50,
-                        sepia: 80,
-                        opacity: 30
-                    });
-            */
+            myPlayer = jQuery("#bgndVideo").YTPlayer({useOnMobile:true, mobileFallbackImage:"assets/mask-4.png"});
 
             /* DEBUG ******************************************************************************************/
             var YTPConsole = jQuery("#eventListener");
@@ -319,7 +311,10 @@
                 YTPConsole.html("");
             });
 
-            myPlayer.on("YTPChangeVideo", function(e){});
+            myPlayer.on("YTPChangeVideo", function(e){
+	            console.debug("YTPChangeVideo", e);
+
+            });
 
             // EVENT: YTPData
             myPlayer.on("YTPData", function (e) {

@@ -320,7 +320,6 @@ var getYTPVideoID = function (url) {
         });
 
         if (YTPlayer.isBackground) {
-
           jQuery("body").css({
             boxSizing: "border-box"
           });

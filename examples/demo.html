@@ -223,6 +223,7 @@
             display: inline-block;
             width: 100px;
         }
+
         #changeVideo input[type=checkbox] {
             display: inline-block;
             width: 20px;
@@ -234,7 +235,7 @@
             padding: 20px;
         }
 
-        /*Slider START ************************************************/
+        /*Slider START *******************************************************************************************/
 
         #filterScript {
             margin-top: 20px;
@@ -288,6 +289,7 @@
             width: 100%;
             box-sizing: border-box;
         }
+
         /*Slider END ************************************************/
 
     </style>
@@ -299,6 +301,7 @@
             myPlayer = jQuery("#bgndVideo").YTPlayer({useOnMobile:true, mobileFallbackImage:"assets/mask-4.png"});
 
             /* DEBUG ******************************************************************************************/
+
             var YTPConsole = jQuery("#eventListener");
             // EVENTS: YTPReady YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted YTPChangeVideo
             myPlayer.on("YTPReady YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted YTPChangeVideo", function (e) {
@@ -346,6 +349,7 @@
                         console.debug("filters: ", myPlayer.YTPGetFilters());
                 }
             });
+
             /* END DEBUG ******************************************************************************************/
 
             /* FILTER SLIDERS ******************************************************************************************/

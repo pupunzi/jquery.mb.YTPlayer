@@ -140,7 +140,7 @@
 .mb_YTPBar .buttonBar {
     transition: all .5s;
     background: transparent;
-    font: 12px/14px Calibri;
+    font: 12px/14px san-serif;
     position: absolute;
     top: -30px;
     left: 0;
@@ -156,7 +156,7 @@
 
 .mb_YTPBar span {
     display: inline-block;
-    font: 16px/20px Calibri, sans-serif;
+    font: 16px/20px sans-serif;
     position: relative;
     width: 30px;
     height: 25px;

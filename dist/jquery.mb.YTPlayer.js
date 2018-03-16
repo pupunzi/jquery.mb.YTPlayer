@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.1.12
- Build:  7020
+ Build:  7027
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.1.12",
-    build  : "7020",
+    build  : "7027",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -1184,6 +1184,7 @@ var getYTPVideoID = function (url) {
      */
     play: function () {
       var YTPlayer = this.get(0);
+     
       if (!YTPlayer.isReady)
         return this;
       
@@ -1266,9 +1267,6 @@ var getYTPVideoID = function (url) {
     setVolume: function (val) {
       var YTPlayer = this.get(0);
       
-      if (!YTPlayer.player.length)
-        return this;
-      
       if (!val && !YTPlayer.opt.vol && YTPlayer.player.getVolume() == 0)
         jQuery(YTPlayer).YTPUnmute();
       else if (( !val && YTPlayer.player.getVolume() > 0 ) || ( val && YTPlayer.opt.vol == val )) {
@@ -1282,6 +1280,13 @@ var getYTPVideoID = function (url) {
         if (YTPlayer.volumeBar && YTPlayer.volumeBar.length) YTPlayer.volumeBar.updateSliderVal(val)
       }
       return this;
+    },
+    /**
+     * Get volume
+     */
+    getVolume: function(){
+      var YTPlayer = this.get(0);
+      return YTPlayer.player.getVolume();
     },
     
     /**
@@ -2235,6 +2240,7 @@ var getYTPVideoID = function (url) {
   jQuery.fn.YTPUnmute = jQuery.mbYTPlayer.unmute;
   jQuery.fn.YTPToggleVolume = jQuery.mbYTPlayer.toggleVolume;
   jQuery.fn.YTPSetVolume = jQuery.mbYTPlayer.setVolume;
+  jQuery.fn.YTPGetVolume = jQuery.mbYTPlayer.getVolume;
   
   jQuery.fn.YTPGetVideoData = jQuery.mbYTPlayer.getVideoData;
   jQuery.fn.YTPFullscreen = jQuery.mbYTPlayer.fullscreen;

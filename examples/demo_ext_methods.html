@@ -180,13 +180,14 @@
             <button onclick="myPlayer.YTPPause()">YTPPause</button>
             <button onclick="myPlayer.YTPPlay()">YTPPlay</button>
             <button onclick="myPlayer.YTPTogglePlay()">YTPTogglePlay</button>
-            <button onclick="myPlayer.YTPSeekTo(50)">YTPSeekTo (50 sec)</button>
+            <button onclick="myPlayer.YTPSeekTo(50)">YTPSeekTo(50 sec)</button>
             <br>
             <br>
             <button onclick="myPlayer.YTPMute()">YTPMute</button>
             <button onclick="myPlayer.YTPUnmute()">YTPUnmute</button>
             <button onclick="myPlayer.YTPToggleVolume()">YTPToggleVolume</button>
-            <button onclick="myPlayer.YTPSetVolume(80)">YTPSetVolume (80)</button>
+            <button onclick="myPlayer.YTPSetVolume(80)">YTPSetVolume(80)</button>
+            <button onclick="showInfo(myPlayer.YTPGetVolume())">YTPGetVolume()</button>
             <br>
             <br>
             <button onclick="showInfo(myPlayer.YTPGetVideoID())">YTPGetVideoID</button>
@@ -195,13 +196,13 @@
             <br>
             <br>
             <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAnchor</button>
-            <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor (top/left)</button>
-            <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor (center/center)</button>
-            <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor (right/bottom)</button>
+            <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor(top/left)</button>
+            <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor(center/center)</button>
+            <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor(right/bottom)</button>
             <br>
             <br>
-            <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter (grayscale)</button>
-            <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter (sepia)</button>
+            <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter(grayscale)</button>
+            <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter(sepia)</button>
             <a href="demo.html">(Play with filters)</a>
             <br>
             <br>

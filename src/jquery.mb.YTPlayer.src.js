@@ -81,6 +81,7 @@ var getYTPVideoID = function (url) {
 	    fadeOnStartTime    : 1500, /* fade in timing at video start */
 	    showControls       : true,
 	    showAnnotations    : false,
+	    cc_load_policy    : false,
 	    showYTLogo         : true,
 	    stopMovieOnBlur    : true,
 	    realfullscreen     : true,
@@ -196,6 +197,8 @@ var getYTPVideoID = function (url) {
 
           /* Manage annotations */
           YTPlayer.property.showAnnotations = YTPlayer.property.showAnnotations ? '1' : '3';
+	        /* Manage show subtitle and caption */
+	        YTPlayer.property.cc_load_policy = YTPlayer.property.cc_load_policy ? '1' : '0';
 
           /* Manage Opacity */
           if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
@@ -418,6 +421,7 @@ var getYTPVideoID = function (url) {
               'allowfullscreen': true,
               'wmode': 'transparent',
               'iv_load_policy': YTPlayer.opt.showAnnotations,
+              'cc_load_policy': YTPlayer.opt.cc_load_policy,
               'playsinline': jQuery.browser.mobile ? 1 : 0,
 
               /* Check if the browser can play HTML5 videos */

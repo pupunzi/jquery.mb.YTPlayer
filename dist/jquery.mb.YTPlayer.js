@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 25/01/18 18.53
  Version:  3.1.12
- Build:  7017
+ Build:  7018
 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
 	  name   : "jquery.mb.YTPlayer",
 	  version: "3.1.12",
-	  build  : "7017",
+	  build  : "7018",
 	  author : "Matteo Bicocchi (pupunzi)",
 	  apiKey : "",
 
@@ -78,6 +78,7 @@ var getYTPVideoID = function (url) {
 	    fadeOnStartTime    : 1500, /* fade in timing at video start */
 	    showControls       : true,
 	    showAnnotations    : false,
+	    cc_load_policy    : false,
 	    showYTLogo         : true,
 	    stopMovieOnBlur    : true,
 	    realfullscreen     : true,
@@ -193,6 +194,8 @@ var getYTPVideoID = function (url) {
 
           /* Manage annotations */
           YTPlayer.property.showAnnotations = YTPlayer.property.showAnnotations ? '1' : '3';
+	        /* Manage show subtitle and caption */
+	        YTPlayer.property.cc_load_policy = YTPlayer.property.cc_load_policy ? '1' : '0';
 
           /* Manage Opacity */
           if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
@@ -415,6 +418,7 @@ var getYTPVideoID = function (url) {
               'allowfullscreen': true,
               'wmode': 'transparent',
               'iv_load_policy': YTPlayer.opt.showAnnotations,
+              'cc_load_policy': YTPlayer.opt.cc_load_policy,
               'playsinline': jQuery.browser.mobile ? 1 : 0,
 
               /* Check if the browser can play HTML5 videos */

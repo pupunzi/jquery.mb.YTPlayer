@@ -1,21 +1,21 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
  jquery.mb.components
-
+ 
  file: jquery.mb.YTPlayer.src.js
- last modified: 25/01/18 18.53
+ last modified: 16/03/18 20.01
  Version:  {{ version }}
  Build:  {{ buildnum }}
-
+ 
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
  blog: 	http://pupunzi.open-lab.com
  site: 	http://pupunzi.com
- 	      http://open-lab.com
-
+ 	http://open-lab.com
+ 
  Licences: MIT, GPL
  http://www.opensource.org/licenses/mit-license.php
  http://www.gnu.org/licenses/gpl.html
-
+ 
  Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 

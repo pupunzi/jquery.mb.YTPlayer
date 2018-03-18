@@ -50,16 +50,17 @@
     }
 
     .player{
+/*
         display:inline-block;
         vertical-align:top;
         position:relative;
-        width:800px;
+        width:100%;
         height:500px;
         margin-top:100px;
         left:0;
         overflow: hidden;
+*/
         border-radius: 10px;
-        /*border: 5px solid #fff;*/
         box-shadow: 0 0 10px rgba(0,0,0,.5);
     }
 
@@ -111,28 +112,6 @@
 
     button:focus{
         outline: none;
-    }
-
-    /* Player customization */
-
-    .mb_YTPBar .mb_YTPLoaded{
-        height:10px;
-        width:0;
-        background: #000;
-        left:0;
-    }
-
-    .mb_YTPBar .mb_YTPProgress{
-        background: transparent;
-    }
-
-    .mb_YTPBar .mb_YTPseekbar{
-        height:10px;
-        width:0;
-        background:#b80d16;
-        bottom:0;
-        left:0;
-        box-shadow:none;
     }
 
 
@@ -261,13 +240,14 @@
 </script>
 </head>
 <body>
-<div id="wrapper" style="position:relative; padding:30px 20px;z-index:10">
+<div id="wrapper" style="position:relative; padding:30px 20px;z-index:10;">
     <a href='https://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
     <h1 style="color:white"> jQuery.mb.YTPlayer as a customized player </h1>
 
     <!-- l_tHTmd5pgk  0YcRwnE6Lzg-->
-    <div id="P1" class="player" style="display:block; margin: 50px; background: rgba(0,0,0,0.5)" data-property="{videoURL:'l_tHTmd5pgk',containment:'self',showControls:true,startAt:6,mute:false,autoPlay:false,loop:false,opacity:1,showYTLogo:true, optimizeDisplay:true}"></div><!--3ovA7zeviRo-->
-
+    <div style="width: 60vw; min-width: 600px">
+    <div id="P1" class="player" style="display:block; background: rgba(0,0,0,0.5)" data-property="{videoURL:'l_tHTmd5pgk',containment:'self',showControls:true,startAt:6,mute:false,autoPlay:false,loop:false,opacity:1,showYTLogo:true, optimizeDisplay:true, backgroundImage:'https://www.hdwallpapers.in/walls/sky_colors-wide.jpg'}"></div><!--3ovA7zeviRo-->
+    </div>
     <div id="filtersControl">
 
         <h2>change video</h2>

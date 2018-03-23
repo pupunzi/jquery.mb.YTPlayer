@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.1.12
- Build:  7049
+ Build:  7050
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.1.12",
-    build  : "7049",
+    build  : "7050",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -62,41 +62,41 @@ var getYTPVideoID = function (url) {
      * Default options for the player
      */
     defaults: {
-      containment        : "body", /* default containment for the player */
-      ratio              : "auto", /* "auto", "16/9", "4/3" or number: 4/3, 16/9 */
-      videoURL           : null,
-      startAt            : 0,
-      stopAt             : 0,
-      autoPlay           : true,
-      vol                : 50, /* 1 to 100 */
-      addRaster          : false,
-      mask               : false, /* Ex: mask:{ 0:'assets/mask-1.png', 5:'assets/mask-2.png', 30: false, 50:'assets/mask-3.png'}*/
-      opacity            : 1,
-      quality            : "default", /* or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres” */
-      mute               : false,
-      loop               : true,
-      fadeOnStartTime    : 1500, /* fade in timing at video start */
-      showControls       : true,
-      showAnnotations    : false,
-      cc_load_policy    : false,
-      showYTLogo         : true,
-      stopMovieOnBlur    : true,
-      realfullscreen     : true,
-      abundance          : 0.2,
-      backgroundUrl      : false,
-      
+      containment    : "body", /* default containment for the player */
+      ratio          : "auto", /* "auto", "16/9", "4/3" or number: 4/3, 16/9 */
+      videoURL       : null,
+      startAt        : 0,
+      stopAt         : 0,
+      autoPlay       : true,
+      vol            : 50, /* 1 to 100 */
+      addRaster      : false,
+      mask           : false, /* Ex: mask:{ 0:'assets/mask-1.png', 5:'assets/mask-2.png', 30: false, 50:'assets/mask-3.png'}*/
+      opacity        : 1,
+      quality        : "default", /* or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres” */
+      mute           : false,
+      loop           : true,
+      fadeOnStartTime: 1500, /* fade in timing at video start */
+      showControls   : true,
+      showAnnotations: false,
+      cc_load_policy : false,
+      showYTLogo     : true,
+      stopMovieOnBlur: true,
+      realfullscreen : true,
+      abundance      : 0.2,
+      backgroundImage: false,
+  
       useOnMobile        : true,
       mobileFallbackImage: null,
-      
-      gaTrack            : true,
-      optimizeDisplay    : true,
-      remember_last_time : false,
-      playOnlyIfVisible  : false,
-      anchor             : "center,center", /* top,bottom,left,right combined in pair */
-      addFilters         : null,
-      
-      onReady            : function (player) {},
-      onError            : function (player, err) {}
+  
+      gaTrack           : true,
+      optimizeDisplay   : true,
+      remember_last_time: false,
+      playOnlyIfVisible : false,
+      anchor            : "center,center", /* top,bottom,left,right combined in pair */
+      addFilters        : null,
+  
+      onReady: function (player) {},
+      onError: function (player, err) {}
     },
     /**
      *  @fontface icons
@@ -750,8 +750,6 @@ var getYTPVideoID = function (url) {
               backgroundSize: "cover"
             });
           YTPlayer.opt.backgroundImage = bgndURL;
-  
-          console.debug(bgndURL)
           
         }
         

@@ -86,7 +86,7 @@ var getYTPVideoID = function (url) {
       stopMovieOnBlur: true,
       realfullscreen : true,
       abundance      : 0.2,
-      backgroundImage: false,
+      coverImage     : false,
   
       useOnMobile        : true,
       mobileFallbackImage: null,
@@ -198,8 +198,12 @@ var getYTPVideoID = function (url) {
           
           /* Manage annotations */
           YTPlayer.property.showAnnotations = YTPlayer.property.showAnnotations ? '1' : '3';
+          
           /* Manage show subtitle and caption */
           YTPlayer.property.cc_load_policy = YTPlayer.property.cc_load_policy ? '1' : '0';
+          
+          /* Manage cover image */
+          YTPlayer.property.coverImage = YTPlayer.property.coverImage  || YTPlayer.property.backgroundImage;
           
           /* Manage Opacity */
           if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
@@ -658,13 +662,13 @@ var getYTPVideoID = function (url) {
         if (YTPlayer.hasData) {
           
           if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-            var bgndURL = YTPlayer.opt.backgroundImage || YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium;
+            var bgndURL = YTPlayer.opt.coverImage || YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium;
             
             YTPlayer.opt.containment.css({
               background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
               backgroundSize: "cover"
             });
-            YTPlayer.opt.backgroundImage = bgndURL;
+            YTPlayer.opt.coverImage = bgndURL;
           }
         }
       });
@@ -745,14 +749,14 @@ var getYTPVideoID = function (url) {
         
         if (!YTPlayer.opt.autoPlay) {
           // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-          var bgndURL = YTPlayer.opt.backgroundImage || jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
+          var bgndURL = YTPlayer.opt.coverImage || jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
           
           if (bgndURL)
             YTPlayer.opt.containment.css({
               background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
               backgroundSize: "cover"
             });
-          YTPlayer.opt.backgroundImage = bgndURL;
+          YTPlayer.opt.coverImage = bgndURL;
           
         }
         
@@ -959,7 +963,7 @@ var getYTPVideoID = function (url) {
       YTPlayer.opt.mute = true;
       YTPlayer.opt.autoPlay = true;
       YTPlayer.opt.addFilters = false;
-      YTPlayer.opt.backgroundImage = false;
+      YTPlayer.opt.coverImage = false;
       
       YTPlayer.hasData = false;
       YTPlayer.hasChanged = true;
@@ -1887,10 +1891,10 @@ var getYTPVideoID = function (url) {
               YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
               
               if (!YTPlayer.isBackground) {
-                if (YTPlayer.opt.backgroundImage && YTPlayer.isPlayer) {
-                  YTPlayer.opt.backgroundImage = YTPlayer.opt.backgroundImage || YTPlayer.orig_background;
+                if (YTPlayer.opt.coverImage && YTPlayer.isPlayer) {
+                  YTPlayer.opt.coverImage = YTPlayer.opt.coverImage || YTPlayer.orig_background;
                   YTPlayer.opt.containment.css({
-                    background: "url(" + YTPlayer.opt.backgroundImage + ") center center",
+                    background: "url(" + YTPlayer.opt.coverImage + ") center center",
                     backgroundSize: "cover"
                   });
                 }
@@ -2033,7 +2037,7 @@ var getYTPVideoID = function (url) {
                 YTPlayer.player.seekTo(startAt, true);
               
               if (!YTPlayer.isPlayer) {
-                if(!YTPlayer.opt.backgroundImage){
+                if(!YTPlayer.opt.coverImage){
                   jQuery(YTPlayer.playerEl).CSSAnimate({
                     opacity: 1
                   }, YTPlayer.opt.fadeOnStartTime);
@@ -2046,7 +2050,7 @@ var getYTPVideoID = function (url) {
                   setTimeout(function(){
                     
                     YTPlayer.wrapper.css({
-                      background: "rgba(0,0,0,0.5) url(" + YTPlayer.opt.backgroundImage + ") center center",
+                      background: "rgba(0,0,0,0.5) url(" + YTPlayer.opt.coverImage + ") center center",
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat"
                     }).CSSAnimate({

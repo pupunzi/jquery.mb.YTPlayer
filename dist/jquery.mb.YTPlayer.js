@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.1.12
- Build:  7051
+ Build:  7053
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.1.12",
-    build  : "7051",
+    build  : "7053",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -659,13 +659,13 @@ var getYTPVideoID = function (url) {
         if (YTPlayer.hasData) {
           
           if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-            var bgndURL = YTPlayer.opt.coverImage || YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium;
+            var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : (YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium);
             
             YTPlayer.opt.containment.css({
               background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
               backgroundSize: "cover"
             });
-            YTPlayer.opt.coverImage = bgndURL;
+
           }
         }
       });
@@ -746,15 +746,13 @@ var getYTPVideoID = function (url) {
         
         if (!YTPlayer.opt.autoPlay) {
           // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-          var bgndURL = YTPlayer.opt.coverImage || jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
+          var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
           
           if (bgndURL)
             YTPlayer.opt.containment.css({
               background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
               backgroundSize: "cover"
             });
-          YTPlayer.opt.coverImage = bgndURL;
-          
         }
         
         YTPlayer.videoData = null;

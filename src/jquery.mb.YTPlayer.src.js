@@ -647,9 +647,11 @@ var getYTPVideoID = function (url) {
       var elTop = playerBox.offset().top + (playerBox.height() / 1.2);
       var elBottom = playerBox.offset().top + (playerBox.height() / 2);
 
+/*
       console.debug("-----------------------------", YTPlayer.id);
       console.debug("EL:: bottom:: ", elBottom, "top:: ",  elTop);
       console.debug("WIN:: bottom:: ", winBottom, "top:: ", winTop);
+*/
 
       return ( ( elBottom <= winBottom ) && ( elTop >= winTop ) );
       

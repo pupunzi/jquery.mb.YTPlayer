@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.1.12
- Build:  7067
+ Build:  7068
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.1.12",
-    build  : "7067",
+    build  : "7068",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -644,9 +644,11 @@ var getYTPVideoID = function (url) {
       var elTop = playerBox.offset().top + (playerBox.height() / 1.2);
       var elBottom = playerBox.offset().top + (playerBox.height() / 2);
 
+/*
       console.debug("-----------------------------", YTPlayer.id);
       console.debug("EL:: bottom:: ", elBottom, "top:: ",  elTop);
       console.debug("WIN:: bottom:: ", winBottom, "top:: ", winTop);
+*/
 
       return ( ( elBottom <= winBottom ) && ( elTop >= winTop ) );
       

@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.1.12
- Build:  7053
+ Build:  7067
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.1.12",
-    build  : "7053",
+    build  : "7067",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -135,7 +135,7 @@ var getYTPVideoID = function (url) {
      */
     buildPlayer: function (options) {
       
-      if (!ytp.YTAPIReady) {
+      if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
         jQuery("#YTAPI").remove();
         var tag = jQuery("<script></script>").attr({
           "src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
@@ -342,7 +342,6 @@ var getYTPVideoID = function (url) {
             position: "relative"
           });
           $YTPlayer.show();
-          
         }
         YTPlayer.opt.containment.prepend(YTPlayer.wrapper);
         
@@ -380,7 +379,9 @@ var getYTPVideoID = function (url) {
           $YTPlayer.trigger("YTAPIReady_" + YTPlayer.id);
           ytp.YTAPIReady = true;
         });
-        
+
+        YTPlayer.isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer);
+
         $YTPlayer.one("YTAPIReady_"+YTPlayer.id, function(){
           
           var YTPlayer = this;
@@ -640,8 +641,13 @@ var getYTPVideoID = function (url) {
       var playerBox = YTPlayer.wrapper;
       var winTop = jQuery(window).scrollTop();
       var winBottom = winTop + jQuery(window).height();
-      var elTop = playerBox.offset().top;
-      var elBottom = elTop + playerBox.height() / 2;
+      var elTop = playerBox.offset().top + (playerBox.height() / 1.2);
+      var elBottom = playerBox.offset().top + (playerBox.height() / 2);
+
+      console.debug("-----------------------------", YTPlayer.id);
+      console.debug("EL:: bottom:: ", elBottom, "top:: ",  elTop);
+      console.debug("WIN:: bottom:: ", winBottom, "top:: ", winTop);
+
       return ( ( elBottom <= winBottom ) && ( elTop >= winTop ) );
       
     },
@@ -1829,11 +1835,13 @@ var getYTPVideoID = function (url) {
           }
         }
         
-        if (YTPlayer.opt.playOnlyIfVisible && YTPlayer.state == 1) {
+        if (YTPlayer.opt.playOnlyIfVisible) {
           var isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer);
-          if (!isOnScreen) {
+          if (!isOnScreen  && YTPlayer.state == 1) {
+            YTPlayer.isOnScreen = false;
             $YTPlayer.YTPPause();
-          } else {
+          } else if (isOnScreen && !YTPlayer.isOnScreen) {
+            YTPlayer.isOnScreen = true;
             YTPlayer.player.playVideo();
           }
         }

@@ -645,7 +645,7 @@ var getYTPVideoID = function (url) {
       var winTop = jQuery(window).scrollTop();
       var winBottom = winTop + jQuery(window).height();
       var elTop = playerBox.offset().top + (playerBox.height() / 1.2);
-      var elBottom = playerBox.offset().top + (playerBox.height() / 2);
+      var elBottom = playerBox.offset().top + (playerBox.height() / 2.8);
 
 /*
       console.debug("-----------------------------", YTPlayer.id);

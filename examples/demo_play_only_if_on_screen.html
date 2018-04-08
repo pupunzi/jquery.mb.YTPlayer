@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  jquery.mb.components
+
+  file: demo_play_only_if_on_screen.html
+  last modified: 16/03/18 20.01
+  Version:  {{ version }}
+  Build:  {{ buildnum }}
+
+  Open Lab s.r.l., Florence - Italy
+  email:  matteo@open-lab.com
+  blog: 	http://pupunzi.open-lab.com
+  site: 	http://pupunzi.com
+  	http://open-lab.com
+
+  Licences: MIT, GPL
+  http://www.opensource.org/licenses/mit-license.php
+  http://www.gnu.org/licenses/gpl.html
+
+  Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
+  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>youtube Chromeless Player - mb.YTPlayer</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+  <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="../dist/jquery.mb.YTPlayer.js"></script>
+  <script src="assets/apikey.js"></script>
+  <style>
+    body {
+      border: none;
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      font: normal 16px/20px Lekton, sans-serif;
+    }
+
+    h1{
+      font-family: 'Lobster', cursive;
+      text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+      color: #000000;
+      font-weight: 200;
+      text-align: center;
+      font-size: 50px;
+      color: #fff;
+    }
+
+    h2{
+      font-family:  sans-serif;
+      text-align: center;
+      font-size: 32px;
+      font-weight: 100;
+      line-height: 1.5;
+      color: #fff;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 16px;
+      display: inline-block;
+      background: #f0f0f0;
+      color: #444;
+      line-height: 30px;
+      margin: 3px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+  </style>
+
+  <script>
+    var myPlayer;
+    jQuery(function () {
+
+      var options = {
+        mobileFallbackImage: "http://www.hdwallpapers.in/walls/pink_cosmos_flowers-wide.jpg",
+        playOnlyIfVisible  : true
+      };
+
+      myPlayer = jQuery(".player").YTPlayer(options);
+    });
+  </script>
+</head>
+<body>
+<div id="wrapper">
+  <a href='https://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
+  <h1>jQuery.mb.YTPlayer</h1>
+  <h2>An HTML5 Background player <br>for YouTube videos</h2>
+  <div id="myPlayer" style="background: #000; height: 600px; width: 100%; position: relative; " ></div>
+  <div class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'#myPlayer', showControls:true, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}"></div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div id="myPlayer-1" style="background: #000; height: 600px; width: 100%; position: relative; " ></div>
+  <div class="player" data-property="{videoURL:'qvuILbcXlg8',containment:'#myPlayer-1', showControls:true, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}"></div>
+
+</div>
+
+
+<a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
+  <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
+</a>
+
+<style>
+  #wp {
+    position: fixed;
+    z-index: 10;
+    min-width: 300px;
+    background: rgba(0, 0, 0, 0.55);
+    /*background: #ffb200;*/
+    color: #fff;
+    font-size: 24px;
+    line-height: 24px;
+    padding: 20px;
+    top: 60px;
+    right: 60px;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 10px;
+    font-family: 'Lobster', cursive;
+  }
+
+  #wp:hover {
+    background: #000000;
+  }
+
+  #wp img {
+    width: 60px;
+    margin-right: 20px;
+  }
+</style>
+<div id="wp" onclick="self.location.href='https://pupunzi.com/wpPlus/go-plus.php?plugin_prefix=YTPL'">
+  <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
+  <span>Get the <br><b>Wordpress</b> Plug-in!</span>
+</div>
+
+</body>
+</html>

@@ -174,46 +174,37 @@ var getYTPVideoID = function (url) {
         YTPlayer.filtersEnabled = true;
         YTPlayer.id = YTPlayer.id || "YTP_" + new Date().getTime();
         $YTPlayer.addClass("mb_YTPlayer");
-        
-        YTPlayer.opt = jQuery.extend({}, options);
+
         /* Set properties */
-        YTPlayer.property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ?
+        var property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ?
             eval('(' + $YTPlayer.data("property") + ')') :
             $YTPlayer.data("property");
-        
-        if (typeof YTPlayer.property != "undefined") {
-          
-          /* Manage Volume */
-          if (typeof YTPlayer.property.vol != "undefined" && YTPlayer.property.vol === 0) {
-            YTPlayer.property.vol = 1;
-            YTPlayer.property.mute = true;
-          }
-          
-          /* Manage loop */
-          if (YTPlayer.property.loop && typeof YTPlayer.property.loop == "boolean")
-            YTPlayer.property.loop = 9999;
-          
-          /* Disable fullScreen if is in an iframe */
-          YTPlayer.property.realfullscreen = isIframe() ? false : YTPlayer.property.realfullscreen;
-          
-          /* Manage annotations */
-          YTPlayer.property.showAnnotations = YTPlayer.property.showAnnotations ? '1' : '3';
-          
-          /* Manage show subtitle and caption */
-          YTPlayer.property.cc_load_policy = YTPlayer.property.cc_load_policy ? '1' : '0';
-          
-          /* Manage cover image */
-          YTPlayer.property.coverImage = YTPlayer.property.coverImage  || YTPlayer.property.backgroundImage;
-          
-          /* Manage Opacity */
-          if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
-            YTPlayer.property.opacity = 1;
-          
-          /* Manage containment */
-          YTPlayer.property.containment = YTPlayer.property.containment == "self" ? $YTPlayer : jQuery(YTPlayer.property.containment);
-          
+        if (typeof property !== "object") {
+          property = {};
         }
-        
+        YTPlayer.opt = jQuery.mbYTPlayer.defaults;
+        jQuery.extend(YTPlayer.opt, options, property);
+        YTPlayer.opt.elementId = YTPlayer.id;
+        if (YTPlayer.opt.vol === 0) {
+          YTPlayer.opt.vol = 1;
+          YTPlayer.opt.mute = true;
+        }
+        if (YTPlayer.opt.loop && typeof YTPlayer.opt.loop === "boolean") {
+          YTPlayer.opt.loop = 9999;
+        }
+        /* Disable fullScreen if is in an iframe */
+        YTPlayer.opt.realfullscreen = isIframe() ? false : YTPlayer.opt.realfullscreen;
+        /* Manage annotations */
+        YTPlayer.opt.showAnnotations = YTPlayer.opt.showAnnotations ? '1' : '3';
+        /* Manage show subtitle and caption */
+        YTPlayer.opt.cc_load_policy = YTPlayer.opt.cc_load_policy ? '1' : '0';
+        /* Manage cover image */
+        YTPlayer.opt.coverImage = YTPlayer.opt.coverImage || YTPlayer.opt.backgroundImage;
+        /* Manage Opacity */
+        if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9) {
+          YTPlayer.opt.opacity = 1;
+        }
+        YTPlayer.opt.containment = YTPlayer.opt.containment === "self" ? $YTPlayer : jQuery(YTPlayer.opt.containment);
         YTPlayer.isRetina = ( window.retina || window.devicePixelRatio > 1 );
         
         if (!$YTPlayer.attr("id"))
@@ -223,22 +214,16 @@ var getYTPVideoID = function (url) {
         
         YTPlayer.isAlone = false;
         YTPlayer.hasFocus = true;
-        YTPlayer.videoID = YTPlayer.property.videoURL ?
-            getYTPVideoID(YTPlayer.property.videoURL).videoID : $YTPlayer.attr("href") ?
+        YTPlayer.videoID = YTPlayer.opt.videoURL ?
+            getYTPVideoID(YTPlayer.opt.videoURL).videoID : $YTPlayer.attr("href") ?
                 getYTPVideoID($YTPlayer.attr("href")).videoID :
                 false;
         
         /* Check if it is a video list */
-        YTPlayer.playlistID = YTPlayer.property.videoURL ?
-            getYTPVideoID(YTPlayer.property.videoURL).playlistID : $YTPlayer.attr("href") ?
+        YTPlayer.playlistID = YTPlayer.opt.videoURL ?
+            getYTPVideoID(YTPlayer.opt.videoURL).playlistID : $YTPlayer.attr("href") ?
                 getYTPVideoID($YTPlayer.attr("href")).playlistID :
                 false;
-        
-        /**
-         * Extend options
-         * */
-        jQuery.extend(YTPlayer.opt,jQuery.mbYTPlayer.defaults, options, YTPlayer.property);
-        YTPlayer.opt.elementId = YTPlayer.id;
         
         var start_from_last = 0;
         if (jQuery.mbCookie.get("YTPlayer_start_from" + YTPlayer.videoID))
@@ -248,7 +233,7 @@ var getYTPVideoID = function (url) {
           jQuery.mbCookie.remove("YTPlayer_start_from" + YTPlayer.videoID);
         }
         
-        YTPlayer.isPlayer = YTPlayer.opt.containment == "self" || ($YTPlayer.is (YTPlayer.opt.containment));
+        YTPlayer.isPlayer = $YTPlayer.is(YTPlayer.opt.containment);
         YTPlayer.isBackground = YTPlayer.opt.containment.is("body");
         
         if (YTPlayer.isBackground && ytp.backgroundIsInited)
@@ -2166,6 +2151,8 @@ var getYTPVideoID = function (url) {
       var win = {};
       win.width = el.outerWidth();
       win.height = el.outerHeight() + abundance;
+      // TODO why do we need to check for ratio == auto in every method, shouldn't this be handled in buildPlayer()?
+      YTPlayer.opt.ratio = YTPlayer.opt.ratio === "auto" ? 16 / 9 : YTPlayer.opt.ratio;
       YTPlayer.opt.ratio = eval(YTPlayer.opt.ratio);
       vid.width = win.width;
       vid.height = Math.ceil(vid.width / YTPlayer.opt.ratio);

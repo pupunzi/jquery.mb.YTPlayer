@@ -1746,7 +1746,7 @@ var getYTPVideoID = function (url) {
     getFilters: function () {
       var YTPlayer = this.get(0);
       return YTPlayer.filters;
-    },
+      },
     
     /* MASK ---------------------------------------------------------------------------------------------------------*/
     
@@ -1926,6 +1926,7 @@ var getYTPVideoID = function (url) {
         display: "inline-block"
       });
       YTPlayer.volumeBar = volumeBar;
+      
       /* time elapsed */
       var idx = jQuery("<span/>").addClass("mb_YTPTime");
       var vURL = YTPlayer.opt.videoURL ? YTPlayer.opt.videoURL : "";
@@ -1955,17 +1956,29 @@ var getYTPVideoID = function (url) {
       var timeBar = jQuery("<div/>").addClass("mb_YTPseekbar").css("position", "absolute");
       progressBar.append(loadedBar).append(timeBar);
       buttonBar.append(playpause).append(MuteUnmute).append(volumeBar).append(idx);
+      
       if (YTPlayer.opt.showYTLogo) {
         buttonBar.append(movieUrl);
       }
-      if (YTPlayer.isBackground || (eval(YTPlayer.opt.realfullscreen) && !YTPlayer.isBackground)) buttonBar.append(onlyVideo);
+  
+      /**
+       * Full screen button
+       */
+      if (YTPlayer.isBackground || (eval(YTPlayer.opt.realfullscreen) && !YTPlayer.isBackground))
+        buttonBar.append(onlyVideo);
+      
       YTPlayer.controlBar.append(buttonBar).append(progressBar);
+      
       if (!YTPlayer.isBackground) {
         YTPlayer.controlBar.addClass("inlinePlayer");
         YTPlayer.wrapper.before(YTPlayer.controlBar);
       } else {
         jQuery("body").after(YTPlayer.controlBar);
       }
+  
+      /**
+       * Volume slider
+       */
       volumeBar.simpleSlider({
         initialval : YTPlayer.opt.vol,
         scale      : 100,
@@ -1977,7 +1990,8 @@ var getYTPVideoID = function (url) {
             jQuery(YTPlayer).YTPUnmute();
           }
           YTPlayer.player.setVolume(el.value);
-          if (!YTPlayer.isMute) YTPlayer.opt.vol = el.value;
+          if (!YTPlayer.isMute)
+            YTPlayer.opt.vol = el.value;
         }
       });
     },
@@ -1993,7 +2007,7 @@ var getYTPVideoID = function (url) {
       
       clearInterval(YTPlayer.getState);
       var interval = 100;
-      //Checking if player has been removed from scene
+      //Checking if player has been removed from the scene
       if (!jQuery.contains(document, YTPlayer)) {
         $YTPlayer.YTPPlayerDestroy();
         clearInterval(YTPlayer.getState);
@@ -2018,6 +2032,7 @@ var getYTPVideoID = function (url) {
           YTPEvent.time = YTPlayer.currentTime;
           jQuery(YTPlayer).trigger(YTPEvent);
         }
+        
         YTPlayer.currentTime = prog.currentTime;
         YTPlayer.totalTime = YTPlayer.player.getDuration();
         if (YTPlayer.player.getVolume() == 0) $YTPlayer.addClass("isMuted");
@@ -2029,7 +2044,10 @@ var getYTPVideoID = function (url) {
           } else {
             YTPlayer.controlBar.find(".mb_YTPTime").html("-- : -- / -- : --");
           }
-        
+          
+        /**
+         * Manage video pause on window blur
+         */
         if (eval(YTPlayer.opt.stopMovieOnBlur)) {
           if (!document.hasFocus()) {
             if (YTPlayer.state == 1) {
@@ -2041,7 +2059,10 @@ var getYTPVideoID = function (url) {
             YTPlayer.player.playVideo();
           }
         }
-        
+  
+        /**
+         * Manage video pause if not on screen
+         */
         if (YTPlayer.opt.playOnlyIfVisible) {
           var isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer);
           if (!isOnScreen && YTPlayer.state == 1) {
@@ -2082,7 +2103,6 @@ var getYTPVideoID = function (url) {
               var YTPEnd = jQuery.Event("YTPEnd");
               YTPEnd.time = YTPlayer.currentTime;
               jQuery(YTPlayer).trigger(YTPEnd);
-              //YTPlayer.state = 0;
               return;
             }
           } else if (!YTPlayer.opt.loop || (YTPlayer.opt.loop > 0 && YTPlayer.player.loopTime === YTPlayer.opt.loop - 1)) {
@@ -2116,17 +2136,11 @@ var getYTPVideoID = function (url) {
           }
           
           YTPlayer.player.loopTime = YTPlayer.player.loopTime ? ++YTPlayer.player.loopTime : 1;
-          
-          //console.debug("loop", YTPlayer.opt.loop, YTPlayer.player.loopTime);
-          
           YTPlayer.opt.startAt = YTPlayer.opt.startAt || 1;
-          
           YTPlayer.preventTrigger = true;
           YTPlayer.state = 2;
-          //jQuery( YTPlayer ).YTPPause();
           YTPlayer.player.pauseVideo();
           YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
-          
           YTPlayer.player.playVideo();
         }
       }, interval);
@@ -2229,19 +2243,9 @@ var getYTPVideoID = function (url) {
             
             /* Fix for Safari freeze */
             if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari ) {
-              // if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.versionCompare(jQuery.mbBrowser.fullVersion, "10.1") < 0) { //jQuery.mbBrowser.os.minor_version < 11
-              /*
-                            YTPlayer.safariPlay = setInterval(function () {
-                              if (YTPlayer.state != 1)
-                                $YTPlayer.YTPPlay();
-                             // console.debug(YTPlayer.state)
-                              else
-                                clearInterval(YTPlayer.safariPlay)
-                            }, 1)
-              */
               setTimeout(function () {
                 $YTPlayer.YTPPlay();
-              },500);
+              },10);
             } else
               $YTPlayer.YTPPlay();
           } else {
@@ -2290,8 +2294,7 @@ var getYTPVideoID = function (url) {
             YTPlayer.controlBar.slideDown(1000);
         }
         
-        else if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari ) { //jQuery.mbBrowser.os.minor_version < 11
-          // else if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.fullVersion && jQuery.mbBrowser.versionCompare(jQuery.mbBrowser.fullVersion, "10.1") < 0) { //jQuery.mbBrowser.os.minor_version < 11
+        else if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari ) {
           YTPlayer.player.playVideo();
           if (startAt >= 0)
             YTPlayer.player.seekTo(startAt, true);

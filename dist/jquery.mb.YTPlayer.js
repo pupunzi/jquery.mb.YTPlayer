@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.1
- Build:  7105
+ Build:  7108
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.1",
-    build  : "7105",
+    build  : "7108",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -2226,19 +2226,9 @@ var getYTPVideoID = function (url) {
             
             /* Fix for Safari freeze */
             if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari ) {
-              // if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.versionCompare(jQuery.mbBrowser.fullVersion, "10.1") < 0) { //jQuery.mbBrowser.os.minor_version < 11
-              /*
-                            YTPlayer.safariPlay = setInterval(function () {
-                              if (YTPlayer.state != 1)
-                                $YTPlayer.YTPPlay();
-                             // console.debug(YTPlayer.state)
-                              else
-                                clearInterval(YTPlayer.safariPlay)
-                            }, 1)
-              */
               setTimeout(function () {
                 $YTPlayer.YTPPlay();
-              },500);
+              },10);
             } else
               $YTPlayer.YTPPlay();
           } else {

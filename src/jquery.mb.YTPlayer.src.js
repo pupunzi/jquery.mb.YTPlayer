@@ -734,8 +734,8 @@ var getYTPVideoID = function (url) {
                   }
                   
                   /**
-                  Trigger state events
-                  */
+                   Trigger state events
+                   */
                   var YTPEvent = jQuery.Event(eventType);
                   YTPEvent.time = YTPlayer.currentTime;
                   
@@ -1034,7 +1034,7 @@ var getYTPVideoID = function (url) {
       var YTPlayer = $YTPlayer.get(0);
       
       /**
-      get the video list from the Youtube playlist passing the ID
+       get the video list from the Youtube playlist passing the ID
        */
       if (typeof videos == "String" && jQuery.mbYTPlayer.apiKey != "") {
         
@@ -2227,18 +2227,23 @@ var getYTPVideoID = function (url) {
             YTPStart.time = YTPlayer.currentTime;
             jQuery(YTPlayer).trigger(YTPStart);
             
-            $YTPlayer.YTPPlay();
-            
             /* Fix for Safari freeze */
-            if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.versionCompare(jQuery.mbBrowser.fullVersion, "10.1") < 0) { //jQuery.mbBrowser.os.minor_version < 11
-              YTPlayer.safariPlay = setInterval(function () {
-                if (YTPlayer.state != 1)
-                  $YTPlayer.YTPPlay();
-                else
-                  clearInterval(YTPlayer.safariPlay)
-              }, 10)
-            }
-            
+            if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari ) {
+              // if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.versionCompare(jQuery.mbBrowser.fullVersion, "10.1") < 0) { //jQuery.mbBrowser.os.minor_version < 11
+              /*
+                            YTPlayer.safariPlay = setInterval(function () {
+                              if (YTPlayer.state != 1)
+                                $YTPlayer.YTPPlay();
+                             // console.debug(YTPlayer.state)
+                              else
+                                clearInterval(YTPlayer.safariPlay)
+                            }, 1)
+              */
+              setTimeout(function () {
+                $YTPlayer.YTPPlay();
+              },500);
+            } else
+              $YTPlayer.YTPPlay();
           } else {
             setTimeout(function () {
               YTPlayer.player.pauseVideo();
@@ -2285,7 +2290,8 @@ var getYTPVideoID = function (url) {
             YTPlayer.controlBar.slideDown(1000);
         }
         
-        else if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.fullVersion && jQuery.mbBrowser.versionCompare(jQuery.mbBrowser.fullVersion, "10.1") < 0) { //jQuery.mbBrowser.os.minor_version < 11
+        else if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari ) { //jQuery.mbBrowser.os.minor_version < 11
+          // else if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari && jQuery.mbBrowser.fullVersion && jQuery.mbBrowser.versionCompare(jQuery.mbBrowser.fullVersion, "10.1") < 0) { //jQuery.mbBrowser.os.minor_version < 11
           YTPlayer.player.playVideo();
           if (startAt >= 0)
             YTPlayer.player.seekTo(startAt, true);

@@ -344,15 +344,21 @@ var getYTPVideoID = function (url) {
         if (typeof property !== "object")
           property = {};
         
-        YTPlayer.opt = jQuery.mbYTPlayer.defaults;
-        jQuery.extend(YTPlayer.opt, options, property);
+        YTPlayer.opt = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaults, YTPlayer.opt, options, property);
+       
         YTPlayer.opt.elementId = YTPlayer.id;
         
         if (YTPlayer.opt.vol === 0) {
           YTPlayer.opt.vol = 1;
           YTPlayer.opt.mute = true;
         }
-        
+  
+        /**
+         * If autoPlay is set to true the mute must be true
+         */
+        if(YTPlayer.opt.autoPlay)
+          YTPlayer.opt.mute = true;
+  
         if (YTPlayer.opt.loop && typeof YTPlayer.opt.loop === "boolean") {
           YTPlayer.opt.loop = 9999;
         }

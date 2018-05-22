@@ -343,11 +343,12 @@ var getYTPVideoID = function (url) {
         
         if (typeof property !== "object")
           property = {};
-        
+
+        //todo
         YTPlayer.opt = jQuery.mbYTPlayer.defaults;
-        jQuery.extend(YTPlayer.opt, options, property);
+        YTPlayer.opt = jQuery.extend(true, {},YTPlayer.opt, options, property);
         YTPlayer.opt.elementId = YTPlayer.id;
-        
+
         if (YTPlayer.opt.vol === 0) {
           YTPlayer.opt.vol = 1;
           YTPlayer.opt.mute = true;
@@ -574,8 +575,18 @@ var getYTPVideoID = function (url) {
           
           if (YTPlayer.isBackground)
             ytp.backgroundIsInited = true;
-          
+
+          console.debug("1:::", YTPlayer.id);
+          console.debug(property.autoPlay);
+          console.debug(YTPlayer.opt.autoPlay);
+
           YTPlayer.opt.autoPlay = typeof YTPlayer.opt.autoPlay == "undefined" ? (YTPlayer.isBackground ? true : false) : YTPlayer.opt.autoPlay;
+
+          console.debug("2:::", YTPlayer.id);
+          console.debug(property.autoPlay);
+          console.debug(YTPlayer.opt.autoPlay);
+
+
           YTPlayer.opt.vol = YTPlayer.opt.vol ? YTPlayer.opt.vol : 100;
           
           jQuery.mbYTPlayer.getDataFromAPI(YTPlayer);
@@ -1595,11 +1606,13 @@ var getYTPVideoID = function (url) {
      * @returns {jQuery.mbYTPlayer}
      */
     applyFilter: function (filter, value) {
-      var $YTPlayer = this;
-      var YTPlayer = $YTPlayer.get(0);
-      YTPlayer.filters[filter].value = value;
-      if (YTPlayer.filtersEnabled)
-        $YTPlayer.YTPEnableFilters();
+      jQuery(this).each(function() {
+        var YTPlayer = this;
+        var $YTPlayer = jQuery(YTPlayer);
+        YTPlayer.filters[filter].value = value;
+        if (YTPlayer.filtersEnabled)
+          $YTPlayer.YTPEnableFilters();
+      })
     },
     
     /**
@@ -1608,21 +1621,23 @@ var getYTPVideoID = function (url) {
      * @returns {jQuery.mbYTPlayer}
      */
     applyFilters: function (filters) {
-      var $YTPlayer = this;
-      var YTPlayer = $YTPlayer.get(0);
-      
-      if (!YTPlayer.isReady) {
-        jQuery(YTPlayer).on("YTPReady", function () {
-          $YTPlayer.YTPApplyFilters(filters);
-        });
-        return this;
-      }
-      
-      for (var key in filters) {
-        $YTPlayer.YTPApplyFilter(key, filters[key]);
-      }
-      
-      $YTPlayer.trigger("YTPFiltersApplied");
+      jQuery(this).each(function(){
+        var YTPlayer = this;
+        var $YTPlayer = jQuery(YTPlayer);
+
+        if (!YTPlayer.isReady) {
+          jQuery(YTPlayer).on("YTPReady", function () {
+            $YTPlayer.YTPApplyFilters(filters);
+          });
+          return this;
+        }
+
+        for (var key in filters) {
+          $YTPlayer.YTPApplyFilter(key, filters[key]);
+        }
+        $YTPlayer.trigger("YTPFiltersApplied");
+      })
+
     },
     
     /**

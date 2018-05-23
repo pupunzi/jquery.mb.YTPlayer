@@ -357,7 +357,12 @@ var getYTPVideoID = function (url) {
         if (YTPlayer.opt.loop && typeof YTPlayer.opt.loop === "boolean") {
           YTPlayer.opt.loop = 9999;
         }
-        
+
+
+        console.debug("1:::", YTPlayer.id);
+        console.debug(property.autoPlay);
+        console.debug(YTPlayer.opt.autoPlay);
+
         /**
          Disable fullScreen if is in an iframe
          */
@@ -576,16 +581,7 @@ var getYTPVideoID = function (url) {
           if (YTPlayer.isBackground)
             ytp.backgroundIsInited = true;
 
-          console.debug("1:::", YTPlayer.id);
-          console.debug(property.autoPlay);
-          console.debug(YTPlayer.opt.autoPlay);
-
           YTPlayer.opt.autoPlay = typeof YTPlayer.opt.autoPlay == "undefined" ? (YTPlayer.isBackground ? true : false) : YTPlayer.opt.autoPlay;
-
-          console.debug("2:::", YTPlayer.id);
-          console.debug(property.autoPlay);
-          console.debug(YTPlayer.opt.autoPlay);
-
 
           YTPlayer.opt.vol = YTPlayer.opt.vol ? YTPlayer.opt.vol : 100;
           

@@ -22,294 +22,416 @@
 
 <html>
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>youtube Chromeless Player - mb.YTPlayer</title>
 
-<title>youtube Chromeless Player - mb.YTPlayer</title>
+  <link href='//fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+  <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
-<link href='https://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-<link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="../dist/jquery.mb.YTPlayer.js"></script>
+  <script src="assets/apikey.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="../dist/jquery.mb.YTPlayer.min.js"></script>
-<script src="assets/apikey.js"></script>
+  <style>
+    *:focus{
+      outline: none;
+    }
 
-<style>
-*:focus{
-    outline: none;
-}
+    body {
+      border: none;
+      margin: 0;
+      padding: 30px;
+      background: #003e50;
+      font: normal 16px/20px Lekton, sans-serif;
+    }
 
-body {
-    border: none;
-    margin: 0;
-    padding: 30px;
-    background: #003e50;
-    font: normal 16px/20px Lekton, sans-serif;
-}
+    input, textarea, select, button {
+      font-family: "helvetica neue", sans-serif !important;
+    }
 
-input, textarea, select, button {
-    font-family: "helvetica neue", sans-serif !important;
-}
+    h1{
+      text-align: center;
+      font-size: 50px;
+      font-family: 'Lobster', cursive;
+    }
 
-h1{
-    text-align: center;
-    font-size: 50px;
-    font-family: 'Lobster', cursive;
-}
+    h2{
+      font-family: "Open Sans", sans-serif;
+      font-size: 35px;
+      text-align: left;
+      line-height: 60px;
+    }
 
-h2{
-    font-family: "Open Sans", sans-serif;
-    font-size: 35px;
-    text-align: left;
-    line-height: 60px;
-}
+    h1, h2{
+      font-family: 'Lobster', cursive;
+      text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+      color: #000000;
+      font-weight: 200;
+    }
 
-h1, h2{
-    font-family: 'Lobster', cursive;
-    text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
-    color: #000000;
-    font-weight: 200;
-}
+    #wrapper{
+      position: relative;
+      min-width: 1280px;
+    }
 
-#wrapper{
-    position: relative;
-    min-width: 1280px;
-}
+    .console{
+      margin-top: 70px;
+      text-align: center;
+    }
 
-.console{
-    margin-top: 70px;
-    text-align: center;
-}
+    #debug {
+      position: absolute;
+      width: 450px;
+      padding: 5px;
+      height: 100%;
+      top: 0;
+      right: 0;
+      background: rgba(0, 0, 0, .8);
+      overflow: auto;
+      color: #fff;
+      font-size: 13px;
+      z-index: 10000;
+    }
 
-#debug {
-    position: absolute;
-    width: 450px;
-    padding: 5px;
-    height: 100%;
-    top: 0;
-    right: 0;
-    background: rgba(0, 0, 0, .8);
-    overflow: auto;
-    color: #fff;
-    font-size: 13px;
-    z-index: 10000;
-}
+    .dida{
+      color: #fff;
+      font-size: 20px;
+      margin-top: 20px;
+    }
 
-.dida{
-    color: #fff;
-    font-size: 20px;
-    margin-top: 20px;
-}
+    button, .button {
+      transition: all .4s;
+      display: inline-block;
+      padding: 0px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      background-color: rgba(248, 248, 248, 0.4);
+      box-shadow: 0 0 4px rgba(0,0,0,0.4);
+      color:#000;
 
-button, .button {
-    transition: all .4s;
-    display: inline-block;
-    padding: 0px 10px;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    background-color: rgba(248, 248, 248, 0.4);
-    box-shadow: 0 0 4px rgba(0,0,0,0.4);
-    color:#000;
+      border: 1px solid transparent;
 
-    border: 1px solid transparent;
+      text-decoration: none;
+      line-height: 30px;
+      margin: 3px;
+      border-radius: 10px;
+    }
 
-    text-decoration: none;
-    line-height: 30px;
-    margin: 3px;
-    border-radius: 10px;
-}
+    button:hover, .button:hover {
+      background-color: rgb(0, 0, 0);
+      color: #FFF;
+    }
 
-button:hover, .button:hover {
-    background-color: rgb(0, 0, 0);
-    color: #FFF;
-}
+    #togglePlay{
+      margin-top: 20px;
+      font-size: 20px;
+      width: 100px;
+      height: 100px;
+      line-height: 70px;
+      border-radius: 100%;
+    }
 
-#togglePlay{
-    margin-top: 20px;
-    font-size: 20px;
-    width: 100px;
-    height: 100px;
-    line-height: 70px;
-    border-radius: 100%;
-}
+    #togglePlay.pause{
+      background-color: rgb(0, 0, 0);
+      color: #fff;
+    }
 
-#togglePlay.pause{
-    background-color: rgb(0, 0, 0);
-    color: #fff;
-}
+    #togglePlay.pause:hover{
+      background-color: #fff;
+      color: #333;
+    }
 
-#togglePlay.pause:hover{
-    background-color: #fff;
-    color: #333;
-}
+    #togglePlay.play{
+      background-color: #fff;
+      color: #333;
+    }
 
-#togglePlay.play{
-    background-color: #fff;
-    color: #333;
-}
+    #togglePlay.play:hover{
+      background-color: rgb(0, 0, 0);
+      color: #fff;
+    }
 
-#togglePlay.play:hover{
-    background-color: rgb(0, 0, 0);
-    color: #fff;
-}
+    .goto {
+      position: absolute;
+      left:0;
+      top: 360px;
+      right: 0;
+      margin: auto;
+      text-align: center;
+      width: 100%;
+      height: 50px;
+    }
 
-.goto {
-    position: absolute;
-    left:0;
-    top: 360px;
-    right: 0;
-    margin: auto;
-    text-align: center;
-    width: 100%;
-    height: 50px;
-}
+    .goto .button{
+      font-size: 30px;
+      font-family: 'Lobster', cursive;
+      padding: 10px;
+      text-transform: none;
+    }
 
+    #togglePlay{
+      margin-top: 20px;
+      font-size: 20px;
+      width: 100px;
+      height: 100px;
+      line-height: 70px;
+      border-radius: 100%;
+    }
 
-.goto .button{
-    font-size: 30px;
-    font-family: 'Lobster', cursive;
-    padding: 10px;
-    text-transform: none;
-}
+    #togglePlay.pause{
+      background-color: rgb(0, 0, 0);
+      color: #fff;
+    }
 
+    #togglePlay.pause:after{
+      content:"pause"
+    }
 
-#filtersControl{
-    position: absolute;
-    top:0;
-    left: 10px;
-    width: 350px;
-    margin: 30px auto;
-    z-index: 1000;
-}
+    #togglePlay.play:after{
+      content:"play"
+    }
 
-#changeVideo {
-    position: absolute;
-    top: 0;
-    right: 10px;
-    width: 350px;
-    margin: 30px auto;
-    z-index: 100;
-    padding: 10px;
-    /*background-color: rgba(25, 34, 37, 0.35);*/
-    border-radius: 10px;
-    color: #FFFFFF;
-    box-sizing: border-box;
-}
+    #togglePlay.pause:hover{
+      background-color: #fff;
+      color: #333;
+    }
 
-#changeVideo label {
-    padding: 10px;
-    display: block;
-}
+    #togglePlay.play{
+      background-color: #fff;
+      color: #333;
+    }
 
-#changeVideo input {
-    padding: 10px;
-    display: block;
-    width: 250px;
-    border-radius: 10px;
-    border: none;
-    font-size: 20px;
-    color: #fff;
-    font-weight: 700;
-    background-color: rgba(168, 168, 168, 0.20);
-}
+    #togglePlay.play:hover{
+      background-color: rgb(0, 0, 0);
+      color: #fff;
+    }
 
-#changeVideo input[type=number] {
-    display: inline-block;
-    width: 100px;
-}
-#changeVideo input[type=checkbox] {
-    display: inline-block;
-    width: 20px;
-}
+    #filtersControl{
+      position: absolute;
+      top:0;
+      left: 10px;
+      width: 350px;
+      margin: 30px auto;
+      z-index: 1000;
+    }
 
-#loadBox{
-    background-color: rgba(168, 168, 168, 0.20);
-    border-radius: 10px;
-    padding: 20px;
-}
+    #changeVideo {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      width: 350px;
+      margin: 30px auto;
+      z-index: 100;
+      padding: 10px;
+      /*background-color: rgba(25, 34, 37, 0.35);*/
+      border-radius: 10px;
+      color: #FFFFFF;
+      box-sizing: border-box;
+    }
 
-</style>
+    #changeVideo label {
+      padding: 10px;
+      display: block;
+    }
 
-<script>
+    #changeVideo input {
+      padding: 10px;
+      display: block;
+      width: 250px;
+      border-radius: 10px;
+      border: none;
+      font-size: 20px;
+      color: #fff;
+      font-weight: 700;
+      background-color: rgba(168, 168, 168, 0.20);
+    }
+
+    #changeVideo input[type=number] {
+      display: inline-block;
+      width: 100px;
+    }
+    #changeVideo input[type=checkbox] {
+      display: inline-block;
+      width: 20px;
+    }
+
+    #loadBox{
+      background-color: rgba(168, 168, 168, 0.20);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    #wp {
+      position: absolute;
+      z-index: 10;
+      min-width: 300px;
+      background: rgba(0, 0, 0, 0.55);
+      /*background: #ffb200;*/
+      color: #fff;
+      font-size: 24px;
+      line-height: 24px;
+      padding: 20px;
+      bottom:60px;
+      cursor: pointer;
+      text-align: left;
+      border-radius: 10px;
+      font-family: 'Lobster', cursive;
+    }
+
+    #wp:hover {
+      background: #000000;
+    }
+
+    #wp img {
+      width: 60px;
+      margin-right: 20px;
+    }
+
+    @media only screen and (max-device-width: 480px) {
+
+      h1 {
+        margin-top: 80px;
+        text-align: left;
+        font-size: 40px;
+        font-family: 'Lobster', cursive;
+      }
+      h2 {
+        font-size: 25px;
+        text-align: left !important;
+        line-height: 1.2;
+      }
+
+      #changeVideo, #filtersControl {
+        position: relative;
+      }
+
+      #wrapper {
+        position: relative;
+        min-width: 100%;
+      }
+
+      .goto{
+        position: relative;
+        top: auto;
+        margin-bottom: 30px;
+        height: auto;
+        width: auto;
+      }
+
+      #info {
+        position: fixed;
+        top: 0;
+        right: 0;
+        max-width: 300px;
+        color: #212121;
+        background-color: rgba(255, 255, 255, 1);
+        z-index: 10000;
+
+        font-size: 100%;
+        padding: 10px;
+        display: none;
+      }
+
+      #donate {
+        display: none;
+      }
+
+      #debug {
+        position: fixed;
+        width: auto;
+      }
+
+      #wp {
+        position: relative;
+        top: auto;
+        left: auto;
+      }
+    }
+
+  </style>
+
+  <script>
+
+    var myPlayer;
     jQuery(function () {
 
-        /**
-         * Initialize the player with a mask applied
-         */
+      /**
+       * Initialize the player with a mask applied
+       */
 //        var myPlayer = jQuery("#bgndVideo").YTPlayer({mask:'assets/mask-1.png'});
 
-        var myPlayer = jQuery("#bgndVideo").YTPlayer({
-            mask:{
-                0:'assets/mask-1.png',  // at the beginning
-                5:'assets/mask-4.png',
-                25:'assets/mask-1.png',
-                30: false,
-                50:'assets/mask-4.png'
-            }
-        });
+      myPlayer = jQuery("#bgndVideo").YTPlayer({
+        mask:{
+          0:'assets/mask-1.png',  // at the beginning
+          5:'assets/mask-4.png',
+          25:'assets/mask-1.png',
+          30: false,
+          50:'assets/mask-4.png'
+        }
+      });
 
-        /* DEBUG ******************************************************************************************/
+      /* DEBUG ******************************************************************************************/
 
-        var YTPConsole = jQuery("#eventListener");
-        // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
-        myPlayer.on("YTPReady YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted YTPChangeVideo", function (e) {
-            YTPConsole.append("event: " + e.type + " (" + jQuery("#bgndVideo").YTPGetPlayer().getPlayerState() + ") > time: " + e.time);
-            YTPConsole.append("<br>");
-        });
-        // EVENT: YTPChanged
-        myPlayer.on("YTPChanged", function (e) {
-            YTPConsole.html("");
-        });
+      var YTPConsole = jQuery("#eventListener");
+      // EVENT: YTPStart YTPEnd YTPLoop YTPPause YTPBuffering
+      myPlayer.on("YTPReady YTPStart YTPEnd YTPPlay YTPLoop YTPPause YTPBuffering YTPMuted YTPUnmuted YTPChangeVideo", function (e) {
+        YTPConsole.append("event: " + e.type + " (" + jQuery("#bgndVideo").YTPGetPlayer().getPlayerState() + ") > time: " + e.time);
+        YTPConsole.append("<br>");
+      });
+      // EVENT: YTPChanged
+      myPlayer.on("YTPChanged", function (e) {
+        YTPConsole.html("");
+      });
 
-        myPlayer.on("YTPChangeVideo", function(e){
-            console.debug("videoId :: ", e.videoId);
-        });
+      myPlayer.on("YTPChangeVideo", function(e){
+        console.debug("videoId :: ", e.videoId);
+      });
 
-        // EVENT: YTPData
-        myPlayer.on("YTPData", function (e) {
+      // EVENT: YTPData
+      myPlayer.on("YTPData", function (e) {
 
-            console.debug("YTPData :: ", e);
+        console.debug("YTPData :: ", e);
 
-            $(".dida").html(e.prop.id + "<br>" + e.prop.title + "<br>@" + e.prop.channelTitle);
-            $("#videoData").show();
+        $(".dida").html(e.prop.id + "<br>" + e.prop.title + "<br>@" + e.prop.channelTitle);
+        $("#videoData").show();
 
-            YTPConsole.append("******************************");
-            YTPConsole.append("<br>");
-            YTPConsole.append(e.type);
-            YTPConsole.append("<br>");
-            YTPConsole.append(e.prop.title);
-            YTPConsole.append("<br>");
-            YTPConsole.append(e.prop.description.replace(/\n/g, "<br/>"));
-            YTPConsole.append("<br>");
-            YTPConsole.append("******************************");
-            YTPConsole.append("<br>");
-        });
+        YTPConsole.append("******************************");
+        YTPConsole.append("<br>");
+        YTPConsole.append(e.type);
+        YTPConsole.append("<br>");
+        YTPConsole.append(e.prop.title);
+        YTPConsole.append("<br>");
+        YTPConsole.append(e.prop.description.replace(/\n/g, "<br/>"));
+        YTPConsole.append("<br>");
+        YTPConsole.append("******************************");
+        YTPConsole.append("<br>");
+      });
 
-        // EVENT: YTPTime
-        myPlayer.on("YTPTime", function (e) {
-            var currentTime = e.time;
-            var traceLog = currentTime / 5 == Math.floor(currentTime / 5);
+      // EVENT: YTPTime
+      myPlayer.on("YTPTime", function (e) {
+        var currentTime = e.time;
+        var traceLog = currentTime / 5 == Math.floor(currentTime / 5);
 
-            if (traceLog && YTPConsole.is(":visible")) {
-                YTPConsole.append(myPlayer.attr("id")+ " > " + e.type + " > actual time is: " + currentTime);
-                YTPConsole.append("<br>");
-            }
+        if (traceLog && YTPConsole.is(":visible")) {
+          YTPConsole.append(myPlayer.attr("id")+ " > " + e.type + " > actual time is: " + currentTime);
+          YTPConsole.append("<br>");
+        }
+      });
 
-        });
+      myPlayer.on("YTPPlay", function(){
+        $("#togglePlay").removeClass("play pause");
+        $("#togglePlay").addClass("pause");
+      });
+
+      myPlayer.on("YTPPause", function(){
+        $("#togglePlay").removeClass("play pause");
+        $("#togglePlay").addClass("play");
+      });
 
     });
-
-    /**
-     *
-     * @param state
-     */
-    function changeLabel(state){
-        $("#togglePlay").html(state != 1 ? "pause" : "play");
-
-        $("#togglePlay").removeClass(state != 1 ? "play" : "pause");
-        $("#togglePlay").addClass(state != 1 ? "pause" : "play");
-    }
 
     /**
      *
@@ -317,121 +439,96 @@ button:hover, .button:hover {
      * @returns {*|number}
      */
     function checkForVal(val){
-        return val || 0;
+      return val || 0;
     }
-</script>
+  </script>
 </head>
 <body>
 
 <div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
-    <a href='https://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
-    <div class="console">
-        <button onclick="jQuery('#bgndVideo').YTPToggleVolume()">mute/unmute</button>
-        <button onclick="jQuery('#bgndVideo').YTPFullscreen(false)">go fullscreen</button>
-        <button id="debugBtn" class="command" onclick="jQuery('#debug').toggle()"> show/hide the console</button>
-    </div>
+  <a href='https://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
+  <br>
+  <h1 style="color:white">jQuery.mb.YTPlayer</h1>
+  <h2 style="color:white; text-align: center">An HTML5 Background player<br>for YouTube videos</h2>
+
+  <div class="console">
+    <button onclick="jQuery('#bgndVideo').YTPToggleVolume()">mute/unmute</button>
+    <button onclick="jQuery('#bgndVideo').YTPFullscreen(false)">go fullscreen</button>
+    <button id="debugBtn" class="command" onclick="jQuery('#debug').toggle()"> show/hide the console</button>
+  </div>
+
+  <div class="goto">
+    <button id="togglePlay" class="command pause" onclick="jQuery('#bgndVideo').YTPTogglePlay()"></button>
     <br>
     <br>
-    <h1 style="color:white">jQuery.mb.YTPlayer</h1>
-    <h2 style="color:white; text-align: center">An HTML5 Background player<br>for YouTube videos</h2>
-
-
-    <div id="filtersControl">
-
-        <h2 style="color:white">Add mask</h2>
-
-        <!--<button class="command" onclick="jQuery('#bgndVideo').YTPAddMask('assets/mask-4.png')">Add mask</button>-->
-        <button class="command" onclick="jQuery('#bgndVideo').YTPAddMask()">Add mask</button>
-        <button class="command" onclick="jQuery('#bgndVideo').YTPRemoveMask()">Remove mask</button>
-
-    </div>
-
-    <div id="changeVideo">
-        <h2 style="color:white">Change video</h2>
-
-        <button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: '7SnmCUwOsts', mute:false, addRaster:false})">video 1</button>
-        <button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 2</button>
-        <button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: 'kcihcYEOeic', mute:false, startAt:10, addRaster:false})">video 3</button>
-        <br>
-        <br>
-        <div id="loadBox">
-            <label for="videoID">Or insert here the ID or the complete URL of the Youtube video:</label>
-            <input id="videoID" type="text" value="r1xohS2u69E" onfocus="$('#loadOptions').slideDown()">
-
-            <div id="loadOptions" style="display: none">
-                <br>
-                <input id="startAt" type="number" placeholder="starts at">
-                <input id="stopAt" type="number" placeholder="stops at">
-                <br>
-                <br>
-                <input id="audioOff" type="checkbox" checked> Audio is OFF
-                <br>
-            </div>
-            <br>
-            <button onclick="$('#loadOptions').slideUp(); jQuery('#bgndVideo').YTPChangeVideo({videoURL: $('#videoID').val(), startAt: checkForVal($('#startAt').val()), stopAt: checkForVal($('#stopAt').val()), mute: $('#audioOff').is(':checked') })">change video</button>
-
-            <div id="videoData" style="display: none">
-                <h2 style="color: #FFFFFF; text-align: left">Current video:</h2>
-                <div class="dida"></div>
-            </div>
-            <br>
-            <button onclick="jQuery.mbYTPlayer.removeStoredData()"> Remove stored data </button>
-        </div>
-    </div>
-
-    <div class="goto">
-        <button id="togglePlay" class="command pause" onclick="jQuery('#bgndVideo').YTPTogglePlay(changeLabel)">pause</button>
-        <br>
-        <br>
-        <br>
-        <a class="button" href="https://github.com/pupunzi/jquery.mb.YTPlayer/wiki" target="_blank">See the doc</a>
-        <a class="button" href="http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer" target="_blank">Download it</a>
-    </div>
+    <br>
+    <a class="button" href="https://github.com/pupunzi/jquery.mb.YTPlayer/wiki" target="_blank">See the doc</a>
+    <a class="button" href="http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer" target="_blank">Download it</a>
+  </div>
 
   <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
-        <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
-    </a>
+    <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
+  </a>
 
-    <!--7SnmCUwOsts--><!--BsekcY04xvQ--><!--r1xohS2u69E--><!--Fk9EBOOAYiU--><!--sEuXfDtrco8--><!--9d8wWcJLnFI-->
-    <div id="bgndVideo" class="player" data-property="{videoURL:'8AE3_AJ9o2A',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:false, startAt:0,  stopAt:296, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true}">My video</div>
+  <!--7SnmCUwOsts--><!--BsekcY04xvQ--><!--r1xohS2u69E--><!--Fk9EBOOAYiU--><!--sEuXfDtrco8--><!--9d8wWcJLnFI-->
+  <div id="bgndVideo" class="player" data-property="{videoURL:'8AE3_AJ9o2A',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:false, startAt:0,  stopAt:296, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true}">My video</div>
+
+
+  <div id="filtersControl">
+
+    <h2 style="color:white">Add mask</h2>
+
+    <!--<button class="command" onclick="jQuery('#bgndVideo').YTPAddMask('assets/mask-4.png')">Add mask</button>-->
+    <button class="command" onclick="jQuery('#bgndVideo').YTPAddMask()">Add mask</button>
+    <button class="command" onclick="jQuery('#bgndVideo').YTPRemoveMask()">Remove mask</button>
+
+  </div>
+
+  <div id="changeVideo">
+    <h2 style="color:white">Change video</h2>
+
+    <button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: '7SnmCUwOsts', mute:false, addRaster:false})">video 1</button>
+    <button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 2</button>
+    <button class="command" onclick="jQuery('#bgndVideo').YTPChangeVideo({videoURL: 'kcihcYEOeic', mute:false, startAt:10, addRaster:false})">video 3</button>
+    <br>
+    <br>
+    <div id="loadBox">
+      <label for="videoID">Or insert here the ID or the complete URL of the Youtube video:</label>
+      <input id="videoID" type="text" value="r1xohS2u69E" onfocus="$('#loadOptions').slideDown()">
+
+      <div id="loadOptions" style="display: none">
+        <br>
+        <input id="startAt" type="number" placeholder="starts at">
+        <input id="stopAt" type="number" placeholder="stops at">
+        <br>
+        <br>
+        <input id="audioOff" type="checkbox" checked> Audio is OFF
+        <br>
+      </div>
+      <br>
+      <button onclick="$('#loadOptions').slideUp(); jQuery('#bgndVideo').YTPChangeVideo({videoURL: $('#videoID').val(), startAt: checkForVal($('#startAt').val()), stopAt: checkForVal($('#stopAt').val()), mute: $('#audioOff').is(':checked') })">change video</button>
+
+      <div id="videoData" style="display: none">
+        <h2 style="color: #FFFFFF; text-align: left">Current video:</h2>
+        <div class="dida"></div>
+      </div>
+      <br>
+      <button onclick="jQuery.mbYTPlayer.removeStoredData()"> Remove stored data </button>
+    </div>
+  </div>
 
 </div>
+
 
 <div id="debug" style="display: none">
-    <h2 style="color: #FFFFFF; text-align: left">Events console: </h2>
-    <div id="eventListener"></div>
+  <h2 style="color: #FFFFFF; text-align: left">Events console: </h2>
+  <button onclick="jQuery('#debug').toggle()"> Close console </button>
+  <div id="eventListener"></div>
 </div>
 
-<style>
-    #wp {
-        position: absolute;
-        z-index: 10;
-        min-width: 300px;
-        background: rgba(0, 0, 0, 0.55);
-        /*background: #ffb200;*/
-        color: #fff;
-        font-size: 24px;
-        line-height: 24px;
-        padding: 20px;
-        bottom:60px;
-        cursor: pointer;
-        text-align: left;
-        border-radius: 10px;
-        font-family: 'Lobster', cursive;
-    }
-
-    #wp:hover {
-        background: #000000;
-    }
-
-    #wp img {
-        width: 60px;
-        margin-right: 20px;
-    }
-</style>
 <div id="wp" onclick="self.location.href='https://pupunzi.com/wpPlus/go-plus.php?plugin_prefix=YTPL'">
-    <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
-    <span>Get the <br><b>Wordpress</b> Plug-in!</span>
+  <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
+  <span>Get the <br><b>Wordpress</b> Plug-in!</span>
 </div>
 
 

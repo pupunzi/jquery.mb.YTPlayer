@@ -3,8 +3,8 @@
  
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
- Version:  3.2.2
- Build:  7131
+ Version:  3.2.3
+ Build:  7132
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -53,8 +53,8 @@ var getYTPVideoID = function (url) {
 
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
-    version: "3.2.2",
-    build  : "7131",
+    version: "3.2.3",
+    build  : "7132",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
 

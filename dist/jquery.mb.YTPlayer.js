@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.2
- Build:  7122
+ Build:  7131
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.2",
-    build  : "7122",
+    build  : "7131",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
 
@@ -201,6 +201,12 @@ var getYTPVideoID = function (url) {
        play the video only if the containment is on screen
        */
       playOnlyIfVisible: false,
+
+      /**
+       onScreenPercentage (bool)
+       percentage of the player height the video should stop or start when visible
+       */
+      onScreenPercentage: 30,
 
       /**
        stopMovieOnBlur (bool)
@@ -565,7 +571,7 @@ var getYTPVideoID = function (url) {
           ytp.YTAPIReady = true;
         });
 
-        YTPlayer.isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer);
+        YTPlayer.isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer, YTPlayer.opt.onScreenPercentage );
 
         $YTPlayer.one("YTAPIReady_" + YTPlayer.id, function () {
 
@@ -838,13 +844,16 @@ var getYTPVideoID = function (url) {
      * @param YTPlayer
      * @returns {boolean}
      */
-    isOnScreen: function (YTPlayer) {
-
+    isOnScreen: function (YTPlayer, perc) {
+      perc = perc || 10;
       var playerBox = YTPlayer.wrapper;
       var winTop = jQuery(window).scrollTop();
       var winBottom = winTop + jQuery(window).height();
-      var elTop = playerBox.offset().top + (playerBox.height() / 1.2);
-      var elBottom = playerBox.offset().top + (playerBox.height() / 2.8);
+
+      var margin = (playerBox.height() * perc) /100 ;
+      var elTop = playerBox.offset().top + margin;
+      var elBottom = playerBox.offset().top + (playerBox.height() - margin);
+
 
       /*
             console.debug("-----------------------------", YTPlayer.id);
@@ -2067,7 +2076,7 @@ var getYTPVideoID = function (url) {
          * Manage video pause if not on screen
          */
         if (YTPlayer.opt.playOnlyIfVisible) {
-          var isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer);
+          var isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer, YTPlayer.opt.onScreenPercentage);
           if (!isOnScreen && YTPlayer.state == 1) {
             YTPlayer.isOnScreen = false;
             $YTPlayer.YTPPause();

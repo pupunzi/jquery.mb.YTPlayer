@@ -206,6 +206,12 @@ var getYTPVideoID = function (url) {
       playOnlyIfVisible: false,
 
       /**
+       onScreenPercentage (bool)
+       percentage of the player height the video should stop or start when visible
+       */
+      onScreenPercentage: 30,
+
+      /**
        stopMovieOnBlur (bool)
        stop the video if the window loose the focus
        */
@@ -568,7 +574,7 @@ var getYTPVideoID = function (url) {
           ytp.YTAPIReady = true;
         });
 
-        YTPlayer.isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer);
+        YTPlayer.isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer, YTPlayer.opt.onScreenPercentage );
 
         $YTPlayer.one("YTAPIReady_" + YTPlayer.id, function () {
 
@@ -841,13 +847,16 @@ var getYTPVideoID = function (url) {
      * @param YTPlayer
      * @returns {boolean}
      */
-    isOnScreen: function (YTPlayer) {
-
+    isOnScreen: function (YTPlayer, perc) {
+      perc = perc || 10;
       var playerBox = YTPlayer.wrapper;
       var winTop = jQuery(window).scrollTop();
       var winBottom = winTop + jQuery(window).height();
-      var elTop = playerBox.offset().top + (playerBox.height() / 1.2);
-      var elBottom = playerBox.offset().top + (playerBox.height() / 2.8);
+
+      var margin = (playerBox.height() * perc) /100 ;
+      var elTop = playerBox.offset().top + margin;
+      var elBottom = playerBox.offset().top + (playerBox.height() - margin);
+
 
       /*
             console.debug("-----------------------------", YTPlayer.id);
@@ -2070,7 +2079,7 @@ var getYTPVideoID = function (url) {
          * Manage video pause if not on screen
          */
         if (YTPlayer.opt.playOnlyIfVisible) {
-          var isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer);
+          var isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer, YTPlayer.opt.onScreenPercentage);
           if (!isOnScreen && YTPlayer.state == 1) {
             YTPlayer.isOnScreen = false;
             $YTPlayer.YTPPause();

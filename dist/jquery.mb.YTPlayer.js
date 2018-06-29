@@ -3,8 +3,8 @@
  
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
- Version:  3.2.3
- Build:  7132
+ Version:  3.2.4
+ Build:  7145
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -53,8 +53,8 @@ var getYTPVideoID = function (url) {
 
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
-    version: "3.2.3",
-    build  : "7132",
+    version: "3.2.4",
+    build  : "7145",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
 
@@ -359,17 +359,20 @@ var getYTPVideoID = function (url) {
         /**
          * If autoPlay is set to true the mute must be true
          */
-        if(YTPlayer.opt.autoPlay)
+        if(YTPlayer.opt.autoPlay) {
           YTPlayer.opt.mute = true;
+          console.info("YTPlayer info: The audio has been turned off to let the video auto-play.")
+        }
 
         if (YTPlayer.opt.loop && typeof YTPlayer.opt.loop === "boolean") {
           YTPlayer.opt.loop = 9999;
         }
 
         /**
-         Disable fullScreen if is in an iframe or on mobile
+         Disable fullScreen if is in an iframe or full-screen API is not available
          */
-        YTPlayer.opt.realfullscreen = isIframe() || YTPlayer.opt.useOnMobile ? false : YTPlayer.opt.realfullscreen;
+        var fullScreenAvailable = document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled;
+        YTPlayer.opt.realfullscreen = isIframe() || !fullScreenAvailable ? false : YTPlayer.opt.realfullscreen;
         /**
          Manage annotations
          */
@@ -1261,12 +1264,13 @@ var getYTPVideoID = function (url) {
      */
     fullscreen: function (real) {
       var YTPlayer = this.get(0);
-      if (typeof real == "undefined") real = YTPlayer.opt.realfullscreen;
-      real = eval(real);
+      if (typeof real == "undefined")
+        real = eval(YTPlayer.opt.realfullscreen);
+      
       var controls = jQuery("#controlBar_" + YTPlayer.id);
       var fullScreenBtn = controls.find(".mb_OnlyYT");
       var videoWrapper = YTPlayer.isPlayer ? YTPlayer.opt.containment : YTPlayer.wrapper;
-
+      
       if (real) {
         var fullscreenchange = jQuery.mbBrowser.mozilla ? "mozfullscreenchange" : jQuery.mbBrowser.webkit ? "webkitfullscreenchange" : "fullscreenchange";
         jQuery(document).off(fullscreenchange).on(fullscreenchange, function () {
@@ -1276,7 +1280,6 @@ var getYTPVideoID = function (url) {
             fullScreenBtn.html(jQuery.mbYTPlayer.controls.onlyYT);
             jQuery(YTPlayer).YTPSetVideoQuality(YTPlayer.opt.quality);
             videoWrapper.removeClass("YTPFullscreen");
-
             videoWrapper.CSSAnimate({
               opacity: YTPlayer.opt.opacity
             }, YTPlayer.opt.fadeOnStartTime);
@@ -1310,7 +1313,8 @@ var getYTPVideoID = function (url) {
             cursor: "auto"
           });
           clearTimeout(YTPlayer.hideCursor);
-          if (!jQuery(e.target).parents().is(".mb_YTPBar")) YTPlayer.hideCursor = setTimeout(hideMouse, 3000);
+          if (!jQuery(e.target).parents().is(".mb_YTPBar"))
+            YTPlayer.hideCursor = setTimeout(hideMouse, 3000);
         });
 
         hideMouse();
@@ -1927,19 +1931,19 @@ var getYTPVideoID = function (url) {
       });
       /* mute/unmute button*/
       var MuteUnmute = jQuery("<span>" + jQuery.mbYTPlayer.controls.mute + "</span>").addClass("mb_YTPMuteUnmute ytpicon").click(function () {
-        if (YTPlayer.player.getVolume() == 0) {
-          jQuery(YTPlayer).YTPUnmute();
-        } else {
-          jQuery(YTPlayer).YTPMute();
-        }
+        jQuery(YTPlayer).YTPToggleVolume();
       });
-      /* volume bar*/
+      /**
+       *  volume bar
+       * */
       var volumeBar = jQuery("<div/>").addClass("mb_YTPVolumeBar").css({
         display: "inline-block"
       });
       YTPlayer.volumeBar = volumeBar;
 
-      /* time elapsed */
+      /**
+       * time elapsed
+       * */
       var idx = jQuery("<span/>").addClass("mb_YTPTime");
       var vURL = YTPlayer.opt.videoURL ? YTPlayer.opt.videoURL : "";
       if (vURL.indexOf("http") < 0) vURL = jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/watch?v=" + YTPlayer.opt.videoURL;

@@ -719,6 +719,8 @@ var getYTPVideoID = function (url) {
                       
                       if(YTPlayer.isPlayer)
                         YTPlayer.inlinePlayButton.hide();
+  
+                      jQuery(document).off("mousedown.YTPstart");
                       break;
                       
                       /** pause */

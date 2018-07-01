@@ -328,6 +328,10 @@
     width: 40px;
 }
 
+.mb_YTPBar.compact span.mb_OnlyYT {
+  left: 260px;
+}
+
 .mb_YTPBar .simpleSlider.muted {
     opacity: .3;
 }

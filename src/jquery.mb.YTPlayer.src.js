@@ -719,7 +719,7 @@ var getYTPVideoID = function (url) {
                       
                       if(YTPlayer.isPlayer)
                         YTPlayer.inlinePlayButton.hide();
-  
+                      
                       jQuery(document).off("mousedown.YTPstart");
                       break;
                       
@@ -1542,7 +1542,8 @@ var getYTPVideoID = function (url) {
         return this;
       
       if (YTPlayer.isMute) {
-        this.YTPSetVolume(YTPlayer.opt.vol)
+        if (!jQuery.browser.mobile)
+          this.YTPSetVolume(YTPlayer.opt.vol)
         this.YTPUnmute();
       } else {
         this.YTPMute();

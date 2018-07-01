@@ -360,11 +360,14 @@ var getYTPVideoID = function (url) {
         }
 
         /**
-         * If autoPlay is set to true the mute must be true
+         * If autoPlay is set to true and  mute is set to false
+         * Webkit browser will not auto-play
+         * Start playing after the first click
          */
-        if(YTPlayer.opt.autoPlay) {
-          YTPlayer.opt.mute = true;
-          console.info("YTPlayer info: The audio has been turned off to let the video auto-play.")
+        if(YTPlayer.opt.autoPlay && YTPlayer.opt.mute == false) {
+          //YTPlayer.opt.mute = true;
+          jQuery(document).one("mousedown.YTPstart", function(){ $YTPlayer.YTPPlay(); });
+          console.info("YTPlayer info: On Webkit browsers you can not autoplay the video if the audio is on.")
         }
 
         if (YTPlayer.opt.loop && typeof YTPlayer.opt.loop === "boolean") {
@@ -1927,12 +1930,16 @@ var getYTPVideoID = function (url) {
         zIndex    : YTPlayer.isBackground ? 10000 : 1000
       }).hide();
       var buttonBar = jQuery("<div/>").addClass("buttonBar");
-      /* play/pause button*/
+      /**
+       *  play/pause button
+       * */
       var playpause = jQuery("<span>" + jQuery.mbYTPlayer.controls.play + "</span>").addClass("mb_YTPPlaypause ytpicon").click(function () {
         if (YTPlayer.player.getPlayerState() == 1) jQuery(YTPlayer).YTPPause();
         else jQuery(YTPlayer).YTPPlay();
       });
-      /* mute/unmute button*/
+      /**
+       *  mute/unmute button
+       * */
       var MuteUnmute = jQuery("<span>" + jQuery.mbYTPlayer.controls.mute + "</span>").addClass("mb_YTPMuteUnmute ytpicon").click(function () {
         jQuery(YTPlayer).YTPToggleVolume();
       });

@@ -101,6 +101,39 @@
     padding: 0 !important;
 }
 
+.inlinePlayButton {
+  font-family: 'ytpregular';
+  font-size: 45px;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 100%;
+  background-color: rgba(0,0,0,.4);
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  cursor: pointer;
+  opacity: .8;
+  transition: all .4s;
+  transform: scale(1.3);
+
+}
+
+.mb_YTPlayer:hover .inlinePlayButton {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.inlinePlayButton:hover {
+  background-color: rgba(0,0,0,1);
+  transform: scale(1.3)!important;
+}
+
 .mbYTP_wrapper iframe {
     max-width: 8000px !important;
 }
@@ -257,7 +290,6 @@
     -webkit-transform-style: "flat";
     box-sizing: border-box;
 }
-
 
 /*RASTER OVERLAY*/
 

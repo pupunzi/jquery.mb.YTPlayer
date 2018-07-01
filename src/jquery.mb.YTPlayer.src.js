@@ -455,20 +455,9 @@ var getYTPVideoID = function (url) {
         }).addClass("YTPOverlay");
         
         /**
-         If is an inline player toggle play if the overlay is clicked
-         */
-        if (YTPlayer.isPlayer) {
-          YTPlayer.overlay.on("click", function () {
-            $YTPlayer.YTPTogglePlay();
-          })
-        }
-        
-        /**
          create the wrapper
          */
-        YTPlayer.wrapper = jQuery("<div/>").addClass("mbYTP_wrapper").attr("id", "wrapper_" + YTPlayer.id);
-        
-        YTPlayer.wrapper.css({
+        YTPlayer.wrapper = jQuery("<div/>").attr("id", "wrapper_" + YTPlayer.id).css({
           position : "absolute",
           zIndex   : 0,
           minWidth : "100%",
@@ -477,7 +466,26 @@ var getYTPVideoID = function (url) {
           top      : 0,
           overflow : "hidden",
           opacity  : 0
-        });
+        }).addClass("mbYTP_wrapper");
+        
+        /**
+         If is an inline player toggle play if the overlay is clicked
+         */
+        if (YTPlayer.isPlayer) {
+          YTPlayer.inlinePlayButton = jQuery("<div/>").addClass("inlinePlayButton").html(jQuery.mbYTPlayer.controls.play);
+          $YTPlayer.append(YTPlayer.inlinePlayButton);
+          YTPlayer.inlinePlayButton.on("click", function(e){
+            $YTPlayer.YTPPlay();
+            e.stopPropagation();
+          });
+          
+          if(YTPlayer.opt.autoPlay)
+            YTPlayer.inlinePlayButton.hide();
+          
+          YTPlayer.overlay.on("click", function () {
+            $YTPlayer.YTPTogglePlay();
+          }).css({cursor: "pointer"})
+        }
         
         /**
          create the playerBox where the YT iframe will be placed
@@ -688,7 +696,7 @@ var getYTPVideoID = function (url) {
                   }
                   
                   YTPlayer.state = state;
-                  console.debug(YTPlayer.state);
+                  // console.debug(YTPlayer.state);
                   
                   var eventType;
                   switch (state) {
@@ -708,6 +716,9 @@ var getYTPVideoID = function (url) {
                       eventType = "YTPPlay";
                       if (YTPlayer.controlBar.length)
                         YTPlayer.controlBar.find(".mb_YTPPlayPause").html(jQuery.mbYTPlayer.controls.pause);
+                      
+                      if(YTPlayer.isPlayer)
+                        YTPlayer.inlinePlayButton.hide();
                       break;
                       
                       /** pause */
@@ -715,6 +726,9 @@ var getYTPVideoID = function (url) {
                       eventType = "YTPPause";
                       if (YTPlayer.controlBar.length)
                         YTPlayer.controlBar.find(".mb_YTPPlayPause").html(jQuery.mbYTPlayer.controls.play);
+                      
+                      if(YTPlayer.isPlayer)
+                        YTPlayer.inlinePlayButton.show();
                       break;
                       
                       /** buffer */
@@ -2290,6 +2304,7 @@ var getYTPVideoID = function (url) {
               }
               YTPlayer.isStarting = false;
             }, 150);
+            
             if (YTPlayer.controlBar.length)
               YTPlayer.controlBar.find(".mb_YTPPlayPause").html(jQuery.mbYTPlayer.controls.play);
           }

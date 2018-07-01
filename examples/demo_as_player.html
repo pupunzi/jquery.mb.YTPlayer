@@ -235,6 +235,9 @@
                 $(".slider[data-filter="+key+"]").updateSliderVal(filters[key].value);
             }
         });
+
+      myPlayer.on('YTPPlay', function(){ console.log('playing'); });
+
     });
 
 </script>

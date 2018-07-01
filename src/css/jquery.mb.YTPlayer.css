@@ -215,8 +215,8 @@
     color: white;
 }
 
-.mb_YTPBar .mb_YTPPlaypause,
-.mb_YTPlayer .mb_YTPBar .mb_YTPPlaypause img {
+.mb_YTPBar .mb_YTPPlayPause,
+.mb_YTPlayer .mb_YTPBar .mb_YTPPlayPause img {
     cursor: pointer;
 }
 

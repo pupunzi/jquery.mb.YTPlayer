@@ -364,7 +364,7 @@ var getYTPVideoID = function (url) {
          * Webkit browser will not auto-play
          * Start playing after the first click
          */
-        if(YTPlayer.opt.autoPlay && YTPlayer.opt.mute == false) {
+        if(YTPlayer.opt.autoPlay && YTPlayer.opt.mute == false && jQuery.browser.chrome) {
           //YTPlayer.opt.mute = true;
           jQuery(document).one("mousedown.YTPstart", function(){ $YTPlayer.YTPPlay(); });
           console.info("YTPlayer info: On Webkit browsers you can not autoplay the video if the audio is on.")

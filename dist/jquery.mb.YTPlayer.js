@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.4
- Build:  7217
+ Build:  7218
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.4",
-    build  : "7217",
+    build  : "7218",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -361,7 +361,7 @@ var getYTPVideoID = function (url) {
          * Webkit browser will not auto-play
          * Start playing after the first click
          */
-        if(YTPlayer.opt.autoPlay && YTPlayer.opt.mute == false) {
+        if(YTPlayer.opt.autoPlay && YTPlayer.opt.mute == false && jQuery.browser.chrome) {
           //YTPlayer.opt.mute = true;
           jQuery(document).one("mousedown.YTPstart", function(){ $YTPlayer.YTPPlay(); });
           console.info("YTPlayer info: On Webkit browsers you can not autoplay the video if the audio is on.")

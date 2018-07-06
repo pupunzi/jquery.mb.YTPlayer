@@ -396,7 +396,7 @@ var getYTPVideoID = function (url) {
          */
         if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
           YTPlayer.opt.opacity = 1;
-        
+
         YTPlayer.opt.containment = YTPlayer.opt.containment === "self" ? $YTPlayer : jQuery(YTPlayer.opt.containment);
         YTPlayer.isRetina = (window.retina || window.devicePixelRatio > 1);
         

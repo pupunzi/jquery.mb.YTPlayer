@@ -364,7 +364,7 @@ var getYTPVideoID = function (url) {
          * Webkit browser will not auto-play
          * Start playing after the first click
          */
-        if(YTPlayer.opt.autoPlay && YTPlayer.opt.mute == false && jQuery.browser.chrome) {
+        if(YTPlayer.opt.autoPlay && YTPlayer.opt.mute == false && jQuery.mbBrowser.chrome) {
           //YTPlayer.opt.mute = true;
           jQuery(document).one("mousedown.YTPstart", function(){ $YTPlayer.YTPPlay(); });
           console.info("YTPlayer info: On Webkit browsers you can not autoplay the video if the audio is on.")
@@ -631,7 +631,7 @@ var getYTPVideoID = function (url) {
               'wmode'          : 'transparent',
               'iv_load_policy' : YTPlayer.opt.showAnnotations,
               'cc_load_policy' : YTPlayer.opt.cc_load_policy,
-              'playsinline'    : jQuery.browser.mobile ? 1 : 0,
+              'playsinline'    : jQuery.mbBrowser.mobile ? 1 : 0,
               
               /**
                Check if the browser can play HTML5 videos
@@ -1542,7 +1542,7 @@ var getYTPVideoID = function (url) {
         return this;
       
       if (YTPlayer.isMute) {
-        if (!jQuery.browser.mobile)
+        if (!jQuery.mbBrowser.mobile)
           this.YTPSetVolume(YTPlayer.opt.vol)
         this.YTPUnmute();
       } else {

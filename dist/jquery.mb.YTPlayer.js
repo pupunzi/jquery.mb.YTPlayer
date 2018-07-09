@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.4
- Build:  7232
+ Build:  7233
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.4",
-    build  : "7232",
+    build  : "7233",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -361,7 +361,7 @@ var getYTPVideoID = function (url) {
          * Webkit browser will not auto-play
          * Start playing after the first click
          */
-        if(YTPlayer.opt.autoPlay && YTPlayer.opt.mute == false && jQuery.browser.chrome) {
+        if(YTPlayer.opt.autoPlay && YTPlayer.opt.mute == false && jQuery.mbBrowser.chrome) {
           //YTPlayer.opt.mute = true;
           jQuery(document).one("mousedown.YTPstart", function(){ $YTPlayer.YTPPlay(); });
           console.info("YTPlayer info: On Webkit browsers you can not autoplay the video if the audio is on.")
@@ -393,7 +393,7 @@ var getYTPVideoID = function (url) {
          */
         if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
           YTPlayer.opt.opacity = 1;
-        
+
         YTPlayer.opt.containment = YTPlayer.opt.containment === "self" ? $YTPlayer : jQuery(YTPlayer.opt.containment);
         YTPlayer.isRetina = (window.retina || window.devicePixelRatio > 1);
         
@@ -628,7 +628,7 @@ var getYTPVideoID = function (url) {
               'wmode'          : 'transparent',
               'iv_load_policy' : YTPlayer.opt.showAnnotations,
               'cc_load_policy' : YTPlayer.opt.cc_load_policy,
-              'playsinline'    : jQuery.browser.mobile ? 1 : 0,
+              'playsinline'    : jQuery.mbBrowser.mobile ? 1 : 0,
               
               /**
                Check if the browser can play HTML5 videos
@@ -1539,7 +1539,7 @@ var getYTPVideoID = function (url) {
         return this;
       
       if (YTPlayer.isMute) {
-        if (!jQuery.browser.mobile)
+        if (!jQuery.mbBrowser.mobile)
           this.YTPSetVolume(YTPlayer.opt.vol)
         this.YTPUnmute();
       } else {

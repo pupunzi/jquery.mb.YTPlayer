@@ -1926,24 +1926,20 @@ var getYTPVideoID = function (url) {
         whiteSpace: "noWrap",
         position  : YTPlayer.isBackground ? "fixed" : "absolute",
         zIndex    : YTPlayer.isBackground ? 10000 : 1000
-      }).hide();
+      }).hide().on("click", function(e){e.stopPropagation();});
       var buttonBar = jQuery("<div/>").addClass("buttonBar");
       /**
        *  play/pause button
        * */
-      var playpause = jQuery("<span>" + jQuery.mbYTPlayer.controls.play + "</span>").addClass("mb_YTPPlayPause ytpicon").click(function () {
+      var playpause = jQuery("<span>" + jQuery.mbYTPlayer.controls.play + "</span>").addClass("mb_YTPPlayPause ytpicon").on("click", function (e) {
+        e.stopPropagation();
         jQuery(YTPlayer).YTPTogglePlay();
-        /*
-                if (YTPlayer.player.getPlayerState() == 1)
-                  jQuery(YTPlayer).YTPPause();
-                else
-                  jQuery(YTPlayer).YTPPlay();
-        */
       });
       /**
        *  mute/unmute button
        * */
-      var MuteUnmute = jQuery("<span>" + jQuery.mbYTPlayer.controls.mute + "</span>").addClass("mb_YTPMuteUnmute ytpicon").click(function () {
+      var MuteUnmute = jQuery("<span>" + jQuery.mbYTPlayer.controls.mute + "</span>").addClass("mb_YTPMuteUnmute ytpicon").on("click", function (e) {
+        e.stopPropagation();
         jQuery(YTPlayer).YTPToggleVolume();
       });
       /**
@@ -1963,10 +1959,12 @@ var getYTPVideoID = function (url) {
       var movieUrl = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.ytLogo).addClass("mb_YTPUrl ytpicon").attr("title", "view on YouTube").on("click", function () {
         window.open(vURL, "viewOnYT")
       });
-      var onlyVideo = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.onlyYT).addClass("mb_OnlyYT ytpicon").on("click", function () {
+      var onlyVideo = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.onlyYT).addClass("mb_OnlyYT ytpicon").on("click", function (e) {
+        e.stopPropagation();
         jQuery(YTPlayer).YTPFullscreen(YTPlayer.opt.realfullscreen);
       });
-      var progressBar = jQuery("<div/>").addClass("mb_YTPProgress").css("position", "absolute").click(function (e) {
+      var progressBar = jQuery("<div/>").addClass("mb_YTPProgress").css("position", "absolute").on("click", function (e) {
+        e.stopPropagation();
         timeBar.css({
           width: (e.clientX - timeBar.offset().left)
         });

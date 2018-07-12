@@ -2136,8 +2136,16 @@ var getYTPVideoID = function (url) {
             }
           } else if (!YTPlayer.opt.loop || (YTPlayer.opt.loop > 0 && YTPlayer.player.loopTime === YTPlayer.opt.loop - 1)) {
             YTPlayer.player.loopTime = undefined;
-            // YTPlayer.preventTrigger = true;
+
             YTPlayer.state = 2;
+
+            var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : (YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium);
+
+            YTPlayer.opt.containment.css({
+              background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
+              backgroundSize: "cover"
+            });
+
             jQuery(YTPlayer).YTPPause();
             YTPlayer.wrapper.CSSAnimate({
               opacity: 0

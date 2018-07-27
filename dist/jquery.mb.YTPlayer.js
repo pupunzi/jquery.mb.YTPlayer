@@ -3,8 +3,8 @@
  
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
- Version:  3.2.4
- Build:  7242
+ Version:  3.2.5
+ Build:  7244
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -53,8 +53,8 @@ var getYTPVideoID = function (url) {
   
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
-    version: "3.2.4",
-    build  : "7242",
+    version: "3.2.5",
+    build  : "7244",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -2075,7 +2075,6 @@ var getYTPVideoID = function (url) {
         if (eval(YTPlayer.opt.stopMovieOnBlur)) {
 
           if (!document.hasFocus()) {
-
             if (YTPlayer.state == 1) {
               YTPlayer.hasFocus = false;
               YTPlayer.preventTrigger = true;
@@ -2083,12 +2082,12 @@ var getYTPVideoID = function (url) {
             }
 
           } else if (document.hasFocus() && !YTPlayer.hasFocus && !(YTPlayer.state == -1 || YTPlayer.state == 0)) {
-
             YTPlayer.hasFocus = true;
             YTPlayer.preventTrigger = true;
+            YTPlayer.preventTrigger = true;
             $YTPlayer.YTPPlay();
-           // YTPlayer.state = 1;
           }
+
         }
         
         /**

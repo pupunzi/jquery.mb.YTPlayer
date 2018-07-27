@@ -2090,6 +2090,7 @@ var getYTPVideoID = function (url) {
             YTPlayer.preventTrigger = true;
             $YTPlayer.YTPPlay();
           }
+          
         }
         
         /**

@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.4
- Build:  7235
+ Build:  7242
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.4",
-    build  : "7235",
+    build  : "7242",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -2073,16 +2073,21 @@ var getYTPVideoID = function (url) {
          * Manage video pause on window blur
          */
         if (eval(YTPlayer.opt.stopMovieOnBlur)) {
+
           if (!document.hasFocus()) {
+
             if (YTPlayer.state == 1) {
               YTPlayer.hasFocus = false;
               YTPlayer.preventTrigger = true;
               $YTPlayer.YTPPause();
             }
+
           } else if (document.hasFocus() && !YTPlayer.hasFocus && !(YTPlayer.state == -1 || YTPlayer.state == 0)) {
+
             YTPlayer.hasFocus = true;
             YTPlayer.preventTrigger = true;
-            YTPlayer.player.playVideo();
+            $YTPlayer.YTPPlay();
+           // YTPlayer.state = 1;
           }
         }
         
@@ -2222,19 +2227,16 @@ var getYTPVideoID = function (url) {
       YTPlayer.state = 2;
       $YTPlayer.YTPPause();
       $YTPlayer.YTPMute();
-      
-      var startAt = YTPlayer.start_from_last ? YTPlayer.start_from_last : YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
-      
       YTPlayer.preventTrigger = true;
       YTPlayer.player.playVideo();
-      $YTPlayer.YTPMute();
-      
-      //if (YTPlayer.start_from_last)
-      YTPlayer.player.seekTo(startAt, true);
-      
       YTPlayer.isStarting = true;
+
+      var startAt = YTPlayer.start_from_last ? YTPlayer.start_from_last : YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
+
       YTPlayer.checkForStartAt = setInterval(function () {
-        
+
+        YTPlayer.player.seekTo(startAt, true);
+
         var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
         if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {
           YTPlayer.start_from_last = null;
@@ -2330,7 +2332,7 @@ var getYTPVideoID = function (url) {
           if (startAt >= 0)
             YTPlayer.player.seekTo(startAt, true);
         }
-      }, 500);
+      }, 100);
       
       return $YTPlayer;
     },

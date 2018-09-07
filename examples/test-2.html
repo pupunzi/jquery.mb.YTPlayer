@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>mb.YTPlayer</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+  <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="../dist/jquery.mb.YTPlayer.js"></script>
+  <script src="assets/apikey.js"></script>
+
+  <style>
+
+    body {
+      border: none;
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      font: normal 16px/20px Lekton, sans-serif;
+    }
+
+    .playerBox {
+      background: #000;
+      height: 800px;
+      width: 100%;
+      position: relative;
+      display: inline-block;
+    }
+
+  </style>
+</head>
+
+<body>
+<div id="wrapper">
+  <div class="playerBox" id="v1" style="background: #252924;"></div>
+  <div style="text-align: center">
+    <button id="playVid"  style="font-size: 40px; margin: 20px" >INIT YTPLAYER</button>
+  </div>
+  <div id="p1" class="player" data-property="{videoURL:'qRSPVj1ldVQ',containment:'#v1', showControls:true, autoPlay:true, loop:2, mute:true, startAt:9, stopAt:100, opacity:1, addRaster:true, quality:'default', playOnlyIfVisible: false}"></div>
+</div>
+<script>
+  function play(){
+    jQuery(".player").YTPlayer();
+  }
+
+  $(function(){
+    /**
+     * Or you can add the event via javascript:
+     */
+    $("#playVid").on("click", play);
+  })
+</script>
+</body>
+</html>

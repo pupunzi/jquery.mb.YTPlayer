@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.5
- Build:  7244
+ Build:  7246
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -54,7 +54,7 @@ var getYTPVideoID = function (url) {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.5",
-    build  : "7244",
+    build  : "7246",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -301,12 +301,27 @@ var getYTPVideoID = function (url) {
     buildPlayer: function (options) {
       
       if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
+
         jQuery("#YTAPI").remove();
         var tag = jQuery("<script></script>").attr({
           "src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
           "id" : "YTAPI"
         });
         jQuery("head").prepend(tag);
+
+
+
+/*
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version;
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+*/
+
+
+
+
       } else {
         setTimeout(function () {
           jQuery(document).trigger("YTAPIReady");

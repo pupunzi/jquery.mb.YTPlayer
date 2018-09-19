@@ -891,8 +891,8 @@ function iOSversion() {
         if (YTPlayer.hasData) {
           
           if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-            var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : (YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium);
-            
+            var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
+                          
             YTPlayer.opt.containment.css({
               background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
               backgroundSize: "cover"

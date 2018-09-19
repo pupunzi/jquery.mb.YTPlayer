@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.5
- Build:  7254
+ Build:  7259
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.5",
-    build  : "7254",
+    build  : "7259",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -888,7 +888,9 @@ function iOSversion() {
         if (YTPlayer.hasData) {
           
           if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-            var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
+            var bgndURL = YTPlayer.opt.coverImage ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
+          
+            console.debug("1",bgndURL);
             
             YTPlayer.opt.containment.css({
               background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
@@ -973,14 +975,17 @@ function iOSversion() {
         
         if (!YTPlayer.opt.autoPlay) {
           // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-          var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
-         // var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
+          var bgndURL = YTPlayer.opt.coverImage ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
           
-          if (bgndURL)
+          if (bgndURL) {
+  
+            console.debug("2",bgndURL);
+            
             YTPlayer.opt.containment.css({
               background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
               backgroundSize: "cover"
             });
+          }
         }
         
         YTPlayer.videoData = null;
@@ -2209,11 +2214,10 @@ function iOSversion() {
 
             YTPlayer.state = 2;
 
-            var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
-            // var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : (YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium);
-
+            var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_background;
+            
             YTPlayer.opt.containment.css({
-              background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
+              background    : bgndURL ,
               backgroundSize: "cover"
             });
 
@@ -2230,9 +2234,9 @@ function iOSversion() {
               
               if (!YTPlayer.isBackground) {
                 if (YTPlayer.opt.coverImage && YTPlayer.isPlayer) {
-                  YTPlayer.opt.coverImage = YTPlayer.opt.coverImage || YTPlayer.orig_background;
+                  var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_background;
                   YTPlayer.opt.containment.css({
-                    background    : "url(" + YTPlayer.opt.coverImage + ") center center",
+                    background    : bgndURL,
                     backgroundSize: "cover"
                   });
                 }
@@ -2371,8 +2375,9 @@ function iOSversion() {
                 } else {
                   YTPlayer.wrapper.css({opacity: 0});
                   setTimeout(function () {
+                    var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_background;
                     YTPlayer.wrapper.css({
-                      background      : "rgba(0,0,0,0.5) url(" + YTPlayer.opt.coverImage + ") center center",
+                      background      : bgndURL,
                       backgroundSize  : "cover",
                       backgroundRepeat: "no-repeat"
                     })

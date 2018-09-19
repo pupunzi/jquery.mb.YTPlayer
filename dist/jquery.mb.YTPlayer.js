@@ -4,11 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.5
-<<<<<<< HEAD
- Build:  7249
-=======
- Build:  7246
->>>>>>> c2ae50dbad43776e22dcb558dcbc1683d2e4cb08
+ Build:  7252
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -65,11 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.5",
-<<<<<<< HEAD
-    build  : "7249",
-=======
-    build  : "7246",
->>>>>>> c2ae50dbad43776e22dcb558dcbc1683d2e4cb08
+    build  : "7252",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -316,27 +308,12 @@ function iOSversion() {
     buildPlayer: function (options) {
       
       if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
-
         jQuery("#YTAPI").remove();
         var tag = jQuery("<script></script>").attr({
           "src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
           "id" : "YTAPI"
         });
         jQuery("head").prepend(tag);
-
-
-
-/*
-        var tag = document.createElement('script');
-
-        tag.src = "https://www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version;
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-*/
-
-
-
-
       } else {
         setTimeout(function () {
           jQuery(document).trigger("YTAPIReady");
@@ -1481,7 +1458,8 @@ function iOSversion() {
       var playBtn = controls.find(".mb_YTPPlayPause");
       playBtn.html(jQuery.mbYTPlayer.controls.pause);
       YTPlayer.state = 1;
-      YTPlayer.orig_background = jQuery(YTPlayer).css("background-image");
+      //YTPlayer.orig_background = jQuery(YTPlayer).css("background-image");
+      YTPlayer.orig_background = YTPlayer.opt.containment.css("background-image");
       
       return this;
     },
@@ -2230,7 +2208,8 @@ function iOSversion() {
 
             YTPlayer.state = 2;
 
-            var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : (YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium);
+            var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
+            // var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : (YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium);
 
             YTPlayer.opt.containment.css({
               background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",

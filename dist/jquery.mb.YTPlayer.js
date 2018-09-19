@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.5
- Build:  7253
+ Build:  7254
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.5",
-    build  : "7253",
+    build  : "7254",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -889,7 +889,7 @@ function iOSversion() {
           
           if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
             var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
-                          
+            
             YTPlayer.opt.containment.css({
               background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
               backgroundSize: "cover"
@@ -973,7 +973,8 @@ function iOSversion() {
         
         if (!YTPlayer.opt.autoPlay) {
           // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-          var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
+          var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
+         // var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
           
           if (bgndURL)
             YTPlayer.opt.containment.css({

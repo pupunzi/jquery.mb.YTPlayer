@@ -892,7 +892,7 @@ function iOSversion() {
           
           if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
             var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
-                          
+            
             YTPlayer.opt.containment.css({
               background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
               backgroundSize: "cover"
@@ -976,7 +976,8 @@ function iOSversion() {
         
         if (!YTPlayer.opt.autoPlay) {
           // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-          var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
+          var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
+         // var bgndURL = YTPlayer.opt.coverImage != "false" ? YTPlayer.opt.coverImage : jQuery.mbYTPlayer.locationProtocol + "//i.ytimg.com/vi/" + YTPlayer.videoID + "/maxresdefault.jpg";
           
           if (bgndURL)
             YTPlayer.opt.containment.css({

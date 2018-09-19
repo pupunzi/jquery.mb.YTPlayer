@@ -322,7 +322,6 @@ function iOSversion() {
         */
 
         var tag = document.createElement('script');
-
         tag.src = "https://www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version;
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -1464,8 +1463,8 @@ function iOSversion() {
       var playBtn = controls.find(".mb_YTPPlayPause");
       playBtn.html(jQuery.mbYTPlayer.controls.pause);
       YTPlayer.state = 1;
-      YTPlayer.orig_background = jQuery(YTPlayer).css("background-image");
 
+      YTPlayer.orig_background = jQuery(YTPlayer).css("background-image");
       return this;
     },
 
@@ -1830,7 +1829,7 @@ function iOSversion() {
       }, YTPlayer.opt.fadeOnStartTime, function () {
         YTPlayer.hasMask = false;
         YTPlayer.overlay.css({
-          backgroundImage   : "",
+          backgroundImage   : "none",
           backgroundRepeat  : "",
           backgroundPosition: "",
           backgroundSize    : ""
@@ -2186,7 +2185,7 @@ function iOSversion() {
                     backgroundSize: "cover"
                   });
                 }
-              } else if (YTPlayer.orig_background) {
+              } else if (YTPlayer.orig_background && YTPlayer.orig_background != "none") {
                 jQuery(YTPlayer).css("background-image", YTPlayer.orig_background);
               }
             });

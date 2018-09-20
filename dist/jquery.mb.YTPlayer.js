@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.5
- Build:  7259
+ Build:  7260
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.5",
-    build  : "7259",
+    build  : "7260",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -406,7 +406,9 @@ function iOSversion() {
         
         YTPlayer.opt.ratio = YTPlayer.opt.ratio === "auto" ? 16 / 9 : YTPlayer.opt.ratio;
         YTPlayer.opt.ratio = eval(YTPlayer.opt.ratio);
-        
+
+        YTPlayer.orig_containment_background = YTPlayer.opt.containment.css("background-image");
+
         if (!$YTPlayer.attr("id"))
           $YTPlayer.attr("id", "ytp_" + new Date().getTime());
         
@@ -888,12 +890,12 @@ function iOSversion() {
         if (YTPlayer.hasData) {
           
           if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-            var bgndURL = YTPlayer.opt.coverImage ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
+            var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
           
             console.debug("1",bgndURL);
             
             YTPlayer.opt.containment.css({
-              background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
+              background    :  bgndURL,
               backgroundSize: "cover"
             });
             
@@ -975,14 +977,12 @@ function iOSversion() {
         
         if (!YTPlayer.opt.autoPlay) {
           // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-          var bgndURL = YTPlayer.opt.coverImage ? YTPlayer.opt.coverImage : YTPlayer.orig_background;
+          var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
           
           if (bgndURL) {
-  
-            console.debug("2",bgndURL);
-            
+
             YTPlayer.opt.containment.css({
-              background    : "rgba(0,0,0,0.5) url(" + bgndURL + ") center center",
+              background    : bgndURL,
               backgroundSize: "cover"
             });
           }
@@ -1464,9 +1464,8 @@ function iOSversion() {
       var playBtn = controls.find(".mb_YTPPlayPause");
       playBtn.html(jQuery.mbYTPlayer.controls.pause);
       YTPlayer.state = 1;
-      //YTPlayer.orig_background = jQuery(YTPlayer).css("background-image");
-      YTPlayer.orig_background = YTPlayer.opt.containment.css("background-image");
-      
+      //YTPlayer.orig_containment_background = jQuery(YTPlayer).css("background-image");
+
       return this;
     },
     
@@ -2214,7 +2213,7 @@ function iOSversion() {
 
             YTPlayer.state = 2;
 
-            var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_background;
+            var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
             
             YTPlayer.opt.containment.css({
               background    : bgndURL ,
@@ -2231,18 +2230,23 @@ function iOSversion() {
               YTPEnd.time = YTPlayer.currentTime;
               jQuery(YTPlayer).trigger(YTPEnd);
               YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
-              
-              if (!YTPlayer.isBackground) {
-                if (YTPlayer.opt.coverImage && YTPlayer.isPlayer) {
-                  var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_background;
+
+
+              // todo: need refactor...
+
+              // if (!YTPlayer.isBackground) {
+              //   if (YTPlayer.opt.coverImage && YTPlayer.isPlayer) {
+                  var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
                   YTPlayer.opt.containment.css({
                     background    : bgndURL,
                     backgroundSize: "cover"
                   });
-                }
-              } else if (YTPlayer.orig_background) {
-                jQuery(YTPlayer).css("background-image", YTPlayer.orig_background);
+                // }
+/*
+              } else if (YTPlayer.orig_containment_background) {
+                jQuery(YTPlayer).css("background-image", YTPlayer.orig_containment_background);
               }
+*/
             });
             return;
           }
@@ -2375,7 +2379,7 @@ function iOSversion() {
                 } else {
                   YTPlayer.wrapper.css({opacity: 0});
                   setTimeout(function () {
-                    var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_background;
+                    var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
                     YTPlayer.wrapper.css({
                       background      : bgndURL,
                       backgroundSize  : "cover",

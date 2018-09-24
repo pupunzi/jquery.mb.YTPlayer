@@ -1064,16 +1064,8 @@ function iOSversion() {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
       
-      /**
-       get the video list from the Youtube playlist passing the ID
-       */
+      /*
       if (typeof videos == "String" && jQuery.mbYTPlayer.apiKey != "") {
-        
-        /**
-         * getVideoListFromYoutube
-         * @param playListID
-         * @param page
-         */
         function getVideoListFromYoutube(playListID, page) {
           page = page || '';
           var youtubeAPI = "https://www.googleapis.com/youtube/v3/playlistItems";
@@ -1095,11 +1087,6 @@ function iOSversion() {
           });
         };
         
-        /**
-         * CreateVideosArray
-         * @param response
-         * @constructor
-         */
         function CreateVideosArray(response) {
           var k = response.items.length;
           for (var i = 0; i < k; i++) {
@@ -1112,9 +1099,9 @@ function iOSversion() {
         
         getVideoListFromYoutube(videos);
         return this;
-        
       }
-      
+      */
+
       YTPlayer.isList = true;
       
       if (shuffle)
@@ -1182,6 +1169,7 @@ function iOSversion() {
         YTPlayer.videoCounter = YTPlayer.videoLength;
       
       var video = YTPlayer.videos[YTPlayer.videoCounter - 1];
+
       jQuery(YTPlayer).YTPChangeVideo(video);
       return this;
     },
@@ -1210,6 +1198,8 @@ function iOSversion() {
       
       if (opt)
         jQuery.extend(YTPlayer.opt, opt);
+
+      console.debug("changeVideo::", YTPlayer.opt);
       
       YTPlayer.videoID = getYTPVideoID(YTPlayer.opt.videoURL).videoID;
       
@@ -1225,7 +1215,9 @@ function iOSversion() {
       }, YTPlayer.opt.fadeOnStartTime, function () {
         
         jQuery.mbYTPlayer.getDataFromAPI(YTPlayer);
-        
+
+        console.debug("YTPGetPlayer::",$YTPlayer.YTPGetPlayer());
+
         $YTPlayer.YTPGetPlayer().loadVideoById({
           videoId         : YTPlayer.videoID,
           // startSeconds: YTPlayer.opt.startAt,
@@ -1252,11 +1244,10 @@ function iOSversion() {
      * @returns {player}
      */
     getPlayer: function () {
-  
-      if (!this.isReady)
-        return this;
-      
-      return this.player;
+      var YTPlayer = this.get(0);
+      if (!YTPlayer.isReady)
+        return null;
+      return YTPlayer.player || null;
     },
     
     /**

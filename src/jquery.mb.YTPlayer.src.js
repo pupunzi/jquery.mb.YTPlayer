@@ -1278,6 +1278,7 @@ function iOSversion() {
      */
     fullscreen: function (real) {
       var YTPlayer = this.get(0);
+
       if (typeof real == "undefined")
         real = eval(YTPlayer.opt.realfullscreen);
       
@@ -1309,9 +1310,12 @@ function iOSversion() {
             }
             jQuery(window).resize();
             jQuery(YTPlayer).trigger("YTPFullScreenEnd");
+
           } else {
+
             jQuery(YTPlayer).YTPSetVideoQuality("default");
             jQuery(YTPlayer).trigger("YTPFullScreenStart");
+
           }
         });
       }

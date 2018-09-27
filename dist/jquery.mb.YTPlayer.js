@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.6
- Build:  7267
+ Build:  7273
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.6",
-    build  : "7267",
+    build  : "7273",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -1275,6 +1275,7 @@ function iOSversion() {
      */
     fullscreen: function (real) {
       var YTPlayer = this.get(0);
+
       if (typeof real == "undefined")
         real = eval(YTPlayer.opt.realfullscreen);
       
@@ -1306,9 +1307,12 @@ function iOSversion() {
             }
             jQuery(window).resize();
             jQuery(YTPlayer).trigger("YTPFullScreenEnd");
+
           } else {
+
             jQuery(YTPlayer).YTPSetVideoQuality("default");
             jQuery(YTPlayer).trigger("YTPFullScreenStart");
+
           }
         });
       }

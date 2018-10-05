@@ -2350,7 +2350,7 @@ function iOSversion() {
           if (!YTPlayer.opt.mute) {
             $YTPlayer.YTPUnmute();
             if (YTPlayer.opt.autoPlay)
-              console.debug("To make the video 'auto-play' you must mute the audio");
+              console.debug("To make the video 'auto-play' you must mute the audio according with the new vendor policy");
           }
           else
             $YTPlayer.YTPMute();

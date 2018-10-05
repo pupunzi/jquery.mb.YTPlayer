@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.6
- Build:  7306
+ Build:  7307
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.6",
-    build  : "7306",
+    build  : "7307",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
 
@@ -2347,7 +2347,7 @@ function iOSversion() {
           if (!YTPlayer.opt.mute) {
             $YTPlayer.YTPUnmute();
             if (YTPlayer.opt.autoPlay)
-              console.debug("To make the video 'auto-play' you must mute the audio");
+              console.debug("To make the video 'auto-play' you must mute the audio according with the new vendor policy");
           }
           else
             $YTPlayer.YTPMute();

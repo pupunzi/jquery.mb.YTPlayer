@@ -2337,18 +2337,23 @@ function iOSversion() {
           if (YTPlayer.opt.addFilters) {
             $YTPlayer.YTPApplyFilters(YTPlayer.opt.addFilters);
           } else {
-            $YTPlayer.YTPApplyFilters({});
+            $YTPlayer.YTPApplyFilters();
           }
           $YTPlayer.YTPEnableFilters();
           var YTPready = jQuery.Event("YTPReady");
           YTPready.time = YTPlayer.currentTime;
-          jQuery(YTPlayer).trigger(YTPready);
+          $YTPlayer.trigger(YTPready);
 
           YTPlayer.state = 2;
-          jQuery(YTPlayer).YTPPause();
+          $YTPlayer.YTPPause();
 
-          if (!YTPlayer.opt.mute)
-            jQuery(YTPlayer).YTPUnmute();
+          if (!YTPlayer.opt.mute) {
+            $YTPlayer.YTPUnmute();
+            if (YTPlayer.opt.autoPlay)
+              console.debug("To make the video 'auto-play' you must mute the audio");
+          }
+          else
+            $YTPlayer.YTPMute();
 
           if (typeof _gaq != "undefined" && eval(YTPlayer.opt.gaTrack))
             _gaq.push(['_trackEvent', 'YTPlayer', 'Play', (YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString())]);
@@ -2361,19 +2366,15 @@ function iOSversion() {
             jQuery(YTPlayer).trigger(YTPStart);
 
             YTPlayer.isStarting = false;
-            $YTPlayer.YTPPlay();
 
             /* Fix for Safari freeze */
             if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari ) {
-
-              $YTPlayer.YTPMute();
-              $YTPlayer.YTPPlay();
-
               jQuery("body").one("mousedown.YTPstart", function(){
-                console.debug("Safari mousedown.YTPstart" );
                 $YTPlayer.YTPPlay();
               });
             }
+
+            $YTPlayer.YTPPlay();
 
           } else {
             YTPlayer.player.pauseVideo();

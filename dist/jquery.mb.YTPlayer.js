@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.6
- Build:  7307
+ Build:  7315
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.6",
-    build  : "7307",
+    build  : "7315",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
 
@@ -2306,22 +2306,23 @@ function iOSversion() {
 
       YTPlayer.preventTrigger = true;
       YTPlayer.state = 2;
-      $YTPlayer.YTPPause();
-      $YTPlayer.YTPMute();
       YTPlayer.preventTrigger = true;
+  
+      YTPlayer.player.mute();
       YTPlayer.player.playVideo();
+      
       YTPlayer.isStarting = true;
 
       var startAt = YTPlayer.start_from_last ? YTPlayer.start_from_last : YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
 
       YTPlayer.checkForStartAt = setInterval(function () {
-
         YTPlayer.player.seekTo(startAt, true);
 
         var canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
         if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {
           YTPlayer.start_from_last = null;
 
+          
           clearInterval(YTPlayer.checkForStartAt);
 
           if (typeof YTPlayer.opt.onReady == "function")
@@ -2345,7 +2346,8 @@ function iOSversion() {
           $YTPlayer.YTPPause();
 
           if (!YTPlayer.opt.mute) {
-            $YTPlayer.YTPUnmute();
+            YTPlayer.player.unMute();
+            // $YTPlayer.YTPUnmute();
             if (YTPlayer.opt.autoPlay)
               console.debug("To make the video 'auto-play' you must mute the audio according with the new vendor policy");
           }

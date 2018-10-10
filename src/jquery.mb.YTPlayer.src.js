@@ -171,7 +171,7 @@ function iOSversion() {
       showControls: true,
 
       /**
-       showControls (string)
+       anchor (string)
        center,top,bottom,left,right combined in pair
        */
       anchor: "center,center",
@@ -407,12 +407,6 @@ function iOSversion() {
          */
         if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
           YTPlayer.opt.opacity = 1;
-
-        /**
-         Manage Fade Time
-         */
-        if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari )
-          YTPlayer.opt.fadeOnStartTime = YTPlayer.opt.fadeOnStartTime;
 
         YTPlayer.opt.containment = YTPlayer.opt.containment === "self" ? $YTPlayer : jQuery(YTPlayer.opt.containment);
         YTPlayer.isRetina = (window.retina || window.devicePixelRatio > 1);
@@ -2363,6 +2357,7 @@ function iOSversion() {
             ga('send', 'event', 'YTPlayer', 'play', (YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString()));
 
           if (YTPlayer.opt.autoPlay) {
+            
             var YTPStart = jQuery.Event("YTPStart");
             YTPStart.time = YTPlayer.currentTime;
             jQuery(YTPlayer).trigger(YTPStart);

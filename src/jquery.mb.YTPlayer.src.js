@@ -240,7 +240,7 @@ function iOSversion() {
        abundance (bool)
        the abudance of the video size
        */
-      abundance: 0.2,
+      abundance: 0.3,
 
       /**
        gaTrack (bool)
@@ -2561,7 +2561,97 @@ function iOSversion() {
       maxWidth  : "initial"
     });
   };
-
+  
+  
+  
+  jQuery.fn.optimizeDisplay = function (anchor) {
+    var YTPlayer = this.get(0);
+    var vid = {};
+    var el = YTPlayer.wrapper;
+    var iframe = jQuery(YTPlayer.playerEl);
+  
+    YTPlayer.opt.anchor = anchor || YTPlayer.opt.anchor;
+    YTPlayer.opt.anchor = typeof YTPlayer.opt.anchor != "undefined " ? YTPlayer.opt.anchor : "center,center";
+    var YTPAlign = YTPlayer.opt.anchor.split(",");
+    
+    if (YTPlayer.opt.optimizeDisplay) {
+      var abundance = el.height() * YTPlayer.opt.abundance;
+      var win = {};
+      win.width = el.outerWidth();
+      win.height = el.outerHeight() + abundance;
+      
+      // TODO why do we need to check for ratio == auto in every method, shouldn't this be handled in buildPlayer()?
+      // The buildPlayer is called once while the ratio could be set each time the changeVideo is called
+      
+      YTPlayer.opt.ratio = YTPlayer.opt.ratio === "auto" ? 16 / 9 : YTPlayer.opt.ratio;
+      YTPlayer.opt.ratio = eval(YTPlayer.opt.ratio);
+      
+      vid.width = win.width + abundance;
+      vid.height = Math.ceil(vid.width / YTPlayer.opt.ratio);
+      vid.marginTop = Math.ceil(-((vid.height - win.height) / 2));
+      vid.marginLeft = -(abundance/2);
+      var lowest = vid.height < win.height;
+      
+      if (lowest) {
+        vid.height = win.height + abundance;
+        vid.width = Math.ceil(vid.height * YTPlayer.opt.ratio);
+        vid.marginTop = -(abundance/2);
+        vid.marginLeft = Math.ceil(-((vid.width - win.width) / 2));
+      }
+      
+      for (var a in YTPAlign) {
+        if (YTPAlign.hasOwnProperty(a)) {
+          var al = YTPAlign[a].replace(/ /g, "");
+          switch (al) {
+            case "top":
+              vid.marginTop = lowest ? -((vid.height - win.height) / 2) : -(abundance/2);
+              break;
+            case "bottom":
+              vid.marginTop = lowest ? -(vid.height - (win.height)) - (abundance/2) : -(vid.height - (win.height));
+              break;
+            case "left":
+              vid.marginLeft = -(abundance/2);
+              break;
+            case "right":
+              vid.marginLeft = lowest ? -(vid.width - win.width) : -(abundance/2);
+              break;
+            default:
+              if (vid.width > win.width)
+                vid.marginLeft = -((vid.width - win.width) / 2);
+              break;
+          }
+        }
+      }
+      
+    } else {
+      vid.width = "100%";
+      vid.height = "100%";
+      vid.marginTop = 0;
+      vid.marginLeft = 0;
+    }
+  
+/*
+    console.debug("YTPAlign", YTPAlign)
+    console.debug("lowest", lowest)
+    console.debug("abundance", abundance)
+    console.debug("vid.width", vid.width)
+    console.debug("vid.height", vid.height)
+    console.debug("vid.marginTop", vid.marginTop)
+    console.debug("vid.marginLeft", vid.marginLeft)
+*/
+    
+    iframe.css({
+      width     : vid.width,
+      height    : vid.height,
+      marginTop : vid.marginTop,
+      marginLeft: vid.marginLeft,
+      maxWidth  : "initial"
+    });
+  };
+  
+  
+  
+  
   /* UTILITIES -----------------------------------------------------------------------------------------------------------------------*/
 
   /**

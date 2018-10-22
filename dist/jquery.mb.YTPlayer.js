@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.8
- Build:  7340
+ Build:  7348
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.8",
-    build  : "7340",
+    build  : "7348",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
 
@@ -237,7 +237,7 @@ function iOSversion() {
        abundance (bool)
        the abudance of the video size
        */
-      abundance: 0.3,
+      abundance: 0.25,
 
       /**
        gaTrack (bool)
@@ -2484,82 +2484,6 @@ function iOSversion() {
    * @param anchor
    * can be center, top, bottom, right, left; (default is center,center)
    */
-  jQuery.fn.optimizeDisplay = function (anchor) {
-    var YTPlayer = this.get(0);
-    var vid = {};
-
-    YTPlayer.opt.anchor = anchor || YTPlayer.opt.anchor;
-    YTPlayer.opt.anchor = typeof YTPlayer.opt.anchor != "undefined " ? YTPlayer.opt.anchor : "center,center";
-    var YTPAlign = YTPlayer.opt.anchor.split(",");
-    var el = YTPlayer.wrapper;
-    var iframe = jQuery(YTPlayer.playerEl);
-
-    if (YTPlayer.opt.optimizeDisplay) {
-      var abundance = iframe.height() * YTPlayer.opt.abundance;
-      var win = {};
-      win.width = el.outerWidth();
-      win.height = el.outerHeight() + abundance;
-
-      // TODO why do we need to check for ratio == auto in every method, shouldn't this be handled in buildPlayer()?
-      // The buildPlayer is called once while the ratio could be set each time the changeVideo is called
-
-      YTPlayer.opt.ratio = YTPlayer.opt.ratio === "auto" ? 16 / 9 : YTPlayer.opt.ratio;
-      YTPlayer.opt.ratio = eval(YTPlayer.opt.ratio);
-
-      vid.width = win.width;
-      vid.height = Math.ceil(vid.width / YTPlayer.opt.ratio);
-      vid.marginTop = Math.ceil(-((vid.height - win.height) / 2));
-      vid.marginLeft = 0;
-      var lowest = vid.height < win.height;
-
-      if (lowest) {
-        vid.height = win.height;
-        vid.width = Math.ceil(vid.height * YTPlayer.opt.ratio);
-        vid.marginTop = 0;
-        vid.marginLeft = Math.ceil(-((vid.width - win.width) / 2));
-      }
-
-      for (var a in YTPAlign) {
-        if (YTPAlign.hasOwnProperty(a)) {
-          var al = YTPAlign[a].replace(/ /g, "");
-          switch (al) {
-            case "top":
-              vid.marginTop = lowest ? -((vid.height - win.height) / 2) : 0;
-              break;
-            case "bottom":
-              vid.marginTop = lowest ? 0 : -(vid.height - (win.height));
-              break;
-            case "left":
-              vid.marginLeft = 0;
-              break;
-            case "right":
-              vid.marginLeft = lowest ? -(vid.width - win.width) : 0;
-              break;
-            default:
-              if (vid.width > win.width)
-                vid.marginLeft = -((vid.width - win.width) / 2);
-              break;
-          }
-        }
-      }
-
-    } else {
-      vid.width = "100%";
-      vid.height = "100%";
-      vid.marginTop = 0;
-      vid.marginLeft = 0;
-    }
-
-    iframe.css({
-      width     : vid.width,
-      height    : vid.height,
-      marginTop : vid.marginTop,
-      marginLeft: vid.marginLeft,
-      maxWidth  : "initial"
-    });
-  };
-  
-  
   
   jQuery.fn.optimizeDisplay = function (anchor) {
     var YTPlayer = this.get(0);
@@ -2576,9 +2500,6 @@ function iOSversion() {
       var win = {};
       win.width = el.outerWidth();
       win.height = el.outerHeight() + abundance;
-      
-      // TODO why do we need to check for ratio == auto in every method, shouldn't this be handled in buildPlayer()?
-      // The buildPlayer is called once while the ratio could be set each time the changeVideo is called
       
       YTPlayer.opt.ratio = YTPlayer.opt.ratio === "auto" ? 16 / 9 : YTPlayer.opt.ratio;
       YTPlayer.opt.ratio = eval(YTPlayer.opt.ratio);
@@ -2601,16 +2522,16 @@ function iOSversion() {
           var al = YTPAlign[a].replace(/ /g, "");
           switch (al) {
             case "top":
-              vid.marginTop = lowest ? -((vid.height - win.height) / 2) : -(abundance/2);
+              vid.marginTop =  -(abundance/2);
               break;
             case "bottom":
-              vid.marginTop = lowest ? -(vid.height - (win.height)) - (abundance/2) : -(vid.height - (win.height));
+              vid.marginTop =  -(vid.height - (win.height)) - (abundance/2) ;
               break;
             case "left":
               vid.marginLeft = -(abundance/2);
               break;
             case "right":
-              vid.marginLeft = lowest ? -(vid.width - win.width) : -(abundance/2);
+              vid.marginLeft =  -(vid.width - win.width) + (abundance/2);
               break;
             default:
               if (vid.width > win.width)
@@ -2628,14 +2549,21 @@ function iOSversion() {
     }
   
 /*
+    console.debug("------------------------")
     console.debug("YTPAlign", YTPAlign)
     console.debug("lowest", lowest)
+    console.debug("------------------------")
     console.debug("abundance", abundance)
+    console.debug("------------------------")
+    console.debug("win.width", win.width)
+    console.debug("win.height", win.height)
+    console.debug("------------------------")
     console.debug("vid.width", vid.width)
     console.debug("vid.height", vid.height)
     console.debug("vid.marginTop", vid.marginTop)
     console.debug("vid.marginLeft", vid.marginLeft)
 */
+
     
     iframe.css({
       width     : vid.width,
@@ -2645,8 +2573,6 @@ function iOSversion() {
       maxWidth  : "initial"
     });
   };
-  
-  
   
   
   /* UTILITIES -----------------------------------------------------------------------------------------------------------------------*/

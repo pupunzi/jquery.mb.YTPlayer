@@ -3,7 +3,7 @@
   "version": "3.2.8",
   "homepage": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer",
   "authors": [
-    "pupunzi <matteo@open-lab.com>"
+    "pupunzi <matbicoc@gmail.com>"
   ],
   "description": "This plugin let you play any public YouTube video as background of your page. It can also be used as a customized player in page.",
   "main": "dist/jquery.mb.YTPlayer.js",
@@ -22,5 +22,5 @@
     "test",
     "tests"
   ],
-  "buildnum": "7340"
+  "buildnum": "7345"
 }

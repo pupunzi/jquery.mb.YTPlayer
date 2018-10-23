@@ -7,7 +7,7 @@
  Build:  {{ buildnum }}
  
  Open Lab s.r.l., Florence - Italy
- email:  matteo@open-lab.com
+ email:  matbicoc@gmail.com
  blog: 	http://pupunzi.open-lab.com
  site: 	http://pupunzi.com
  	http://open-lab.com
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
         banner: '/*' +
         '<%= pkg.title %> <%= grunt.template.today("dd-mm-yyyy") %>\n' +
         ' _ jquery.mb.components \n' +
-        ' _ email: matteo@open-lab.com \n' +
+        ' _ email: matbicoc@gmail.com \n' +
         ' _ Copyright (c) 2001-<%= grunt.template.today("yyyy") %>. Matteo Bicocchi (Pupunzi); \n' +
         ' _ blog: http://pupunzi.open-lab.com \n' +
         ' _ Open Lab s.r.l., Florence - Italy \n' +

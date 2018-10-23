@@ -12,9 +12,9 @@
     "custom"
   ],
   "version": "3.2.8",
-  "author": "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)",
+  "author": "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)",
   "maintainers": [
-    "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)"
+    "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)"
   ],
   "license": "MIT",
   "bugs": {
@@ -51,5 +51,5 @@
   "directories": {
     "example": "examples"
   },
-  "buildnum": "7340"
+  "buildnum": "7345"
 }

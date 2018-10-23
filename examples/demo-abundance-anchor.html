@@ -218,74 +218,39 @@
   <h2 style="color:white">
     An HTML5 Background player
     <br>for YouTube videos</h2>
+  <h2 style="color:white">Discover the Abundance and the Anchor parameters</h2>
 
   <div class="console">
-    <h2 style="color:white">Available controls methods</h2>
-    <button onclick="myPlayer.YTPPause()">YTPPause</button>
-    <button onclick="myPlayer.YTPPlay()">YTPPlay</button>
+
     <button onclick="myPlayer.YTPTogglePlay()">YTPTogglePlay</button>
-    <button onclick="myPlayer.YTPSeekTo(50)">YTPSeekTo(50)</button>
-    <br>
-    <br>
-    <button onclick="myPlayer.YTPMute()">YTPMute</button>
-    <button onclick="myPlayer.YTPUnmute()">YTPUnmute</button>
     <button onclick="myPlayer.YTPToggleVolume()">YTPToggleVolume</button>
-    <button onclick="myPlayer.YTPSetVolume(80)">YTPSetVolume(80)</button>
-    <button onclick="showInfo(myPlayer.YTPGetVolume())">YTPGetVolume()</button>
     <br>
-    <br>
-    <button onclick="showInfo(myPlayer.YTPGetVideoID())">YTPGetVideoID</button>
-    <button onclick="showInfo(myPlayer.YTPGetTime())">YTPGetTime</button>
-    <button onclick="showInfo(myPlayer.YTPGetTotalTime())">YTPGetTotalTime</button>
-    <br>
-    <br>
-    <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAnchor</button>
-    <button onclick="myPlayer.YTPSetAnchor('left,top')">YTPSetAnchor('top/left')</button>
-    <button onclick="myPlayer.YTPSetAnchor('center,center')">YTPSetAnchor('center/center')</button>
-    <button onclick="myPlayer.YTPSetAnchor('right,bottom')">YTPSetAnchor('right/bottom')</button>
-    <br>
-    <br>
-    <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter('grayscale',100)</button>
-    <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter('sepia',100)</button>
-    <a href="demo.html">(Play with filters)</a>
-    <br>
-    <br>
-    <button onclick="myPlayer.YTPAddMask('assets/mask-4.png')">YTPAddMask</button>
-    <button onclick="myPlayer.YTPRemoveMask()">YTPRemoveMask</button>
-    <!--<button onclick="myPlayer.YTPToggleMask()">YTPToggleMask</button>-->
-    <br>
-    <br>
-    <button onclick="myPlayer.YTPFullscreen()">YTPFullscreen</button>
-    <button onclick="console.debug(myPlayer.YTPGetPlayer())">YTPGetPlayer</button>
-    <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>
-    <br>
-    <button>YTPSetAbundance <input type="range" id="abundanceVal"  min="0" max="10" oninput="myPlayer.YTPSetAbundance(jQuery('#abundanceVal').val()/10); jQuery('#abundanceValNumber').html(jQuery('#abundanceVal').val()/10)" /> (<span id="abundanceValNumber"></span>) </button>
+
+    <button>YTPSetAbundance() <input type="range" id="abundanceVal"  min="0" max="100" value="0" oninput="myPlayer.YTPSetAbundance(jQuery('#abundanceVal').val()/100); jQuery('#abundanceValNumber').html(jQuery('#abundanceVal').val()/100)" /> <span id="abundanceValNumber"></span> </button>
     <button onclick="showInfo(myPlayer.YTPGetAbundance())">YTPGetAbundance</button>
+
+    <br>
+    <button >YTPSetAnchor() <select onchange="myPlayer.YTPSetAnchor(jQuery('#anchorVal').val())" id="anchorVal">
+      <option value="center,center" selected>center,center</option>
+      <option value="top,center" >top,center</option>
+      <option value="bottom,center" >bottom,center</option>
+      <option value="bottom,right" >bottom,right</option>
+      <option value="top,right" >top,right</option>
+      <option value="bottom,left" >bottom,left</option>
+      <option value="top,left" >top,left</option>
+    </select></button>    <button onclick="showInfo(myPlayer.YTPGetAnchor())">YTPGetAnchor</button>
 
   </div>
 
   <div id="info"></div>
 
-  <a  id="donate" style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
-    <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
-  </a>
 
   <!--r1xohS2u69E-->
   <!--7SnmCUwOsts-->
   <!--IJNR2EpS0jw-->
-  <a id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:false, startAt:40, stopAt:150, opacity:1, addRaster:true, quality:'hd720', abundance:.3}">My video</a>
+  <a id="bgndVideo" class="player" data-property="{videoURL:'IJNR2EpS0jw',containment:'body', showControls:true, autoPlay:false, loop:true, vol:50, mute:false, startAt:40, stopAt:150, opacity:1, addRaster:true, quality:'hd720', abundance:0}">My video</a>
   <!--BsekcY04xvQ-->
 
 </div>
-
-<div id="wp" onclick="self.location.href='https://pupunzi.com/wpPlus/go-plus.php?plugin_prefix=YTPL'">
-  <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
-  <span>Get the
-            <br>
-            <b>Wordpress</b> Plug-in!</span>
-</div>
-
-
 </body>
-
 </html>

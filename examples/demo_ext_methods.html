@@ -259,8 +259,12 @@
     <button onclick="console.debug(myPlayer.YTPGetPlayer())">YTPGetPlayer</button>
     <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>
     <br>
+    <br>
     <button>YTPSetAbundance <input type="range" id="abundanceVal"  min="0" max="100" oninput="myPlayer.YTPSetAbundance(jQuery('#abundanceVal').val()/100); jQuery('#abundanceValNumber').html(jQuery('#abundanceVal').val()/100)" /> (<span id="abundanceValNumber"></span>) </button>
     <button onclick="showInfo(myPlayer.YTPGetAbundance())">YTPGetAbundance</button>
+    <br>
+    <br>
+    <button><input id="stopMovieOnBlur" checked name="stopMovieOnBlur" type="checkbox" onchange="if($(this).is(':checked')){jQuery('#bgndVideo').YTPSetOption('stopMovieOnBlur', true)} else {jQuery('#bgndVideo').YTPSetOption('stopMovieOnBlur', false)}"> <label for="stopMovieOnBlur" style="color:#fff">stopMovieOnBlur</label></button>
 
   </div>
 

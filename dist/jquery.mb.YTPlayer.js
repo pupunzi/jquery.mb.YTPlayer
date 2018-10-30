@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 16/03/18 20.01
  Version:  3.2.8
- Build:  7347
+ Build:  7349
  
  Open Lab s.r.l., Florence - Italy
  email:  matbicoc@gmail.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name: "jquery.mb.YTPlayer",
     version: "3.2.8",
-    build: "7347",
+    build: "7349",
     author: "Matteo Bicocchi (pupunzi)",
     apiKey: "",
 
@@ -900,7 +900,7 @@ function iOSversion() {
           if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
             var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
 
-            console.debug("1", bgndURL);
+            //console.debug("1", bgndURL);
 
             YTPlayer.opt.containment.css({
               background: bgndURL,
@@ -1204,7 +1204,7 @@ function iOSversion() {
       if (opt)
         jQuery.extend(YTPlayer.opt, opt);
 
-      console.debug("changeVideo::", YTPlayer.opt);
+      //console.debug("changeVideo::", YTPlayer.opt);
 
       YTPlayer.videoID = getYTPVideoID(YTPlayer.opt.videoURL).videoID;
 
@@ -1221,7 +1221,7 @@ function iOSversion() {
 
         jQuery.mbYTPlayer.getDataFromAPI(YTPlayer);
 
-        console.debug("YTPGetPlayer::", $YTPlayer.YTPGetPlayer());
+        //console.debug("YTPGetPlayer::", $YTPlayer.YTPGetPlayer());
 
         $YTPlayer.YTPGetPlayer().loadVideoById({
           videoId: YTPlayer.videoID,
@@ -2607,6 +2607,7 @@ function iOSversion() {
     }
 
 
+/*
     console.debug("YTPAlign", YTPAlign)
     console.debug("lowest", lowest)
     console.debug("abundance", abundance)
@@ -2619,6 +2620,7 @@ function iOSversion() {
     console.debug("----------------------------")
     console.debug("vid.marginTop", vid.marginTop)
     console.debug("vid.marginLeft", vid.marginLeft)
+*/
 
 
     iframe.css({
@@ -2805,7 +2807,7 @@ jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQue
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
- _ email: matbicoc@gmail.com                                                                                                                       _
+ _ email: matteo@open-lab.com                                                                                                                       _
  _ site: http://pupunzi.com                                                                                                                         _
  _       http://open-lab.com                                                                                                                        _
  _ blog: http://pupunzi.open-lab.com                                                                                                                _
@@ -2846,7 +2848,7 @@ jQuery.browser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
- _ email: matbicoc@gmail.com                                                                                                                       _
+ _ email: matteo@open-lab.com                                                                                                                       _
  _ site: http://pupunzi.com                                                                                                                         _
  _       http://open-lab.com                                                                                                                        _
  _ blog: http://pupunzi.open-lab.com                                                                                                                _

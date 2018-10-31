@@ -1,13 +1,13 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
  jquery.mb.components
  
- file: jquery.mb.YTPlayer.src.js
- last modified: 16/03/18 20.01
- Version:  3.2.8
- Build:  7349
+ file: jquery.mb.YTPlayer.js
+ last modified: 10/30/18 11:22 PM
+ Version:  {{ version }}
+ Build:  {{ buildnum }}
  
  Open Lab s.r.l., Florence - Italy
- email:  matbicoc@gmail.com
+ email:  matteo@open-lab.com
  blog: 	http://pupunzi.open-lab.com
  site: 	http://pupunzi.com
  	http://open-lab.com

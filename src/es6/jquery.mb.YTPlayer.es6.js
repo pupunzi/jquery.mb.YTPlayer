@@ -1,23 +1,21 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
  jquery.mb.components
-
- ES6
-
- file: jquery.mb.YTPlayer.src.js
- last modified: 16/03/18 20.01
+ 
+ file: jquery.mb.YTPlayer.es6.js
+ last modified: 10/25/18 8:00 PM
  Version:  {{ version }}
  Build:  {{ buildnum }}
-
+ 
  Open Lab s.r.l., Florence - Italy
- email:  matbicoc@gmail.com
+ email:  matteo@open-lab.com
  blog: 	http://pupunzi.open-lab.com
  site: 	http://pupunzi.com
  	http://open-lab.com
-
+ 
  Licences: MIT, GPL
  http://www.opensource.org/licenses/mit-license.php
  http://www.gnu.org/licenses/gpl.html
-
+ 
  Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 

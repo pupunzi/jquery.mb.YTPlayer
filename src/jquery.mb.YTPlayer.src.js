@@ -2,12 +2,12 @@
  jquery.mb.components
  
  file: jquery.mb.YTPlayer.src.js
- last modified: 16/03/18 20.01
+ last modified: 10/29/18 7:42 PM
  Version:  {{ version }}
  Build:  {{ buildnum }}
  
  Open Lab s.r.l., Florence - Italy
- email:  matbicoc@gmail.com
+ email:  matteo@open-lab.com
  blog: 	http://pupunzi.open-lab.com
  site: 	http://pupunzi.com
  	http://open-lab.com

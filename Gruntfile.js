@@ -2,12 +2,12 @@
  jquery.mb.components
  
  file: Gruntfile.js
- last modified: 31/01/18 12.09
+ last modified: 10/25/18 8:00 PM
  Version:  {{ version }}
  Build:  {{ buildnum }}
  
  Open Lab s.r.l., Florence - Italy
- email:  matbicoc@gmail.com
+ email:  matteo@open-lab.com
  blog: 	http://pupunzi.open-lab.com
  site: 	http://pupunzi.com
  	http://open-lab.com

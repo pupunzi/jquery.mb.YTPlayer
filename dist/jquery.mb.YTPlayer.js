@@ -1,10 +1,10 @@
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
  jquery.mb.components
  
- file: jquery.mb.YTPlayer.js
- last modified: 10/30/18 11:22 PM
- Version:  {{ version }}
- Build:  {{ buildnum }}
+ file: jquery.mb.YTPlayer.src.js
+ last modified: 10/29/18 7:42 PM
+ Version:  3.2.8
+ Build:  7359
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name: "jquery.mb.YTPlayer",
     version: "3.2.8",
-    build: "7349",
+    build: "7359",
     author: "Matteo Bicocchi (pupunzi)",
     apiKey: "",
 
@@ -467,7 +467,20 @@ function iOSversion() {
           width: "100%",
           height: "100%"
         }).addClass("YTPOverlay");
-
+  
+        if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background != "none") {
+          // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
+          var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
+    
+          YTPlayer.opt.containment.css({
+            background: bgndURL,
+            backgroundColor: "#000",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat"
+          });
+    
+        }
+  
         /**
          create the wrapper
          */
@@ -897,17 +910,19 @@ function iOSversion() {
       jQuery(YTPlayer).off("YTPData.YTPlayer").on("YTPData.YTPlayer", function () {
         if (YTPlayer.hasData) {
 
-          if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
+/*
+          if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background != "none") {
+          // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
             var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
-
-            //console.debug("1", bgndURL);
-
             YTPlayer.opt.containment.css({
               background: bgndURL,
-              backgroundSize: "cover"
+              backgroundColor: "#000",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat"
             });
 
           }
+*/
         }
       });
 

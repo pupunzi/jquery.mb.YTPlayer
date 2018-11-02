@@ -470,7 +470,20 @@ function iOSversion() {
           width: "100%",
           height: "100%"
         }).addClass("YTPOverlay");
-
+  
+        if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background != "none") {
+          // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
+          var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
+    
+          YTPlayer.opt.containment.css({
+            background: bgndURL,
+            backgroundColor: "#000",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat"
+          });
+    
+        }
+  
         /**
          create the wrapper
          */
@@ -900,17 +913,19 @@ function iOSversion() {
       jQuery(YTPlayer).off("YTPData.YTPlayer").on("YTPData.YTPlayer", function () {
         if (YTPlayer.hasData) {
 
-          if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
+/*
+          if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background != "none") {
+          // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
             var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
-
-            //console.debug("1", bgndURL);
-
             YTPlayer.opt.containment.css({
               background: bgndURL,
-              backgroundSize: "cover"
+              backgroundColor: "#000",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat"
             });
 
           }
+*/
         }
       });
 

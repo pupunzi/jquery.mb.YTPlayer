@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 11/2/18 7:23 PM
  Version:  3.2.8
- Build:  7362
+ Build:  7369
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name: "jquery.mb.YTPlayer",
     version: "3.2.8",
-    build: "7362",
+    build: "7369",
     author: "Matteo Bicocchi (pupunzi)",
     apiKey: "",
     
@@ -716,7 +716,7 @@ function iOSversion() {
                     return;
                   
                   var state = event.target.getPlayerState();
-                  
+
                   if (YTPlayer.preventTrigger || YTPlayer.isStarting) {
                     YTPlayer.preventTrigger = false;
                     return
@@ -724,7 +724,14 @@ function iOSversion() {
                   
                   YTPlayer.state = state;
                   // console.debug(YTPlayer.state);
-                  
+
+                  if (event.data == YT.PlayerState.PLAYING) {
+                    console.debug('YTPlayer.opt.quality', YTPlayer.opt.quality)
+                    event.target.setPlaybackQuality(YTPlayer.opt.quality);
+                  }
+
+                  console.debug('YTPGetVideoQuality', jQuery(YTPlayer).YTPGetVideoQuality());
+
                   var eventType;
                   switch (state) {
                       
@@ -1053,10 +1060,23 @@ function iOSversion() {
      */
     setVideoQuality: function (quality) {
       var YTPlayer = this.get(0);
+      jQuery(YTPlayer).YTPPause();
+      YTPlayer.opt.quality = quality;
       YTPlayer.player.setPlaybackQuality(quality);
+       jQuery(YTPlayer).YTPPlay();
       return this;
     },
-    
+
+     /**
+     * getVideoQuality
+     * @returns {jQuery.mbYTPlayer}
+     */
+    getVideoQuality: function () {
+      var YTPlayer = this.get(0);
+      var quality = YTPlayer.player.getPlaybackQuality();
+      return quality;
+    },
+
     /**
      * playlist
      * @param videos -> Array or String (videoList ID)
@@ -2705,9 +2725,11 @@ function iOSversion() {
   jQuery.fn.YTPGetVideoData = jQuery.mbYTPlayer.getVideoData;
   jQuery.fn.YTPFullscreen = jQuery.mbYTPlayer.fullscreen;
   jQuery.fn.YTPToggleLoops = jQuery.mbYTPlayer.toggleLoops;
-  jQuery.fn.YTPSetVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
   jQuery.fn.YTPManageProgress = jQuery.mbYTPlayer.manageProgress;
-  
+
+  jQuery.fn.YTPSetVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
+  jQuery.fn.YTPGetVideoQuality = jQuery.mbYTPlayer.getVideoQuality;
+
   jQuery.fn.YTPApplyFilter = jQuery.mbYTPlayer.applyFilter;
   jQuery.fn.YTPApplyFilters = jQuery.mbYTPlayer.applyFilters;
   jQuery.fn.YTPToggleFilter = jQuery.mbYTPlayer.toggleFilter;

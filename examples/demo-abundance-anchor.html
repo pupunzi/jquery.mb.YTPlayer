@@ -227,7 +227,7 @@
     <button onclick="myPlayer.YTPToggleVolume()">YTPToggleVolume</button>
     <br>
 
-    <button>YTPSetAbundance() <input type="range" id="abundanceVal"  min="0" max="100" value="0" oninput="myPlayer.YTPSetAbundance(jQuery('#abundanceVal').val()/100); jQuery('#abundanceValNumber').html(jQuery('#abundanceVal').val()/100)" /> <span id="abundanceValNumber"></span> </button>
+    <button>YTPSetAbundance() <input type="range" id="abundanceVal"  min="0" max="100" value="0" oninput="myPlayer.YTPSetAbundance(jQuery('#abundanceVal').val()/100, true); jQuery('#abundanceValNumber').html(jQuery('#abundanceVal').val()/100)" /> <span id="abundanceValNumber"></span> </button>
     <button onclick="showInfo(myPlayer.YTPGetAbundance())">YTPGetAbundance</button>
 
     <br>

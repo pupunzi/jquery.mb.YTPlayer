@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 11/2/18 7:23 PM
  Version:  3.2.8
- Build:  7398
+ Build:  7411
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.8",
-    build  : "7398",
+    build  : "7411",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -716,7 +716,7 @@ function iOSversion() {
                     return;
                   
                   var state = event.target.getPlayerState();
-                  
+
                   if (YTPlayer.preventTrigger || YTPlayer.isStarting) {
                     YTPlayer.preventTrigger = false;
                     return
@@ -724,7 +724,14 @@ function iOSversion() {
                   
                   YTPlayer.state = state;
                   // console.debug(YTPlayer.state);
-                  
+
+                  if (event.data == YT.PlayerState.PLAYING) {
+                    // console.debug('YTPlayer.opt.quality', YTPlayer.opt.quality)
+                    event.target.setPlaybackQuality(YTPlayer.opt.quality);
+                  }
+
+                  // console.debug('YTPGetVideoQuality', jQuery(YTPlayer).YTPGetVideoQuality());
+
                   var eventType;
                   switch (state) {
                       
@@ -1053,10 +1060,23 @@ function iOSversion() {
      */
     setVideoQuality: function (quality) {
       var YTPlayer = this.get(0);
+      jQuery(YTPlayer).YTPPause();
+      YTPlayer.opt.quality = quality;
       YTPlayer.player.setPlaybackQuality(quality);
+       jQuery(YTPlayer).YTPPlay();
       return this;
     },
-    
+
+     /**
+     * getVideoQuality
+     * @returns {jQuery.mbYTPlayer}
+     */
+    getVideoQuality: function () {
+      var YTPlayer = this.get(0);
+      var quality = YTPlayer.player.getPlaybackQuality();
+      return quality;
+    },
+
     /**
      * playlist
      * @param videos -> Array or String (videoList ID)
@@ -1555,12 +1575,14 @@ function iOSversion() {
      */
     setVolume: function (val) {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
       YTPlayer.opt.vol = val;
+      this.YTPUnmute();
       YTPlayer.player.setVolume(YTPlayer.opt.vol);
-      
+
       if (YTPlayer.volumeBar && YTPlayer.volumeBar.length)
         YTPlayer.volumeBar.updateSliderVal(val);
       
@@ -1637,19 +1659,23 @@ function iOSversion() {
       var YTPlayer = this.get(0);
       if (!YTPlayer.isReady)
         return this;
-      
+
+      // console.debug("unmute::", YTPlayer.isMute,"Vol::", YTPlayer.opt.vol)
+
       if (!YTPlayer.isMute)
         return this;
-      
+
       YTPlayer.player.unMute();
       YTPlayer.isMute = false;
       jQuery(YTPlayer).YTPSetVolume(YTPlayer.opt.vol);
-      if (YTPlayer.volumeBar && YTPlayer.volumeBar.length) YTPlayer.volumeBar.updateSliderVal(YTPlayer.opt.vol > 10 ? YTPlayer.opt.vol : 10);
+      if (YTPlayer.volumeBar && YTPlayer.volumeBar.length)
+        YTPlayer.volumeBar.updateSliderVal(YTPlayer.opt.vol > 10 ? YTPlayer.opt.vol : 10);
       var controls = jQuery("#controlBar_" + YTPlayer.id);
       var muteBtn = controls.find(".mb_YTPMuteUnmute");
       muteBtn.html(jQuery.mbYTPlayer.controls.mute);
       jQuery(YTPlayer).removeClass("isMuted");
-      if (YTPlayer.volumeBar && YTPlayer.volumeBar.length) YTPlayer.volumeBar.removeClass("muted");
+      if (YTPlayer.volumeBar && YTPlayer.volumeBar.length)
+        YTPlayer.volumeBar.removeClass("muted");
       var YTPEvent = jQuery.Event("YTPUnmuted");
       YTPEvent.time = YTPlayer.currentTime;
       
@@ -2097,6 +2123,7 @@ function iOSversion() {
         scale      : 100,
         orientation: "h",
         callback   : function (el) {
+
           if (el.value == 0) {
             jQuery(YTPlayer).YTPMute();
           } else {
@@ -2105,7 +2132,10 @@ function iOSversion() {
           YTPlayer.player.setVolume(el.value);
           if (!YTPlayer.isMute)
             YTPlayer.opt.vol = el.value;
+
+          // console.debug(jQuery(YTPlayer).YTPGetVolume())
         }
+
       });
     },
     
@@ -2353,9 +2383,14 @@ function iOSversion() {
             if (YTPlayer.opt.autoPlay)
               console.debug("To make the video 'auto-play' you must mute the audio according with the new vendor policy");
           }
-          else
+          else{
+            $YTPlayer.YTPMute();
+/*
+            YTPlayer.isMute = true;
             YTPlayer.player.mute();
-          
+*/
+          }
+
           if (typeof _gaq != "undefined" && eval(YTPlayer.opt.gaTrack))
             _gaq.push(['_trackEvent', 'YTPlayer', 'Play', (YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString())]);
           else if (typeof ga != "undefined" && eval(YTPlayer.opt.gaTrack))
@@ -2391,7 +2426,7 @@ function iOSversion() {
               YTPlayer.preventTrigger = true;
               $YTPlayer.YTPPause();
               
-              console.debug("YTPPause");
+              // console.debug("YTPPause");
               
               if (!YTPlayer.isPlayer) {
                 if (!YTPlayer.opt.coverImage) {
@@ -2531,7 +2566,8 @@ function iOSversion() {
       return $YTPlayer;
     }
   };
-  
+
+
   /**
    * optimizeDisplay
    * @param anchor
@@ -2542,81 +2578,66 @@ function iOSversion() {
     var vid = {};
     var el = YTPlayer.wrapper;
     var iframe = jQuery(YTPlayer.playerEl);
-    
+
     YTPlayer.opt.anchor = anchor || YTPlayer.opt.anchor;
+
+    // console.debug(YTPlayer.opt.anchor);
+
     YTPlayer.opt.anchor = typeof YTPlayer.opt.anchor != "undefined " ? YTPlayer.opt.anchor : "center,center";
     var YTPAlign = YTPlayer.opt.anchor.split(",");
     var ab = abundanceX ? abundanceX : YTPlayer.opt.abundance;
+
     if (YTPlayer.opt.optimizeDisplay) {
       var abundance = el.height() * ab;
       var win = {};
       win.width = el.outerWidth();
       win.height = el.outerHeight() + abundance;
-      
+
       YTPlayer.opt.ratio = YTPlayer.opt.ratio === "auto" ? 16 / 9 : YTPlayer.opt.ratio;
       YTPlayer.opt.ratio = eval(YTPlayer.opt.ratio);
-      
+
       vid.width = win.width + abundance;
       vid.height = Math.ceil(vid.width / YTPlayer.opt.ratio);
-      vid.marginTop = Math.ceil(-((vid.height - win.height) / 2));
+      vid.marginTop = Math.ceil(-((vid.height - win.height + abundance) / 2));
       vid.marginLeft = -(abundance / 2);
       var lowest = vid.height < win.height;
-      
+
       if (lowest) {
         vid.height = win.height + abundance;
         vid.width = Math.ceil(vid.height * YTPlayer.opt.ratio);
-        vid.marginTop = -(abundance / 2);
+        vid.marginTop = -(abundance/2);
         vid.marginLeft = Math.ceil(-((vid.width - win.width) / 2));
       }
-      
+
       for (var a in YTPAlign) {
         if (YTPAlign.hasOwnProperty(a)) {
           var al = YTPAlign[a].replace(/ /g, "");
+
           switch (al) {
             case "top":
-              vid.marginTop = -(abundance / 2);
+              vid.marginTop = -abundance;
               break;
             case "bottom":
-              vid.marginTop = Math.ceil(-(vid.height - (win.height)) - (abundance / 2));
+              vid.marginTop = Math.ceil( -(vid.height - win.height) - (abundance / 2) );
               break;
             case "left":
-              vid.marginLeft = -(abundance / 2);
+              vid.marginLeft = -(abundance);
               break;
             case "right":
               vid.marginLeft = Math.ceil(-(vid.width - win.width) + (abundance / 2));
               break;
-            default:
-              if (vid.width > win.width)
-                vid.marginLeft = -((vid.width - win.width) / 2) + (abundance / 2);
-              break;
           }
+
         }
       }
-      
+
     } else {
       vid.width = "100%";
       vid.height = "100%";
       vid.marginTop = 0;
       vid.marginLeft = 0;
     }
-    
-    
-    /*
-        console.debug("YTPAlign", YTPAlign)
-        console.debug("lowest", lowest)
-        console.debug("abundance", abundance)
-        console.debug("----------------------------")
-        console.debug("vid.width", vid.width)
-        console.debug("vid.height", vid.height)
-        console.debug("----------------------------")
-        console.debug("win.width", win.width)
-        console.debug("win.height", win.height)
-        console.debug("----------------------------")
-        console.debug("vid.marginTop", vid.marginTop)
-        console.debug("vid.marginLeft", vid.marginLeft)
-    */
-    
-    
+
     iframe.css({
       width     : vid.width,
       height    : vid.height,
@@ -2624,6 +2645,8 @@ function iOSversion() {
       marginLeft: vid.marginLeft,
       maxWidth  : "initial"
     });
+
+
   };
   
   
@@ -2695,9 +2718,11 @@ function iOSversion() {
   jQuery.fn.YTPGetVideoData = jQuery.mbYTPlayer.getVideoData;
   jQuery.fn.YTPFullscreen = jQuery.mbYTPlayer.fullscreen;
   jQuery.fn.YTPToggleLoops = jQuery.mbYTPlayer.toggleLoops;
-  jQuery.fn.YTPSetVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
   jQuery.fn.YTPManageProgress = jQuery.mbYTPlayer.manageProgress;
-  
+
+  jQuery.fn.YTPSetVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
+  jQuery.fn.YTPGetVideoQuality = jQuery.mbYTPlayer.getVideoQuality;
+
   jQuery.fn.YTPApplyFilter = jQuery.mbYTPlayer.applyFilter;
   jQuery.fn.YTPApplyFilters = jQuery.mbYTPlayer.applyFilters;
   jQuery.fn.YTPToggleFilter = jQuery.mbYTPlayer.toggleFilter;

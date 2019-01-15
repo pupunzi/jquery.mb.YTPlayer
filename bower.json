@@ -1,6 +1,6 @@
 {
   "name": "jquery.mb.ytplayer",
-  "version": "3.2.8",
+  "version": "3.2.9",
   "homepage": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer",
   "authors": [
     "pupunzi <matbicoc@gmail.com>"
@@ -22,5 +22,5 @@
     "test",
     "tests"
   ],
-  "buildnum": "7411"
+  "buildnum": "7413"
 }

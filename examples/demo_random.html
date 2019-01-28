@@ -90,6 +90,10 @@
             var myPlayer = jQuery(".player").YTPlayer();
         });
 
+        var videos = ["VuaJAgx0x_4", "3ovA7zeviRo", "u9k1FaMIYTs", "bkCg84XgBUg", "UJQmV8aPNao"];
+        //Define the random video to be passed to the initialization call
+        var rndVideo = videos[Math.floor(Math.random() * videos.length)];
+
     </script>
 </head>
 <body>
@@ -99,10 +103,7 @@
     <h2>Random video from a list.</h2>
     <h2>Each time you reload the page a video is randomly selected.</h2>
 </div>
-<script>
-    var videos = ["VuaJAgx0x_4", "3ovA7zeviRo", "u9k1FaMIYTs", "bkCg84XgBUg", "UJQmV8aPNao"];
-    var rndVideo = videos[Math.floor(Math.random() * videos.length)];
-</script>
+
 <a class="player" data-property="{videoURL:rndVideo,containment:'body',autoPlay:true, mute:true, startAt:0,opacity:1,ratio:'4/3', addRaster:true}">My video</a>
 
 <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">

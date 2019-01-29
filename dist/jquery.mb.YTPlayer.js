@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 11/2/18 7:23 PM
  Version:  3.2.9
- Build:  7413
+ Build:  7414
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.9",
-    build  : "7413",
+    build  : "7414",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -2032,7 +2032,7 @@ function iOSversion() {
       YTPlayer.opt.showYTLogo = YTPlayer.opt.showYTLogo || YTPlayer.opt.printUrl;
       if (jQuery("#controlBar_" + YTPlayer.id).length)
         return;
-      YTPlayer.controlBar = jQuery("<span/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTPBar").css({
+      YTPlayer.controlBar = jQuery("<div/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTPBar").css({
         whiteSpace: "noWrap",
         position  : YTPlayer.isBackground ? "fixed" : "absolute",
         zIndex    : YTPlayer.isBackground ? 10000 : 1000

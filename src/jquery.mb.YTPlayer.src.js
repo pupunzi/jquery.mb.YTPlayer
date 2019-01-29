@@ -2035,7 +2035,7 @@ function iOSversion() {
       YTPlayer.opt.showYTLogo = YTPlayer.opt.showYTLogo || YTPlayer.opt.printUrl;
       if (jQuery("#controlBar_" + YTPlayer.id).length)
         return;
-      YTPlayer.controlBar = jQuery("<span/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTPBar").css({
+      YTPlayer.controlBar = jQuery("<div/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTPBar").css({
         whiteSpace: "noWrap",
         position  : YTPlayer.isBackground ? "fixed" : "absolute",
         zIndex    : YTPlayer.isBackground ? 10000 : 1000

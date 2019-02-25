@@ -228,7 +228,7 @@ function iOSversion() {
        realfullscreen (bool)
        the video when in full screen covers all the display
        */
-      realfullscreen: true,
+      realFullscreen: true,
       
       /**
        optimizeDisplay (bool)
@@ -389,7 +389,7 @@ function iOSversion() {
          Disable fullScreen if is in an iframe or full-screen API is not available
          */
         var fullScreenAvailable = document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled;
-        YTPlayer.opt.realfullscreen = isIframe() || !fullScreenAvailable ? false : YTPlayer.opt.realfullscreen;
+        YTPlayer.opt.realFullscreen = isIframe() || !fullScreenAvailable ? false : YTPlayer.opt.realFullscreen;
         
         /**
          Manage annotations
@@ -1312,7 +1312,7 @@ function iOSversion() {
       var YTPlayer = this.get(0);
       
       if (typeof real == "undefined")
-        real = eval(YTPlayer.opt.realfullscreen);
+        real = eval(YTPlayer.opt.realFullscreen);
       
       var controls = jQuery("#controlBar_" + YTPlayer.id);
       var fullScreenBtn = controls.find(".mb_OnlyYT");
@@ -2076,7 +2076,7 @@ function iOSversion() {
       });
       var onlyVideo = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.onlyYT).addClass("mb_OnlyYT ytpicon").on("click", function (e) {
         e.stopPropagation();
-        jQuery(YTPlayer).YTPFullscreen(YTPlayer.opt.realfullscreen);
+        jQuery(YTPlayer).YTPFullscreen(YTPlayer.opt.realFullscreen);
       });
       var progressBar = jQuery("<div/>").addClass("mb_YTPProgress").css("position", "absolute").on("click", function (e) {
         e.stopPropagation();
@@ -2106,7 +2106,7 @@ function iOSversion() {
       /**
        * Full screen button
        */
-      if (YTPlayer.isBackground || (eval(YTPlayer.opt.realfullscreen) && !YTPlayer.isBackground))
+      if (YTPlayer.isBackground || (eval(YTPlayer.opt.realFullscreen) && !YTPlayer.isBackground))
         buttonBar.append(onlyVideo);
       
       YTPlayer.controlBar.append(buttonBar).append(progressBar);

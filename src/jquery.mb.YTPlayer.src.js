@@ -1148,7 +1148,7 @@ function iOSversion() {
       }
       
       if (typeof callback == "function")
-        jQuery(YTPlayer).one("YTPChanged", function () {
+        jQuery(YTPlayer).on("YTPChanged", function () {
           callback(YTPlayer);
         });
       

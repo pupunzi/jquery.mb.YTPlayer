@@ -94,7 +94,7 @@ function iOSversion() {
        fadeOnStartTime (int)
        fade in timing at video start
        */
-      fadeOnStartTime: 1500,
+      fadeOnStartTime: 1000,
       
       /**
        startAt (int)
@@ -265,15 +265,13 @@ function iOSversion() {
        onReady (function)
        a callback function fired once the player is ready
        */
-      onReady: function (player) {
-      },
+      onReady: function (player) {},
       
       /**
        onReady (function)
        a callback function fired if there's an error
        */
-      onError: function (player, err) {
-      }
+      onError: function (player, err) {}
     },
     /**
      *  @fontface icons
@@ -314,7 +312,7 @@ function iOSversion() {
       
       if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
         jQuery("#YTAPI").remove();
-        var tag = jQuery("<script></script>").attr({
+        var tag = jQuery("<script>").attr({
           "src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
           "id" : "YTAPI"
         });
@@ -335,6 +333,8 @@ function iOSversion() {
         }
         return isIfr;
       };
+
+
       
       //console.time( "YTPlayerInit" );
       
@@ -2235,7 +2235,7 @@ function iOSversion() {
             YTPlayer.volumeBar.updateSliderVal(YTPlayer.opt.vol);
         }
         // the video is ended
-        if (YTPlayer.player.getPlayerState() > 0 && ((parseFloat(YTPlayer.player.getDuration() - .5) < YTPlayer.player.getCurrentTime()) || (stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) >= stopAt))) {
+        if (YTPlayer.player.getPlayerState() > 0 && ((parseFloat(YTPlayer.player.getDuration() - (YTPlayer.opt.fadeOnStartTime / 1000)) < YTPlayer.player.getCurrentTime()) || (stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) >= stopAt))) {
           
           if (YTPlayer.isEnded)
             return;

@@ -2173,6 +2173,7 @@ function iOSversion() {
         
         var stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
         stopAt = stopAt < YTPlayer.player.getDuration() ? stopAt : 0;
+
         if (YTPlayer.currentTime != prog.currentTime) {
           var YTPEvent = jQuery.Event("YTPTime");
           YTPEvent.time = YTPlayer.currentTime;
@@ -2234,12 +2235,13 @@ function iOSversion() {
             YTPlayer.volumeBar.updateSliderVal(YTPlayer.opt.vol);
         }
         // the video is ended
-        if (YTPlayer.player.getPlayerState() > 0 && ((parseFloat(YTPlayer.player.getDuration() - .5) < YTPlayer.player.getCurrentTime()) || (stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) > stopAt))) {
+        if (YTPlayer.player.getPlayerState() > 0 && ((parseFloat(YTPlayer.player.getDuration() - .5) < YTPlayer.player.getCurrentTime()) || (stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) >= stopAt))) {
           
           if (YTPlayer.isEnded)
             return;
           
           YTPlayer.isEnded = true;
+
           setTimeout(function () {
             YTPlayer.isEnded = false
           }, 1000);

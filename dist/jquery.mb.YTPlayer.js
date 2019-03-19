@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 11/2/18 7:23 PM
  Version:  3.2.9
- Build:  7420
+ Build:  7421
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -13,8 +13,8 @@
  	http://open-lab.com
  
  Licences: MIT, GPL
- http://www.opensource.org/licenses/mit-license.php
- http://www.gnu.org/licenses/gpl.html
+ https://www.opensource.org/licenses/mit-license.php
+ https://www.gnu.org/licenses/gpl.html
  
  Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.9",
-    build  : "7420",
+    build  : "7421",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -310,7 +310,7 @@ function iOSversion() {
       if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
         jQuery("#YTAPI").remove();
         var tag = jQuery("<script>").attr({
-          "src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
+          "src": "https://www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
           "id" : "YTAPI"
         });
         jQuery("head").prepend(tag);
@@ -330,6 +330,8 @@ function iOSversion() {
         }
         return isIfr;
       };
+
+
       
       //console.time( "YTPlayerInit" );
       
@@ -948,7 +950,7 @@ function iOSversion() {
          * Get video info from API3 (needs api key)
          * snippet,player,contentDetails,statistics,status
          */
-        jQuery.getJSON(jQuery.mbYTPlayer.locationProtocol + "//www.googleapis.com/youtube/v3/videos?id=" + YTPlayer.videoID + "&key=" + jQuery.mbYTPlayer.apiKey + "&part=snippet", function (data) {
+        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?id=" + YTPlayer.videoID + "&key=" + jQuery.mbYTPlayer.apiKey + "&part=snippet", function (data) {
           YTPlayer.dataReceived = true;
           
           var YTPChanged = jQuery.Event("YTPChanged");
@@ -2065,7 +2067,7 @@ function iOSversion() {
        * */
       var idx = jQuery("<span/>").addClass("mb_YTPTime");
       var vURL = YTPlayer.opt.videoURL ? YTPlayer.opt.videoURL : "";
-      if (vURL.indexOf("http") < 0) vURL = jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/watch?v=" + YTPlayer.opt.videoURL;
+      if (vURL.indexOf("http") < 0) vURL = "https://www.youtube.com/watch?v=" + YTPlayer.opt.videoURL;
       var movieUrl = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.ytLogo).addClass("mb_YTPUrl ytpicon").attr("title", "view on YouTube").on("click", function () {
         window.open(vURL, "viewOnYT")
       });

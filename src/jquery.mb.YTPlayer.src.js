@@ -13,8 +13,8 @@
  	http://open-lab.com
  
  Licences: MIT, GPL
- http://www.opensource.org/licenses/mit-license.php
- http://www.gnu.org/licenses/gpl.html
+ https://www.opensource.org/licenses/mit-license.php
+ https://www.gnu.org/licenses/gpl.html
  
  Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -94,7 +94,7 @@ function iOSversion() {
        fadeOnStartTime (int)
        fade in timing at video start
        */
-      fadeOnStartTime: 1500,
+      fadeOnStartTime: 1000,
       
       /**
        startAt (int)
@@ -265,15 +265,13 @@ function iOSversion() {
        onReady (function)
        a callback function fired once the player is ready
        */
-      onReady: function (player) {
-      },
+      onReady: function (player) {},
       
       /**
        onReady (function)
        a callback function fired if there's an error
        */
-      onError: function (player, err) {
-      }
+      onError: function (player, err) {}
     },
     /**
      *  @fontface icons
@@ -314,8 +312,8 @@ function iOSversion() {
       
       if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
         jQuery("#YTAPI").remove();
-        var tag = jQuery("<script></script>").attr({
-          "src": jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
+        var tag = jQuery("<script>").attr({
+          "src": "https://www.youtube.com/iframe_api?v=" + jQuery.mbYTPlayer.version,
           "id" : "YTAPI"
         });
         jQuery("head").prepend(tag);
@@ -335,6 +333,8 @@ function iOSversion() {
         }
         return isIfr;
       };
+
+
       
       //console.time( "YTPlayerInit" );
       
@@ -931,7 +931,7 @@ function iOSversion() {
          * Get video info from API3 (needs api key)
          * snippet,player,contentDetails,statistics,status
          */
-        jQuery.getJSON(jQuery.mbYTPlayer.locationProtocol + "//www.googleapis.com/youtube/v3/videos?id=" + YTPlayer.videoID + "&key=" + jQuery.mbYTPlayer.apiKey + "&part=snippet", function (data) {
+        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?id=" + YTPlayer.videoID + "&key=" + jQuery.mbYTPlayer.apiKey + "&part=snippet", function (data) {
           YTPlayer.dataReceived = true;
           
           var YTPChanged = jQuery.Event("YTPChanged");
@@ -1111,7 +1111,7 @@ function iOSversion() {
       }
       
       if (typeof callback == "function")
-        jQuery(YTPlayer).one("YTPChanged", function () {
+        jQuery(YTPlayer).on("YTPChanged", function () {
           callback(YTPlayer);
         });
       
@@ -2033,7 +2033,7 @@ function iOSversion() {
        * */
       var idx = jQuery("<span/>").addClass("mb_YTPTime");
       var vURL = YTPlayer.opt.videoURL ? YTPlayer.opt.videoURL : "";
-      if (vURL.indexOf("http") < 0) vURL = jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/watch?v=" + YTPlayer.opt.videoURL;
+      if (vURL.indexOf("http") < 0) vURL = "https://www.youtube.com/watch?v=" + YTPlayer.opt.videoURL;
       var movieUrl = jQuery("<span/>").html(jQuery.mbYTPlayer.controls.ytLogo).addClass("mb_YTPUrl ytpicon").attr("title", "view on YouTube").on("click", function () {
         window.open(vURL, "viewOnYT")
       });
@@ -2136,6 +2136,7 @@ function iOSversion() {
         
         var stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
         stopAt = stopAt < YTPlayer.player.getDuration() ? stopAt : 0;
+
         if (YTPlayer.currentTime != prog.currentTime) {
           var YTPEvent = jQuery.Event("YTPTime");
           YTPEvent.time = YTPlayer.currentTime;
@@ -2197,12 +2198,13 @@ function iOSversion() {
             YTPlayer.volumeBar.updateSliderVal(YTPlayer.opt.vol);
         }
         // the video is ended
-        if (YTPlayer.player.getPlayerState() > 0 && ((parseFloat(YTPlayer.player.getDuration() - .5) < YTPlayer.player.getCurrentTime()) || (stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) > stopAt))) {
+        if (YTPlayer.player.getPlayerState() > 0 && ((parseFloat(YTPlayer.player.getDuration() - (YTPlayer.opt.fadeOnStartTime / 1000)) < YTPlayer.player.getCurrentTime()) || (stopAt > 0 && parseFloat(YTPlayer.player.getCurrentTime()) >= stopAt))) {
           
           if (YTPlayer.isEnded)
             return;
           
           YTPlayer.isEnded = true;
+
           setTimeout(function () {
             YTPlayer.isEnded = false
           }, 1000);

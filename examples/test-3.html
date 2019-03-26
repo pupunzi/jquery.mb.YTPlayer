@@ -26,9 +26,11 @@
 
   <link href='https://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
   <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.mb.ytplayer@3.2.9/dist/css/jquery.mb.YTPlayer.min.css">-->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="../dist/jquery.mb.YTPlayer.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/jquery.mb.ytplayer@3.2.9/dist/jquery.mb.YTPlayer.min.js"></script>-->
   <script src="assets/apikey.js"></script>
 
   <style>
@@ -56,14 +58,22 @@
 <body>
 <!--<div class="playerBox" id="v1" style="background: #7698c6;"></div>-->
 
-<div id="wrapper">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/Zry1ilxCmvA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div id="wrapper" style="height: 50vh">
+
 </div>
 <!--https://www.youtube.com/watch?v=Zry1ilxCmvA-->
 <div id="p1" class="player" data-property="{videoURL:'qRSPVj1ldVQ', ratio:16/9, abundance:.3, anchor:'center,center', containment:'body', showControls:true, autoPlay:true, loop:true, mute:true, opacity:1, addRaster:true, quality:'default'}"></div>
 
 <script>
-  jQuery(".player").YTPlayer();
+  //jQuery(".player").YTPlayer();
+
+  var videos = [{ videoURL:'koxqaR1YtJE', containment:'#wrapper', showControls:true, startAt: 0, autoPlay:true, loop:false , mute:true, opacity:1}, { videoURL:'EzKImzjwGyM', containment:'#wrapper', showControls:false, startAt: 0, autoPlay:true, loop:false , mute:true, opacity:1 }]
+
+  jQuery(".player").YTPlaylist(videos, false, function(video){
+    console.log('Video changed', video.videoData);
+    console.log('Video:',video.id, video.opt);
+  });
+
 </script>
 </body>
 </html>

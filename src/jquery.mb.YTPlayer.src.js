@@ -1240,8 +1240,10 @@ function iOSversion() {
      */
     getPlayer: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return null;
+
       return YTPlayer.player || null;
     },
     
@@ -1251,6 +1253,7 @@ function iOSversion() {
      */
     playerDestroy: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1473,6 +1476,7 @@ function iOSversion() {
      */
     togglePlay: function (callback) {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1493,6 +1497,7 @@ function iOSversion() {
      */
     stop: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1509,6 +1514,7 @@ function iOSversion() {
      */
     pause: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1527,6 +1533,7 @@ function iOSversion() {
      */
     seekTo: function (sec) {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1560,6 +1567,7 @@ function iOSversion() {
      */
     getVolume: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1573,6 +1581,7 @@ function iOSversion() {
     toggleVolume: function () {
       
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1592,6 +1601,7 @@ function iOSversion() {
      */
     mute: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1623,6 +1633,7 @@ function iOSversion() {
      */
     unmute: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
 
@@ -1662,6 +1673,7 @@ function iOSversion() {
     applyFilter: function (filter, value) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1678,9 +1690,7 @@ function iOSversion() {
     applyFilters: function (filters) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
-      if (!YTPlayer.isReady)
-        return this;
-      
+
       if (!YTPlayer.isReady) {
         jQuery(YTPlayer).on("YTPReady", function () {
           $YTPlayer.YTPApplyFilters(filters);
@@ -1704,6 +1714,7 @@ function iOSversion() {
     toggleFilter: function (filter, value) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1726,6 +1737,7 @@ function iOSversion() {
     toggleFilters: function (callback) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1749,6 +1761,7 @@ function iOSversion() {
     disableFilters: function () {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1767,6 +1780,7 @@ function iOSversion() {
     enableFilters: function () {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1792,6 +1806,7 @@ function iOSversion() {
     removeFilter: function (filter, callback) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1827,6 +1842,7 @@ function iOSversion() {
      */
     getFilters: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1842,9 +1858,12 @@ function iOSversion() {
      */
     addMask: function (mask) {
       var YTPlayer = this.get(0);
+
+/*
       if (!YTPlayer.isReady)
         return this;
-      
+*/
+
       if (!mask)
         mask = YTPlayer.actualMask;
       
@@ -1875,9 +1894,12 @@ function iOSversion() {
      */
     removeMask: function () {
       var YTPlayer = this.get(0);
+
+/*
       if (!YTPlayer.isReady)
         return this;
-      
+*/
+
       YTPlayer.overlay.CSSAnimate({
         opacity: 0
       }, YTPlayer.opt.fadeOnStartTime, function () {
@@ -1902,23 +1924,36 @@ function iOSversion() {
      */
     applyMask: function (YTPlayer) {
       var $YTPlayer = jQuery(YTPlayer);
+
+/*
       if (!YTPlayer.isReady)
         return this;
-      
+*/
+
       $YTPlayer.off("YTPTime.mask");
-      
+
       if (YTPlayer.opt.mask) {
         if (typeof YTPlayer.opt.mask == "string") {
+
           $YTPlayer.YTPAddMask(YTPlayer.opt.mask);
           YTPlayer.actualMask = YTPlayer.opt.mask;
+
         } else if (typeof YTPlayer.opt.mask == "object") {
+
+          console.debug(YTPlayer.opt.mask);
+
           for (var time in YTPlayer.opt.mask) {
+
             if (YTPlayer.opt.mask[time])
               var img = jQuery("<img/>").attr("src", YTPlayer.opt.mask[time]);
+
           }
+
           if (YTPlayer.opt.mask[0])
             $YTPlayer.YTPAddMask(YTPlayer.opt.mask[0]);
+
           $YTPlayer.on("YTPTime.mask", function (e) {
+
             for (var time in YTPlayer.opt.mask) {
               if (e.time == time)
                 if (!YTPlayer.opt.mask[time]) {
@@ -1939,9 +1974,12 @@ function iOSversion() {
      */
     toggleMask: function () {
       var YTPlayer = this.get(0);
+
+/*
       if (!YTPlayer.isReady)
         return this;
-      
+*/
+
       var $YTPlayer = jQuery(YTPlayer);
       if (YTPlayer.hasMask)
         $YTPlayer.YTPRemoveMask();
@@ -2350,9 +2388,14 @@ function iOSversion() {
           YTPlayer.state = 2;
           
           if (!YTPlayer.opt.mute) {
-            YTPlayer.player.unMute();
-            if (YTPlayer.opt.autoPlay)
+
+            if (YTPlayer.opt.autoPlay){
               console.debug("To make the video 'auto-play' you must mute the audio according with the latest vendor policy");
+              YTPlayer.player.mute();
+            }
+
+            YTPlayer.player.unMute();
+
           }
           else{
             $YTPlayer.YTPMute();
@@ -2377,7 +2420,6 @@ function iOSversion() {
                 $YTPlayer.YTPPlay();
               });
             }
-            
             $YTPlayer.YTPPlay();
             
           } else {
@@ -2391,9 +2433,7 @@ function iOSversion() {
             setTimeout(function () {
               YTPlayer.preventTrigger = true;
               $YTPlayer.YTPPause();
-              
-              // console.debug("YTPPause");
-              
+
               if (!YTPlayer.isPlayer) {
                 if (!YTPlayer.opt.coverImage) {
                   jQuery(YTPlayer.playerEl).CSSAnimate({

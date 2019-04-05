@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 11/2/18 7:23 PM
  Version:  3.2.9
- Build:  7421
+ Build:  7429
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -61,7 +61,7 @@ function iOSversion() {
   jQuery.mbYTPlayer = {
     name   : "jquery.mb.YTPlayer",
     version: "3.2.9",
-    build  : "7421",
+    build  : "7429",
     author : "Matteo Bicocchi (pupunzi)",
     apiKey : "",
     
@@ -404,6 +404,7 @@ function iOSversion() {
         YTPlayer.opt.coverImage = YTPlayer.opt.coverImage || YTPlayer.opt.backgroundImage;
         
         /**
+         * todo: remove
          Manage Opacity for IE < 10
          */
         if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
@@ -468,17 +469,14 @@ function iOSversion() {
           height  : "100%"
         }).addClass("YTPOverlay");
         
-        if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background != "none") {
-          // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
+        if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background) {
           var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
-          
           YTPlayer.opt.containment.css({
             background      : bgndURL,
             backgroundColor : "#000",
             backgroundSize  : "cover",
             backgroundRepeat: "no-repeat"
           });
-          
         }
         
         /**
@@ -903,28 +901,8 @@ function iOSversion() {
      */
     getDataFromAPI: function (YTPlayer) {
       
-      //console.debug("getDataFromAPI", YTPlayer.id, YTPlayer.videoID)
-      
       YTPlayer.videoData = jQuery.mbStorage.get("YTPlayer_data_" + YTPlayer.videoID);
-      /*
-            jQuery(YTPlayer).off("YTPData.YTPlayer").on("YTPData.YTPlayer", function () {
-              if (YTPlayer.hasData) {
-                if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background != "none") {
-                  // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-                  var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
-                  YTPlayer.opt.containment.css({
-                    background: bgndURL,
-                    backgroundColor: "#000",
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat"
-                  });
-                }
-              }
-            });
-      */
-      
       if (YTPlayer.videoData) {
-        
         setTimeout(function () {
           YTPlayer.dataReceived = true;
           
@@ -992,21 +970,6 @@ function iOSversion() {
           YTPChanged.videoId = YTPlayer.videoID;
           jQuery(YTPlayer).trigger(YTPChanged);
         }, 10);
-        
-        /*
-                if (!YTPlayer.opt.autoPlay) {
-                  // if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
-                  var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
-                  
-                  if (bgndURL) {
-                    
-                    YTPlayer.opt.containment.css({
-                      background: bgndURL,
-                      backgroundSize: "cover"
-                    });
-                  }
-                }
-        */
         YTPlayer.videoData = null;
         
       }
@@ -1274,8 +1237,10 @@ function iOSversion() {
      */
     getPlayer: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return null;
+
       return YTPlayer.player || null;
     },
     
@@ -1285,6 +1250,7 @@ function iOSversion() {
      */
     playerDestroy: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1507,6 +1473,7 @@ function iOSversion() {
      */
     togglePlay: function (callback) {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1527,6 +1494,7 @@ function iOSversion() {
      */
     stop: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1543,6 +1511,7 @@ function iOSversion() {
      */
     pause: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1561,6 +1530,7 @@ function iOSversion() {
      */
     seekTo: function (sec) {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1594,6 +1564,7 @@ function iOSversion() {
      */
     getVolume: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1607,6 +1578,7 @@ function iOSversion() {
     toggleVolume: function () {
       
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1626,6 +1598,7 @@ function iOSversion() {
      */
     mute: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1657,6 +1630,7 @@ function iOSversion() {
      */
     unmute: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
 
@@ -1696,6 +1670,7 @@ function iOSversion() {
     applyFilter: function (filter, value) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1712,9 +1687,7 @@ function iOSversion() {
     applyFilters: function (filters) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
-      if (!YTPlayer.isReady)
-        return this;
-      
+
       if (!YTPlayer.isReady) {
         jQuery(YTPlayer).on("YTPReady", function () {
           $YTPlayer.YTPApplyFilters(filters);
@@ -1738,6 +1711,7 @@ function iOSversion() {
     toggleFilter: function (filter, value) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1760,6 +1734,7 @@ function iOSversion() {
     toggleFilters: function (callback) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1783,6 +1758,7 @@ function iOSversion() {
     disableFilters: function () {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1801,6 +1777,7 @@ function iOSversion() {
     enableFilters: function () {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1826,6 +1803,7 @@ function iOSversion() {
     removeFilter: function (filter, callback) {
       var $YTPlayer = this;
       var YTPlayer = $YTPlayer.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1861,6 +1839,7 @@ function iOSversion() {
      */
     getFilters: function () {
       var YTPlayer = this.get(0);
+
       if (!YTPlayer.isReady)
         return this;
       
@@ -1876,9 +1855,12 @@ function iOSversion() {
      */
     addMask: function (mask) {
       var YTPlayer = this.get(0);
+
+/*
       if (!YTPlayer.isReady)
         return this;
-      
+*/
+
       if (!mask)
         mask = YTPlayer.actualMask;
       
@@ -1909,9 +1891,12 @@ function iOSversion() {
      */
     removeMask: function () {
       var YTPlayer = this.get(0);
+
+/*
       if (!YTPlayer.isReady)
         return this;
-      
+*/
+
       YTPlayer.overlay.CSSAnimate({
         opacity: 0
       }, YTPlayer.opt.fadeOnStartTime, function () {
@@ -1936,23 +1921,36 @@ function iOSversion() {
      */
     applyMask: function (YTPlayer) {
       var $YTPlayer = jQuery(YTPlayer);
+
+/*
       if (!YTPlayer.isReady)
         return this;
-      
+*/
+
       $YTPlayer.off("YTPTime.mask");
-      
+
       if (YTPlayer.opt.mask) {
         if (typeof YTPlayer.opt.mask == "string") {
+
           $YTPlayer.YTPAddMask(YTPlayer.opt.mask);
           YTPlayer.actualMask = YTPlayer.opt.mask;
+
         } else if (typeof YTPlayer.opt.mask == "object") {
+
+          console.debug(YTPlayer.opt.mask);
+
           for (var time in YTPlayer.opt.mask) {
+
             if (YTPlayer.opt.mask[time])
               var img = jQuery("<img/>").attr("src", YTPlayer.opt.mask[time]);
+
           }
+
           if (YTPlayer.opt.mask[0])
             $YTPlayer.YTPAddMask(YTPlayer.opt.mask[0]);
+
           $YTPlayer.on("YTPTime.mask", function (e) {
+
             for (var time in YTPlayer.opt.mask) {
               if (e.time == time)
                 if (!YTPlayer.opt.mask[time]) {
@@ -1973,9 +1971,12 @@ function iOSversion() {
      */
     toggleMask: function () {
       var YTPlayer = this.get(0);
+
+/*
       if (!YTPlayer.isReady)
         return this;
-      
+*/
+
       var $YTPlayer = jQuery(YTPlayer);
       if (YTPlayer.hasMask)
         $YTPlayer.YTPRemoveMask();
@@ -2257,12 +2258,13 @@ function iOSversion() {
             
             YTPlayer.state = 2;
             
-            var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
-            
-            YTPlayer.opt.containment.css({
-              background    : bgndURL,
-              backgroundSize: "cover"
-            });
+            if(YTPlayer.opt.coverImage || YTPlayer.orig_containment_background) {
+              var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
+              YTPlayer.opt.containment.css({
+                background    : bgndURL,
+                backgroundSize: "cover"
+              });
+            }
             
             jQuery(YTPlayer).YTPPause();
             YTPlayer.wrapper.CSSAnimate({
@@ -2276,12 +2278,14 @@ function iOSversion() {
               YTPEnd.time = YTPlayer.currentTime;
               jQuery(YTPlayer).trigger(YTPEnd);
               YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
-              
-              var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
-              YTPlayer.opt.containment.css({
-                background    : bgndURL,
-                backgroundSize: "cover"
-              });
+  
+              if(YTPlayer.opt.coverImage || YTPlayer.orig_containment_background) {
+                var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
+                YTPlayer.opt.containment.css({
+                  background    : bgndURL,
+                  backgroundSize: "cover"
+                });
+              }
               
             });
             return;
@@ -2381,16 +2385,17 @@ function iOSversion() {
           YTPlayer.state = 2;
           
           if (!YTPlayer.opt.mute) {
+
+            if (YTPlayer.opt.autoPlay){
+              console.debug("To make the video 'auto-play' you must mute the audio according with the latest vendor policy");
+              YTPlayer.player.mute();
+            }
+
             YTPlayer.player.unMute();
-            if (YTPlayer.opt.autoPlay)
-              console.debug("To make the video 'auto-play' you must mute the audio according with the new vendor policy");
+
           }
           else{
             $YTPlayer.YTPMute();
-/*
-            YTPlayer.isMute = true;
-            YTPlayer.player.mute();
-*/
           }
 
           if (typeof _gaq != "undefined" && eval(YTPlayer.opt.gaTrack))
@@ -2412,7 +2417,6 @@ function iOSversion() {
                 $YTPlayer.YTPPlay();
               });
             }
-            
             $YTPlayer.YTPPlay();
             
           } else {
@@ -2423,13 +2427,10 @@ function iOSversion() {
             if (YTPlayer.start_from_last)
               YTPlayer.player.seekTo(startAt, true);
             
-            
             setTimeout(function () {
               YTPlayer.preventTrigger = true;
               $YTPlayer.YTPPause();
-              
-              // console.debug("YTPPause");
-              
+
               if (!YTPlayer.isPlayer) {
                 if (!YTPlayer.opt.coverImage) {
                   jQuery(YTPlayer.playerEl).CSSAnimate({
@@ -2441,12 +2442,14 @@ function iOSversion() {
                 } else {
                   YTPlayer.wrapper.css({opacity: 0});
                   setTimeout(function () {
-                    var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
-                    YTPlayer.wrapper.css({
-                      background      : bgndURL,
-                      backgroundSize  : "cover",
-                      backgroundRepeat: "no-repeat"
-                    })
+                    if(YTPlayer.opt.coverImage || YTPlayer.orig_containment_background) {
+                      var bgndURL = YTPlayer.opt.coverImage ? "url(" + YTPlayer.opt.coverImage + ") center center" : YTPlayer.orig_containment_background;
+                      YTPlayer.wrapper.css({
+                        background      : bgndURL,
+                        backgroundSize  : "cover",
+                        backgroundRepeat: "no-repeat"
+                      })
+                    }
                   }, YTPlayer.opt.fadeOnStartTime)
                 }
               }
@@ -2469,11 +2472,9 @@ function iOSversion() {
         }
         
         if (jQuery.mbBrowser.os.name == "mac" && jQuery.mbBrowser.safari) {
-          
           YTPlayer.player.playVideo();
           if (startAt >= 0)
             YTPlayer.player.seekTo(startAt, true);
-          
         }
         
       }, 100);

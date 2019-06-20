@@ -25,7 +25,11 @@
   "docs": "https://github.com/pupunzi/jquery.mb.YTPlayer/wiki",
   "download": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer/",
   "dependencies": {
-    "jquery": "^3.3.1"
+    "grunt-contrib-uglify-es": "github:gruntjs/grunt-contrib-uglify#harmony",
+    "jquery": "^3.4.1",
+    "uglify-es": "github:mishoo/UglifyJS2#harmony",
+    "uglify-js": "^3.6.0",
+    "uglify-js-es6": "^2.8.9"
   },
   "main": "dist/jquery.mb.YTPlayer.js",
   "scripts": {
@@ -36,20 +40,20 @@
     "url": "git+https://github.com/pupunzi/jquery.mb.YTPlayer.git"
   },
   "devDependencies": {
-    "grunt": "^1.0.3",
+    "grunt": "^1.0.4",
     "grunt-build-number": "^1.0.0",
-    "grunt-bump": "^0.3.1",
+    "grunt-bump": "^0.3.4",
     "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-copy": "^0.8.2",
     "grunt-contrib-cssmin": "^0.12.3",
-    "grunt-contrib-uglify": "^4.0.0",
+    "grunt-contrib-uglify": "^4.0.1",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-include-replace": "^3.0.0",
+    "grunt-include-replace": "^3.2.0",
     "grunt-jsbeautifier": "^0.2.13",
     "grunt-strip-code": "^1.0.6"
   },
   "directories": {
     "example": "examples"
   },
-  "buildnum": "7432"
+  "buildnum": "7445"
 }

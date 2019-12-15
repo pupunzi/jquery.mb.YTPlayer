@@ -1548,6 +1548,35 @@ function iOSversion()
 		},
 
 		/**
+		 * getPlaybackRate
+		 * @returns {PlaybackRate(}
+		 */
+		getPlaybackRate: function () {
+			let YTPlayer = this.get(0)
+
+			if (!YTPlayer.isReady)
+				return this
+
+			return YTPlayer.player.getPlaybackRate()
+		},
+
+		/**
+		 * setPlaybackRate
+		 * @param suggestedRate:Number
+		 * 0.25, 0.5, 1, 1.5, 2
+		 * @returns {jQuery.mbYTPlayer}
+		 */
+		setPlaybackRate: function (val) {
+			let YTPlayer = this.get(0)
+
+			if (!YTPlayer.isReady)
+				return this
+
+			YTPlayer.player.setPlaybackRate(val)
+			return this
+		},
+
+		/**
 		 * setVolume
 		 * @param val
 		 * @returns {jQuery.mbYTPlayer}
@@ -2726,6 +2755,9 @@ function iOSversion()
 	jQuery.fn.YTPStop = jQuery.mbYTPlayer.stop
 	jQuery.fn.YTPPause = jQuery.mbYTPlayer.pause
 	jQuery.fn.YTPSeekTo = jQuery.mbYTPlayer.seekTo
+
+	jQuery.fn.YTPGetPlaybackRate = jQuery.mbYTPlayer.getPlaybackRate
+	jQuery.fn.YTPSetPlaybackRate = jQuery.mbYTPlayer.setPlaybackRate
 
 	jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.playlist
 	jQuery.fn.YTPPlayNext = jQuery.mbYTPlayer.playNext

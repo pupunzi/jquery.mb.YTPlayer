@@ -267,6 +267,12 @@
     <button onclick="myPlayer.YTPPlayerDestroy()">YTPPlayerDestroy</button>
     <br>
     <br>
+    <button onclick="showInfo(myPlayer.YTPGetPlaybackRate())">YTPGetPlaybackRate</button>
+    <button onclick="myPlayer.YTPSetPlaybackRate(0.25)">YTPSetPlaybackRate to 0.25</button>
+    <button onclick="myPlayer.YTPSetPlaybackRate(1)">YTPSetPlaybackRate to 1</button>
+    <button onclick="myPlayer.YTPSetPlaybackRate(2)">YTPSetPlaybackRate to 2</button>
+    <br>
+    <br>
     <button>YTPSetAbundance <input type="range" id="abundanceVal"  min="0" max="100" oninput="myPlayer.YTPSetAbundance(jQuery('#abundanceVal').val()/100, true); jQuery('#abundanceValNumber').html(jQuery('#abundanceVal').val()/100)" /> (<span id="abundanceValNumber"></span>) </button>
     <button onclick="showInfo(myPlayer.YTPGetAbundance())">YTPGetAbundance</button>
     <br>

@@ -4,3 +4,4 @@ node_modules/
 !/.gitignore
 apikey.js
 test.html
+examples/YTPAudio

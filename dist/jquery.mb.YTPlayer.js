@@ -4,7 +4,7 @@
  file: jquery.mb.YTPlayer.src.js
  last modified: 11/2/18 7:23 PM
  Version:  3.2.11
- Build:  7447
+ Build:  7449
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -62,7 +62,7 @@ function iOSversion() {
 	jQuery.mbYTPlayer = {
 		name   : 'jquery.mb.YTPlayer',
 		version: '3.2.11',
-		build  : '7447',
+		build  : '7449',
 		author : 'Matteo Bicocchi (pupunzi)',
 		apiKey : '',
 

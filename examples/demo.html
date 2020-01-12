@@ -319,6 +319,10 @@
 
       // EVENT: YTPData
       myPlayer.on("YTPData", function (e) {
+
+      	if(!e.prop.title)
+      		return;
+
         $(".dida").html(e.prop.title + "<br>@" + e.prop.channelTitle);
         $("#videoData").show();
 

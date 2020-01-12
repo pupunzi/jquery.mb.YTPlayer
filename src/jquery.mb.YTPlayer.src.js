@@ -815,6 +815,8 @@ function iOSversion() {
 									if (typeof YTPlayer.opt.onError == 'function')
 										YTPlayer.opt.onError($YTPlayer, err)
 
+									console.debug("error:", err)
+
 									switch (err.data) {
 										case 2:
 											console.error('video ID:: ' + YTPlayer.videoID + ': The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks.')
@@ -827,7 +829,7 @@ function iOSversion() {
 											break
 										case 101:
 										case 150:
-											console.error('video ID:: ' + YTPlayer.videoID + ': The owner of the requested video does not allow it to be played in embedded players.')
+											console.error('video ID:: ' + YTPlayer.videoID + ': The video doesn\'t exist or The owner does not allow it to be played in embedded players.')
 											break
 									}
 
@@ -911,6 +913,9 @@ function iOSversion() {
 					YTPChanged.time = YTPlayer.currentTime
 					YTPChanged.videoId = YTPlayer.videoID
 					YTPChanged.opt = YTPlayer.opt
+
+					//console.debug("videoData:",YTPlayer.videoData)
+
 					jQuery(YTPlayer).trigger(YTPChanged)
 
 					let YTPData = jQuery.Event('YTPData')
@@ -1213,9 +1218,14 @@ function iOSversion() {
 					// endSeconds: YTPlayer.opt.stopAt,
 					suggestedQuality: YTPlayer.opt.quality
 				})
+
 				$YTPlayer.YTPPause()
 				$YTPlayer.optimizeDisplay()
 
+				if (YTPlayer.checkForStartAt) {
+					clearInterval(YTPlayer.checkForStartAt)
+					clearInterval(YTPlayer.getState)
+				}
 				$YTPlayer.YTPCheckForState()
 			})
 
@@ -1963,7 +1973,7 @@ function iOSversion() {
 
 				} else if (typeof YTPlayer.opt.mask == 'object') {
 
-					console.debug(YTPlayer.opt.mask)
+					//console.debug(YTPlayer.opt.mask)
 
 					for (let time in YTPlayer.opt.mask) {
 

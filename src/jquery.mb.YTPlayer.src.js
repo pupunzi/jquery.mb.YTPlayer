@@ -1,23 +1,13 @@
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
- jquery.mb.components
- 
- file: jquery.mb.YTPlayer.src.js
- last modified: 11/2/18 7:23 PM
- Version:  {{ version }}
- Build:  {{ buildnum }}
- 
- Open Lab s.r.l., Florence - Italy
- email:  matteo@open-lab.com
- blog: 	http://pupunzi.open-lab.com
- site: 	http://pupunzi.com
- 	http://open-lab.com
- 
- Licences: MIT, GPL
- https://www.opensource.org/licenses/mit-license.php
- https://www.gnu.org/licenses/gpl.html
- 
- Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/**********************************************
+* @File Name: jquery.mb.YTPlayer.src.js
+* @Author: Matteo Bicocchi
+* @Date: 2020-01-11
+* @Email: matbicoc@gmail.com
+*
+* @Last Modified by: Matteo Bicocchi
+* @Last Modified time: 2020-03-14
+* @Copyright: 2020. Matteo Bicocchi
+****************************************************/
 
 /* src-block */
 alert('This is the \'jquery.mb.YTPlayer.src.js\' javascript file and can\'t be included. Use the one you find in the \'dist\' folder!')

@@ -1,6 +1,20 @@
 /**********************************************
 * @File Name: jquery.mb.YTPlayer.src.js
 * @Author: Matteo Bicocchi
+* @Date: 2020-03-16
+* @Email: matbicoc@gmail.com
+*
+* @Last Modified by: Matteo Bicocchi
+* @Last Modified time: 2020-03-18
+* @Copyright: 2020. Matteo Bicocchi
+*
+*  Open Lab s.r.l., Florence - Italy
+*  @blog: 	http://pupunzi.open-lab.com
+*  @site: 	http://pupunzi.com
+****************************************************/
+/**********************************************
+* @File Name: jquery.mb.YTPlayer.src.js
+* @Author: Matteo Bicocchi
 * @Date: 2020-01-11
 * @Email: matbicoc@gmail.com
 *
@@ -12,7 +26,6 @@
 /* src-block */
 alert('This is the \'jquery.mb.YTPlayer.src.js\' javascript file and can\'t be included. Use the one you find in the \'dist\' folder!')
 /* end-src-block */
-
 
 var ytp = ytp || {}
 

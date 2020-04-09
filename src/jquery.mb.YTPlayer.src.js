@@ -860,6 +860,16 @@ function iOSversion() {
 							})
 
 							/**
+							 * Optimize display on orientation change
+							 */
+							jQuery(window).off('orientationchange.YTP_' + YTPlayer.id).on('orientationchange.YTP_' + YTPlayer.id, function () {
+								// setTimeout(function (){
+									//console.debug('orientationchange')
+									$YTPlayer.optimizeDisplay()
+								// },1)
+							})
+
+							/**
 							 * Set the time of the last visit progress
 							 */
 							if (YTPlayer.opt.remember_last_time) {
@@ -2621,6 +2631,7 @@ function iOSversion() {
 	 * can be center, top, bottom, right, left; (default is center,center)
 	 */
 	jQuery.fn.optimizeDisplay = function (anchor, abundanceX) {
+
 		let YTPlayer = this.get(0)
 		let vid = {}
 		let el = YTPlayer.wrapper

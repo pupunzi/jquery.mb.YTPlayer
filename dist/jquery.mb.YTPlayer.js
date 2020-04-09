@@ -1,24 +1,27 @@
-/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
- jquery.mb.components
- 
- file: jquery.mb.YTPlayer.src.js
- last modified: 11/2/18 7:23 PM
- Version:  3.3.1
- Build:  7471
- 
- Open Lab s.r.l., Florence - Italy
- email:  matteo@open-lab.com
- blog: 	http://pupunzi.open-lab.com
- site: 	http://pupunzi.com
- 	http://open-lab.com
- 
- Licences: MIT, GPL
- https://www.opensource.org/licenses/mit-license.php
- https://www.gnu.org/licenses/gpl.html
- 
- Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-
+/**********************************************
+* @File Name: jquery.mb.YTPlayer.src.js
+* @Author: Matteo Bicocchi
+* @Date: 2020-03-16
+* @Email: matbicoc@gmail.com
+*
+* @Last Modified by: Matteo Bicocchi
+* @Last Modified time: 2020-03-18
+* @Copyright: 2020. Matteo Bicocchi
+*
+*  Open Lab s.r.l., Florence - Italy
+*  @blog: 	http://pupunzi.open-lab.com
+*  @site: 	http://pupunzi.com
+****************************************************/
+/**********************************************
+* @File Name: jquery.mb.YTPlayer.src.js
+* @Author: Matteo Bicocchi
+* @Date: 2020-01-11
+* @Email: matbicoc@gmail.com
+*
+* @Last Modified by: Matteo Bicocchi
+* @Last Modified time: 2020-03-14
+* @Copyright: 2020. Matteo Bicocchi
+****************************************************/
 
 
 var ytp = ytp || {}
@@ -62,7 +65,7 @@ function iOSversion() {
 	jQuery.mbYTPlayer = {
 		name   : 'jquery.mb.YTPlayer',
 		version: '3.3.1',
-		build  : '7471',
+		build  : '7479',
 		author : 'Matteo Bicocchi (pupunzi)',
 		apiKey : '',
 
@@ -851,6 +854,16 @@ function iOSversion() {
 							 */
 							jQuery(window).off('resize.YTP_' + YTPlayer.id).on('resize.YTP_' + YTPlayer.id, function () {
 								$YTPlayer.optimizeDisplay()
+							})
+
+							/**
+							 * Optimize display on orientation change
+							 */
+							jQuery(window).off('orientationchange.YTP_' + YTPlayer.id).on('orientationchange.YTP_' + YTPlayer.id, function () {
+								// setTimeout(function (){
+									//console.debug('orientationchange')
+									$YTPlayer.optimizeDisplay()
+								// },1)
 							})
 
 							/**
@@ -2615,6 +2628,7 @@ function iOSversion() {
 	 * can be center, top, bottom, right, left; (default is center,center)
 	 */
 	jQuery.fn.optimizeDisplay = function (anchor, abundanceX) {
+
 		let YTPlayer = this.get(0)
 		let vid = {}
 		let el = YTPlayer.wrapper

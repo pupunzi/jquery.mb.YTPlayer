@@ -4,7 +4,7 @@
   file: index.tmpl
   last modified: 10/25/18 8:00 PM
   Version:  3.3.1
-  Build:  7479
+  Build:  7496
 
   Open Lab s.r.l., Florence - Italy
   email:  matteo@open-lab.com
@@ -27,9 +27,9 @@
 	<meta charset="UTF-8">
 	<title>youtube Chromeless Player - mb.YTPlayer</title>
 	<link href='//fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-	<link href="css/jquery.mb.YTPlayer.min.css?_bn=7479" media="all" rel="stylesheet" type="text/css">
+	<link href="css/jquery.mb.YTPlayer.min.css?_bn=7496" media="all" rel="stylesheet" type="text/css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="jquery.mb.YTPlayer.js?_bn=7479"></script>
+	<script src="jquery.mb.YTPlayer.js?_bn=7496"></script>
 	<script src="../examples/assets/apikey.js"></script>
 	<style>
 		*:focus {
@@ -42,6 +42,9 @@
 			padding: 30px;
 			background: #222c2f;
 			font: normal 16px/20px Lekton, sans-serif;
+
+			position: absolute;
+			height: 100vh;
 		}
 
 		h1 {
@@ -304,6 +307,7 @@
 
       var myPlayer = jQuery( "#bgndVideo" ).YTPlayer( {
         remember_last_time: should_remember
+				, coverImage: 'cover.png'
         , onReady: function( player ) {
           YTPConsole.append( player.id + " player is ready" );
           YTPConsole.append( "<br>" );
@@ -506,7 +510,7 @@
 	<!--BsekcY04xvQ-->
 </div>
 <div id="debug" style="display: none">
-	<a id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:false, startAt:10,ratio:16/9, stopAt:150, opacity:1, addRaster:true, quality:'hd720', optimizeDisplay:true}">My video</a>
+	<a id="bgndVideo" class="player" data-property="{videoURL:'r1xohS2u69E',containment:'body', showControls:true, autoPlay:true, loop:true, vol:50, mute:false, startAt:10,ratio:16/9, stopAt:150, opacity:1, addRaster:true, quality:'hd720', optimizeDisplay:true, addFilters:{'opacity': 35, 'saturate': 497, 'contrast': 159}}">My video</a>
 	<h2 style="color: #FFFFFF; text-align: left">Events console: </h2>
 	<div id="eventListener"></div>
 </div>

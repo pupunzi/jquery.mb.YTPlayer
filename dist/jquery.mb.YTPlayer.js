@@ -64,8 +64,8 @@ function iOSversion() {
 
 	jQuery.mbYTPlayer = {
 		name   : 'jquery.mb.YTPlayer',
-		version: '3.3.1',
-		build  : '7500',
+		version: '3.3.2',
+		build  : '7501',
 		author : 'Matteo Bicocchi (pupunzi)',
 		apiKey : '',
 

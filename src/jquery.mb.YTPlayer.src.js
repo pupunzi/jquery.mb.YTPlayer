@@ -960,40 +960,49 @@ function iOSversion() {
 				 * Get video info from API3 (needs api key)
 				 * snippet,player,contentDetails,statistics,status
 				 */
-				jQuery.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + YTPlayer.videoID + '&key=' + jQuery.mbYTPlayer.apiKey + '&part=snippet', function (data) {
-					YTPlayer.dataReceived = true;
 
-					let YTPChanged = jQuery.Event('YTPChanged');
-					YTPChanged.time = YTPlayer.currentTime;
-					YTPChanged.videoId = YTPlayer.videoID;
-					jQuery(YTPlayer).trigger(YTPChanged);
+					jQuery.getJSON('https://www.googleapis.com/youtube/v3/videos?id=' + YTPlayer.videoID + '&key=' + jQuery.mbYTPlayer.apiKey + '&part=snippet', function (data) {
+						YTPlayer.dataReceived = true;
 
-					function parseYTPlayer_data(data) {
-						YTPlayer.videoData = {};
-						YTPlayer.videoData.id = YTPlayer.videoID;
-						YTPlayer.videoData.channelTitle = data.channelTitle;
-						YTPlayer.videoData.title = data.title;
-						YTPlayer.videoData.description = data.description.length < 400 ? data.description : data.description.substring(0, 400) + ' ...';
-						YTPlayer.videoData.thumb_max = data.thumbnails.maxres ? data.thumbnails.maxres.url : null;
-						YTPlayer.videoData.thumb_high = data.thumbnails.high ? data.thumbnails.high.url : null;
-						YTPlayer.videoData.thumb_medium = data.thumbnails.medium ? data.thumbnails.medium.url : null;
-						jQuery.mbStorage.set('YTPlayer_data_' + YTPlayer.videoID, YTPlayer.videoData)
-					}
+						let YTPChanged = jQuery.Event('YTPChanged');
+						YTPChanged.time = YTPlayer.currentTime;
+						YTPChanged.videoId = YTPlayer.videoID;
+						jQuery(YTPlayer).trigger(YTPChanged);
 
-					if (!data.items[0]) {
-						YTPlayer.videoData = {};
-						YTPlayer.hasData = false
-					} else {
-						parseYTPlayer_data(data.items[0].snippet);
-						YTPlayer.hasData = true
-					}
+						function parseYTPlayer_data(data) {
+							YTPlayer.videoData = {};
+							YTPlayer.videoData.id = YTPlayer.videoID;
+							YTPlayer.videoData.channelTitle = data.channelTitle;
+							YTPlayer.videoData.title = data.title;
+							YTPlayer.videoData.description = data.description.length < 400 ? data.description : data.description.substring(0, 400) + ' ...';
+							YTPlayer.videoData.thumb_max = data.thumbnails.maxres ? data.thumbnails.maxres.url : null;
+							YTPlayer.videoData.thumb_high = data.thumbnails.high ? data.thumbnails.high.url : null;
+							YTPlayer.videoData.thumb_medium = data.thumbnails.medium ? data.thumbnails.medium.url : null;
+							jQuery.mbStorage.set('YTPlayer_data_' + YTPlayer.videoID, YTPlayer.videoData)
+						}
 
-					let YTPData = jQuery.Event('YTPData');
-					YTPData.prop = {};
-					for (let x in YTPlayer.videoData) YTPData.prop[x] = YTPlayer.videoData[x];
-					jQuery(YTPlayer).trigger(YTPData)
-				})
+						if (!data.items[0]) {
+							YTPlayer.videoData = {};
+							YTPlayer.hasData = false
+						} else {
+							parseYTPlayer_data(data.items[0].snippet);
+							YTPlayer.hasData = true
+						}
 
+						let YTPData = jQuery.Event('YTPData');
+						YTPData.prop = {};
+						for (let x in YTPlayer.videoData) YTPData.prop[x] = YTPlayer.videoData[x];
+						jQuery(YTPlayer).trigger(YTPData)
+					})
+							.fail(function(jqxhr){
+								console.error("YT data error:: ",jqxhr);
+								YTPlayer.hasData = false;
+
+								let YTPChanged = jQuery.Event('YTPChanged');
+								YTPChanged.time = YTPlayer.currentTime;
+								YTPChanged.videoId = YTPlayer.videoID;
+								jQuery(YTPlayer).trigger(YTPChanged)
+							})
 			} else {
 
 				setTimeout(function () {
@@ -1003,7 +1012,6 @@ function iOSversion() {
 					jQuery(YTPlayer).trigger(YTPChanged)
 				}, 10);
 				YTPlayer.videoData = null
-
 			}
 
 			YTPlayer.opt.ratio = YTPlayer.opt.ratio == 'auto' ? 16 / 9 : YTPlayer.opt.ratio;

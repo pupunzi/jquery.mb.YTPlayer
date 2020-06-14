@@ -152,6 +152,9 @@ function iOSversion() {
 
 			/**
 			 quality (string)
+			 @deprecated
+
+			 setPlaybackQuality has been deprecated on the YT API and doesn't work anymore
 			 “small”, “medium”, “large”, “hd720”, “hd1080”, “highres”, "default"
 			 */
 			quality: 'default',
@@ -410,6 +413,12 @@ function iOSversion() {
 				 Manage cover image
 				 */
 				YTPlayer.opt.coverImage = YTPlayer.opt.coverImage || YTPlayer.opt.backgroundImage;
+
+				/**
+				 Manage Quality
+				 the setPlaybackQuality has been deprecated by YT
+				 */
+				YTPlayer.opt.quality = 'default';
 
 				/**
 				 * todo: remove
@@ -737,10 +746,13 @@ function iOSversion() {
 									YTPlayer.state = state;
 									// console.debug(YTPlayer.state);
 
+/*
 									if (event.data === YT.PlayerState.PLAYING) {
 										// console.debug('YTPlayer.opt.quality', YTPlayer.opt.quality)
-										event.target.setPlaybackQuality(YTPlayer.opt.quality)
+									//	event.target.setPlaybackQuality(YTPlayer.opt.quality)
+										event.target.setPlaybackQuality('default')
 									}
+*/
 
 									// console.debug('YTPGetVideoQuality', jQuery(YTPlayer).YTPGetVideoQuality());
 
@@ -781,7 +793,8 @@ function iOSversion() {
 
 											/** buffer */
 										case 3:
-											YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
+											// YTPlayer.player.setPlaybackQuality('default');
+											// YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 											eventType = 'YTPBuffering';
 											if (YTPlayer.controlBar.length)
 												YTPlayer.controlBar.find('.mb_YTPPlayPause').html(jQuery.mbYTPlayer.controls.play);
@@ -1058,16 +1071,23 @@ function iOSversion() {
 		},
 		/**
 		 * setVideoQuality
+		 * @deprecated
+		 *
 		 * @param quality
 		 * @returns {jQuery.mbYTPlayer}
 		 */
 		setVideoQuality: function (quality) {
+
+			return this;
+
+/*
 			let YTPlayer = this.get(0);
 			jQuery(YTPlayer).YTPPause();
 			YTPlayer.opt.quality = quality;
 			YTPlayer.player.setPlaybackQuality(quality);
 			jQuery(YTPlayer).YTPPlay();
 			return this
+*/
 		},
 
 		/**
@@ -1329,7 +1349,7 @@ function iOSversion() {
 					if (!isFullScreen) {
 						YTPlayer.isAlone = false;
 						fullScreenBtn.html(jQuery.mbYTPlayer.controls.onlyYT);
-						jQuery(YTPlayer).YTPSetVideoQuality(YTPlayer.opt.quality);
+						//jQuery(YTPlayer).YTPSetVideoQuality(YTPlayer.opt.quality);
 						videoWrapper.removeClass('YTPFullscreen');
 						videoWrapper.CSSAnimate({
 							opacity: YTPlayer.opt.opacity
@@ -1349,7 +1369,7 @@ function iOSversion() {
 
 					} else {
 
-						jQuery(YTPlayer).YTPSetVideoQuality('default');
+						//jQuery(YTPlayer).YTPSetVideoQuality('default');
 						jQuery(YTPlayer).trigger('YTPFullScreenStart')
 
 					}

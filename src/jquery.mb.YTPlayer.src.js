@@ -2487,7 +2487,7 @@ function iOSversion() {
 
 								let canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
 
-								if($.browser.mobile)
+								if(jQuery.browser.mobile)
 										canPlayVideo = true;
 
 								if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  jquery.mb.components
+  file: demo_domElement.html
+  last modified: 21/11/17 19.37
+  Version:  {{ version }}
+  Build:  {{ buildnum }}
+
+  Open Lab s.r.l., Florence - Italy
+  email: matbicoc@gmail.com
+  site: 	http://pupunzi.com
+  	http://open-lab.com
+  blog: 	http://pupunzi.open-lab.com
+
+  Licences: MIT, GPL
+  http://www.opensource.org/licenses/mit-license.php
+  http://www.gnu.org/licenses/gpl.html
+
+  Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi)
+  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>youtube Chromeless Player - mb.YTPlayer</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+  <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.mb.ytplayer@3.2.9/dist/css/jquery.mb.YTPlayer.min.css">-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="../dist/jquery.mb.YTPlayer.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/jquery.mb.ytplayer@3.2.9/dist/jquery.mb.YTPlayer.min.js"></script>-->
+  <script src="assets/apikey.js"></script>
+
+  <style>
+
+    body {
+      border: none;
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      font: normal 16px/20px Lekton, sans-serif;
+    }
+
+    .playerBox {
+      background: #000;
+      height: 800px;
+      width: 100%;
+      position: relative;
+      display: inline-block;
+    }
+
+  </style>
+
+</head>
+
+<body>
+<!--<div class="playerBox" id="v1" style="background: #7698c6;"></div>-->
+
+<div id="wrapper" style="height: 50vh">
+
+</div>
+<!--https://www.youtube.com/watch?v=Zry1ilxCmvA-->
+<div id="YTPlayer_1759429485" cl data-property="{videoURL:'https://youtu.be/l-a7TzI88Z4', mobileFallbackImage:'', coverImage:'', opacity:1, autoPlay:true, containment:'body', startAt:1, stopAt:0, mute:true, vol:50, showControls:false, optimizeDisplay:true, printUrl:false, loop:true, addRaster:true, quality:'default', ratio:'auto', realfullscreen:true, gaTrack:false, stopMovieOnBlur:true, remember_last_time:false, abundance:'0.3', anchor:'center,center'}" class="mb_YTPlayer" ></div>
+<script>
+
+  jQuery(".mb_YTPlayer").YTPlayer();
+
+</script>
+</body>
+</html>

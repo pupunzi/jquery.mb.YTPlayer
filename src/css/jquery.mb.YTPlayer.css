@@ -101,7 +101,7 @@
     padding: 0 !important;
 }
 
-.inlinePlayButton {
+.inlinePlayButton, .inlinePlayButtonMobile {
   font-family: 'ytpregular';
   font-size: 45px;
   color: #ffffff;
@@ -121,7 +121,10 @@
   opacity: .8;
   transition: all .4s;
   transform: scale(1.3);
+}
 
+.inlinePlayButtonMobile {
+    transform: scale(1);
 }
 
 .mb_YTPlayer:hover .inlinePlayButton {

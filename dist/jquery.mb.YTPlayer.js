@@ -17,9 +17,16 @@
 
 var ytp = ytp || {};
 
+console.time('YTPlayerLoadAPI');
+console.time('YTPlayerInit');
+console.time('YTPlayerStartPlay');
+
 function onYouTubeIframeAPIReady() {
+	console.timeEnd('YTPlayerLoadAPI');
+
 	if (ytp.YTAPIReady)
 		return;
+
 	ytp.YTAPIReady = true;
 	jQuery(document).trigger('YTAPIReady')
 }
@@ -56,7 +63,7 @@ function iOSversion() {
 	jQuery.mbYTPlayer = {
 		name   : 'jquery.mb.YTPlayer',
 		version: '3.3.4',
-		build  : '7525',
+		build  : '7557',
 		author : 'Matteo Bicocchi (pupunzi)',
 		apiKey : '',
 
@@ -105,6 +112,12 @@ function iOSversion() {
 			 on page load video should start or pause
 			 */
 			autoPlay: true,
+
+			/**
+			 delayAtStart (bool)
+			 If the YT API don't fire the event the player will try to start anyway after...
+			 */
+			delayAtStart: 300,
 
 			/**
 			 coverImage (string)
@@ -321,11 +334,14 @@ function iOSversion() {
 					'id' : 'YTAPI'
 				});
 				jQuery('head').prepend(tag)
+
+				tag.on("load", function(){alert("Loaded")});
+
 			} else {
 				setTimeout(function () {
 					jQuery(document).trigger('YTAPIReady');
 					ytp.YTAPIReady = true
-				}, 100)
+				}, 50)
 			}
 
 			function isIframe() {
@@ -337,9 +353,6 @@ function iOSversion() {
 				}
 				return isIfr
 			}
-
-			console.time('YTPlayerInit');
-			console.time('YTPlayerStartPlay');
 
 			return this.each(function () {
 				let YTPlayer = this;
@@ -484,17 +497,6 @@ function iOSversion() {
 				}).addClass('YTPOverlay');
 
 				$YTPlayer.changeCoverImage();
-				/*
-								if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background) {
-									let bgndURL = YTPlayer.opt.coverImage ? 'url(' + YTPlayer.opt.coverImage + ') center center' : YTPlayer.orig_containment_background
-									if (bgndURL)
-										YTPlayer.opt.containment.css({
-											background      : bgndURL,
-											backgroundSize  : 'cover',
-											backgroundRepeat: 'no-repeat'
-										})
-								}
-				*/
 
 				/**
 				 create the wrapper
@@ -901,10 +903,7 @@ function iOSversion() {
 							 * Optimize display on orientation change
 							 */
 							jQuery(window).off('orientationchange.YTP_' + YTPlayer.id).on('orientationchange.YTP_' + YTPlayer.id, function () {
-								// setTimeout(function (){
-								//console.debug('orientationchange')
 								$YTPlayer.optimizeDisplay()
-								// },1)
 							});
 
 							/**
@@ -927,6 +926,17 @@ function iOSversion() {
 				jQuery.mbYTPlayer.applyMask(YTPlayer);
 
 				console.timeEnd('YTPlayerInit')
+
+				//if the YT API didn't call the callback;
+				setTimeout(function(){
+					//console.debug(YTPlayer.opt.delayAtStart);
+
+					if(!ytp.YTAPIReady){
+						ytp.YTAPIReady = true;
+						jQuery(document).trigger('YTAPIReady')
+					}
+				},YTPlayer.opt.delayAtStart)
+
 			})
 		},
 
@@ -2589,7 +2599,6 @@ function iOSversion() {
 							YTPlayer.controlBar.find('.mb_YTPPlayPause').html(jQuery.mbYTPlayer.controls.play)
 					}
 
-					console.debug()
 					if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && (YTPlayer.loading && YTPlayer.loading.length)) {
 						YTPlayer.loading.html('Ready');
 						setTimeout(function () {
@@ -2956,33 +2965,174 @@ b&&setFilter(a,"grayscale",d[b]);"hueRotate"===b&&setFilter(a,"hueRotate",d[b]);
 	f[c]&&(c=f[c]);h.off(jQuery.CSS.transitionEnd+"."+e.id);f=jQuery.CSS.getProp(d);var m={};jQuery.extend(m,d);m[jQuery.CSS.sfx+"transition-property"]=f;m[jQuery.CSS.sfx+"transition-duration"]=a+"ms";m[jQuery.CSS.sfx+"transition-delay"]=b+"ms";m[jQuery.CSS.sfx+"transition-timing-function"]=c;setTimeout(function(){h.one(jQuery.CSS.transitionEnd+"."+e.id,n);h.css(m)},1);e.timeout=setTimeout(function(){e.called||!g?(e.called=!1,e.CSSAIsRunning=!1):(h.css(jQuery.CSS.sfx+"transition",""),g.apply(e),e.CSSAIsRunning=
 			!1,"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null))},a+b+10)}else{for(f in d)"transform"===f&&delete d[f],"filter"===f&&delete d[f],"transform-origin"===f&&delete d[f],"auto"===d[f]&&delete d[f],"x"===f&&(k=d[f],l="left",d[l]=k,delete d[f]),"y"===f&&(k=d[f],l="top",d[l]=k,delete d[f]),"-ms-transform"!==f&&"-ms-filter"!==f||delete d[f];h.delay(b).animate(d,a,g)}}})}};jQuery.fn.CSSAnimate=jQuery.CSS.animate;jQuery.normalizeCss=jQuery.CSS.normalizeCss;
 jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQuery.normalizeCss(d);a.css(b)})};
-;/*___________________________________________________________________________________________________________________________________________________
- _ jquery.mb.components                                                                                                                             _
- _                                                                                                                                                  _
- _ file: jquery.mb.simpleSlider.min.js                                                                                                              _
- _ last modified: 09/05/17 19.31                                                                                                                    _
- _                                                                                                                                                  _
- _ Open Lab s.r.l., Florence - Italy                                                                                                                _
- _                                                                                                                                                  _
- _ email: matteo@open-lab.com                                                                                                                       _
- _ site: http://pupunzi.com                                                                                                                         _
- _       http://open-lab.com                                                                                                                        _
- _ blog: http://pupunzi.open-lab.com                                                                                                                _
- _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
- _                                                                                                                                                  _
- _ Licences: MIT, GPL                                                                                                                               _
- _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
- _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
- _                                                                                                                                                  _
- _ Copyright (c) 2001-2017. Matteo Bicocchi (Pupunzi);                                                                                              _
- ___________________________________________________________________________________________________________________________________________________*/
+;/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ jquery.mb.components
+ 
+ file: jquery.mb.simpleSlider.js
+ last modified: 11/18/17 7:19 PM
+ Version:  3.3.4
+ Build:  7557
+ 
+ Open Lab s.r.l., Florence - Italy 
+ email:  matteo@open-lab.com
+ blog: 	http://pupunzi.open-lab.com
+ site: 	http://pupunzi.com
+ 	http://open-lab.com 
+ 
+ Licences: MIT, GPL
+ http://www.opensource.org/licenses/mit-license.php
+ http://www.gnu.org/licenses/gpl.html
+ 
+ Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
+ :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-(function(b){b.simpleSlider={defaults:{initialval:0,maxVal:100,orientation:"h",readonly:!1,callback:!1},events:{start:b.browser.mobile?"touchstart":"mousedown",end:b.browser.mobile?"touchend":"mouseup",move:b.browser.mobile?"touchmove":"mousemove"},init:function(c){return this.each(function(){var a=this,d=b(a);d.addClass("simpleSlider");a.opt={};b.extend(a.opt,b.simpleSlider.defaults,c);b.extend(a.opt,d.data());var e="h"==a.opt.orientation?"horizontal":"vertical";e=b("<div/>").addClass("level").addClass(e);
-		d.prepend(e);a.level=e;d.css({cursor:"default"});"auto"==a.opt.maxVal&&(a.opt.maxVal=b(a).outerWidth());d.updateSliderVal();a.opt.readonly||(d.on(b.simpleSlider.events.start,function(c){b.browser.mobile&&(c=c.changedTouches[0]);a.canSlide=!0;d.updateSliderVal(c);"h"==a.opt.orientation?d.css({cursor:"col-resize"}):d.css({cursor:"row-resize"});b.browser.mobile||(c.preventDefault(),c.stopPropagation())}),b(document).on(b.simpleSlider.events.move,function(c){b.browser.mobile&&(c=c.changedTouches[0]);
-			a.canSlide&&(b(document).css({cursor:"default"}),d.updateSliderVal(c),b.browser.mobile||(c.preventDefault(),c.stopPropagation()))}).on(b.simpleSlider.events.end,function(){b(document).css({cursor:"auto"});a.canSlide=!1;d.css({cursor:"auto"})}))})},updateSliderVal:function(c){var a=this.get(0);if(a.opt){a.opt.initialval="number"==typeof a.opt.initialval?a.opt.initialval:a.opt.initialval(a);var d=b(a).outerWidth(),e=b(a).outerHeight();a.x="object"==typeof c?c.clientX+document.body.scrollLeft-this.offset().left:
-			"number"==typeof c?c*d/a.opt.maxVal:a.opt.initialval*d/a.opt.maxVal;a.y="object"==typeof c?c.clientY+document.body.scrollTop-this.offset().top:"number"==typeof c?(a.opt.maxVal-a.opt.initialval-c)*e/a.opt.maxVal:a.opt.initialval*e/a.opt.maxVal;a.y=this.outerHeight()-a.y;a.scaleX=a.x*a.opt.maxVal/d;a.scaleY=a.y*a.opt.maxVal/e;a.outOfRangeX=a.scaleX>a.opt.maxVal?a.scaleX-a.opt.maxVal:0>a.scaleX?a.scaleX:0;a.outOfRangeY=a.scaleY>a.opt.maxVal?a.scaleY-a.opt.maxVal:0>a.scaleY?a.scaleY:0;a.outOfRange="h"==
-	a.opt.orientation?a.outOfRangeX:a.outOfRangeY;a.value="undefined"!=typeof c?"h"==a.opt.orientation?a.x>=this.outerWidth()?a.opt.maxVal:0>=a.x?0:a.scaleX:a.y>=this.outerHeight()?a.opt.maxVal:0>=a.y?0:a.scaleY:"h"==a.opt.orientation?a.scaleX:a.scaleY;"h"==a.opt.orientation?a.level.width(Math.floor(100*a.x/d)+"%"):a.level.height(Math.floor(100*a.y/e));"h"===a.opt.orientation&&(a.x>=this.outerWidth()||0>=a.x)||"h"!==a.opt.orientation&&(a.y>=this.outerHeight()||0>=a.y)||"function"===typeof a.opt.callback&&
-	a.opt.callback(a)}}};b.fn.simpleSlider=b.simpleSlider.init;b.fn.updateSliderVal=b.simpleSlider.updateSliderVal})(jQuery);
+(function ($) {
+
+	$.simpleSlider = {
+		defaults: {
+			initialval : 0,
+			maxval     : 100,
+			orientation: "h",
+			readonly   : false,
+			callback   : false
+		},
+
+		events: {
+			start: $.browser.mobile ? "touchstart" : "mousedown",
+			end  : $.browser.mobile ? "touchend" : "mouseup",
+			move : $.browser.mobile ? "touchmove" : "mousemove"
+		},
+
+		init: function (opt) {
+
+			return this.each(function () {
+				var el = this;
+				var $el = $(el);
+
+				$el.addClass("simpleSlider");
+
+				el.opt = {};
+
+				$.extend(el.opt, $.simpleSlider.defaults, opt);
+				$.extend(el.opt, $el.data());
+
+				console.debug($el.data());
+
+				var levelClass = el.opt.orientation == "h" ? "horizontal" : "vertical";
+				var level = $("<div/>").addClass("level").addClass(levelClass);
+
+				$el.prepend(level);
+				el.level = level;
+
+				$el.css({cursor: "default"});
+
+				if (el.opt.maxval == "auto")
+					el.opt.maxval = $(el).outerWidth();
+
+				$el.updateSliderVal();
+
+				if (!el.opt.readonly) {
+
+					$el.on($.simpleSlider.events.start, function (e) {
+
+						if ($.browser.mobile)
+							e = e.changedTouches[0];
+
+						el.canSlide = true;
+						$el.updateSliderVal(e);
+
+						if (el.opt.orientation == "h")
+							$el.css({cursor: "col-resize"});
+						else
+							$el.css({cursor: "row-resize"});
+
+						el.lastVal = el.val;
+
+						if (!$.browser.mobile) {
+							e.preventDefault();
+							e.stopPropagation();
+						}
+					});
+
+					$(document).on($.simpleSlider.events.move, function (e) {
+
+						if ($.browser.mobile)
+							e = e.changedTouches[0];
+
+						if (!el.canSlide)
+							return;
+
+						$(document).css({cursor: "default"});
+						$el.updateSliderVal(e);
+
+						if (!$.browser.mobile) {
+							e.preventDefault();
+							e.stopPropagation();
+						}
+
+					}).on($.simpleSlider.events.end, function () {
+						$(document).css({cursor: "auto"});
+						el.canSlide = false;
+						$el.css({cursor: "auto"})
+					});
+
+				}
+			})
+		},
+
+		updateSliderVal: function (e) {
+
+			var $el = this;
+			var el = $el.get(0);
+
+			if (!el.opt)
+				return;
+
+			el.opt.initialval = typeof el.opt.initialval == "number" ? el.opt.initialval : el.opt.initialval(el);
+
+			var elWidth = $(el).outerWidth();
+			var elHeight = $(el).outerHeight();
+
+			el.x = typeof e == "object" ? (e.clientX + document.body.scrollLeft) - $el.offset().left : typeof e == "number" ? (e * elWidth) / el.opt.maxval : (el.opt.initialval * elWidth) / el.opt.maxval;
+			el.y = typeof e == "object" ? (e.clientY + document.body.scrollTop) - $el.offset().top : typeof e == "number" ? ((el.opt.maxval - el.opt.initialval - e) * elHeight) / el.opt.maxval : (el.opt.initialval * elHeight) / el.opt.maxval;
+			el.y = $el.outerHeight() - el.y;
+
+			el.scaleX = (el.x * el.opt.maxval) / elWidth;
+			el.scaleY = (el.y * el.opt.maxval) / elHeight;
+
+			el.outOfRangeX = el.scaleX > el.opt.maxval ? (el.scaleX - el.opt.maxval) : el.scaleX < 0 ? el.scaleX : 0;
+			el.outOfRangeY = el.scaleY > el.opt.maxval ? (el.scaleY - el.opt.maxval) : el.scaleY < 0 ? el.scaleY : 0;
+			el.outOfRange = el.opt.orientation == "h" ? el.outOfRangeX : el.outOfRangeY;
+
+			if (typeof e != "undefined")
+				el.value = el.opt.orientation == "h" ? (el.x >= $el.outerWidth() ? el.opt.maxval : el.x <= 0 ? 0 : el.scaleX) : (el.y >= $el.outerHeight() ? el.opt.maxval : el.y <= 0 ? 0 : el.scaleY);
+			else
+				el.value = el.opt.orientation == "h" ? el.scaleX : el.scaleY;
+
+			if (el.opt.orientation == "h")
+				el.level.width(getPercent(el.x, elWidth) + "%");
+			else {
+				el.level.height(getPercent(el.y, elHeight));
+			}
+
+			function getPercent(val, tot) {
+				return Math.floor((val * 100) / tot);
+			}
+
+			if (el.lastVal === el.value && ((el.opt.orientation === "h" && (el.x >= $el.outerWidth() || el.x <= 0)) || (el.opt.orientation !== "h" && (el.y >= $el.outerHeight() || el.y <= 0))))
+				return;
+
+			if (typeof el.opt.callback === "function")
+				el.opt.callback(el);
+
+			el.lastVal = el.value;
+		}
+	};
+
+	$.fn.simpleSlider = $.simpleSlider.init;
+	$.fn.updateSliderVal = $.simpleSlider.updateSliderVal;
+
+})(jQuery);
 ;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _

@@ -20,6 +20,12 @@ alert('This is the \'jquery.mb.YTPlayer.src.js\' javascript file and can\'t be i
 
 var ytp = ytp || {};
 
+let YTPrndSuffix = new Date().getTime();
+let YTPtimerLabels = {
+	init        : "YTPlayerInit_" + YTPrndSuffix,
+	startPlaying: "YTPlayerStartPlay_" + YTPrndSuffix
+}
+
 function onYouTubeIframeAPIReady() {
 	if (ytp.YTAPIReady)
 		return;
@@ -148,7 +154,7 @@ function iOSversion() {
 			 setPlaybackQuality has been deprecated on the YT API and doesn't work anymore
 			 “small”, “medium”, “large”, “hd720”, “hd1080”, “highres”, "default"
 			 */
-			quality: 'default',
+			quality: 'hd1080',
 
 			/**
 			 vol (int)
@@ -341,13 +347,13 @@ function iOSversion() {
 				return isIfr
 			}
 
-			console.time('YTPlayerInit');
-			console.time('YTPlayerStartPlay');
-
 			return this.each(function () {
+
+
 				let YTPlayer = this;
 				let $YTPlayer = jQuery(YTPlayer);
 				$YTPlayer.hide();
+
 				YTPlayer.loop = 0;
 				YTPlayer.state = 0;
 				YTPlayer.filters = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
@@ -359,13 +365,22 @@ function iOSversion() {
 				 Set properties
 				 */
 				let property = $YTPlayer.data('property') && typeof $YTPlayer.data('property') == 'string' ?
-						eval('(' + $YTPlayer.data('property') + ')') :
-						$YTPlayer.data('property');
+					eval('(' + $YTPlayer.data('property') + ')') :
+					$YTPlayer.data('property');
 
 				if (typeof property !== 'object')
 					property = {};
 
 				YTPlayer.opt = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaults, YTPlayer.opt, options, property);
+
+				YTPrndSuffix = getYTPVideoID(YTPlayer.opt.videoURL).videoID
+				YTPtimerLabels = {
+					init        : "YTPlayerInit_" + YTPrndSuffix,
+					startPlaying: "YTPlayerStartPlay_" + YTPrndSuffix
+				}
+
+				console.time(YTPtimerLabels.init);
+				console.time(YTPtimerLabels.startPlaying);
 
 				YTPlayer.opt.elementId = YTPlayer.id;
 
@@ -375,7 +390,7 @@ function iOSversion() {
 				}
 
 				/**
-				 * If autoPlay is set to true and  mute is set to false
+				 * If autoPlay is set to true and mute is set to false
 				 * Webkit browser will not auto-play
 				 * Start playing after the first click
 				 */
@@ -416,7 +431,7 @@ function iOSversion() {
 				 Manage Quality
 				 the setPlaybackQuality has been deprecated by YT
 				 */
-				YTPlayer.opt.quality = 'default';
+				YTPlayer.opt.quality = 'hd1080';
 
 				/**
 				 * todo: remove
@@ -443,17 +458,17 @@ function iOSversion() {
 				YTPlayer.isAlone = false;
 				YTPlayer.hasFocus = true;
 				YTPlayer.videoID = YTPlayer.opt.videoURL ?
-						getYTPVideoID(YTPlayer.opt.videoURL).videoID : $YTPlayer.attr('href') ?
-								getYTPVideoID($YTPlayer.attr('href')).videoID :
-								false;
+					getYTPVideoID(YTPlayer.opt.videoURL).videoID : $YTPlayer.attr('href') ?
+						getYTPVideoID($YTPlayer.attr('href')).videoID :
+						false;
 
 				/**
 				 Check if it is a video list
 				 */
 				YTPlayer.playlistID = YTPlayer.opt.videoURL ?
-						getYTPVideoID(YTPlayer.opt.videoURL).playlistID : $YTPlayer.attr('href') ?
-								getYTPVideoID($YTPlayer.attr('href')).playlistID :
-								false;
+					getYTPVideoID(YTPlayer.opt.videoURL).playlistID : $YTPlayer.attr('href') ?
+						getYTPVideoID($YTPlayer.attr('href')).playlistID :
+						false;
 
 				let start_from_last = 0;
 				if (jQuery.mbCookie.get('YTPlayer_start_from' + YTPlayer.videoID))
@@ -764,30 +779,27 @@ function iOSversion() {
 									YTPlayer.state = state;
 									// console.debug(YTPlayer.state);
 
-									/*
-																		if (event.data === YT.PlayerState.PLAYING) {
-																			// console.debug('YTPlayer.opt.quality', YTPlayer.opt.quality)
-																		//	event.target.setPlaybackQuality(YTPlayer.opt.quality)
-																			event.target.setPlaybackQuality('default')
-																		}
-									*/
 
-									// console.debug('YTPGetVideoQuality', jQuery(YTPlayer).YTPGetVideoQuality());
+									if (event.data === YT.PlayerState.PLAYING) {
+										// console.debug('YTPlayer.opt.quality', YTPlayer.opt.quality)
+										event.target.setPlaybackQuality(YTPlayer.opt.quality)
+										//event.target.setPlaybackQuality('default')
+									}
 
 									let eventType;
 									switch (state) {
 
-											/** unstarted */
+										/** unstarted */
 										case -1:
 											eventType = 'YTPUnstarted';
 											break;
 
-											/** unstarted */
+										/** unstarted */
 										case 0:
 											eventType = 'YTPRealEnd';
 											break;
 
-											/** play */
+										/** play */
 										case 1:
 											eventType = 'YTPPlay';
 											if (YTPlayer.controlBar.length)
@@ -799,7 +811,7 @@ function iOSversion() {
 											jQuery(document).off('mousedown.YTPstart');
 											break;
 
-											/** pause */
+										/** pause */
 										case 2:
 											eventType = 'YTPPause';
 											if (YTPlayer.controlBar.length)
@@ -809,16 +821,16 @@ function iOSversion() {
 												YTPlayer.inlinePlayButton.show();
 											break;
 
-											/** buffer */
+										/** buffer */
 										case 3:
 											// YTPlayer.player.setPlaybackQuality('default');
-											// YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
+											YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 											eventType = 'YTPBuffering';
 											if (YTPlayer.controlBar.length)
 												YTPlayer.controlBar.find('.mb_YTPPlayPause').html(jQuery.mbYTPlayer.controls.play);
 											break;
 
-											/** cued */
+										/** cued */
 										case 5:
 											eventType = 'YTPCued';
 											break;
@@ -929,7 +941,17 @@ function iOSversion() {
 				$YTPlayer.off('YTPTime.mask');
 				jQuery.mbYTPlayer.applyMask(YTPlayer);
 
-				console.timeEnd('YTPlayerInit')
+				console.timeEnd(YTPtimerLabels.init)
+
+				setTimeout(function () {
+					if (!ytp.YTAPIReady && typeof window.YT == "object") {
+						jQuery(document).trigger('YTAPIReady')
+						ytp.YTAPIReady = true;
+
+						console.error("YTPlayer: More then a call to the YT API has been detected")
+					}
+				}, 1000)
+
 			})
 		},
 
@@ -1025,15 +1047,15 @@ function iOSversion() {
 					for (let x in YTPlayer.videoData) YTPData.prop[x] = YTPlayer.videoData[x];
 					jQuery(YTPlayer).trigger(YTPData)
 				})
-						.fail(function (jqxhr) {
-							console.error("YT data error:: ", jqxhr);
-							YTPlayer.hasData = false;
+				.fail(function (jqxhr) {
+					console.error("YT data error:: ", jqxhr);
+					YTPlayer.hasData = false;
 
-							let YTPChanged = jQuery.Event('YTPChanged');
-							YTPChanged.time = YTPlayer.currentTime;
-							YTPChanged.videoId = YTPlayer.videoID;
-							jQuery(YTPlayer).trigger(YTPChanged)
-						})
+					let YTPChanged = jQuery.Event('YTPChanged');
+					YTPChanged.time = YTPlayer.currentTime;
+					YTPChanged.videoId = YTPlayer.videoID;
+					jQuery(YTPlayer).trigger(YTPChanged)
+				})
 			} else {
 
 				setTimeout(function () {
@@ -1096,16 +1118,14 @@ function iOSversion() {
 		 */
 		setVideoQuality: function (quality) {
 
+			let YTPlayer = this.get(0);
+			let time = YTPlayer.player.getCurrentTime()
+			jQuery(YTPlayer).YTPPause();
+			YTPlayer.opt.quality = quality;
+			YTPlayer.player.setPlaybackQuality(quality);
+			YTPlayer.player.seekTo(time) // or set to CurrentTime using player.getCurrentTime()
+			jQuery(YTPlayer).YTPPlay();
 			return this;
-
-			/*
-						let YTPlayer = this.get(0);
-						jQuery(YTPlayer).YTPPause();
-						YTPlayer.opt.quality = quality;
-						YTPlayer.player.setPlaybackQuality(quality);
-						jQuery(YTPlayer).YTPPlay();
-						return this
-			*/
 		},
 
 		/**
@@ -1316,11 +1336,7 @@ function iOSversion() {
 		 */
 		getPlayer: function () {
 			let YTPlayer = this.get(0);
-
-			if (!YTPlayer.isReady)
-				return null;
-
-			return YTPlayer.player || null
+			return !YTPlayer.isReady ? null : YTPlayer.player
 		},
 
 		/**
@@ -1367,7 +1383,7 @@ function iOSversion() {
 					if (!isFullScreen) {
 						YTPlayer.isAlone = false;
 						fullScreenBtn.html(jQuery.mbYTPlayer.controls.onlyYT);
-						//jQuery(YTPlayer).YTPSetVideoQuality(YTPlayer.opt.quality);
+						jQuery(YTPlayer).YTPSetVideoQuality(YTPlayer.opt.quality);
 						videoWrapper.removeClass('YTPFullscreen');
 						videoWrapper.CSSAnimate({
 							opacity: YTPlayer.opt.opacity
@@ -1459,7 +1475,7 @@ function iOSversion() {
 			function RunPrefixMethod(obj, method) {
 				let pfx = ['webkit', 'moz', 'ms', 'o', ''];
 				let p = 0,
-						m, t;
+					m, t;
 				while (p < pfx.length && !obj[m]) {
 					m = method;
 					if (pfx[p] == '') {
@@ -2461,8 +2477,8 @@ function iOSversion() {
 					YTPlayer.overlay.removeClass(function (index, classNames) {
 						// change the list into an array
 						let current_classes = classNames.split(' '),
-								// array of classes which are to be removed
-								classes_to_remove = [];
+							// array of classes which are to be removed
+							classes_to_remove = [];
 						jQuery.each(current_classes, function (index, class_name) {
 							// if the classname begins with bg add it to the classes_to_remove array
 							if (/raster.*/.test(class_name)) {
@@ -2556,7 +2572,7 @@ function iOSversion() {
 							})
 						}
 						$YTPlayer.YTPPlay();
-						console.timeEnd('YTPlayerStartPlay')
+						console.timeEnd(YTPtimerLabels.startPlaying)
 
 					} else {
 

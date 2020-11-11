@@ -31,7 +31,7 @@
   <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="../dist/jquery.mb.YTPlayer.js"></script>
+  <script src="../dist/jquery.mb.YTPlayer.min.js"></script>
   <script src="assets/apikey.js"></script>
 
   <style>
@@ -288,7 +288,7 @@
   </a>
 
 
-  <a id="bgndVideo" class="player"
+  <div id="bgndVideo" class="player"
      data-property="{
      videoURL:'r1xohS2u69E',
      containment:'body',
@@ -303,9 +303,10 @@
      addRaster:true,
      quality:'small',
      abundance:.25,
-     coverImage:'assets/bg-1.jpg'
+     coverImage:'assets/bg-1.jpg',
+     fadeOnStartTime: 1000
      }"
-  >My video</a>
+  >My video</div>
 
 </div>
 

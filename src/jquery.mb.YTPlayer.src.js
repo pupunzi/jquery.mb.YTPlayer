@@ -13,7 +13,6 @@
  *  @site:  http://pupunzi.com
  ****************************************************/
 
-
 /* src-block */
 alert('This is the \'jquery.mb.YTPlayer.src.js\' javascript file and can\'t be included. Use the one you find in the \'dist\' folder!');
 /* end-src-block */

@@ -29,6 +29,7 @@ let YTPtimerLabels = {
 function onYouTubeIframeAPIReady() {
 	if (ytp.YTAPIReady)
 		return;
+
 	ytp.YTAPIReady = true;
 	jQuery(document).trigger('YTAPIReady')
 }
@@ -114,6 +115,12 @@ function iOSversion() {
 			 on page load video should start or pause
 			 */
 			autoPlay: true,
+
+			/**
+			 delayAtStart (bool)
+			 If the YT API don't fire the event the player will try to start anyway after...
+			 */
+			delayAtStart: 1000,
 
 			/**
 			 coverImage (string)
@@ -348,12 +355,9 @@ function iOSversion() {
 			}
 
 			return this.each(function () {
-
-
 				let YTPlayer = this;
 				let $YTPlayer = jQuery(YTPlayer);
 				$YTPlayer.hide();
-
 				YTPlayer.loop = 0;
 				YTPlayer.state = 0;
 				YTPlayer.filters = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
@@ -502,17 +506,6 @@ function iOSversion() {
 				}).addClass('YTPOverlay');
 
 				$YTPlayer.changeCoverImage();
-				/*
-								if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background) {
-									let bgndURL = YTPlayer.opt.coverImage ? 'url(' + YTPlayer.opt.coverImage + ') center center' : YTPlayer.orig_containment_background
-									if (bgndURL)
-										YTPlayer.opt.containment.css({
-											background      : bgndURL,
-											backgroundSize  : 'cover',
-											backgroundRepeat: 'no-repeat'
-										})
-								}
-				*/
 
 				/**
 				 create the wrapper
@@ -781,9 +774,7 @@ function iOSversion() {
 
 
 									if (event.data === YT.PlayerState.PLAYING) {
-										// console.debug('YTPlayer.opt.quality', YTPlayer.opt.quality)
 										event.target.setPlaybackQuality(YTPlayer.opt.quality)
-										//event.target.setPlaybackQuality('default')
 									}
 
 									let eventType;
@@ -916,10 +907,7 @@ function iOSversion() {
 							 * Optimize display on orientation change
 							 */
 							jQuery(window).off('orientationchange.YTP_' + YTPlayer.id).on('orientationchange.YTP_' + YTPlayer.id, function () {
-								// setTimeout(function (){
-								//console.debug('orientationchange')
 								$YTPlayer.optimizeDisplay()
-								// },1)
 							});
 
 							/**
@@ -950,7 +938,7 @@ function iOSversion() {
 
 						console.error("YTPlayer: More then a call to the YT API has been detected")
 					}
-				}, 1000)
+				},YTPlayer.opt.delayAtStart)
 
 			})
 		},
@@ -2608,7 +2596,6 @@ function iOSversion() {
 							YTPlayer.controlBar.find('.mb_YTPPlayPause').html(jQuery.mbYTPlayer.controls.play)
 					}
 
-					console.debug()
 					if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay && (YTPlayer.loading && YTPlayer.loading.length)) {
 						YTPlayer.loading.html('Ready');
 						setTimeout(function () {

@@ -61,8 +61,8 @@ function iOSversion() {
 
 	jQuery.mbYTPlayer = {
 		name   : 'jquery.mb.YTPlayer',
-		version: '3.3.4',
-		build  : '7538',
+		version: '3.3.5',
+		build  : '7539',
 		author : 'Matteo Bicocchi (pupunzi)',
 		apiKey : '',
 
@@ -2963,8 +2963,8 @@ jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQue
  
  file: jquery.mb.simpleSlider.js
  last modified: 11/18/17 7:19 PM
- Version:  3.3.4
- Build:  7538
+ Version:  3.3.5
+ Build:  7539
  
  Open Lab s.r.l., Florence - Italy 
  email:  matteo@open-lab.com

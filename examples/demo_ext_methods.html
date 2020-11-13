@@ -160,6 +160,7 @@
         font-size: 40px;
         font-family: 'Lobster', cursive;
       }
+
       h2 {
         font-size: 25px;
         text-align: left !important;
@@ -198,17 +199,18 @@
   </style>
 
   <script>
-    var myPlayer;
-    function showInfo(info) {
-      $("#info").stop().delay(500).html(info).stop().fadeIn().delay(5000).fadeOut();
-    }
+		var myPlayer;
 
-    jQuery(function () {
-      myPlayer = jQuery("#bgndVideo").YTPlayer();
-      myPlayer.on("YTPData", function (e) {
-        showInfo(e.prop.title + "<br><br>@" + e.prop.channelTitle);
-      });
-    });
+		function showInfo(info) {
+			$("#info").stop().delay(500).html(info).stop().fadeIn().delay(5000).fadeOut();
+		}
+
+		jQuery(function () {
+			myPlayer = jQuery("#bgndVideo").YTPlayer();
+			myPlayer.on("YTPData", function (e) {
+				showInfo(e.prop.title + "<br><br>@" + e.prop.channelTitle);
+			});
+		});
   </script>
 </head>
 
@@ -273,23 +275,29 @@
     <button onclick="myPlayer.YTPSetPlaybackRate(2)">YTPSetPlaybackRate to 2</button>
     <br>
     <br>
-    <button>YTPSetAbundance <input type="range" id="abundanceVal"  min="0" max="100" oninput="myPlayer.YTPSetAbundance(jQuery('#abundanceVal').val()/100, true); jQuery('#abundanceValNumber').html(jQuery('#abundanceVal').val()/100)" /> (<span id="abundanceValNumber"></span>) </button>
+    <button>YTPSetAbundance <input type="range" id="abundanceVal" min="0" max="100"
+                                   oninput="myPlayer.YTPSetAbundance(jQuery('#abundanceVal').val()/100, true); jQuery('#abundanceValNumber').html(jQuery('#abundanceVal').val()/100)"/> (<span
+        id="abundanceValNumber"></span>)
+    </button>
     <button onclick="showInfo(myPlayer.YTPGetAbundance())">YTPGetAbundance</button>
     <br>
     <br>
-    <button><input id="stopMovieOnBlur" checked name="stopMovieOnBlur" type="checkbox" onchange="if($(this).is(':checked')){jQuery('#bgndVideo').YTPSetOption('stopMovieOnBlur', true)} else {jQuery('#bgndVideo').YTPSetOption('stopMovieOnBlur', false)}"> <label for="stopMovieOnBlur" style="color:#fff">stopMovieOnBlur</label></button>
+    <button><input id="stopMovieOnBlur" checked name="stopMovieOnBlur" type="checkbox"
+                   onchange="if($(this).is(':checked')){jQuery('#bgndVideo').YTPSetOption('stopMovieOnBlur', true)} else {jQuery('#bgndVideo').YTPSetOption('stopMovieOnBlur', false)}"> <label for="stopMovieOnBlur"
+                                                                                                                                                                                                style="color:#fff">stopMovieOnBlur</label>
+    </button>
 
   </div>
 
   <div id="info"></div>
 
-  <a  id="donate" style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
+  <a id="donate" style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
     <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
   </a>
 
 
   <div id="bgndVideo" class="player"
-     data-property="{
+       data-property="{
      videoURL:'r1xohS2u69E',
      containment:'body',
      showControls:true,
@@ -306,7 +314,8 @@
      coverImage:'assets/bg-1.jpg',
      fadeOnStartTime: 1000
      }"
-  >My video</div>
+  >My video
+  </div>
 
 </div>
 

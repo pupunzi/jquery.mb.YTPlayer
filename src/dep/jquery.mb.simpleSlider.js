@@ -49,8 +49,6 @@
 				$.extend(el.opt, $.simpleSlider.defaults, opt);
 				$.extend(el.opt, $el.data());
 
-				console.debug($el.data());
-
 				var levelClass = el.opt.orientation == "h" ? "horizontal" : "vertical";
 				var level = $("<div/>").addClass("level").addClass(levelClass);
 

@@ -1,0 +1,98 @@
+<!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  jquery.mb.components
+
+  file: demo_domElement.html
+  last modified: 10/25/18 8:00 PM
+  Version:  {{ version }}
+  Build:  {{ buildnum }}
+
+  Open Lab s.r.l., Florence - Italy
+  email:  matteo@open-lab.com
+  blog: 	http://pupunzi.open-lab.com
+  site: 	http://pupunzi.com
+  	http://open-lab.com
+
+  Licences: MIT, GPL
+  http://www.opensource.org/licenses/mit-license.php
+  http://www.gnu.org/licenses/gpl.html
+
+  Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
+  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>youtube Chromeless Player - mb.YTPlayer</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+    <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        body {
+            border: none;
+            margin: 0;
+            padding: 0;
+            background: #000000;
+            font: normal 16px/20px Lekton, sans-serif;
+        }
+
+        #customElement {
+            width: 100%;
+            height: 400px;
+            background: rgba(81, 150, 191, 0.60);
+            position: relative;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            background: url("assets/ytplayer_img.jpg") no-repeat center center;
+            background-size: cover;
+        }
+
+        #testText {
+            position: absolute;
+            font-family: 'Lobster', cursive;
+            font-size: 40px;
+            text-align: center;
+            line-height: 80px;
+            color: #000;
+            width: 100%;
+            margin-top: 0;
+            text-shadow: 10px 10px 20px rgba(248, 248, 248, 0.60);
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            display: inline-block;
+            background: #f0f0f0;
+            color: #444;
+            line-height: 30px;
+            margin: 3px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+    </style>
+
+</head>
+<body>
+<div id="wrapper">
+
+    <div class="opnlb-ytplayer-container" id="myPlayer_9576" style="width:1000px; height:500px"></div><div id="myPlayerParams_9576" class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=lWx0vAJcvwk',containment:'#myPlayer_9576', showControls:false, autoPlay:true, loop:false, mute:true, startAt:0, stopAt:0}"></div>
+    <script>jQuery(function(){jQuery("#myPlayerParams_9576").YTPlayer();})</script>
+
+</div>
+
+</div>
+<script src="../dist/jquery.mb.YTPlayer.js"></script>
+
+</body>
+</html>

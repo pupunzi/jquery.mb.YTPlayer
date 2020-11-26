@@ -61,8 +61,8 @@ function iOSversion() {
 
 	jQuery.mbYTPlayer = {
 		name   : 'jquery.mb.YTPlayer',
-		version: '3.3.5',
-		build  : '7541',
+		version: '3.3.6',
+		build  : '7543',
 		author : 'Matteo Bicocchi (pupunzi)',
 		apiKey : '',
 
@@ -2962,8 +2962,8 @@ jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQue
  
  file: jquery.mb.simpleSlider.js
  last modified: 11/18/17 7:19 PM
- Version:  3.3.5
- Build:  7541
+ Version:  3.3.6
+ Build:  7543
  
  Open Lab s.r.l., Florence - Italy 
  email:  matteo@open-lab.com
@@ -3007,6 +3007,8 @@ jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQue
 
 				$.extend(el.opt, $.simpleSlider.defaults, opt);
 				$.extend(el.opt, $el.data());
+
+				console.debug($el.data());
 
 				var levelClass = el.opt.orientation == "h" ? "horizontal" : "vertical";
 				var level = $("<div/>").addClass("level").addClass(levelClass);

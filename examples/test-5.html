@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  jquery.mb.components
+  file: demo_domElement.html
+  last modified: 21/11/17 19.37
+  Version:  {{ version }}
+  Build:  {{ buildnum }}
+
+  Open Lab s.r.l., Florence - Italy
+  email: matbicoc@gmail.com
+  site: 	http://pupunzi.com
+  	http://open-lab.com
+  blog: 	http://pupunzi.open-lab.com
+
+  Licences: MIT, GPL
+  http://www.opensource.org/licenses/mit-license.php
+  http://www.gnu.org/licenses/gpl.html
+
+  Copyright (c) 2001-2020. Matteo Bicocchi (Pupunzi)
+  :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>test YTPlayer</title>
+
+  <style>
+
+    body {
+      border: none;
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      font: normal 16px/20px Lekton, sans-serif;
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #video-container{
+      background-color: red;
+      position: absolute;
+      left: 50%; /* % of surrounding element */
+      top: 50%;
+      transform: translate(-50%, -50%); /* % of current element */
+
+      height: 100%;
+      width: 177.77777778vh; /* 100 * 16 / 9 */
+      min-width: 100%;
+      min-height: 56.25vw; /* 100 * 9 / 16 */
+    }
+
+    iframe{
+      position: absolute;
+      left: 60%; /* % of surrounding element */
+      top: 60%;
+      width: 120%;
+      height: 120%;
+      transform: translate(-60%, -60%); /* % of current element */
+    }
+  </style>
+</head>
+<body>
+<div id="video-container">
+<iframe src="https://youtube-nocookie.com/embed/qRSPVj1ldVQ?controls=0"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+</div>
+</body>
+</html>

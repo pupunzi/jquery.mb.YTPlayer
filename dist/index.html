@@ -373,6 +373,7 @@
             var $slaider = $( slider );
             if ( slider.value ) applFilters.push( $slaider.data( "filter" ) + ": " + ( +( slider.value ).toFixed( 0 ) ) );
           }
+
           for ( var y in applFilters ) {
             var comma = y < applFilters.length - 1 ? "," : "<br>";
             desc += "<br> &nbsp;&nbsp;&nbsp;" + applFilters[ y ] + comma;

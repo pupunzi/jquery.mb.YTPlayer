@@ -678,7 +678,7 @@ function iOSversion() {
 						 * @type {{modestbranding: number, autoplay: number, controls: number, showinfo: number, rel: number, enablejsapi: number, version: number, playerapiid: string, origin: string, allowfullscreen: boolean, iv_load_policy: (string|*|jQuery.mbYTPlayer.opt.showAnnotations), playsinline: number}}
 						 */
 						let playerVars = {
-							'modestbranding' : 0,
+							'modestbranding' : 1,
 							'autoplay'       : 0,
 							'controls'       : 0,
 							'showinfo'       : 0,

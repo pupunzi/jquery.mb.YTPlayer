@@ -19,11 +19,11 @@ alert('This is the \'jquery.mb.YTPlayer.src.js\' javascript file and can\'t be i
 
 var ytp = ytp || {};
 
-let YTPrndSuffix = new Date().getTime();
-let YTPtimerLabels = {
-	init        : "YTPlayerInit_" + YTPrndSuffix,
-	startPlaying: "YTPlayerStartPlay_" + YTPrndSuffix
-}
+let YTPRndSuffix = new Date().getTime();
+let YTPTimerLabels = {
+	init        : "YTPlayerInit_" + YTPRndSuffix,
+	startPlaying: "YTPlayerStartPlay_" + YTPRndSuffix
+};
 
 function onYouTubeIframeAPIReady() {
 	if (ytp.YTAPIReady)
@@ -272,6 +272,12 @@ function iOSversion() {
 			addFilters: false,
 
 			/**
+			 useNoCookie (bool)
+			 use https://www.youtube-nocookie.com host to serve the video
+			 */
+			useNoCookie: true,
+
+			/**
 			 onReady (function)
 			 a callback function fired once the player is ready
 			 */
@@ -376,14 +382,14 @@ function iOSversion() {
 
 				YTPlayer.opt = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaults, YTPlayer.opt, options, property);
 
-				YTPrndSuffix = getYTPVideoID(YTPlayer.opt.videoURL).videoID
-				YTPtimerLabels = {
-					init        : "YTPlayerInit_" + YTPrndSuffix,
-					startPlaying: "YTPlayerStartPlay_" + YTPrndSuffix
-				}
+				YTPRndSuffix = getYTPVideoID(YTPlayer.opt.videoURL).videoID;
+				YTPTimerLabels = {
+					init        : "YTPlayerInit_" + YTPRndSuffix,
+					startPlaying: "YTPlayerStartPlay_" + YTPRndSuffix
+				};
 
-				console.time(YTPtimerLabels.init);
-				console.time(YTPtimerLabels.startPlaying);
+				console.time(YTPTimerLabels.init);
+				console.time(YTPTimerLabels.startPlaying);
 
 				YTPlayer.opt.elementId = YTPlayer.id;
 
@@ -701,7 +707,7 @@ function iOSversion() {
 
 						new YT.Player(YTPlayer.playerID, {
 							//videoId: YTPlayer.videoID.toString(),
-							host      : 'https://www.youtube-nocookie.com',
+							host      : YTPlayer.opt.useNoCookie? 'https://www.youtube-nocookie.com' : 'https://www.youtube.com',
 							playerVars: playerVars,
 							events    : {
 								'onReady'                : function (event) {
@@ -896,11 +902,11 @@ function iOSversion() {
 				$YTPlayer.off('YTPTime.mask');
 				jQuery.mbYTPlayer.applyMask(YTPlayer);
 
-				console.timeEnd(YTPtimerLabels.init)
+				console.timeEnd(YTPTimerLabels.init);
 
 				setTimeout(function () {
 					if (!ytp.YTAPIReady && typeof window.YT == "object") {
-						jQuery(document).trigger('YTAPIReady')
+						jQuery(document).trigger('YTAPIReady');
 						ytp.YTAPIReady = true;
 
 						console.error("YTPlayer: More then a call to the YT API has been detected")
@@ -1074,11 +1080,11 @@ function iOSversion() {
 		setVideoQuality: function (quality) {
 
 			let YTPlayer = this.get(0);
-			let time = YTPlayer.player.getCurrentTime()
+			let time = YTPlayer.player.getCurrentTime();
 			jQuery(YTPlayer).YTPPause();
 			YTPlayer.opt.quality = quality;
 			YTPlayer.player.setPlaybackQuality(quality);
-			YTPlayer.player.seekTo(time) // or set to CurrentTime using player.getCurrentTime()
+			YTPlayer.player.seekTo(time); // or set to CurrentTime using player.getCurrentTime()
 			jQuery(YTPlayer).YTPPlay();
 			return this;
 		},
@@ -2418,7 +2424,7 @@ function iOSversion() {
 							 */
 							jQuery(document).on('mousedown.YTPstartAudio', function () {
 								if (YTPlayer.forcedMuted){
-									console.debug("AAAAAAA")
+									console.debug("AAAAAAA");
 									YTPlayer.player.unMute();
 									YTPlayer.forcedMuted=false;
 									jQuery(document).off('mousedown.YTPstartAudio')
@@ -2457,7 +2463,7 @@ function iOSversion() {
 							})
 						}
 						$YTPlayer.YTPPlay();
-						console.timeEnd(YTPtimerLabels.startPlaying)
+						console.timeEnd(YTPTimerLabels.startPlaying)
 					} else {
 						YTPlayer.preventTrigger = true;
 						$YTPlayer.YTPPause();

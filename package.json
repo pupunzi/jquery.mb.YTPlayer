@@ -11,7 +11,7 @@
     "player",
     "custom"
   ],
-  "version": "3.3.7",
+  "version": "3.3.8",
   "author": "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)",
   "maintainers": [
     "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)"
@@ -55,5 +55,5 @@
   "directories": {
     "example": "examples"
   },
-  "buildnum": "7557"
+  "buildnum": "7561"
 }

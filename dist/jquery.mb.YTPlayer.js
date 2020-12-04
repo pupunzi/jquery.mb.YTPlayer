@@ -62,7 +62,7 @@ function iOSversion() {
 	jQuery.mbYTPlayer = {
 		name   : 'jquery.mb.YTPlayer',
 		version: '3.3.6',
-		build  : '7543',
+		build  : '7556',
 		author : 'Matteo Bicocchi (pupunzi)',
 		apiKey : '',
 
@@ -389,19 +389,6 @@ function iOSversion() {
 					YTPlayer.opt.mute = true
 				}
 
-				/**
-				 * If autoPlay is set to true and mute is set to false
-				 * Webkit browser will not auto-play
-				 * Start playing after the first click
-				 */
-				if (YTPlayer.opt.autoPlay && YTPlayer.opt.mute === false && jQuery.mbBrowser.chrome) {
-					//YTPlayer.opt.mute = true;
-					jQuery(document).one('mousedown.YTPstart', function () {
-						$YTPlayer.YTPPlay()
-					});
-					console.info('YTPlayer info: On Webkit browsers you can not autoplay the video if the audio is on.')
-				}
-
 				if (YTPlayer.opt.loop && typeof YTPlayer.opt.loop === 'boolean') {
 					YTPlayer.opt.loop = 9999
 				}
@@ -688,7 +675,7 @@ function iOSversion() {
 						 * @type {{modestbranding: number, autoplay: number, controls: number, showinfo: number, rel: number, enablejsapi: number, version: number, playerapiid: string, origin: string, allowfullscreen: boolean, iv_load_policy: (string|*|jQuery.mbYTPlayer.opt.showAnnotations), playsinline: number}}
 						 */
 						let playerVars = {
-							'modestbranding' : 1,
+							'modestbranding' : 0,
 							'autoplay'       : 0,
 							'controls'       : 0,
 							'showinfo'       : 0,
@@ -711,34 +698,15 @@ function iOSversion() {
 
 						new YT.Player(YTPlayer.playerID, {
 							//videoId: YTPlayer.videoID.toString(),
+							host      : 'https://www.youtube-nocookie.com',
 							playerVars: playerVars,
 							events    : {
 								'onReady'                : function (event) {
-
 									YTPlayer.player = event.target;
-
-									//todo: make playlist works
-									/* if (YTPlayer.playlistID && YTPlayer.apiKey) {
-										YTPlayer.isList = true;
-										YTPlayer.videos = [];
-										YTPlayer.player.cuePlaylist({
-											listType: 'playlist',
-											list: YTPlayer.playlistID.toString(),
-											startSeconds: YTPlayer.opt.startAt,
-											endSeconds: YTPlayer.opt.stopAt,
-											suggestedQuality: YTPlayer.opt.quality
-										});
-										}
-										 else { */
-
 									YTPlayer.player.loadVideoById({
 										videoId         : YTPlayer.videoID.toString(),
-										// startSeconds: YTPlayer.start_from_last || YTPlayer.opt.startAt,
-										// endSeconds: YTPlayer.opt.stopAt,
 										suggestedQuality: YTPlayer.opt.quality
 									});
-
-									/*}*/
 
 									$YTPlayer.trigger('YTPlayerIsReady_' + YTPlayer.id)
 								},
@@ -934,7 +902,7 @@ function iOSversion() {
 
 						console.error("YTPlayer: More then a call to the YT API has been detected")
 					}
-				},YTPlayer.opt.delayAtStart)
+				}, YTPlayer.opt.delayAtStart)
 
 			})
 		},
@@ -1138,44 +1106,6 @@ function iOSversion() {
 			let $YTPlayer = this;
 			let YTPlayer = $YTPlayer.get(0);
 
-			/*
-			if (typeof videos == "String" && jQuery.mbYTPlayer.apiKey != "") {
-				function getVideoListFromYoutube(playListID, page) {
-				page = page || '';
-				let youtubeAPI = "https://www.googleapis.com/youtube/v3/playlistItems";
-				jQuery.getJSON(youtubeAPI, {
-					part      : "snippet,contentDetails",
-					playlistId: playListID, //You have to enter the PlaylistID
-					maxResults: 50,
-					pageToken : page,
-					key       : jQuery.mbYTPlayer.apiKey //You have to enter your own YoutubeAPIKey
-				}).done(function (response) {
-					CreateVideosArray(response);
-					if (response.nextPageToken) {
-					page = response.nextPageToken;
-					getVideoListFromYoutube(plID, page, videos);
-					} else {
-					$YTPlayer.YTPlaylist(YTPlayer.videos, shuffle, callback)
-					}
-					;
-				});
-				};
-
-				function CreateVideosArray(response) {
-				let k = response.items.length;
-				for (let i = 0; i < k; i++) {
-					YTPlayer.videos.push({
-					"videoURL": response.items[i].contentDetails.videoId
-					});
-				}
-				;
-				};
-
-				getVideoListFromYoutube(videos);
-				return this;
-			}
-			*/
-
 			YTPlayer.isList = true;
 
 			if (shuffle)
@@ -1290,8 +1220,6 @@ function iOSversion() {
 
 				$YTPlayer.YTPGetPlayer().loadVideoById({
 					videoId         : YTPlayer.videoID,
-					// startSeconds: YTPlayer.opt.startAt,
-					// endSeconds: YTPlayer.opt.stopAt,
 					suggestedQuality: YTPlayer.opt.quality
 				});
 
@@ -1386,10 +1314,7 @@ function iOSversion() {
 						jQuery(YTPlayer).trigger('YTPFullScreenEnd')
 
 					} else {
-
-						//jQuery(YTPlayer).YTPSetVideoQuality('default');
 						jQuery(YTPlayer).trigger('YTPFullScreenStart')
-
 					}
 				})
 			}
@@ -1742,8 +1667,6 @@ function iOSversion() {
 			if (!YTPlayer.isReady)
 				return this;
 
-			// console.debug("unmute::", YTPlayer.isMute,"Vol::", YTPlayer.opt.vol)
-
 			if (!YTPlayer.isMute)
 				return this;
 
@@ -1965,11 +1888,6 @@ function iOSversion() {
 		addMask: function (mask) {
 			let YTPlayer = this.get(0);
 
-			/*
-					if (!YTPlayer.isReady)
-					return this;
-			*/
-
 			if (!mask)
 				mask = YTPlayer.actualMask;
 
@@ -2001,11 +1919,6 @@ function iOSversion() {
 		removeMask: function () {
 			let YTPlayer = this.get(0);
 
-			/*
-					if (!YTPlayer.isReady)
-					return this;
-			*/
-
 			YTPlayer.overlay.CSSAnimate({
 				opacity: 0
 			}, YTPlayer.opt.fadeOnStartTime, function () {
@@ -2031,11 +1944,6 @@ function iOSversion() {
 		applyMask: function (YTPlayer) {
 			let $YTPlayer = jQuery(YTPlayer);
 
-			/*
-					if (!YTPlayer.isReady)
-					return this;
-			*/
-
 			$YTPlayer.off('YTPTime.mask');
 
 			if (YTPlayer.opt.mask) {
@@ -2045,8 +1953,6 @@ function iOSversion() {
 					YTPlayer.actualMask = YTPlayer.opt.mask
 
 				} else if (typeof YTPlayer.opt.mask == 'object') {
-
-					//console.debug(YTPlayer.opt.mask)
 
 					for (let time in YTPlayer.opt.mask) {
 
@@ -2080,11 +1986,6 @@ function iOSversion() {
 		 */
 		toggleMask: function () {
 			let YTPlayer = this.get(0);
-
-			/*
-					if (!YTPlayer.isReady)
-					return this;
-			*/
 
 			let $YTPlayer = jQuery(YTPlayer);
 			if (YTPlayer.hasMask)
@@ -2138,7 +2039,6 @@ function iOSversion() {
 				return
 			}
 
-			// @YTPlayer.opt.printUrl: is deprecated; use YTPlayer.opt.showYTLogo
 			YTPlayer.opt.showYTLogo = YTPlayer.opt.showYTLogo || YTPlayer.opt.printUrl;
 			if (jQuery('#controlBar_' + YTPlayer.id).length)
 				return;
@@ -2242,9 +2142,6 @@ function iOSversion() {
 					YTPlayer.player.setVolume(el.value);
 					if (!YTPlayer.isMute)
 						YTPlayer.opt.vol = el.value
-
-					// console.debug(jQuery(YTPlayer).YTPGetVolume())
-
 				}
 
 			})
@@ -2260,16 +2157,12 @@ function iOSversion() {
 			let YTPlayer = this.get(0);
 			if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background) {
 				let bgndURL = imageURL || (YTPlayer.opt.coverImage ? 'url(' + YTPlayer.opt.coverImage + ') center center' : YTPlayer.orig_containment_background);
-
-				//	console.debug(YTPlayer.wrapper);
-
 				if (bgndURL)
 					YTPlayer.opt.containment.css({
 						background          : bgndURL,
 						backgroundSize      : 'cover',
-						// backgroundRepeat    : 'no-repeat',
+						backgroundRepeat    : 'no-repeat',
 						backgroundAttachment: 'fixed'
-
 					})
 			}
 			return this;
@@ -2404,24 +2297,11 @@ function iOSversion() {
 								YTPlayer.controlBar.find('.mb_YTPPlayPause').html(jQuery.mbYTPlayer.controls.play);
 
 							$YTPlayer.changeCoverImage();
-							/*
-														if (YTPlayer.opt.coverImage || YTPlayer.orig_containment_background) {
-															let bgndURL = YTPlayer.opt.coverImage ? 'url(' + YTPlayer.opt.coverImage + ') center center' : YTPlayer.orig_containment_background
-															if (bgndURL)
-																YTPlayer.opt.containment.css({
-																	background      : bgndURL,
-																	backgroundSize  : 'cover',
-																	backgroundRepeat: 'no-repeat'
-																})
-														}
-							*/
 
 							let YTPEnd = jQuery.Event('YTPEnd');
 							YTPEnd.time = YTPlayer.currentTime;
 							jQuery(YTPlayer).trigger(YTPEnd);
 							YTPlayer.player.seekTo(YTPlayer.opt.startAt, true);
-
-
 						});
 						return
 					}
@@ -2430,9 +2310,7 @@ function iOSversion() {
 					YTPlayer.opt.startAt = YTPlayer.opt.startAt || 1;
 					YTPlayer.preventTrigger = true;
 					YTPlayer.state = 2;
-					//YTPlayer.player.pauseVideo();
 					YTPlayer.player.seekTo(YTPlayer.opt.startAt, true)
-					//YTPlayer.player.playVideo();
 				}
 			}, interval)
 		},
@@ -2526,11 +2404,31 @@ function iOSversion() {
 					if (!YTPlayer.opt.mute) {
 
 						if (YTPlayer.opt.autoPlay) {
-							console.debug('To make the video \'auto-play\' you must mute the audio according with the latest vendor policy');
-							YTPlayer.player.mute()
-						}
+							console.debug('We muted the audio to make the video \'auto-play\' according with the latest vendor policy. ' +
+								'The audio will unmute at the first user interaction with the page');
+							YTPlayer.player.mute();
+							YTPlayer.forcedMuted = true;
+							/**
+							 * If autoPlay is set to true and mute is set to false
+							 * Browsers will not auto-play
+							 * Start playing audio after the first click
+							 */
+							jQuery(document).on('mousedown.YTPstartAudio', function () {
+								if (YTPlayer.forcedMuted){
+									console.debug("AAAAAAA")
+									YTPlayer.player.unMute();
+									YTPlayer.forcedMuted=false;
+									jQuery(document).off('mousedown.YTPstartAudio')
+								}
+							});
 
-						YTPlayer.player.unMute()
+							jQuery(window).on("scroll", function(){
+								console.debug("AAAAA")
+							})
+
+						} else {
+							YTPlayer.player.unMute()
+						}
 
 					} else {
 						$YTPlayer.YTPMute()
@@ -2557,9 +2455,7 @@ function iOSversion() {
 						}
 						$YTPlayer.YTPPlay();
 						console.timeEnd(YTPtimerLabels.startPlaying)
-
 					} else {
-
 						YTPlayer.preventTrigger = true;
 						$YTPlayer.YTPPause();
 
@@ -2963,7 +2859,7 @@ jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQue
  file: jquery.mb.simpleSlider.js
  last modified: 11/18/17 7:19 PM
  Version:  3.3.6
- Build:  7543
+ Build:  7556
  
  Open Lab s.r.l., Florence - Italy 
  email:  matteo@open-lab.com

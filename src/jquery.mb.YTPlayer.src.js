@@ -367,8 +367,8 @@ let getYTPVideoID = function (url) {
 				 Set properties
 				 */
 				let property = $YTPlayer.data('property') && typeof $YTPlayer.data('property') == 'string' ?
-					eval('(' + $YTPlayer.data('property') + ')') :
-					$YTPlayer.data('property');
+						eval('(' + $YTPlayer.data('property') + ')') :
+						$YTPlayer.data('property');
 
 				if (typeof property !== 'object')
 					property = {};
@@ -447,17 +447,17 @@ let getYTPVideoID = function (url) {
 				YTPlayer.isAlone = false;
 				YTPlayer.hasFocus = true;
 				YTPlayer.videoID = YTPlayer.opt.videoURL ?
-					getYTPVideoID(YTPlayer.opt.videoURL).videoID : $YTPlayer.attr('href') ?
-						getYTPVideoID($YTPlayer.attr('href')).videoID :
-						false;
+						getYTPVideoID(YTPlayer.opt.videoURL).videoID : $YTPlayer.attr('href') ?
+								getYTPVideoID($YTPlayer.attr('href')).videoID :
+								false;
 
 				/**
 				 Check if it is a video list
 				 */
 				YTPlayer.playlistID = YTPlayer.opt.videoURL ?
-					getYTPVideoID(YTPlayer.opt.videoURL).playlistID : $YTPlayer.attr('href') ?
-						getYTPVideoID($YTPlayer.attr('href')).playlistID :
-						false;
+						getYTPVideoID(YTPlayer.opt.videoURL).playlistID : $YTPlayer.attr('href') ?
+								getYTPVideoID($YTPlayer.attr('href')).playlistID :
+								false;
 
 				let start_from_last = 0;
 				if (jQuery.mbCookie.get('YTPlayer_start_from' + YTPlayer.videoID))
@@ -700,10 +700,10 @@ let getYTPVideoID = function (url) {
 
 						new YT.Player(YTPlayer.playerID, {
 							//videoId: YTPlayer.videoID.toString(),
-							host      : YTPlayer.opt.useNoCookie? 'https://www.youtube-nocookie.com' : 'https://www.youtube.com',
+							host      : YTPlayer.opt.useNoCookie ? 'https://www.youtube-nocookie.com' : 'https://www.youtube.com',
 							playerVars: playerVars,
 							events    : {
-								'onReady'                : function (event) {
+								'onReady'      : function (event) {
 									YTPlayer.player = event.target;
 									YTPlayer.player.loadVideoById({
 										videoId         : YTPlayer.videoID.toString(),
@@ -723,7 +723,7 @@ let getYTPVideoID = function (url) {
 								 * 3 (buffering)
 								 * 5 (video cued)
 								 */
-								'onStateChange'          : function (event) {
+								'onStateChange': function (event) {
 
 									if (typeof event.target.getPlayerState != 'function')
 										return;
@@ -738,7 +738,6 @@ let getYTPVideoID = function (url) {
 									YTPlayer.state = state;
 									// console.debug(YTPlayer.state);
 
-
 									if (event.data === YT.PlayerState.PLAYING) {
 										event.target.setPlaybackQuality(YTPlayer.opt.quality)
 									}
@@ -746,17 +745,17 @@ let getYTPVideoID = function (url) {
 									let eventType;
 									switch (state) {
 
-										/** unstarted */
+											/** unstarted */
 										case -1:
 											eventType = 'YTPUnstarted';
 											break;
 
-										/** unstarted */
+											/** unstarted */
 										case 0:
 											eventType = 'YTPRealEnd';
 											break;
 
-										/** play */
+											/** play */
 										case 1:
 											eventType = 'YTPPlay';
 											if (YTPlayer.controlBar.length)
@@ -768,7 +767,7 @@ let getYTPVideoID = function (url) {
 											jQuery(document).off('mousedown.YTPstart');
 											break;
 
-										/** pause */
+											/** pause */
 										case 2:
 											eventType = 'YTPPause';
 											if (YTPlayer.controlBar.length)
@@ -778,7 +777,7 @@ let getYTPVideoID = function (url) {
 												YTPlayer.inlinePlayButton.show();
 											break;
 
-										/** buffer */
+											/** buffer */
 										case 3:
 											// YTPlayer.player.setPlaybackQuality('default');
 											YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
@@ -787,7 +786,7 @@ let getYTPVideoID = function (url) {
 												YTPlayer.controlBar.find('.mb_YTPPlayPause').html(jQuery.mbYTPlayer.controls.play);
 											break;
 
-										/** cued */
+											/** cued */
 										case 5:
 											eventType = 'YTPCued';
 											break;
@@ -803,6 +802,7 @@ let getYTPVideoID = function (url) {
 									YTPEvent.time = YTPlayer.currentTime;
 									jQuery(YTPlayer).trigger(YTPEvent)
 								},
+
 								/**
 								 * onPlaybackQualityChange
 								 * @param e
@@ -813,6 +813,7 @@ let getYTPVideoID = function (url) {
 									YTPQualityChange.quality = quality;
 									jQuery(YTPlayer).trigger(YTPQualityChange)
 								},
+
 								/**
 								 * onError
 								 * @param err
@@ -823,7 +824,7 @@ let getYTPVideoID = function (url) {
 								 101 – The owner of the requested video does not allow it to be played in embedded players.
 								 150 – This error is the same as 101. It's just a 101 error in disguise!
 								 */
-								'onError'                : function (err) {
+								'onError': function (err) {
 
 									if (typeof YTPlayer.opt.onError == 'function')
 										YTPlayer.opt.onError($YTPlayer, err);
@@ -848,7 +849,6 @@ let getYTPVideoID = function (url) {
 
 									if (YTPlayer.isList)
 										jQuery(YTPlayer).YTPPlayNext()
-
 								}
 							}
 						});
@@ -901,11 +901,9 @@ let getYTPVideoID = function (url) {
 					if (!ytp.YTAPIReady && typeof window.YT == "object") {
 						jQuery(document).trigger('YTAPIReady');
 						ytp.YTAPIReady = true;
-
 						console.error("YTPlayer: More then a call to the YT API has been detected")
 					}
 				}, YTPlayer.opt.delayAtStart)
-
 			})
 		},
 
@@ -1001,15 +999,15 @@ let getYTPVideoID = function (url) {
 					for (let x in YTPlayer.videoData) YTPData.prop[x] = YTPlayer.videoData[x];
 					jQuery(YTPlayer).trigger(YTPData)
 				})
-				.fail(function (jqxhr) {
-					console.error("YT data error:: ", jqxhr);
-					YTPlayer.hasData = false;
+						.fail(function (jqxhr) {
+							console.error("YT data error:: ", jqxhr);
+							YTPlayer.hasData = false;
 
-					let YTPChanged = jQuery.Event('YTPChanged');
-					YTPChanged.time = YTPlayer.currentTime;
-					YTPChanged.videoId = YTPlayer.videoID;
-					jQuery(YTPlayer).trigger(YTPChanged)
-				})
+							let YTPChanged = jQuery.Event('YTPChanged');
+							YTPChanged.time = YTPlayer.currentTime;
+							YTPChanged.videoId = YTPlayer.videoID;
+							jQuery(YTPlayer).trigger(YTPChanged)
+						})
 			} else {
 
 				setTimeout(function () {
@@ -1386,10 +1384,10 @@ let getYTPVideoID = function (url) {
 			function RunPrefixMethod(obj, method) {
 				let pfx = ['webkit', 'moz', 'ms', 'o', ''];
 				let p = 0,
-					m, t;
+						m, t;
 				while (p < pfx.length && !obj[m]) {
 					m = method;
-					if (pfx[p] == '') {
+					if (pfx[p] === '') {
 						m = m.substr(0, 1).toLowerCase() + m.substr(1)
 					}
 					m = pfx[p] + m;
@@ -1483,7 +1481,7 @@ let getYTPVideoID = function (url) {
 			if (!YTPlayer.isReady)
 				return this;
 
-			if (YTPlayer.state == 1)
+			if (YTPlayer.state === 1)
 				this.YTPPause();
 			else
 				this.YTPPlay();
@@ -1959,8 +1957,7 @@ let getYTPVideoID = function (url) {
 					for (let time in YTPlayer.opt.mask) {
 
 						if (YTPlayer.opt.mask[time])
-							img = jQuery('<img/>').attr('src', YTPlayer.opt.mask[time])
-
+							let img = jQuery('<img/>').attr('src', YTPlayer.opt.mask[time])
 					}
 
 					if (YTPlayer.opt.mask[0])
@@ -1969,7 +1966,7 @@ let getYTPVideoID = function (url) {
 					$YTPlayer.on('YTPTime.mask', function (e) {
 
 						for (let time in YTPlayer.opt.mask) {
-							if (e.time == time)
+							if (e.time === time)
 								if (!YTPlayer.opt.mask[time]) {
 									$YTPlayer.YTPRemoveMask()
 								} else {
@@ -2341,8 +2338,8 @@ let getYTPVideoID = function (url) {
 					YTPlayer.overlay.removeClass(function (index, classNames) {
 						// change the list into an array
 						let current_classes = classNames.split(' '),
-							// array of classes which are to be removed
-							classes_to_remove = [];
+								// array of classes which are to be removed
+								classes_to_remove = [];
 						jQuery.each(current_classes, function (index, class_name) {
 							// if the classname begins with bg add it to the classes_to_remove array
 							if (/raster.*/.test(class_name)) {
@@ -2407,7 +2404,7 @@ let getYTPVideoID = function (url) {
 
 						if (YTPlayer.opt.autoPlay) {
 							console.debug('We muted the audio to make the video \'auto-play\' according with the latest vendor policy. ' +
-								'The audio will unmute at the first user interaction with the page');
+									'The audio will unmute at the first user interaction with the page');
 							YTPlayer.player.mute();
 							YTPlayer.forcedMuted = true;
 							/**
@@ -2416,15 +2413,15 @@ let getYTPVideoID = function (url) {
 							 * Start playing audio after the first click
 							 */
 							jQuery(document).on('mousedown.YTPstartAudio', function () {
-								if (YTPlayer.forcedMuted){
+								if (YTPlayer.forcedMuted) {
 									console.debug("AAAAAAA");
 									YTPlayer.player.unMute();
-									YTPlayer.forcedMuted=false;
+									YTPlayer.forcedMuted = false;
 									jQuery(document).off('mousedown.YTPstartAudio')
 								}
 							});
 
-							jQuery(window).on("scroll", function(){
+							jQuery(window).on("scroll", function () {
 								console.debug("AAAAA")
 							})
 

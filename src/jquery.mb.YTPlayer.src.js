@@ -510,7 +510,7 @@ let getYTPVideoID = function (url) {
 				 If is an inline player toggle play if the overlay is clicked
 				 */
 				if (YTPlayer.isPlayer) {
-					let inlinePlayButtonCss = jQuery.browser.mobile ? "inlinePlayButtonMobile" : "inlinePlayButton";
+					let inlinePlayButtonCss = jQuery.mbBrowser.mobile ? "inlinePlayButtonMobile" : "inlinePlayButton";
 					YTPlayer.inlinePlayButton = jQuery('<div/>').addClass('inlinePlayButton').html(jQuery.mbYTPlayer.controls.play);
 					$YTPlayer.append(YTPlayer.inlinePlayButton);
 					YTPlayer.inlinePlayButton.on('click', function (e) {
@@ -1957,7 +1957,7 @@ let getYTPVideoID = function (url) {
 					for (let time in YTPlayer.opt.mask) {
 
 						if (YTPlayer.opt.mask[time])
-							let img = jQuery('<img/>').attr('src', YTPlayer.opt.mask[time])
+							img = jQuery('<img/>').attr('src', YTPlayer.opt.mask[time])
 					}
 
 					if (YTPlayer.opt.mask[0])
@@ -2370,7 +2370,7 @@ let getYTPVideoID = function (url) {
 
 				let canPlayVideo = YTPlayer.player.getVideoLoadedFraction() >= startAt / YTPlayer.player.getDuration();
 
-				if (jQuery.browser.mobile)
+				if (jQuery.mbBrowser.mobile)
 					canPlayVideo = true;
 
 				if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {

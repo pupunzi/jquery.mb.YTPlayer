@@ -11,7 +11,7 @@
     "player",
     "custom"
   ],
-  "version": "3.3.8",
+  "version": "3.3.9",
   "author": "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)",
   "maintainers": [
     "Pupunzi <matbicoc@gmail.com> (Matteo Bicocchi)"
@@ -50,10 +50,11 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-include-replace": "^3.2.0",
     "grunt-jsbeautifier": "^0.2.13",
+    "grunt-replace": "^1.0.1",
     "grunt-strip-code": "^1.0.6"
   },
   "directories": {
     "example": "examples"
   },
-  "buildnum": "7566"
+  "buildnum": "7581"
 }

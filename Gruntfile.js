@@ -30,7 +30,7 @@ module.exports = function (grunt) {
           {flatten: true, expand: true, cwd: '../jquery.mb.browser/inc/', src: ['jquery.mb.browser.min.js'], dest: 'src/dep/'},
           {flatten: true, expand: true, cwd: '../jquery.mb.storage/inc/', src: ['jquery.mb.storage.min.js'], dest: 'src/dep/'},
           {flatten: true, expand: true, cwd: '../jquery.mb.CSSAnimate/inc/', src: ['jquery.mb.CSSAnimate.min.js'], dest: 'src/dep/'},
-          {flatten: true, expand: true, cwd: '../jquery.mb.simpleSlider/inc/', src: ['jquery.mb.simpleSlider.js'], dest: 'src/dep/'},
+          {flatten: true, expand: true, cwd: '../jquery.mb.simpleSlider/inc/', src: ['jquery.mb.simpleSlider.min.js'], dest: 'src/dep/'},
           {flatten: false, expand: true, cwd: 'src/css/font/', src: ['**'], dest: 'dist/css/font/'},
           {flatten: false, expand: true, cwd: 'src/css/images/', src: ['**'], dest: 'dist/css/images/'},
           {flatten: true, expand: true, cwd: 'src/', src: ['index.tmpl'], dest: 'dist/',
@@ -38,6 +38,23 @@ module.exports = function (grunt) {
               return dest + src.replace('.tmpl', '.html');
             }
           }
+        ]
+      }
+    },
+    replace: {
+      dist: {
+        options: {
+          patterns: [
+            {
+              match: /browser/g,
+              replacement: function () {
+                return 'mbBrowser'; // replaces "foo" to "bar"
+              }
+            }
+          ]
+        },
+        files: [
+          {expand: true, flatten: true, src: ['dist/jquery.mb.YTPlayer.js'], dest: 'dist/'}
         ]
       }
     },
@@ -209,11 +226,12 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks("grunt-jsbeautifier");
   grunt.loadNpmTasks('grunt-strip-code');
+  grunt.loadNpmTasks('grunt-replace');
 
   grunt.loadNpmTasks('grunt-build-number');
   grunt.loadNpmTasks('grunt-bump');
 
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'strip_code', 'uglify', 'cssmin', 'includereplace']); //'jsbeautifier',
+  grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'strip_code', 'uglify', 'replace', 'cssmin', 'includereplace']); //'jsbeautifier', 'replace'
 };

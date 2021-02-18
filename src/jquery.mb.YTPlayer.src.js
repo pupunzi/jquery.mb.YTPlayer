@@ -1,17 +1,23 @@
-/**********************************************
- * @File Name: jquery.mb.YTPlayer.src.js
- * @Author: Matteo Bicocchi
- * @Date: 2020-03-16
- * @Email: matbicoc@gmail.com
- *
- * @Last Modified by: Matteo Bicocchi
- * @Last Modified time: 2020-03-18
- * @Copyright: 2020. Matteo Bicocchi
- *
- *  Open Lab s.r.l., Florence - Italy
- *  @blog:  http://pupunzi.open-lab.com
- *  @site:  http://pupunzi.com
- ****************************************************/
+/*___________________________________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                                             _
+ _                                                                                                                                                  _
+ _ file: jquery.mb.YTPlayer.src.js                                                                                                                  _
+ _ last modified: 2/3/21 7:31 PM                                                                                                                    _
+ _                                                                                                                                                  _
+ _ Open Lab s.r.l., Florence - Italy                                                                                                                _
+ _                                                                                                                                                  _
+ _ email: matteo@open-lab.com                                                                                                                       _
+ _ site: http://pupunzi.com                                                                                                                         _
+ _       http://open-lab.com                                                                                                                        _
+ _ blog: http://pupunzi.open-lab.com                                                                                                                _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
+ _                                                                                                                                                  _
+ _ Licences: MIT, GPL                                                                                                                               _
+ _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
+ _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
+ _                                                                                                                                                  _
+ _ Copyright (c) 2001-2021. Matteo Bicocchi (Pupunzi);                                                                                              _
+ ___________________________________________________________________________________________________________________________________________________*/
 
 /* src-block */
 alert('This is the \'jquery.mb.YTPlayer.src.js\' javascript file and can\'t be included. Use the one you find in the \'dist\' folder!');
@@ -2133,7 +2139,7 @@ let getYTPVideoID = function (url) {
 				orientation: 'h',
 				callback   : function (el) {
 
-					if (el.value == 0) {
+					if (el.value === 0) {
 						jQuery(YTPlayer).YTPMute()
 					} else {
 						jQuery(YTPlayer).YTPUnmute()
@@ -2199,7 +2205,7 @@ let getYTPVideoID = function (url) {
 				let stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
 				stopAt = stopAt < YTPlayer.player.getDuration() ? stopAt : 0;
 
-				if (YTPlayer.currentTime != prog.currentTime) {
+				if (YTPlayer.currentTime !== prog.currentTime) {
 					let YTPEvent = jQuery.Event('YTPTime');
 					YTPEvent.time = YTPlayer.currentTime;
 					jQuery(YTPlayer).trigger(YTPEvent)
@@ -2207,7 +2213,7 @@ let getYTPVideoID = function (url) {
 
 				YTPlayer.currentTime = prog.currentTime;
 				YTPlayer.totalTime = YTPlayer.player.getDuration();
-				if (YTPlayer.player.getVolume() == 0) $YTPlayer.addClass('isMuted');
+				if (YTPlayer.player.getVolume() === 0) $YTPlayer.addClass('isMuted');
 				else $YTPlayer.removeClass('isMuted');
 
 				if (YTPlayer.opt.showControls)
@@ -2227,7 +2233,7 @@ let getYTPVideoID = function (url) {
 							YTPlayer.preventTrigger = true;
 							$YTPlayer.YTPPause()
 						}
-					} else if (document.hasFocus() && !YTPlayer.hasFocus && !(YTPlayer.state == -1 || YTPlayer.state == 0)) {
+					} else if (document.hasFocus() && !YTPlayer.hasFocus && !(YTPlayer.state === -1 || YTPlayer.state === 0)) {
 						YTPlayer.hasFocus = true;
 						YTPlayer.preventTrigger = true;
 						$YTPlayer.YTPPlay()
@@ -2239,7 +2245,7 @@ let getYTPVideoID = function (url) {
 				 */
 				if (YTPlayer.opt.playOnlyIfVisible) {
 					let isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer, YTPlayer.opt.onScreenPercentage);
-					if (!isOnScreen && YTPlayer.state == 1) {
+					if (!isOnScreen && YTPlayer.state === 1) {
 						YTPlayer.isOnScreen = false;
 						$YTPlayer.YTPPause()
 					} else if (isOnScreen && !YTPlayer.isOnScreen) {
@@ -2332,7 +2338,7 @@ let getYTPVideoID = function (url) {
 
 			if (YTPlayer.overlay)
 				if (YTPlayer.opt.addRaster) {
-					let classN = YTPlayer.opt.addRaster == 'dot' ? 'raster-dot' : 'raster';
+					let classN = YTPlayer.opt.addRaster === 'dot' ? 'raster-dot' : 'raster';
 					YTPlayer.overlay.addClass(YTPlayer.isRetina ? classN + ' retina' : classN)
 				} else {
 					YTPlayer.overlay.removeClass(function (index, classNames) {
@@ -2421,9 +2427,7 @@ let getYTPVideoID = function (url) {
 								}
 							});
 
-							jQuery(window).on("scroll", function () {
-								console.debug("AAAAA")
-							})
+							jQuery(window).on("scroll", function () {})
 
 						} else {
 							YTPlayer.player.unMute()
@@ -2611,14 +2615,13 @@ let getYTPVideoID = function (url) {
 
 		YTPlayer.opt.anchor = anchor || YTPlayer.opt.anchor;
 
-		// console.debug(YTPlayer.opt.anchor);
-
 		YTPlayer.opt.anchor = typeof YTPlayer.opt.anchor != 'undefined ' ? YTPlayer.opt.anchor : 'center,center';
 		let YTPAlign = YTPlayer.opt.anchor.split(',');
 		let ab = abundanceX ? abundanceX : YTPlayer.opt.abundance;
 
 		if (YTPlayer.opt.optimizeDisplay) {
 			let abundance = el.height() * ab;
+
 			let win = {};
 			win.width = el.outerWidth();
 			win.height = el.outerHeight() + abundance;
@@ -2657,7 +2660,6 @@ let getYTPVideoID = function (url) {
 							vid.marginLeft = Math.ceil(-(vid.width - win.width) + (abundance / 2));
 							break
 					}
-
 				}
 			}
 
@@ -2676,9 +2678,7 @@ let getYTPVideoID = function (url) {
 			maxWidth  : 'initial'
 		})
 
-
 	};
-
 
 	/* UTILITIES -----------------------------------------------------------------------------------------------------------------------*/
 

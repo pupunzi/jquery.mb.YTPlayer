@@ -26,11 +26,9 @@
 
   <link href='https://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
   <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
-  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.mb.ytplayer@3.2.9/dist/css/jquery.mb.YTPlayer.min.css">-->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="../dist/jquery.mb.YTPlayer.js"></script>
-  <!--<script src="https://cdn.jsdelivr.net/npm/jquery.mb.ytplayer@3.2.9/dist/jquery.mb.YTPlayer.min.js"></script>-->
   <script src="assets/apikey.js"></script>
 
   <style>
@@ -56,18 +54,89 @@
 </head>
 
 <body>
-
-<div id="wrapper" style="height: 50vh">
-
+<div id="wrapper">
+  <div class="playerBox" id="v1" style="background: #7698c6;"></div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="playerBox" id="v2" style="background: #7698c6;"></div>
 </div>
-<div id="playerVideo1" class="mbYTPVideo inline_YTPlayer"
-     data-property="{videoURL:'https://www.youtube.com/watch?v=yEn8_X7Ei3A', opacity:1, autoPlay:true, containment:'body', startAt:0, stopAt:0, mute:true, vol:50, optimizeDisplay:true, showControls:false, printUrl:true, loop:true, addRaster:false, quality:'default', realfullscreen:true, ratio:'auto', abundance:'0.2', coverImage:'http://localhost/wp-content/uploads/Photo-21-10-15-16-10-53.jpg', anchor:'center,center', gaTrack:false, stopMovieOnBlur:true, remember_last_time:false}"></div>
+
+<div id="p1" class="player" data-property="{videoURL:'qRSPVj1ldVQ',containment:'#v1', showControls:false, autoPlay:true, loop:2, mute:true, startAt:9, stopAt:100, opacity:1, addRaster:true, quality:'default', playOnlyIfVisible: true}"></div>
+<div id="p2" class="player" data-property="{videoURL:'qRSPVj1ldVQ',containment:'#v2', showControls:false, autoPlay:true, loop:2, mute:true, startAt:9, stopAt:100, opacity:1, addRaster:true, quality:'default', playOnlyIfVisible: true}"></div>
+
 <script>
-
-	jQuery(".mbYTPVideo").YTPlayer({
-		useNoCookie: true
-	});
-
+  jQuery(".player").YTPlayer();
 </script>
 </body>
 </html>

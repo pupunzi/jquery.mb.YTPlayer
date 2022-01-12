@@ -1,17 +1,23 @@
-/**********************************************
- * @File Name: jquery.mb.YTPlayer.src.js
- * @Author: Matteo Bicocchi
- * @Date: 2020-03-16
- * @Email: matbicoc@gmail.com
- *
- * @Last Modified by: Matteo Bicocchi
- * @Last Modified time: 2020-03-18
- * @Copyright: 2020. Matteo Bicocchi
- *
- *  Open Lab s.r.l., Florence - Italy
- *  @blog:  http://pupunzi.open-lab.com
- *  @site:  http://pupunzi.com
- ****************************************************/
+/*___________________________________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                                             _
+ _                                                                                                                                                  _
+ _ file: jquery.mb.YTPlayer.src.js                                                                                                                  _
+ _ last modified: 2/3/21 7:31 PM                                                                                                                    _
+ _                                                                                                                                                  _
+ _ Open Lab s.r.l., Florence - Italy                                                                                                                _
+ _                                                                                                                                                  _
+ _ email: matteo@open-lab.com                                                                                                                       _
+ _ site: http://pupunzi.com                                                                                                                         _
+ _       http://open-lab.com                                                                                                                        _
+ _ blog: http://pupunzi.open-lab.com                                                                                                                _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
+ _                                                                                                                                                  _
+ _ Licences: MIT, GPL                                                                                                                               _
+ _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
+ _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
+ _                                                                                                                                                  _
+ _ Copyright (c) 2001-2021. Matteo Bicocchi (Pupunzi);                                                                                              _
+ ___________________________________________________________________________________________________________________________________________________*/
 
 
 var ytp = ytp || {};
@@ -55,7 +61,7 @@ let getYTPVideoID = function (url) {
 	jQuery.mbYTPlayer = {
 		name   : 'jquery.mb.YTPlayer',
 		version: '3.3.9',
-		build  : '7581',
+		build  : '7613',
 		author : 'Matteo Bicocchi (pupunzi)',
 		apiKey : '',
 
@@ -150,7 +156,7 @@ let getYTPVideoID = function (url) {
 			 setPlaybackQuality has been deprecated on the YT API and doesn't work anymore
 			 “small”, “medium”, “large”, “hd720”, “hd1080”, “highres”, "default"
 			 */
-			quality: 'default',
+			quality: 'hd1080',
 
 			/**
 			 vol (int)
@@ -325,19 +331,25 @@ let getYTPVideoID = function (url) {
 		 */
 		buildPlayer: function (options) {
 
-			if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
-				jQuery('#YTAPI').remove();
-				let tag = jQuery('<script>').attr({
-					'src': 'https://www.youtube.com/iframe_api?v=' + jQuery.mbYTPlayer.version,
-					'id' : 'YTAPI'
-				});
-				jQuery('head').prepend(tag)
-			} else {
-				setTimeout(function () {
-					jQuery(document).trigger('YTAPIReady');
-					ytp.YTAPIReady = true
-				}, 100)
-			}
+			jQuery(function(){
+				if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
+					jQuery('#YTAPI').remove();
+					let tag = jQuery('<script>').attr({
+						'src'  : '//www.youtube.com/iframe_api?v=' + jQuery.mbYTPlayer.version,
+						'id'   : 'YTAPI',
+						'async': 'async',
+						'defer': true
+					});
+
+					jQuery('body').append(tag);
+
+				} else {
+					setTimeout(function () {
+						jQuery(document).trigger('YTAPIReady');
+						ytp.YTAPIReady = true
+					}, 100)
+				}
+			});
 
 			function isIframe() {
 				let isIfr = false;
@@ -418,6 +430,13 @@ let getYTPVideoID = function (url) {
 				 the setPlaybackQuality has been deprecated by YT
 				 */
 				YTPlayer.opt.quality = 'hd1080';
+
+				/**
+				 * todo: remove
+				 Manage Opacity for IE < 10
+				 */
+				if (jQuery.mbBrowser.msie && jQuery.mbBrowser.version < 9)
+					YTPlayer.opt.opacity = 1;
 
 				YTPlayer.opt.containment = YTPlayer.opt.containment === 'self' ? $YTPlayer : jQuery(YTPlayer.opt.containment);
 				YTPlayer.isRetina = (window.retina || window.devicePixelRatio > 1);
@@ -501,7 +520,7 @@ let getYTPVideoID = function (url) {
 				 */
 				if (YTPlayer.isPlayer) {
 					let inlinePlayButtonCss = jQuery.mbBrowser.mobile ? "inlinePlayButtonMobile" : "inlinePlayButton";
-					YTPlayer.inlinePlayButton = jQuery('<div/>').addClass(inlinePlayButtonCss).html(jQuery.mbYTPlayer.controls.play);
+					YTPlayer.inlinePlayButton = jQuery('<div/>').addClass('inlinePlayButton').html(jQuery.mbYTPlayer.controls.play);
 					$YTPlayer.append(YTPlayer.inlinePlayButton);
 					YTPlayer.inlinePlayButton.on('click', function (e) {
 
@@ -986,9 +1005,7 @@ let getYTPVideoID = function (url) {
 
 					let YTPData = jQuery.Event('YTPData');
 					YTPData.prop = {};
-					for (let x in YTPlayer.videoData)
-						YTPData.prop[x] = YTPlayer.videoData[x];
-
+					for (let x in YTPlayer.videoData) YTPData.prop[x] = YTPlayer.videoData[x];
 					jQuery(YTPlayer).trigger(YTPData)
 				})
 						.fail(function (jqxhr) {
@@ -2125,7 +2142,7 @@ let getYTPVideoID = function (url) {
 				orientation: 'h',
 				callback   : function (el) {
 
-					if (el.value == 0) {
+					if (el.value === 0) {
 						jQuery(YTPlayer).YTPMute()
 					} else {
 						jQuery(YTPlayer).YTPUnmute()
@@ -2191,7 +2208,7 @@ let getYTPVideoID = function (url) {
 				let stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
 				stopAt = stopAt < YTPlayer.player.getDuration() ? stopAt : 0;
 
-				if (YTPlayer.currentTime != prog.currentTime) {
+				if (YTPlayer.currentTime !== prog.currentTime) {
 					let YTPEvent = jQuery.Event('YTPTime');
 					YTPEvent.time = YTPlayer.currentTime;
 					jQuery(YTPlayer).trigger(YTPEvent)
@@ -2199,7 +2216,7 @@ let getYTPVideoID = function (url) {
 
 				YTPlayer.currentTime = prog.currentTime;
 				YTPlayer.totalTime = YTPlayer.player.getDuration();
-				if (YTPlayer.player.getVolume() == 0) $YTPlayer.addClass('isMuted');
+				if (YTPlayer.player.getVolume() === 0) $YTPlayer.addClass('isMuted');
 				else $YTPlayer.removeClass('isMuted');
 
 				if (YTPlayer.opt.showControls)
@@ -2219,7 +2236,7 @@ let getYTPVideoID = function (url) {
 							YTPlayer.preventTrigger = true;
 							$YTPlayer.YTPPause()
 						}
-					} else if (document.hasFocus() && !YTPlayer.hasFocus && !(YTPlayer.state == -1 || YTPlayer.state == 0)) {
+					} else if (document.hasFocus() && !YTPlayer.hasFocus && !(YTPlayer.state === -1 || YTPlayer.state === 0)) {
 						YTPlayer.hasFocus = true;
 						YTPlayer.preventTrigger = true;
 						$YTPlayer.YTPPlay()
@@ -2231,7 +2248,7 @@ let getYTPVideoID = function (url) {
 				 */
 				if (YTPlayer.opt.playOnlyIfVisible) {
 					let isOnScreen = jQuery.mbYTPlayer.isOnScreen(YTPlayer, YTPlayer.opt.onScreenPercentage);
-					if (!isOnScreen && YTPlayer.state == 1) {
+					if (!isOnScreen && YTPlayer.state === 1) {
 						YTPlayer.isOnScreen = false;
 						$YTPlayer.YTPPause()
 					} else if (isOnScreen && !YTPlayer.isOnScreen) {
@@ -2324,7 +2341,7 @@ let getYTPVideoID = function (url) {
 
 			if (YTPlayer.overlay)
 				if (YTPlayer.opt.addRaster) {
-					let classN = YTPlayer.opt.addRaster == 'dot' ? 'raster-dot' : 'raster';
+					let classN = YTPlayer.opt.addRaster === 'dot' ? 'raster-dot' : 'raster';
 					YTPlayer.overlay.addClass(YTPlayer.isRetina ? classN + ' retina' : classN)
 				} else {
 					YTPlayer.overlay.removeClass(function (index, classNames) {
@@ -2413,9 +2430,7 @@ let getYTPVideoID = function (url) {
 								}
 							});
 
-							jQuery(window).on("scroll", function () {
-								console.debug("AAAAA")
-							})
+							jQuery(window).on("scroll", function () {})
 
 						} else {
 							YTPlayer.player.unMute()
@@ -2603,14 +2618,13 @@ let getYTPVideoID = function (url) {
 
 		YTPlayer.opt.anchor = anchor || YTPlayer.opt.anchor;
 
-		// console.debug(YTPlayer.opt.anchor);
-
 		YTPlayer.opt.anchor = typeof YTPlayer.opt.anchor != 'undefined ' ? YTPlayer.opt.anchor : 'center,center';
 		let YTPAlign = YTPlayer.opt.anchor.split(',');
 		let ab = abundanceX ? abundanceX : YTPlayer.opt.abundance;
 
 		if (YTPlayer.opt.optimizeDisplay) {
 			let abundance = el.height() * ab;
+
 			let win = {};
 			win.width = el.outerWidth();
 			win.height = el.outerHeight() + abundance;
@@ -2649,7 +2663,6 @@ let getYTPVideoID = function (url) {
 							vid.marginLeft = Math.ceil(-(vid.width - win.width) + (abundance / 2));
 							break
 					}
-
 				}
 			}
 
@@ -2668,9 +2681,7 @@ let getYTPVideoID = function (url) {
 			maxWidth  : 'initial'
 		})
 
-
 	};
-
 
 	/* UTILITIES -----------------------------------------------------------------------------------------------------------------------*/
 
@@ -2775,7 +2786,7 @@ let getYTPVideoID = function (url) {
 	jQuery.fn.YTPSetOption = jQuery.mbYTPlayer.setOption
 
 })(jQuery, ytp);
-/*___________________________________________________________________________________________________________________________________________________
+;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.mbBrowser.min.js                                                                                                                   _
@@ -2808,6 +2819,7 @@ if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.mbBrowser.opera=!0,jQuery.mbBrow
 jQuery.mbBrowser.version=jQuery.mbBrowser.majorVersion;jQuery.mbBrowser.android=/Android/i.test(nAgt);jQuery.mbBrowser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.mbBrowser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.mbBrowser.operaMobile=/Opera Mini/i.test(nAgt);jQuery.mbBrowser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.mbBrowser.kindle=/Kindle|Silk/i.test(nAgt);
 jQuery.mbBrowser.mobile=jQuery.mbBrowser.android||jQuery.mbBrowser.blackberry||jQuery.mbBrowser.ios||jQuery.mbBrowser.windowsMobile||jQuery.mbBrowser.operaMobile||jQuery.mbBrowser.kindle;jQuery.isMobile=jQuery.mbBrowser.mobile;jQuery.isTablet=jQuery.mbBrowser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.mbBrowser.android&&!/chrome/i.test(nAgt);jQuery.mbBrowser=jQuery.mbBrowser;
 jQuery.mbBrowser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e)return!1;for(var c=a.split("."),d=e.split("."),b=0,f=Math.max(c.length,d.length);b<f;b++){if(c[b]&&!d[b]&&0<parseInt(c[b])||parseInt(c[b])>parseInt(d[b]))return 1;if(d[b]&&!c[b]&&0<parseInt(d[b])||parseInt(c[b])<parseInt(d[b]))return-1}return 0};
+;
 /*
  * ******************************************************************************
  *  jquery.mb.components
@@ -2831,19 +2843,19 @@ jQuery.mbBrowser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof
 jQuery.support.CSStransition=function(){var d=(document.body||document.documentElement).style;return void 0!==d.transition||void 0!==d.WebkitTransition||void 0!==d.MozTransition||void 0!==d.MsTransition||void 0!==d.OTransition}();function uncamel(d){return d.replace(/([A-Z])/g,function(a){return"-"+a.toLowerCase()})}function setUnit(d,a){return"string"!==typeof d||d.match(/^[\-0-9\.]+jQuery/)?""+d+a:d}
 function setFilter(d,a,b){var c=uncamel(a),g=jQuery.mbBrowser.mozilla?"":jQuery.CSS.sfx;d[g+"filter"]=d[g+"filter"]||"";b=setUnit(b>jQuery.CSS.filters[a].max?jQuery.CSS.filters[a].max:b,jQuery.CSS.filters[a].unit);d[g+"filter"]+=c+"("+b+") ";delete d[a]}
 jQuery.CSS={name:"mb.CSSAnimate",author:"Matteo Bicocchi",version:"2.0.0",transitionEnd:"transitionEnd",sfx:"",filters:{blur:{min:0,max:100,unit:"px"},brightness:{min:0,max:400,unit:"%"},contrast:{min:0,max:400,unit:"%"},grayscale:{min:0,max:100,unit:"%"},hueRotate:{min:0,max:360,unit:"deg"},invert:{min:0,max:100,unit:"%"},saturate:{min:0,max:400,unit:"%"},sepia:{min:0,max:100,unit:"%"}},normalizeCss:function(d){var a=jQuery.extend(!0,{},d);jQuery.mbBrowser.webkit||jQuery.mbBrowser.opera?jQuery.CSS.sfx=
-		"-webkit-":jQuery.mbBrowser.mozilla?jQuery.CSS.sfx="-moz-":jQuery.mbBrowser.msie&&(jQuery.CSS.sfx="-ms-");jQuery.CSS.sfx="";for(var b in a){"transform"===b&&(a[jQuery.CSS.sfx+"transform"]=a[b],delete a[b]);"transform-origin"===b&&(a[jQuery.CSS.sfx+"transform-origin"]=d[b],delete a[b]);"filter"!==b||jQuery.mbBrowser.mozilla||(a[jQuery.CSS.sfx+"filter"]=d[b],delete a[b]);"blur"===b&&setFilter(a,"blur",d[b]);"brightness"===b&&setFilter(a,"brightness",d[b]);"contrast"===b&&setFilter(a,"contrast",d[b]);"grayscale"===
-b&&setFilter(a,"grayscale",d[b]);"hueRotate"===b&&setFilter(a,"hueRotate",d[b]);"invert"===b&&setFilter(a,"invert",d[b]);"saturate"===b&&setFilter(a,"saturate",d[b]);"sepia"===b&&setFilter(a,"sepia",d[b]);if("x"===b){var c=jQuery.CSS.sfx+"transform";a[c]=a[c]||"";a[c]+=" translateX("+setUnit(d[b],"px")+")";delete a[b]}"y"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" translateY("+setUnit(d[b],"px")+")",delete a[b]);"z"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" translateZ("+
-		setUnit(d[b],"px")+")",delete a[b]);"rotate"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotate("+setUnit(d[b],"deg")+")",delete a[b]);"rotateX"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotateX("+setUnit(d[b],"deg")+")",delete a[b]);"rotateY"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotateY("+setUnit(d[b],"deg")+")",delete a[b]);"rotateZ"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotateZ("+setUnit(d[b],"deg")+")",delete a[b]);"scale"===b&&
-(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scale("+setUnit(d[b],"")+")",delete a[b]);"scaleX"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scaleX("+setUnit(d[b],"")+")",delete a[b]);"scaleY"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scaleY("+setUnit(d[b],"")+")",delete a[b]);"scaleZ"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scaleZ("+setUnit(d[b],"")+")",delete a[b]);"skew"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" skew("+setUnit(d[b],
-		"deg")+")",delete a[b]);"skewX"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" skewX("+setUnit(d[b],"deg")+")",delete a[b]);"skewY"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" skewY("+setUnit(d[b],"deg")+")",delete a[b]);"perspective"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" perspective("+setUnit(d[b],"px")+")",delete a[b])}return a},getProp:function(d){var a=[],b;for(b in d)0>a.indexOf(b)&&a.push(uncamel(b));return a.join(",")},animate:function(d,a,b,c,g){return this.each(function(){function n(){e.called=
-		!0;e.CSSAIsRunning=!1;h.off(jQuery.CSS.transitionEnd+"."+e.id);clearTimeout(e.timeout);h.css(jQuery.CSS.sfx+"transition","");"function"==typeof g&&g.apply(e);"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null)}var e=this,h=jQuery(this);e.id=e.id||"CSSA_"+(new Date).getTime();var k=k||{type:"noEvent"};if(e.CSSAIsRunning&&e.eventType==k.type&&!jQuery.mbBrowser.msie&&9>=jQuery.mbBrowser.version)e.CSSqueue=function(){h.CSSAnimate(d,a,b,c,g)};else if(e.CSSqueue=null,e.eventType=k.type,0!==h.length&&
-		d){d=jQuery.normalizeCss(d);e.CSSAIsRunning=!0;"function"==typeof a&&(g=a,a=jQuery.fx.speeds._default);"function"==typeof b&&(c=b,b=0);"string"==typeof b&&(g=b,b=0);"function"==typeof c&&(g=c,c="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof a)for(var l in jQuery.fx.speeds)if(a==l){a=jQuery.fx.speeds[l];break}else a=jQuery.fx.speeds._default;a||(a=jQuery.fx.speeds._default);"string"===typeof g&&(c=g,g=null);if(jQuery.support.CSStransition){var f={"default":"ease","in":"ease-in",out:"ease-out",
-	"in-out":"ease-in-out",snap:"cubic-bezier(0,1,.5,1)",easeOutCubic:"cubic-bezier(.215,.61,.355,1)",easeInOutCubic:"cubic-bezier(.645,.045,.355,1)",easeInCirc:"cubic-bezier(.6,.04,.98,.335)",easeOutCirc:"cubic-bezier(.075,.82,.165,1)",easeInOutCirc:"cubic-bezier(.785,.135,.15,.86)",easeInExpo:"cubic-bezier(.95,.05,.795,.035)",easeOutExpo:"cubic-bezier(.19,1,.22,1)",easeInOutExpo:"cubic-bezier(1,0,0,1)",easeInQuad:"cubic-bezier(.55,.085,.68,.53)",easeOutQuad:"cubic-bezier(.25,.46,.45,.94)",easeInOutQuad:"cubic-bezier(.455,.03,.515,.955)",
-	easeInQuart:"cubic-bezier(.895,.03,.685,.22)",easeOutQuart:"cubic-bezier(.165,.84,.44,1)",easeInOutQuart:"cubic-bezier(.77,0,.175,1)",easeInQuint:"cubic-bezier(.755,.05,.855,.06)",easeOutQuint:"cubic-bezier(.23,1,.32,1)",easeInOutQuint:"cubic-bezier(.86,0,.07,1)",easeInSine:"cubic-bezier(.47,0,.745,.715)",easeOutSine:"cubic-bezier(.39,.575,.565,1)",easeInOutSine:"cubic-bezier(.445,.05,.55,.95)",easeInBack:"cubic-bezier(.6,-.28,.735,.045)",easeOutBack:"cubic-bezier(.175, .885,.32,1.275)",easeInOutBack:"cubic-bezier(.68,-.55,.265,1.55)"};
-	f[c]&&(c=f[c]);h.off(jQuery.CSS.transitionEnd+"."+e.id);f=jQuery.CSS.getProp(d);var m={};jQuery.extend(m,d);m[jQuery.CSS.sfx+"transition-property"]=f;m[jQuery.CSS.sfx+"transition-duration"]=a+"ms";m[jQuery.CSS.sfx+"transition-delay"]=b+"ms";m[jQuery.CSS.sfx+"transition-timing-function"]=c;setTimeout(function(){h.one(jQuery.CSS.transitionEnd+"."+e.id,n);h.css(m)},1);e.timeout=setTimeout(function(){e.called||!g?(e.called=!1,e.CSSAIsRunning=!1):(h.css(jQuery.CSS.sfx+"transition",""),g.apply(e),e.CSSAIsRunning=
-			!1,"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null))},a+b+10)}else{for(f in d)"transform"===f&&delete d[f],"filter"===f&&delete d[f],"transform-origin"===f&&delete d[f],"auto"===d[f]&&delete d[f],"x"===f&&(k=d[f],l="left",d[l]=k,delete d[f]),"y"===f&&(k=d[f],l="top",d[l]=k,delete d[f]),"-ms-transform"!==f&&"-ms-filter"!==f||delete d[f];h.delay(b).animate(d,a,g)}}})}};jQuery.fn.CSSAnimate=jQuery.CSS.animate;jQuery.normalizeCss=jQuery.CSS.normalizeCss;
+			"-webkit-":jQuery.mbBrowser.mozilla?jQuery.CSS.sfx="-moz-":jQuery.mbBrowser.msie&&(jQuery.CSS.sfx="-ms-");jQuery.CSS.sfx="";for(var b in a){"transform"===b&&(a[jQuery.CSS.sfx+"transform"]=a[b],delete a[b]);"transform-origin"===b&&(a[jQuery.CSS.sfx+"transform-origin"]=d[b],delete a[b]);"filter"!==b||jQuery.mbBrowser.mozilla||(a[jQuery.CSS.sfx+"filter"]=d[b],delete a[b]);"blur"===b&&setFilter(a,"blur",d[b]);"brightness"===b&&setFilter(a,"brightness",d[b]);"contrast"===b&&setFilter(a,"contrast",d[b]);
+		"grayscale"===b&&setFilter(a,"grayscale",d[b]);"hueRotate"===b&&setFilter(a,"hueRotate",d[b]);"invert"===b&&setFilter(a,"invert",d[b]);"saturate"===b&&setFilter(a,"saturate",d[b]);"sepia"===b&&setFilter(a,"sepia",d[b]);if("x"===b){var c=jQuery.CSS.sfx+"transform";a[c]=a[c]||"";a[c]+=" translateX("+setUnit(d[b],"px")+")";delete a[b]}"y"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" translateY("+setUnit(d[b],"px")+")",delete a[b]);"z"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=
+				" translateZ("+setUnit(d[b],"px")+")",delete a[b]);"rotate"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotate("+setUnit(d[b],"deg")+")",delete a[b]);"rotateX"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotateX("+setUnit(d[b],"deg")+")",delete a[b]);"rotateY"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotateY("+setUnit(d[b],"deg")+")",delete a[b]);"rotateZ"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" rotateZ("+setUnit(d[b],"deg")+")",delete a[b]);
+		"scale"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scale("+setUnit(d[b],"")+")",delete a[b]);"scaleX"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scaleX("+setUnit(d[b],"")+")",delete a[b]);"scaleY"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scaleY("+setUnit(d[b],"")+")",delete a[b]);"scaleZ"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" scaleZ("+setUnit(d[b],"")+")",delete a[b]);"skew"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" skew("+
+				setUnit(d[b],"deg")+")",delete a[b]);"skewX"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" skewX("+setUnit(d[b],"deg")+")",delete a[b]);"skewY"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" skewY("+setUnit(d[b],"deg")+")",delete a[b]);"perspective"===b&&(c=jQuery.CSS.sfx+"transform",a[c]=a[c]||"",a[c]+=" perspective("+setUnit(d[b],"px")+")",delete a[b])}return a},getProp:function(d){var a=[],b;for(b in d)0>a.indexOf(b)&&a.push(uncamel(b));return a.join(",")},animate:function(d,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              a,b,c,g){return this.each(function(){function n(){e.called=!0;e.CSSAIsRunning=!1;h.off(jQuery.CSS.transitionEnd+"."+e.id);clearTimeout(e.timeout);h.css(jQuery.CSS.sfx+"transition","");"function"==typeof g&&g.apply(e);"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null)}var e=this,h=jQuery(this);e.id=e.id||"CSSA_"+(new Date).getTime();var k=k||{type:"noEvent"};if(e.CSSAIsRunning&&e.eventType==k.type&&!jQuery.mbBrowser.msie&&9>=jQuery.mbBrowser.version)e.CSSqueue=function(){h.CSSAnimate(d,
+			a,b,c,g)};else if(e.CSSqueue=null,e.eventType=k.type,0!==h.length&&d){d=jQuery.normalizeCss(d);e.CSSAIsRunning=!0;"function"==typeof a&&(g=a,a=jQuery.fx.speeds._default);"function"==typeof b&&(c=b,b=0);"string"==typeof b&&(g=b,b=0);"function"==typeof c&&(g=c,c="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof a)for(var l in jQuery.fx.speeds)if(a==l){a=jQuery.fx.speeds[l];break}else a=jQuery.fx.speeds._default;a||(a=jQuery.fx.speeds._default);"string"===typeof g&&(c=g,g=null);if(jQuery.support.CSStransition){var f=
+			{"default":"ease","in":"ease-in",out:"ease-out","in-out":"ease-in-out",snap:"cubic-bezier(0,1,.5,1)",easeOutCubic:"cubic-bezier(.215,.61,.355,1)",easeInOutCubic:"cubic-bezier(.645,.045,.355,1)",easeInCirc:"cubic-bezier(.6,.04,.98,.335)",easeOutCirc:"cubic-bezier(.075,.82,.165,1)",easeInOutCirc:"cubic-bezier(.785,.135,.15,.86)",easeInExpo:"cubic-bezier(.95,.05,.795,.035)",easeOutExpo:"cubic-bezier(.19,1,.22,1)",easeInOutExpo:"cubic-bezier(1,0,0,1)",easeInQuad:"cubic-bezier(.55,.085,.68,.53)",easeOutQuad:"cubic-bezier(.25,.46,.45,.94)",
+				easeInOutQuad:"cubic-bezier(.455,.03,.515,.955)",easeInQuart:"cubic-bezier(.895,.03,.685,.22)",easeOutQuart:"cubic-bezier(.165,.84,.44,1)",easeInOutQuart:"cubic-bezier(.77,0,.175,1)",easeInQuint:"cubic-bezier(.755,.05,.855,.06)",easeOutQuint:"cubic-bezier(.23,1,.32,1)",easeInOutQuint:"cubic-bezier(.86,0,.07,1)",easeInSine:"cubic-bezier(.47,0,.745,.715)",easeOutSine:"cubic-bezier(.39,.575,.565,1)",easeInOutSine:"cubic-bezier(.445,.05,.55,.95)",easeInBack:"cubic-bezier(.6,-.28,.735,.045)",easeOutBack:"cubic-bezier(.175, .885,.32,1.275)",
+				easeInOutBack:"cubic-bezier(.68,-.55,.265,1.55)"};f[c]&&(c=f[c]);h.off(jQuery.CSS.transitionEnd+"."+e.id);f=jQuery.CSS.getProp(d);var m={};jQuery.extend(m,d);m[jQuery.CSS.sfx+"transition-property"]=f;m[jQuery.CSS.sfx+"transition-duration"]=a+"ms";m[jQuery.CSS.sfx+"transition-delay"]=b+"ms";m[jQuery.CSS.sfx+"transition-timing-function"]=c;setTimeout(function(){h.one(jQuery.CSS.transitionEnd+"."+e.id,n);h.css(m)},1);e.timeout=setTimeout(function(){e.called||!g?(e.called=!1,e.CSSAIsRunning=!1):(h.css(jQuery.CSS.sfx+
+			"transition",""),g.apply(e),e.CSSAIsRunning=!1,"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null))},a+b+10)}else{for(f in d)"transform"===f&&delete d[f],"filter"===f&&delete d[f],"transform-origin"===f&&delete d[f],"auto"===d[f]&&delete d[f],"x"===f&&(k=d[f],l="left",d[l]=k,delete d[f]),"y"===f&&(k=d[f],l="top",d[l]=k,delete d[f]),"-ms-transform"!==f&&"-ms-filter"!==f||delete d[f];h.delay(b).animate(d,a,g)}}})}};jQuery.fn.CSSAnimate=jQuery.CSS.animate;jQuery.normalizeCss=jQuery.CSS.normalizeCss;
 jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQuery.normalizeCss(d);a.css(b)})};
-/*___________________________________________________________________________________________________________________________________________________
+;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.simpleSlider.min.js                                                                                                              _
@@ -2869,7 +2881,7 @@ jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQue
 			"number"==typeof d?d*c/a.opt.maxval:a.opt.initialval*c/a.opt.maxval;a.y="object"==typeof d?d.clientY+document.body.scrollTop-this.offset().top:"number"==typeof d?(a.opt.maxval-a.opt.initialval-d)*f/a.opt.maxval:a.opt.initialval*f/a.opt.maxval;a.y=this.outerHeight()-a.y;a.scaleX=a.x*a.opt.maxval/c;a.scaleY=a.y*a.opt.maxval/f;a.outOfRangeX=a.scaleX>a.opt.maxval?a.scaleX-a.opt.maxval:0>a.scaleX?a.scaleX:0;a.outOfRangeY=a.scaleY>a.opt.maxval?a.scaleY-a.opt.maxval:0>a.scaleY?a.scaleY:0;a.outOfRange="h"===
 	a.opt.orientation?a.outOfRangeX:a.outOfRangeY;a.value="undefined"!=typeof d?"h"===a.opt.orientation?a.x>=this.outerWidth()?a.opt.maxval:0>=a.x?0:a.scaleX:a.y>=this.outerHeight()?a.opt.maxval:0>=a.y?0:a.scaleY:"h"===a.opt.orientation?a.scaleX:a.scaleY;"h"===a.opt.orientation?a.level.width(Math.floor(100*a.x/c)+"%"):a.level.height(Math.floor(100*a.y/f));a.lastVal===a.value&&("h"===a.opt.orientation&&(a.x>=this.outerWidth()||0>=a.x)||"h"!==a.opt.orientation&&(a.y>=this.outerHeight()||0>=a.y))||("function"===
 	typeof a.opt.callback&&a.opt.callback(a),a.lastVal=a.value)}}};b.fn.simpleSlider=b.simpleSlider.init;b.fn.updateSliderVal=b.simpleSlider.updateSliderVal})(jQuery);
-/*___________________________________________________________________________________________________________________________________________________
+;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.storage.min.js                                                                                                                   _
@@ -2892,7 +2904,7 @@ jQuery.fn.css3=function(d){return this.each(function(){var a=jQuery(this),b=jQue
 
 (function(d){d.mbCookie={set:function(a,c,f,b){"object"==typeof c&&(c=JSON.stringify(c));b=b?"; domain="+b:"";var e=new Date,d="";0<f&&(e.setTime(e.getTime()+864E5*f),d="; expires="+e.toGMTString());document.cookie=a+"="+c+d+"; path=/"+b},get:function(a){a+="=";for(var c=document.cookie.split(";"),d=0;d<c.length;d++){for(var b=c[d];" "==b.charAt(0);)b=b.substring(1,b.length);if(0==b.indexOf(a))try{return JSON.parse(b.substring(a.length,b.length))}catch(e){return b.substring(a.length,b.length)}}return null},
 	remove:function(a){d.mbCookie.set(a,"",-1)}};d.mbStorage={set:function(a,c){"object"==typeof c&&(c=JSON.stringify(c));localStorage.setItem(a,c)},get:function(a){if(localStorage[a])try{return JSON.parse(localStorage[a])}catch(c){return localStorage[a]}else return null},remove:function(a){a?localStorage.removeItem(a):localStorage.clear()}}})(jQuery);
-/*___________________________________________________________________________________________________________________________________________________
+;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mbBrowser.min.js                                                                                                                    _

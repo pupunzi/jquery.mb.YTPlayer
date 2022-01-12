@@ -334,19 +334,25 @@ let getYTPVideoID = function (url) {
 		 */
 		buildPlayer: function (options) {
 
-			if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
-				jQuery('#YTAPI').remove();
-				let tag = jQuery('<script>').attr({
-					'src': 'https://www.youtube.com/iframe_api?v=' + jQuery.mbYTPlayer.version,
-					'id' : 'YTAPI'
-				});
-				jQuery('head').prepend(tag)
-			} else {
-				setTimeout(function () {
-					jQuery(document).trigger('YTAPIReady');
-					ytp.YTAPIReady = true
-				}, 100)
-			}
+			jQuery(function(){
+				if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
+					jQuery('#YTAPI').remove();
+					let tag = jQuery('<script>').attr({
+						'src'  : '//www.youtube.com/iframe_api?v=' + jQuery.mbYTPlayer.version,
+						'id'   : 'YTAPI',
+						'async': 'async',
+						'defer': true
+					});
+
+					jQuery('body').append(tag);
+
+				} else {
+					setTimeout(function () {
+						jQuery(document).trigger('YTAPIReady');
+						ytp.YTAPIReady = true
+					}, 100)
+				}
+			});
 
 			function isIframe() {
 				let isIfr = false;

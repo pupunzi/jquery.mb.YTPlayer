@@ -4,7 +4,7 @@
   file: index.tmpl
   last modified: 10/25/18 8:00 PM
   Version:  3.3.9
-  Build:  7581
+  Build:  7613
 
   Open Lab s.r.l., Florence - Italy
   email:  matteo@open-lab.com
@@ -27,9 +27,9 @@
 	<meta charset="UTF-8">
 	<title>youtube Chromeless Player - mb.YTPlayer</title>
 	<link href='//fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-	<link href="css/jquery.mb.YTPlayer.min.css?_bn=7581" media="all" rel="stylesheet" type="text/css">
+	<link href="css/jquery.mb.YTPlayer.min.css?_bn=7613" media="all" rel="stylesheet" type="text/css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="jquery.mb.YTPlayer.js?_bn=7581"></script>
+	<script src="jquery.mb.YTPlayer.min.js?_bn=7613"></script>
 	<script src="../examples/assets/apikey.js"></script>
 	<style>
 		*:focus {
@@ -39,12 +39,13 @@
 		body {
 			border: none;
 			margin: 0;
-			padding: 30px;
+			padding: 0;
 			background: #222c2f;
 			font: normal 16px/20px Lekton, sans-serif;
 
-			position: absolute;
-			height: 100vh;
+			position: relative;
+			height: 100%;
+			width: 100%;
 		}
 
 		h1 {
@@ -71,6 +72,8 @@
 		#wrapper {
 			position: relative;
 			min-width: 1280px;
+			max-width: 1280px;
+			margin: auto;
 		}
 
 		.console {
@@ -79,9 +82,9 @@
 		}
 
 		#debug {
-			position: absolute;
-			width: 450px;
-			padding: 5px;
+			position: fixed;
+			width: 350px;
+			padding: 10px;
 			height: 100%;
 			top: 0;
 			right: 0;
@@ -307,7 +310,7 @@
 
       var myPlayer = jQuery( "#bgndVideo" ).YTPlayer( {
         remember_last_time: should_remember
-				, coverImage: 'cover.png'
+				, coverImage: 'cover.jpg'
         , onReady: function( player ) {
           YTPConsole.append( player.id + " player is ready" );
           YTPConsole.append( "<br>" );
@@ -405,9 +408,9 @@
 </head>
 
 <body>
-<div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
+<div id="wrapper">
 	<div class="console">
-		<button onclick="jQuery('#bgndVideo').toggleVolume()">mute/unmute</button>
+		<button onclick="jQuery('#bgndVideo').YTPToggleVolume()">mute/unmute</button>
 		<button onclick="jQuery('#bgndVideo').YTPFullscreen()">go fullscreen</button>
 		<button id="debugBtn" class="command" onclick="jQuery('#debug').toggle()"> show/hide the console</button>
 	</div>

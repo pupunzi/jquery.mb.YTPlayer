@@ -334,7 +334,7 @@ let getYTPVideoID = function (url) {
 		 */
 		buildPlayer: function (options) {
 
-			jQuery(function(){
+			 jQuery(function(){
 				if (!ytp.YTAPIReady && typeof window.YT === 'undefined') {
 					jQuery('#YTAPI').remove();
 					let tag = jQuery('<script>').attr({
@@ -344,7 +344,7 @@ let getYTPVideoID = function (url) {
 						'defer': true
 					});
 
-					jQuery('body').append(tag);
+					jQuery('head').append(tag);
 
 				} else {
 					setTimeout(function () {
@@ -352,7 +352,7 @@ let getYTPVideoID = function (url) {
 						ytp.YTAPIReady = true
 					}, 100)
 				}
-			});
+			 });
 
 			function isIframe() {
 				let isIfr = false;

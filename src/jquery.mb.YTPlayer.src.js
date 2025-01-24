@@ -367,7 +367,6 @@ let getYTPVideoID = function (url) {
 			return this.each(function () {
 				let YTPlayer = this;
 				let $YTPlayer = jQuery(YTPlayer);
-				$YTPlayer.hide();
 				YTPlayer.loop = 0;
 				YTPlayer.state = 0;
 				YTPlayer.filters = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaultFilters);
@@ -382,9 +381,14 @@ let getYTPVideoID = function (url) {
 						eval('(' + $YTPlayer.data('property') + ')') :
 						$YTPlayer.data('property');
 
-				if (typeof property !== 'object')
+				if (typeof property !== 'object'){
 					property = {};
-
+					jQuery.mbYTPlayer.defaults.containment = this;
+					$YTPlayer.show();
+				} else {
+					$YTPlayer.hide();
+				}
+				
 				YTPlayer.opt = jQuery.extend(true, {}, jQuery.mbYTPlayer.defaults, YTPlayer.opt, options, property);
 
 				YTPRndSuffix = getYTPVideoID(YTPlayer.opt.videoURL).videoID;
@@ -479,7 +483,7 @@ let getYTPVideoID = function (url) {
 					jQuery.mbCookie.remove('YTPlayer_start_from' + YTPlayer.videoID)
 				}
 
-				YTPlayer.isPlayer = $YTPlayer.is(YTPlayer.opt.containment);
+				YTPlayer.isPlayer = false;// $YTPlayer.is(YTPlayer.opt.containment);
 				YTPlayer.isBackground = YTPlayer.opt.containment.is('body');
 
 				if (YTPlayer.isBackground && ytp.backgroundIsInited)

@@ -6,7 +6,6 @@ __An open source jQuery component to easily build your custom Youtube® player o
 
 ![mb.YTPlayer](http://pupunzi.open-lab.com/wp-content/uploads/2010/06/DSC03762.jpg)
 
-## [go to the demo](https://pupunzi.com/#mb.components/mb.YTPlayer/YTPlayer.html)
 ## [go to the doc](https://github.com/pupunzi/jquery.mb.YTPlayer/wiki)
 ## [go to the blog](https://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-YTPlayer/)
 

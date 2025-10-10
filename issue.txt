@@ -1,2 +1,0 @@
-setPlaybackQuality:
-https://stackoverflow.com/questions/53205246/the-youtube-iframe-api-serves-up-streams-at-resolutions-that-will-not-playback-o

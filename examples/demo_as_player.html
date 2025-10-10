@@ -23,417 +23,465 @@
 
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>youtube Chromeless Player - mb.YTPlayer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>youtube Chromeless Player - mb.YTPlayer</title>
 
-  <link href='https://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
-  <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lekton|Lobster' rel='stylesheet' type='text/css'>
+    <link href="../dist/css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="../dist/jquery.mb.YTPlayer.js"></script>
-  <script src="assets/apikey.js"></script>
-  <style>
-    body {
-      border: none;
-      margin: 0;
-      padding: 30px;
-      background: #003e50;
-      font: normal 16px/20px Lekton, sans-serif;
-      min-width: 1280px;
-    }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../dist/jquery.mb.YTPlayer.js"></script>
+    <script src="assets/apikey.js"></script>
+    <style>
+        body {
+            border: none;
+            margin: 0;
+            padding: 30px;
+            background: #003e50;
+            font: normal 16px/20px Lekton, sans-serif;
+            min-width: 1280px;
+        }
 
-    h1, h2 {
-      font-family: 'Lobster', cursive;
-      font-size: 40px;
-      text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
-      color: #FFFFFF;
-      font-weight: 200;
-    }
+        h1, h2 {
+            font-family: 'Lobster', cursive;
+            font-size: 40px;
+            text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.30);
+            color: #FFFFFF;
+            font-weight: 200;
+        }
 
-    .player {
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, .5);
-    }
+        .player {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+            height: 100%;
+        }
 
-    .player.fullscreen {
-      border-radius: 0;
-      border: 0px solid #fff;
-      box-shadow: none;
-    }
+        .player-container {
+            width: 60vw;
+            min-width: 600px;
+            aspect-ratio: 16 / 9;
+        }
 
-    #wrapper {
-      position: relative;
-      padding: 30px 20px;
-      z-index: 10;
-    }
 
-    .dida {
-      color: #fff;
-      font-size: 20px;
-      position: relative;
-      width: 800px;
-      margin: 0 60px;
-    }
+        .player.fullscreen {
+            border-radius: 0;
+            border: 0px solid #fff;
+            box-shadow: none;
+        }
 
-    .controls {
-      position: relative;
-      width: 800px;
-      margin: 0 50px;
-    }
+        #wrapper {
+            position: relative;
+            padding: 30px 20px;
+            z-index: 10;
+        }
 
-    button, .button {
-      transition: all .4s;
+        .dida {
+            color: #fff;
+            font-size: 20px;
+            position: relative;
+            width: 800px;
+            margin: 0 60px;
+        }
 
-      display: inline-block;
-      padding: 0px 10px;
-      font-size: 16px;
+        .controls {
+            position: relative;
+            width: 800px;
+            margin: 0 50px;
+        }
 
-      cursor: pointer;
+        button, .button {
+            transition: all .4s;
 
-      background-color: rgba(248, 248, 248, 0.4);
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
-      color: #000;
+            display: inline-block;
+            padding: 0px 10px;
+            font-size: 16px;
 
-      border: 1px solid transparent;
+            cursor: pointer;
 
-      text-decoration: none;
-      line-height: 30px;
-      margin: 3px;
-      border-radius: 10px;
-    }
+            background-color: rgba(248, 248, 248, 0.4);
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+            color: #000;
 
-    button:hover, .button:hover {
-      background-color: rgb(0, 0, 0);
-      color: #FFF;
-    }
+            border: 1px solid transparent;
 
-    button:focus {
-      outline: none;
-    }
+            text-decoration: none;
+            line-height: 30px;
+            margin: 3px;
+            border-radius: 10px;
+        }
 
-    #filtersControl {
-      position: absolute;
-      top: 70px;
-      right: 50px;
-      width: 400px;
-      margin: 30px auto;
-    }
+        button:hover, .button:hover {
+            background-color: rgb(0, 0, 0);
+            color: #FFF;
+        }
 
-    #filterScript {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: rgba(25, 34, 37, 0.35);
-      color: #fff;
-      border-radius: 10px;
-    }
+        button:focus {
+            outline: none;
+        }
 
-    .slider {
-      position: relative;
-      width: 100%;
-      height: 25px;
-      border: 0 solid transparent;
-      background-color: #192225;
-      border-radius: 4px;
-      margin-top: 10px;
-      overflow: hidden;
-    }
+        #filtersControl {
+            position: absolute;
+            top: 70px;
+            right: 50px;
+            width: 400px;
+            margin: 30px auto;
+        }
 
-    .slider .level {
-      background-color: #3c6784;
-      height: 100%;
-    }
+        #filterScript {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgba(25, 34, 37, 0.35);
+            color: #fff;
+            border-radius: 10px;
+        }
 
-    .slider .desc {
-      position: absolute;
-      right: 0;
-      top: 0;
-      padding: 5px;
-      font-size: 12px;
-      line-height: 18px;
-      color: #fff;
-    }
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 25px;
+            border: 0 solid transparent;
+            background-color: #192225;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
 
-    .slider span {
-      font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
-      /*text-transform: uppercase;*/
-      position: absolute;
-      top: 0;
-      font-size: 12px;
-      line-height: 18px;
-      color: #fff;
-      padding: 4px;
-      text-align: left;
-      width: 100%;
-      box-sizing: border-box;
-    }
+        .slider .level {
+            background-color: #3c6784;
+            height: 100%;
+        }
 
-    .goto {
-      margin-top: 20px;
-      text-align: center;
-      width: 100%;
-      height: 50px;
-    }
+        .slider .desc {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 5px;
+            font-size: 12px;
+            line-height: 18px;
+            color: #fff;
+        }
 
-    .goto .button {
-      font-size: 20px;
-      font-family: 'Lobster', cursive;
-      padding: 10px;
-    }
+        .slider span {
+            font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+            /*text-transform: uppercase;*/
+            position: absolute;
+            top: 0;
+            font-size: 12px;
+            line-height: 18px;
+            color: #fff;
+            padding: 4px;
+            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-    .player-container {
-      width: 60vw;
-      min-width: 600px
-    }
+        .goto {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            height: 50px;
+        }
 
-    #wp {
-      position: absolute;
-      right: 60px;
-      top: 20px;
-      z-index: 10;
-      min-width: 300px;
-      background: rgba(0, 0, 0, 0.55);
-      /*background: #ffb200;*/
-      color: #fff;
-      font-size: 24px;
-      line-height: 24px;
-      padding: 20px;
-      cursor: pointer;
-      text-align: left;
-      border-radius: 10px;
-      font-family: 'Lobster', cursive;
-    }
+        .goto .button {
+            font-size: 20px;
+            font-family: 'Lobster', cursive;
+            padding: 10px;
+        }
 
-    #wp:hover {
-      background: #000000;
-    }
+        #wp {
+            position: absolute;
+            right: 60px;
+            top: 20px;
+            z-index: 10;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.55);
+            /*background: #ffb200;*/
+            color: #fff;
+            font-size: 24px;
+            line-height: 24px;
+            padding: 20px;
+            cursor: pointer;
+            text-align: left;
+            border-radius: 10px;
+            font-family: 'Lobster', cursive;
+        }
 
-    #wp img {
-      width: 60px;
-      margin-right: 20px;
-    }
+        #wp:hover {
+            background: #000000;
+        }
 
-    @media only screen and (max-device-width: 480px) {
+        #wp img {
+            width: 60px;
+            margin-right: 20px;
+        }
 
-      body {
-        width: 100%;
-        min-width: 0;
-        padding: 0;
-      }
+        @media only screen and (max-device-width: 480px) {
 
-      h1 {
-        margin-top: 80px;
-        text-align: left;
-        font-size: 40px;
-        font-family: 'Lobster', cursive;
-        line-height: 1;
-      }
+            body {
+                width: 100%;
+                min-width: 0;
+                padding: 0;
+            }
 
-      h2 {
-        font-size: 25px;
-        text-align: left;
-        line-height: 1.2;
-      }
+            h1 {
+                margin-top: 80px;
+                text-align: left;
+                font-size: 40px;
+                font-family: 'Lobster', cursive;
+                line-height: 1;
+            }
 
-      #wrapper {
-        position: relative;
-        width: 100%;
-        min-width: 0;
-        padding: 0;
-      }
+            h2 {
+                font-size: 25px;
+                text-align: left;
+                line-height: 1.2;
+            }
 
-      .player-container {
-        width: 100%;
-        min-width: 0;
-      }
+            #wrapper {
+                position: relative;
+                width: 100%;
+                min-width: 0;
+                padding: 0;
+            }
 
-      .controls {
-        position: relative;
-        width: 100%;
-        margin: 0;
-      }
+            .player-container {
+                width: 100%;
+                min-width: 0;
+            }
 
-      #donate {
-        display: none;
-      }
+            .controls {
+                position: relative;
+                width: 100%;
+                margin: 0;
+            }
 
-      .dida {
-        width: 100%;
-        margin: 0;
-      }
+            #donate {
+                display: none;
+            }
 
-      #wp {
-        position: relative !important;
-        top: auto;
-        left: auto;
-      }
+            .dida {
+                width: 100%;
+                margin: 0;
+            }
 
-      #filtersControl {
-        position: relative;
-        top: 0;
-        right: 0px;
-        width: 100%;
-        margin: 0;
-      }
-    }
+            #wp {
+                position: relative !important;
+                top: auto;
+                left: auto;
+            }
 
-  </style>
+            #filtersControl {
+                position: relative;
+                top: 0;
+                right: 0px;
+                width: 100%;
+                margin: 0;
+            }
+        }
 
-  <script>
+    </style>
 
-			var myPlayer;
-			jQuery(function () {
+    <script>
 
-					myPlayer = jQuery("#P1").YTPlayer();
-					myPlayer.on("YTPData", function (e) {
-							$(".dida").html(e.prop.title + "<br>@" + e.prop.channelTitle);
-					});
+		var myPlayer;
+		jQuery(function () {
 
-					/* create sliders for filters adjustment */
-					var $slider = $(".slider").simpleSlider({
-							initialval: 0, //function (el) {return Math.random() * el.opt.scale},
-							scale     : 100,
-							callback  : function (el) {
-									var filter = $(el).data("filter");
-									jQuery('#P1').YTPApplyFilter(filter, +(el.value).toFixed(0));
-
-									$("span", el).html(filter + "       (" + (+(el.value).toFixed(0)) + ")");
-
-									var applFilters = [];
-									var desc = "$(selector).YTPApplyFilters({";
-
-									for (var x = 0; x < $(".slider").length; x++) {
-											var slider = $(".slider").eq(x).get(0);
-											var $slaider = $(slider);
-
-											if (slider.value)
-													applFilters.push($slaider.data("filter") + ": " + (+(slider.value).toFixed(0)));
-									}
-									;
-
-									for (var y in applFilters) {
-											var comma = y < applFilters.length - 1 ? "," : "<br>";
-											desc += "<br> &nbsp;&nbsp;&nbsp;" + applFilters[y] + comma;
-									}
-
-									desc += "})";
-
-									$("#filterScript").html(desc);
-							}
-					});
-
-					//update applied filters
-					myPlayer.on("YTPFiltersApplied", function () {
-							var filters = myPlayer.get(0).filters;
-							for (var key in filters) {
-									$(".slider[data-filter=" + key + "]").updateSliderVal(filters[key].value);
-							}
-					});
-
-					myPlayer.on('YTPPlay', function () {
-							console.log('playing');
-					});
-
+			var videos = [
+				{
+					videoURL      : "59Rkw_Lg-0U",
+					containment   : 'self',
+					showControls  : true,
+					startAt       : 0,
+					mute          : false,
+					autoPlay      : true,
+					loop          : false,
+					opacity       : 1,
+					showYTLogo    : true,
+					coverImage    : 'images/Animation.gif',
+					mask          : 'images/Theater.png',
+					realfullscreen: true
+				},
+				{
+					videoURL      : "916rOYwrEWY",
+					containment   : 'self',
+					showControls  : true,
+					startAt       : 0,
+					mute          : false,
+					autoPlay      : true,
+					loop          : false,
+					opacity       : 1,
+					showYTLogo    : true,
+					coverImage    : 'images/Animation.gif',
+					mask          : 'images/Theater.png',
+					realfullscreen: true
+				}
+			];
+			myPlayListPlayer = jQuery("#P1").YTPlaylist(videos, false, function (video) {
+                /*
+                 if (video.videoData) {
+                 jQuery("#videoID").html(video.videoData.id);
+                 jQuery("#videoTitle").html(video.videoData.title);
+                 }
+                 */
 			});
 
-			function toggleFullScreenOnPlay(el) {
-					if ($(el).is(':checked'))
-							myPlayer.get(0).opt.goFullScreenOnPlay = true;
-					else
-							myPlayer.get(0).opt.goFullScreenOnPlay = false;
-			}
 
-  </script>
+/*
+			myPlayer = jQuery("#P1").YTPlayer();
+			myPlayer.on("YTPData", function (e) {
+				$(".dida").html(e.prop.title + "<br>@" + e.prop.channelTitle);
+			});
+*/
+
+            /* create sliders for filters adjustment */
+			var $slider = $(".slider").simpleSlider({
+				initialval: 0, //function (el) {return Math.random() * el.opt.scale},
+				scale     : 100,
+				callback  : function (el) {
+					var filter = $(el).data("filter");
+					jQuery('#P1').YTPApplyFilter(filter, +(el.value).toFixed(0));
+
+					$("span", el).html(filter + "       (" + (+(el.value).toFixed(0)) + ")");
+
+					var applFilters = [];
+					var desc = "$(selector).YTPApplyFilters({";
+
+					for (var x = 0; x < $(".slider").length; x++) {
+						var slider = $(".slider").eq(x).get(0);
+						var $slaider = $(slider);
+
+						if (slider.value)
+							applFilters.push($slaider.data("filter") + ": " + (+(slider.value).toFixed(0)));
+					}
+					;
+
+					for (var y in applFilters) {
+						var comma = y < applFilters.length - 1 ? "," : "<br>";
+						desc += "<br> &nbsp;&nbsp;&nbsp;" + applFilters[y] + comma;
+					}
+
+					desc += "})";
+
+					$("#filterScript").html(desc);
+				}
+			});
+
+			//update applied filters
+			myPlayer.on("YTPFiltersApplied", function () {
+				var filters = myPlayer.get(0).filters;
+				for (var key in filters) {
+					$(".slider[data-filter=" + key + "]").updateSliderVal(filters[key].value);
+				}
+			});
+
+			myPlayer.on('YTPPlay', function () {
+				console.log('playing');
+			});
+
+		});
+
+		function toggleFullScreenOnPlay(el) {
+			if ($(el).is(':checked'))
+				myPlayer.get(0).opt.goFullScreenOnPlay = true;
+			else
+				myPlayer.get(0).opt.goFullScreenOnPlay = false;
+		}
+
+    </script>
 </head>
 <body>
 <div id="wrapper">
-  <a id="pupunzi-home" href='https://pupunzi.com/#mb.components/components.html'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
-  <h1 style="color:white"> jQuery.mb.YTPlayer as a customized player </h1>
+    <a id="pupunzi-home" href='https://pupunzi.com/#mb.components/components.html'><img id='logo' border='0' src='https://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>
+    <h1 style="color:white"> jQuery.mb.YTPlayer as a customized player </h1>
 
-  <!-- l_tHTmd5pgk  0YcRwnE6Lzg-->
-  <div class="player-container">
-    <!-- , goFullScreenOnPlay:true -->
-    <div id="P1" class="player" style="display:block; background: rgba(0,0,0,0.5)" data-property="{videoURL:'l_tHTmd5pgk',containment:'self',showControls:true,startAt:6,mute:false,autoPlay:false,loop:false,opacity:1,showYTLogo:true, optimizeDisplay:true, coverImage:'assets/cover.png'}"></div>
-    <!--3ovA7zeviRo-->
-  </div>
-  <br>
-  <div class="controls">
-    <button onclick="jQuery('#P1').YTPPlay()">play</button>
-    <button onclick="jQuery('#P1').YTPPause()">pause</button>
-    <button onclick="jQuery('#P1').YTPToggleVolume()">mute/unmute</button>
-    <button onclick="jQuery('#P1').YTPFullscreen()">go fullscreen</button>
+    <!-- l_tHTmd5pgk  0YcRwnE6Lzg-->
+    <div class="player-container">
+        <!-- , goFullScreenOnPlay:true -->
+        <div id="P1" class="player" style="display:block; background: rgba(0,0,0,0.5); overflow: hidden"></div>
+        <!--59Rkw_Lg-0U-->
+    </div>
     <br>
-    <br>
-    <input name="toggleFullScreenOnPlay" id="toggleFullScreenOnPlay" type="checkbox" onchange="toggleFullScreenOnPlay(this)" value="true"><label for="toggleFullScreenOnPlay">Activate Fullscreen on play</label>
-  </div>
-
-  <div id="filtersControl">
-    <h2>change video</h2>
-    <button class="command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: 'l_tHTmd5pgk', mute:false, addRaster:true})">video 1</button>
-    <button class="command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: '7SnmCUwOsts', mute:false, addRaster:false, autoPlay: true})">video 2</button>
-    <button class="command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 3</button>
-    <button class="command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: '8AE3_AJ9o2A', mute:false, startAt:0, addRaster:false, ratio:16/9})">video 4</button>
-
-    <h2>Apply filters</h2>
-    <h3 style="color: white">* Does not work in IE.</h3>
-
-    <button id="toggleFilters"
-            onclick="jQuery('#P1').YTPToggleFilters(function(a){if(!a) {$('#toggleFilters').html('enable filters')} else {$('#toggleFilters').html('disable filters')}})">
-      disable filters
-    </button>
-
-    <div class="slider"
-         data-filter="grayscale"><span>grayscale</span>
+    <div class="controls">
+        <button onclick="jQuery('#P1').YTPPlayPrev()">prev video</button>
+        <button onclick="jQuery('#P1').YTPPlayNext()">next video</button>
+        &nbsp;&nbsp;&nbsp;
+        <button onclick="jQuery('#P1').YTPPlay()">play</button>
+        <button onclick="jQuery('#P1').YTPPause()">pause</button>
+        <button onclick="jQuery('#P1').YTPToggleVolume()">mute/unmute</button>
+        <button onclick="jQuery('#P1').YTPFullscreen()">go fullscreen</button>
+        <br>
+        <br>
+        <input name="toggleFullScreenOnPlay" id="toggleFullScreenOnPlay" type="checkbox" onchange="toggleFullScreenOnPlay(this)" value="true"><label for="toggleFullScreenOnPlay">Activate Fullscreen on play</label>
     </div>
 
-    <div class="slider"
-         data-filter="hue_rotate"
-         data-scale="360"><span>hue rotate</span>
+    <div id="filtersControl">
+        <h2>change video</h2>
+        <button class="command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: 'l_tHTmd5pgk', mute:false, addRaster:true})">video 1</button>
+        <button class="command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: '7SnmCUwOsts', mute:false, addRaster:false, autoPlay: true})">video 2</button>
+        <button class="command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: 'BsekcY04xvQ', mute:false, addRaster:false})">video 3</button>
+        <button class="command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: '8AE3_AJ9o2A', mute:false, startAt:0, addRaster:false, ratio:16/9})">video 4</button>
+
+        <h2>Apply filters</h2>
+        <h3 style="color: white">* Does not work in IE.</h3>
+
+        <button id="toggleFilters"
+                onclick="jQuery('#P1').YTPToggleFilters(function(a){if(!a) {$('#toggleFilters').html('enable filters')} else {$('#toggleFilters').html('disable filters')}})">
+            disable filters
+        </button>
+
+        <div class="slider"
+             data-filter="grayscale"><span>grayscale</span>
+        </div>
+
+        <div class="slider"
+             data-filter="hue_rotate"
+             data-scale="360"><span>hue rotate</span>
+        </div>
+
+        <div class="slider"
+             data-filter="invert"><span>invert</span>
+        </div>
+
+        <div class="slider"
+             data-filter="sepia"><span>sepia</span>
+        </div>
+
+        <div class="slider"
+             data-filter="opacity"><span>opacity</span>
+        </div>
+
+        <div class="slider"
+             data-filter="saturate"
+             data-scale="200"><span>saturate</span>
+        </div>
+
+        <div class="slider"
+             data-filter="brightness"
+             data-scale="200"><span>brightness</span>
+        </div>
+
+        <div class="slider"
+             data-filter="contrast"
+             data-scale="500"><span>contrast</span>
+        </div>
+
+        <div class="slider"
+             data-filter="blur"
+             data-scale="50"><span>blur</span>
+        </div>
+
+
+        <div id="filterScript">
+
+        </div>
+
+        <div class="goto">
+            <a class="button" href="https://github.com/pupunzi/jquery.mb.YTPlayer/wiki" target="_blank">See the doc</a>
+            <a class="button" href="http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer" target="_blank">Download it</a>
+        </div>
+
     </div>
-
-    <div class="slider"
-         data-filter="invert"><span>invert</span>
-    </div>
-
-    <div class="slider"
-         data-filter="sepia"><span>sepia</span>
-    </div>
-
-    <div class="slider"
-         data-filter="opacity"><span>opacity</span>
-    </div>
-
-    <div class="slider"
-         data-filter="saturate"
-         data-scale="200"><span>saturate</span>
-    </div>
-
-    <div class="slider"
-         data-filter="brightness"
-         data-scale="200"><span>brightness</span>
-    </div>
-
-    <div class="slider"
-         data-filter="contrast"
-         data-scale="500"><span>contrast</span>
-    </div>
-
-    <div class="slider"
-         data-filter="blur"
-         data-scale="50"><span>blur</span>
-    </div>
-
-
-    <div id="filterScript">
-
-    </div>
-
-    <div class="goto">
-      <a class="button" href="https://github.com/pupunzi/jquery.mb.YTPlayer/wiki" target="_blank">See the doc</a>
-      <a class="button" href="http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-ytplayer" target="_blank">Download it</a>
-    </div>
-
-  </div>
 
 </div>
 <div class="dida"></div>
@@ -441,12 +489,12 @@
 <button onclick="jQuery.mbYTPlayer.removeStoredData()" style="margin: 0px 60px;"> Remove stored data</button>
 
 <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
-  <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
+    <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
 </a>
 
 <div id="wp" onclick="self.location.href='https://pupunzi.com/wpPlus/go-plus.php?plugin_prefix=YTPL'">
-  <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
-  <span>Get the <br><b>Wordpress</b> Plug-in!</span>
+    <img src="https://pupunzi.com/wpPlus/images/YTPL.svg" style="float: left">
+    <span>Get the <br><b>Wordpress</b> Plug-in!</span>
 </div>
 
 </body>

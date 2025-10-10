@@ -101,45 +101,78 @@
        */
       var videos = [
         {
-          videoURL: "RVrLiXfiCik",
-          containment: 'body',
-          autoPlay: true,
-          mute: false,
-          startAt: 20,
-          stopAt: 75,
-          opacity: 1,
-          loop: false,
-          ratio: 16/9,
-          addRaster: true,
-          quality: "auto"
+          videoURL: "59Rkw_Lg-0U",
+          containment:'body',
+          showControls:true,
+          startAt:0,
+          mute:false,
+          autoPlay:true,
+          loop:false,
+          opacity:1,
+          showYTLogo:true,
+          coverImage:'images/Animation.gif',
+          mask:'images/Theater.png',
+          realfullscreen: true
         },
         {
-          videoURL: "UWEjxkkB8Xs",
-          containment: 'body',
-          autoPlay: true,
-          mute: true,
-          startAt: 1,
-          stopAt: 50,
-          opacity: 1,
-          loop: 2,
-          ratio: 4/3,
-          addRaster: false,
-          quality: "large"
-        },
-        {
-          videoURL: "3nVzewhsmM0",
-          containment: 'body',
-          autoPlay: true,
-          mute: false,
-          startAt: 75,
-          // stopAt: 75,
-          opacity: 1,
-          loop: 2,
-          ratio: 4/3,
-          addRaster: true,
-          quality: "large"
+          videoURL: "916rOYwrEWY",
+          containment:'body',
+          showControls:true,
+          startAt:0,
+          mute:false,
+          autoPlay:true,
+          loop:false,
+          opacity:1,
+          showYTLogo:true,
+          coverImage:'images/Animation.gif',
+          mask:'images/Theater.png',
+          realfullscreen: true
         }
       ];
+
+      /*
+            let videos = [
+              {
+                videoURL: "J76S5q_ETfo",
+                containment: 'body',
+                autoPlay: true,
+                mute: false,
+                startAt: 20,
+                stopAt: 75,
+                opacity: 1,
+                loop: false,
+                ratio: 16/9,
+                addRaster: true,
+                quality: "auto"
+              },
+              {
+                videoURL: "UWEjxkkB8Xs",
+                containment: 'body',
+                autoPlay: true,
+                mute: true,
+                startAt: 1,
+                stopAt: 50,
+                opacity: 1,
+                loop: 2,
+                ratio: 4/3,
+                addRaster: false,
+                quality: "large"
+              },
+              {
+                videoURL: "3nVzewhsmM0",
+                containment: 'body',
+                autoPlay: true,
+                mute: false,
+                startAt: 75,
+                // stopAt: 75,
+                opacity: 1,
+                loop: 2,
+                ratio: 4/3,
+                addRaster: true,
+                quality: "large"
+              }
+            ];
+      */
 
       myPlayListPlayer = jQuery("#myPlayerID").YTPlaylist(videos, false, function (video) {
         /*

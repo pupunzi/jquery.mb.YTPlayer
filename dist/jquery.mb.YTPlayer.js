@@ -2,7 +2,7 @@
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.YTPlayer.src.js                                                                                                                  _
- _ last modified: 10/10/25                                                                                                                    _
+ _ last modified: 2/3/21 7:31 PM                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -16,7 +16,7 @@
  _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
  _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
  _                                                                                                                                                  _
- _ Copyright (c) 2001-2025. Matteo Bicocchi (Pupunzi);                                                                                              _
+ _ Copyright (c) 2001-2021. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 
 
@@ -60,8 +60,8 @@ let getYTPVideoID = function (url) {
 	
 	jQuery.mbYTPlayer = {
 		name   : 'jquery.mb.YTPlayer',
-		version: '3.3.9',
-		build  : '7627',
+		version: '3.4.0',
+		build  : '7629',
 		author : 'Matteo Bicocchi (pupunzi)',
 		apiKey : '',
 		
